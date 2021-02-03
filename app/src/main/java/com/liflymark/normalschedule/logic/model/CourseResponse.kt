@@ -14,5 +14,3 @@ data class AllCourse(
     val teacher: String,
     val teachingBuildName: String
 )
-
-data class UserId(val id: String)

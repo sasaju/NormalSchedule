@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface CourseService {
+
     @GET("timetable/getid")
     fun getId():Call<String>
 
@@ -13,7 +14,7 @@ interface CourseService {
     fun getCaptcha(@Path("sessionId") sessionId: String): Call<Image>
 
     @FormUrlEncoded
-    @POST("timetable")
+    @POST("timetable/")
     fun getCourse(@Field("user") user:String,
                   @Field("password") passWord: String,
                   @Field("yzm") captcha: String,
