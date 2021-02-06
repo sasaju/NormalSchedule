@@ -15,23 +15,25 @@ import com.liflymark.normalschedule.ui.Course
 class CourseViewModel: ViewModel() {
     private val getImageTimesLiveData = MutableLiveData<Int>()
 
-    private var id = Repository.getId().value.toString()
+    private var id = ""
     private var user = ""
     private var password = ""
     private var yzm = ""
     private var formMapLiveData = MutableLiveData<String>()
+    private var idLiveData = MutableLiveData<String>()
 
 //    val imageLiveData = Transformations.switchMap(getImageTimesLiveData) {
 //        Repository.getCaptcha(id)
 //    }
 
     val courseLiveData = Transformations.switchMap(formMapLiveData) { _ ->
-        Repository.getCourse(user, password, yzm, id)
+        this.id = Repository.getId().value.toString()
+        Repository.getCourse(user, password, yzm, "asdfasfasdfasdf")
     }
 
     fun refreshId() {
-        Log.d("ViewModel", id)
-        id = Repository.getId().value.toString()
+        Log.d("ViewModel", this.id)
+        this.id = Repository.getId().value.toString()
     }
 
     fun getImage() {
@@ -41,7 +43,11 @@ class CourseViewModel: ViewModel() {
     fun putValue(user: String, password: String, yzm: String) {
         this.user = user
         this.password = password
-        this.yzm = yzm
+        if (yzm == ""){
+            this.yzm = "abcde"
+        }else {
+            this.yzm = yzm
+        }
         formMapLiveData.value = user + password + yzm + id
     }
 }

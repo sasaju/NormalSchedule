@@ -9,7 +9,9 @@ import kotlinx.coroutines.delay
 
 suspend fun main(){
     // val a = NormalScheduleNetwork.getId()
-    val a = NormalScheduleNetwork.getCourse("20191801075", "fei123698745", "", "adbylxBkvTCS-fpckcODx")
+    // val a = NormalScheduleNetwork.getCourse("20191801075", "fei123698745", "", "adbylxBkvTCS-fpckcODx")
+    val a = Repository.getCourse("20191801075", "fei123698745", "", "adbylxBkvTCS-fpckcODx")
     delay(200)
     print(a)
+    print(a.value.toString())
 }

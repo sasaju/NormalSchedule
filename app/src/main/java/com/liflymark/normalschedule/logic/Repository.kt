@@ -12,14 +12,17 @@ object Repository {
 
     fun getId() = fire(Dispatchers.IO) {
         val id =NormalScheduleNetwork.getId()
-        if (id != "") {
-            Log.d("Repository", id)
-            Result.success(id)
-        } else {
-            Log.d("Repository", "failure")
-            Result.failure(RuntimeException("Can't get id!"))
-        }
+        Result.success("1236")
+//        // Log.d("Repository", id)
+//        if (id != "") {
+//            // Log.d("Repository", id)
+//            Result.success(id)
+//        } else {
+//            // Log.d("Repository", "failure")
+//            Result.failure(RuntimeException("Can't get id!"))
+//        }
     }
+
 
     fun getCaptcha(sessionId: String) = fire(Dispatchers.IO) {
         val img = NormalScheduleNetwork.getCaptcha(sessionId)
@@ -44,5 +47,4 @@ object Repository {
             }
             emit(result)
         }
-
 }
