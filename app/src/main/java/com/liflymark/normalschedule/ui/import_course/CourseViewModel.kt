@@ -13,41 +13,54 @@ import com.liflymark.normalschedule.logic.model.CourseResponse
 import com.liflymark.normalschedule.ui.Course
 
 class CourseViewModel: ViewModel() {
-    private val getImageTimesLiveData = MutableLiveData<Int>()
-
     private var id = ""
     private var user = ""
     private var password = ""
     private var yzm = ""
     private var formMapLiveData = MutableLiveData<String>()
-    private var idLiveData = MutableLiveData<String>()
+    private var getIdOrNotLiveData = MutableLiveData<Int>(0)
+    private var getImageTimesLiveData = MutableLiveData(0)
 
-//    val imageLiveData = Transformations.switchMap(getImageTimesLiveData) {
-//        Repository.getCaptcha(id)
-//    }
-
+    val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
+        Repository.getId()
+    }
     val courseLiveData = Transformations.switchMap(formMapLiveData) { _ ->
-        this.id = Repository.getId().value.toString()
-        Repository.getCourse(user, password, yzm, "asdfasfasdfasdf")
+        Repository.getCourse(user, password, yzm, id)
     }
-
-    fun refreshId() {
-        Log.d("ViewModel", this.id)
-        this.id = Repository.getId().value.toString()
-    }
-
-    fun getImage() {
+    val imageLiveData = Transformations.switchMap(getImageTimesLiveData) {
         Repository.getCaptcha(id)
     }
 
-    fun putValue(user: String, password: String, yzm: String) {
+    fun getId() {
+        getIdOrNotLiveData.value = 1
+        getImageTimesLiveData.value = 0
+    }
+
+    fun refreshId() {
+        if (getIdOrNotLiveData.value!! >= 1){
+            getIdOrNotLiveData.value = getIdOrNotLiveData.value!! +1
+        } else {
+            return
+        }
+    }
+
+    fun getImage(id: String) {
+        val temp = getIdOrNotLiveData.value?.toInt()
+        this.id = id
+        if (temp != null) {
+            getImageTimesLiveData.value = temp + 1
+        }
+    }
+
+    fun putValue(user: String, password: String, yzm: String, id: String) {
         this.user = user
         this.password = password
+        this.id = id
         if (yzm == ""){
             this.yzm = "abcde"
         }else {
             this.yzm = yzm
         }
-        formMapLiveData.value = user + password + yzm + id
+        formMapLiveData.value = user + password + yzm
     }
 }
