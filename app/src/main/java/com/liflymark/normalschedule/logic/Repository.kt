@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import android.media.Image
 import android.util.Log
 import androidx.lifecycle.liveData
+import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
@@ -20,7 +21,6 @@ object Repository {
             Result.failure(RuntimeException("Can't get id!"))
         }
     }
-
 
     fun getCaptcha(sessionId: String) = fire(Dispatchers.IO) {
         val img = NormalScheduleNetwork.getCaptcha(sessionId).bytes()
@@ -42,4 +42,6 @@ object Repository {
             }
             emit(result)
         }
+
+    fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
 }

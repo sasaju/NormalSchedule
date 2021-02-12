@@ -63,4 +63,6 @@ class CourseViewModel: ViewModel() {
         }
         formMapLiveData.value = user + password + yzm
     }
+
+    fun saveAccount(user: String, password: String) = Repository.saveAccount(user, password)
 }

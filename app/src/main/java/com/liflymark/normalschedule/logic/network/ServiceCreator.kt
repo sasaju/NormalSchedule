@@ -7,7 +7,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object ServiceCreator {
 
-    private const val BASE_URL = "http://47.94.53.154/"
+    private const val BASE_URL = "http:///"
 
     private val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
