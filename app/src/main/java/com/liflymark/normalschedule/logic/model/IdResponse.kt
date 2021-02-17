@@ -1,5 +1,7 @@
 package com.liflymark.normalschedule.logic.model
 
+// 用于接收api返回的id
+
 data class IdResponse(
-    public val id: String
+    val id: String
 )

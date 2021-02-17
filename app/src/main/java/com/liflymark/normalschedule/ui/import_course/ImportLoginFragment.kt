@@ -1,27 +1,20 @@
 package com.liflymark.normalschedule.ui.import_course
 
-import android.graphics.BitmapFactory
-import android.opengl.Visibility
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.graphics.contains
-import androidx.core.graphics.drawable.toIcon
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.liflymark.normalschedule.NormalScheduleApplication
+import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.logic.Repository
-import com.liflymark.normalschedule.logic.model.IdResponse
-import kotlinx.android.synthetic.main.activity_main.*
+import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
 import kotlinx.android.synthetic.main.fragment_import_login.*
-import java.io.InputStream
+import kotlin.concurrent.thread
 
 class ImportLoginFragment: Fragment() {
 
@@ -51,24 +44,52 @@ class ImportLoginFragment: Fragment() {
 
         viewModel.courseLiveData.observe(viewLifecycleOwner, Observer { result ->
 
-            if (result.getOrNull() == null) {
+            val course = result.getOrNull()
+
+            if (course == null) {
                 Toast.makeText(activity, "登陆异常，重启app试试", Toast.LENGTH_SHORT).show()
-            }
-            when(result.getOrNull()?.status) {
-                "yes" -> {
-                    Toast.makeText(activity, "登陆成功，解析成功", Toast.LENGTH_SHORT).show()
-                    // viewModel.saveAccount(userName, userPassword)
+            } else {
+                val allCourseList = course.allCourse
+                when (course.status) {
+                    "yes" -> {
+                        Toast.makeText(activity, "登陆成功，解析成功", Toast.LENGTH_SHORT).show()
+                        viewModel.insertOriginalCourse(allCourseList)
+//                        for (singleCourse in allCourseList) {
+//                            Log.d("ImportLoginFragment", singleCourse.toString())
+//                        }
+                        Toast.makeText(activity, "已保存", Toast.LENGTH_SHORT).show()
+                        // viewModel.saveAccount(userName, userPassword)
+                    }
+                    "no" -> {
+                        Toast.makeText(activity, "登陆成功，解析异常，请务必检查课程表是否正确", Toast.LENGTH_SHORT).show()
+                        // viewModel.saveAccount(userName, userPassword)
+                    }
+                    else -> {
+                        Toast.makeText(activity, result.getOrNull()!!.status, Toast.LENGTH_SHORT).show()
+                        viewModel.getImage(id)
+                    }
                 }
-                "no" -> {
-                    Toast.makeText(activity, "登陆成功，解析异常，请务必检查课程表是否正确", Toast.LENGTH_SHORT).show()
-                    // viewModel.saveAccount(userName, userPassword)
+
+                if(activity is MainActivity) {
+                    val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                        putExtra("isSaved", true)
+                    }
+                    startActivity(intent)
                 }
-                else -> Toast.makeText(activity, result.getOrNull()!!.status, Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(activity, result.getOrNull()!!.status, Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.insertCourseLiveData.observe(viewLifecycleOwner, Observer { result->
+            val number = result.getOrNull()
+            if (number == "0") {
+                Log.d("ImportLoginFragment", "成功")
+            } else {
+                Log.d("ImportLoginFragment", "错误")
+           }
         })
 
         ivCode.setOnClickListener {
+            progress_bar.visibility = View.VISIBLE
             // Toast.makeText(activity, "正在尝试获取图片", Toast.LENGTH_SHORT).show()
             viewModel.getImage(id)
             viewModel.imageLiveData.observe(viewLifecycleOwner, Observer { image ->
@@ -90,6 +111,23 @@ class ImportLoginFragment: Fragment() {
                 userPassword == "" -> Toast.makeText(activity, "请输入密码", Toast.LENGTH_SHORT).show()
                 else -> viewModel.putValue(userName, userPassword, yzm, id)
             }
+        }
+
+
+        testButton.setOnClickListener {
+            thread {
+                val a = viewModel.loadAllCourse()
+                var n = 0
+                for (i in a) {
+                    Log.d("ImportResult", i.toString())
+                    n++
+                }
+                Log.d("ImportResult", n.toString())
+            }
+            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                putExtra("isSaved", true)
+            }
+            startActivity(intent)
         }
     }
 }

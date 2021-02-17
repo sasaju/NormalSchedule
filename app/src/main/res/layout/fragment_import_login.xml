@@ -106,6 +106,17 @@
             tools:ignore="MissingConstraints"
             app:layout_constraintTop_toBottomOf="@id/input_code"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/testButton"
+            style="@style/DialogButtonStyle"
+            android:backgroundTint="@color/green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="读取"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintTop_toBottomOf="@id/btnSign"/>
+
         <RelativeLayout
             android:id="@+id/rl_code"
             android:layout_width="120dp"
@@ -120,22 +131,25 @@
                 android:id="@+id/progress_bar"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_centerInParent="true" />
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
 
-<!--            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                android:id="@+id/iv_error"-->
-<!--                style="@style/IconTextViewStyle"-->
-<!--                android:layout_width="32dp"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:text=""-->
-<!--                android:textColor="@color/orange" />-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text"
+                style="@style/IconTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:text="点击此处加载验证码"
+                android:textSize="10dp"
+                android:textColor="@color/orange" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivCode"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:layout_centerInParent="true" />
+                android:layout_centerInParent="true"
+                />
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatImageView

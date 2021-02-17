@@ -1,16 +1,12 @@
 package com.liflymark.normalschedule.ui.import_course
 
-import android.media.Image
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.liflymark.normalschedule.logic.Repository
-import com.liflymark.normalschedule.logic.model.CourseResponse
-import com.liflymark.normalschedule.ui.Course
+import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.model.AllCourse
 
 class CourseViewModel: ViewModel() {
     private var id = ""
@@ -20,6 +16,7 @@ class CourseViewModel: ViewModel() {
     private var formMapLiveData = MutableLiveData<String>()
     private var getIdOrNotLiveData = MutableLiveData<Int>(0)
     private var getImageTimesLiveData = MutableLiveData(0)
+    private var courseListLiveData = MutableLiveData<List<AllCourse>>()
 
     val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
         Repository.getId()
@@ -29,6 +26,9 @@ class CourseViewModel: ViewModel() {
     }
     val imageLiveData = Transformations.switchMap(getImageTimesLiveData) {
         Repository.getCaptcha(id)
+    }
+    val insertCourseLiveData = Transformations.switchMap(courseListLiveData) { it ->
+        Repository.insertCourse(it)
     }
 
     fun getId() {
@@ -64,5 +64,14 @@ class CourseViewModel: ViewModel() {
         formMapLiveData.value = user + password + yzm
     }
 
-    fun saveAccount(user: String, password: String) = Repository.saveAccount(user, password)
+    fun insertOriginalCourse(allCourseList: List<AllCourse>) {
+        Log.d("CourseViewModel", "获取到课程")
+        courseListLiveData.value = allCourseList
+    }
+
+    fun loadAllCourse(): List<CourseBean> {
+        return Repository.loadAllCourse()
+    }
+
+    // fun saveAccount(account: Account) = Repository.saveAccount(account)
 }

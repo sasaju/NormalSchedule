@@ -1,17 +1,25 @@
 package com.liflymark.normalschedule.logic
 
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.util.Log
 import androidx.lifecycle.liveData
+import com.liflymark.normalschedule.NormalScheduleApplication
+import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.dao.AccountDao
+import com.liflymark.normalschedule.logic.dao.AppDatabase
+import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.model.IdResponse
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
+import com.liflymark.normalschedule.logic.utils.Convert
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
 object Repository {
+
+    private val dataBase = AppDatabase.getDatabase(NormalScheduleApplication.context)
+    private val courseDao = dataBase.courseDao()
 
     fun getId() = fire(Dispatchers.IO) {
         val id =NormalScheduleNetwork.getId()
@@ -30,7 +38,21 @@ object Repository {
 
     fun getCourse(user:String, password:String, yzm:String, headers:String) = fire(Dispatchers.IO) {
         val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
+        Log.d("Repository", "获取到课程")
         Result.success(courseResponse)
+    }
+
+    fun insertCourse(courseList: List<AllCourse>) = fire(Dispatchers.IO) {
+        for (singleCourse in courseList) {
+            courseDao.insertCourse(Convert().courseResponseToBean(singleCourse))
+            // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
+        }
+
+        Result.success("0")
+    }
+
+    fun loadAllCourse(): List<CourseBean> {
+        return courseDao.loadAllCourse()
     }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
@@ -43,5 +65,5 @@ object Repository {
             emit(result)
         }
 
-    fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
+    fun saveAccount(account: IdResponse) = AccountDao.saveAccount(account)
 }
