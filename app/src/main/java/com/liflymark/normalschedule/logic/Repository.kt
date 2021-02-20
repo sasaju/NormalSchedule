@@ -44,15 +44,15 @@ object Repository {
 
     fun insertCourse(courseList: List<AllCourse>) = fire(Dispatchers.IO) {
         for (singleCourse in courseList) {
-            courseDao.insertCourse(Convert().courseResponseToBean(singleCourse))
+            courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
             // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
         }
 
         Result.success("0")
     }
 
-    fun loadAllCourse(): List<CourseBean> {
-        return courseDao.loadAllCourse()
+    fun loadAllCourse() = fire(Dispatchers.IO){
+        Result.success(courseDao.loadAllCourse())
     }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =

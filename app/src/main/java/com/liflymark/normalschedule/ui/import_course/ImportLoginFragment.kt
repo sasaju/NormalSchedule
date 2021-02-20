@@ -115,19 +115,21 @@ class ImportLoginFragment: Fragment() {
 
 
         testButton.setOnClickListener {
-            thread {
-                val a = viewModel.loadAllCourse()
-                var n = 0
-                for (i in a) {
-                    Log.d("ImportResult", i.toString())
-                    n++
-                }
-                Log.d("ImportResult", n.toString())
-            }
+//            thread {
+//                val a = viewModel.loadAllCourse()
+//                var n = 0
+//                for (i in a) {
+//                    Log.d("ImportResult", i.toString())
+//                    n++
+//                }
+//                Log.d("ImportResult", n.toString())
+//            }
             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                 putExtra("isSaved", true)
             }
             startActivity(intent)
+            activity?.finish()
+            return@setOnClickListener
         }
     }
 }

@@ -20,7 +20,7 @@ interface CourseOriginalDao {
     suspend fun updateCourse(newCourse: CourseBean)
 
     @Query("select * from CourseBean")
-    fun loadAllCourse(): List<CourseBean>
+    suspend fun loadAllCourse(): List<CourseBean>
 
     @Delete
     suspend fun deleteCourse(course: CourseBean)

@@ -1,6 +1,7 @@
 package com.liflymark.normalschedule.ui.import_course
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,7 @@ class CourseViewModel: ViewModel() {
     private var getIdOrNotLiveData = MutableLiveData<Int>(0)
     private var getImageTimesLiveData = MutableLiveData(0)
     private var courseListLiveData = MutableLiveData<List<AllCourse>>()
+    private var courseDatabaseLiveData = MutableLiveData(0)
 
     val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
         Repository.getId()
@@ -30,6 +32,12 @@ class CourseViewModel: ViewModel() {
     val insertCourseLiveData = Transformations.switchMap(courseListLiveData) { it ->
         Repository.insertCourse(it)
     }
+    val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
+        Repository.loadAllCourse()
+    }
+//    val allCourseList = Transformations.switchMap(courseDatabaseLiveData) {
+//        Repository.loadAllCourse()
+//    }
 
     fun getId() {
         getIdOrNotLiveData.value = 1
@@ -69,8 +77,9 @@ class CourseViewModel: ViewModel() {
         courseListLiveData.value = allCourseList
     }
 
-    fun loadAllCourse(): List<CourseBean> {
-        return Repository.loadAllCourse()
+
+    fun loadAllCourse() {
+        courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
     }
 
     // fun saveAccount(account: Account) = Repository.saveAccount(account)

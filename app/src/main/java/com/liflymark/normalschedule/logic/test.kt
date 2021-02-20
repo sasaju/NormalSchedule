@@ -7,11 +7,14 @@ import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork.getCourse
 import kotlinx.coroutines.delay
 
-suspend fun main(){
+fun main(){
     // val a = NormalScheduleNetwork.getId()
     // val a = NormalScheduleNetwork.getCourse("20191801075", "fei123698745", "", "adbylxBkvTCS-fpckcODx")
-    val a =NormalScheduleNetwork.getCaptcha("dcbxhjT37-DdtcuyXP-Dx")
-    delay(200)
-    print(a)
-    print(a.toString())
+//    val a =NormalScheduleNetwork.getCaptcha("dcbxhjT37-DdtcuyXP-Dx")
+//    delay(200)
+//    print(a)
+//    print(a.toString())
+    val a = "1234567890"
+    for (element in a)
+        print(element)
 }

@@ -1,2 +1,3 @@
+include ':IcyTimeTable'
 include ':app'
 rootProject.name = "NormalSchedule"

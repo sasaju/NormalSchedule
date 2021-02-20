@@ -1,11 +1,28 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.Transformations
+import com.liflymark.normalschedule.logic.model.AllCourse
 
 class ShowTimetableViewModel: ViewModel() {
-    fun loadAllCourse(): List<CourseBean> {
-        return Repository.loadAllCourse()
+    private var courseListLiveData = MutableLiveData(0)
+    private val myHandler = SavedStateHandle()
+    val TEXTVIEW_WIDTH = "TEXTVIEW_WIDTH"
+    private var courseDatabaseLiveData = MutableLiveData(0)
+
+    val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
+        Repository.loadAllCourse()
+    }
+
+    fun loadAllCourse() {
+        courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
+    }
+
+    fun saveTextWidth(width: Float) {
+        myHandler.set(TEXTVIEW_WIDTH, width)
     }
 }

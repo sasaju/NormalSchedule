@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    android:fitsSystemWindows="true">
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/weekName"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title0"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="0.5"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title0_1"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title1"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title2"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title3"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title4"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title5"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title6"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title7"-->
+<!--            style="@style/ScheduleHeaderStyle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--    </LinearLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/schedule_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:paddingTop="@dimen/paddingTop"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:divider="@null" />
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/iv_next"-->
+    <!--        android:layout_width="32dp"-->
+    <!--        android:layout_height="32dp"-->
+    <!--        android:layout_above="@id/weekName"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:padding="8dp"-->
+    <!--        android:rotation="180"-->
+    <!--        android:src="@drawable/ic_back" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_back"-->
+<!--        android:layout_width="32dp"-->
+<!--        android:layout_height="32dp"-->
+<!--        android:layout_above="@id/weekName"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:padding="8dp"-->
+<!--        android:src="@drawable/ic_back"-->
+<!--        android:visibility="gone" />-->
+
+</RelativeLayout>
