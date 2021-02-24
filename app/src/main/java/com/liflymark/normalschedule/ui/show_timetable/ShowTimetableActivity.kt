@@ -1,45 +1,46 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
-import android.content.Context
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
-import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.liflymark.icytimetable.IcyTimeTableHelper
 import com.liflymark.icytimetable.IcyTimeTableManager
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.logic.utils.DensityUtil
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_show_timetable.*
-import kotlinx.android.synthetic.main.fragment_header_toolbar.*
 import kotlinx.android.synthetic.main.fragment_show_course_list.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.handleCoroutineException
-import kotlin.concurrent.thread
+
 
 class ShowTimetableActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProviders.of(this).get(ShowTimetableViewModel::class.java) }
     private lateinit var courseList: List<CourseBean>
+    private lateinit var adapter: ScheduleRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_timetable)
         viewModel.courseDatabaseLiveDataVal.observe(this, Observer { it ->
             courseList = it.getOrNull()!!
-            refreshUi(courseList)
-
+            val layoutManager = LinearLayoutManager(this)
+            all_week_schedule_recyclerview.layoutManager = layoutManager
+            adapter = ScheduleRecyclerAdapter(this, courseList)
+            all_week_schedule_recyclerview.adapter = adapter
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(all_week_schedule_recyclerview)
+            layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            adapter.notifyDataSetChanged()
+//            refreshUi(courseList)
         })
         viewModel.loadAllCourse()
     }
@@ -72,7 +73,7 @@ class ShowTimetableActivity : AppCompatActivity() {
 //
 //    }
 //
-    private fun refreshUi(courseList: List<CourseBean>){
+    private fun refreshUi(courseList: List<CourseBean>): RecyclerView{
 //        this.courseList = courseList
 //        val layoutManager = LinearLayoutManager(this)
 //        schedule_recyclerview.layoutManager = layoutManager
@@ -86,30 +87,29 @@ class ShowTimetableActivity : AppCompatActivity() {
         val gapFilling = IcyTimeTableHelper.gapFilling(data[0], totalCoursePerDay, columnCount)
         val icyRowInfo = IcyTimeTableHelper.getIcyRowInfo(gapFilling)
 
-        Log.d("ShowTimetableActivity",data[0].toString())
+        Log.d("ShowTimetableActivity", data[0].toString())
 
         val adapter = GroupAdapter<GroupieViewHolder>()
         schedule_recyclerview.addItemDecoration(
-            MyRowInfoDecoration(
-                resources.getDimensionPixelSize(R.dimen.paddingLeft),
-                resources.getDimensionPixelSize(R.dimen.perCourseHeight),
-                Color.BLACK,
-                resources.getDimension(R.dimen.numberSize),
-                resources.getDimension(R.dimen.textSize)
-                ,
-                icyRowInfo,
-                totalCoursePerDay
-            )
+                MyRowInfoDecoration(
+                        resources.getDimensionPixelSize(R.dimen.paddingLeft),
+                        resources.getDimensionPixelSize(R.dimen.perCourseHeight),
+                        Color.BLACK,
+                        resources.getDimension(R.dimen.numberSize),
+                        resources.getDimension(R.dimen.textSize),
+                        icyRowInfo,
+                        totalCoursePerDay
+                )
         )
         schedule_recyclerview.addItemDecoration(
-            MyColInfoDecoration(columnCount,resources.getDimensionPixelSize(R.dimen.paddingTop),Color.GRAY,Color.WHITE,Color.BLUE,
-                resources.getDimension(R.dimen.textSize))
+                MyColInfoDecoration(columnCount, resources.getDimensionPixelSize(R.dimen.paddingTop), Color.GRAY, Color.WHITE, Color.BLUE,
+                        resources.getDimension(R.dimen.textSize))
         )
         schedule_recyclerview.layoutManager = IcyTimeTableManager(
-            45,
-            resources.getDimensionPixelSize(R.dimen.perCourseHeight),
-            columnCount,
-            totalCoursePerDay
+                45,
+                resources.getDimensionPixelSize(R.dimen.perCourseHeight),
+                columnCount,
+                totalCoursePerDay
         ) {
             gapFilling[it]
         }
@@ -121,7 +121,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                 else -> SpaceItem()
             }
         }.let(adapter::update)
-
+        return schedule_recyclerview
     }
 }
 

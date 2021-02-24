@@ -75,6 +75,8 @@ class ImportLoginFragment: Fragment() {
                         putExtra("isSaved", true)
                     }
                     startActivity(intent)
+                    activity?.finish()
+                    return@Observer
                 }
             }
         })
