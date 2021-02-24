@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -14,8 +15,7 @@ class ScheduleRecyclerAdapter(private val courseList: List<CourseBean>,
 ): RecyclerView.Adapter<ScheduleRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val courseTextView: AppCompatTextView = view.findViewById(R.id.tv_course_name)
-        val cardView: MaterialCardView = view.findViewById(R.id.cv_course)
+        val singleWeekCourseRecyclerView: RelativeLayout  = view.findViewById(R.id.single_week_schedule)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

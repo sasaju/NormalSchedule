@@ -3,10 +3,13 @@ package com.liflymark.icytimetable
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.text.TextPaint
 import android.view.View
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 
+
+// 用于绘制时间列的类
 abstract class IcyRowTimeInfoDecoration(
     private val width: Int,//宽度
     private val perCourseHeight: Int,// 每节课的高度
@@ -22,7 +25,7 @@ abstract class IcyRowTimeInfoDecoration(
         isAntiAlias = true
         textSize = numberTextSize
     }
-    private val timePaint = Paint().apply {
+    private val timePaint = TextPaint().apply {
         color = textColor
         isAntiAlias = true
         textSize = numberTextSize - 10.toFloat()

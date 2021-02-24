@@ -117,7 +117,7 @@ class ShowTimetableActivity : AppCompatActivity() {
         gapFilling.map {
             when (it) {
                 is IcyTimeTableManager.EmptyCourseInfo -> SpaceItem()
-                is MyCourse -> CourseItem(it)
+                is OneByOneCourseBean -> CourseItem(it)
                 else -> SpaceItem()
             }
         }.let(adapter::update)

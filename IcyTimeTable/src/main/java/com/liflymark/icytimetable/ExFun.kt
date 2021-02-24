@@ -4,7 +4,10 @@ import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.util.Log
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
+
 
 fun Canvas.drawTextAtTop(text: String, rect: Rect, paint: Paint) { //顶部draw
     val baseX = rect.centerX().toFloat() - paint.measureText(text) / 2f
@@ -23,14 +26,27 @@ fun Canvas.drawTextAtBottom(text: String, rect: Rect, paint: Paint) { //底部dr
             else -(paint.fontMetrics.ascent + paint.fontMetrics.descent)).toFloat()
     drawText(text, baseX, baseY, paint)
 }
-fun Canvas.drawTextAtCenter(text: String, rect: Rect, paint: Paint) {
+fun Canvas.drawTextAtCenter(text: String, rect: Rect, paint: TextPaint) {
     val baseX = rect.centerX().toFloat() - paint.measureText(text) / 2f
+    // val layout = StaticLayout(text, paint, 300, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true)
     val textBounds = Rect().apply { paint.getTextBounds(text, 0, text.length - 1, this) }
     val baseY = rect.centerY() +
             if (textBounds.height() != 0) textBounds.height() / 2f
             else -(paint.fontMetrics.ascent + paint.fontMetrics.descent) / 2f
     drawText(text, baseX, baseY, paint)
 }
+//fun Canvas.drawTextAtCenter(text: String, rect: Rect, paint: TextPaint){
+//    val textPaint = TextPaint()
+//    textPaint.setARGB(0xFF, 0, 0, 0)
+//    textPaint.textSize = 20.0f
+//    textPaint.isAntiAlias = true
+//    val layout = StaticLayout("abc\r\n123", textPaint, 300, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true)
+//    canvas.save()
+//    canvas.translate(20, 20)
+//    layout.draw(cv)
+//    canvas.restore()
+//
+//}
 val Int.dp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 val Int.px: Int
