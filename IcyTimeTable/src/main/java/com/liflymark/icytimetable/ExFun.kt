@@ -35,6 +35,27 @@ fun Canvas.drawTextAtCenter(text: String, rect: Rect, paint: TextPaint) {
             else -(paint.fontMetrics.ascent + paint.fontMetrics.descent) / 2f
     drawText(text, baseX, baseY, paint)
 }
+
+
+fun Canvas.drawTextAtCenterUp(text: String, rect: Rect, paint: Paint) {
+    val baseX = rect.centerX().toFloat() - paint.measureText(text) / 2f
+    // val layout = StaticLayout(text, paint, 300, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true)
+    val textBounds = Rect().apply { paint.getTextBounds(text, 0, text.length - 1, this) }
+    val baseY = rect.centerY() +
+            if (textBounds.height() != 0) textBounds.height().toFloat()
+            else -(paint.fontMetrics.ascent + paint.fontMetrics.descent)
+    drawText(text, baseX, baseY, paint)
+}
+
+fun Canvas.drawTextAtCenterDown(text: String, rect: Rect, paint: Paint) {
+    val baseX = rect.centerX().toFloat() - paint.measureText(text) / 2f
+    // val layout = StaticLayout(text, paint, 300, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true)
+    val textBounds = Rect().apply { paint.getTextBounds(text, 0, text.length - 1, this) }
+    val baseY = rect.centerY() +
+            if (textBounds.height() != 0) textBounds.height().toFloat() * 2.5f
+            else -(paint.fontMetrics.ascent + paint.fontMetrics.descent) * 2.5f
+    drawText(text, baseX, baseY, paint)
+}
 //fun Canvas.drawTextAtCenter(text: String, rect: Rect, paint: TextPaint){
 //    val textPaint = TextPaint()
 //    textPaint.setARGB(0xFF, 0, 0, 0)

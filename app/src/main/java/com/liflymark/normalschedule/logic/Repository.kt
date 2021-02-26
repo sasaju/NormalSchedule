@@ -50,6 +50,18 @@ object Repository {
 
         Result.success("0")
     }
+    suspend fun insertCourse2(courseList: List<AllCourse>) {
+        for (singleCourse in courseList) {
+            try {
+                courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
+            } catch (e:Exception){
+                Result.failure<Exception>(e)
+            }
+
+            // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
+        }
+    }
+
 
     fun loadAllCourse() = fire(Dispatchers.IO){
         Result.success(courseDao.loadAllCourse())

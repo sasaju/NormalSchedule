@@ -12,9 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
 import kotlinx.android.synthetic.main.fragment_import_login.*
-import kotlin.concurrent.thread
 
 class ImportLoginFragment: Fragment() {
 
@@ -53,15 +53,29 @@ class ImportLoginFragment: Fragment() {
                 when (course.status) {
                     "yes" -> {
                         Toast.makeText(activity, "登陆成功，解析成功", Toast.LENGTH_SHORT).show()
-                        viewModel.insertOriginalCourse(allCourseList)
+//                        viewModel.insertOriginalCourse(allCourseList)
 //                        for (singleCourse in allCourseList) {
 //                            Log.d("ImportLoginFragment", singleCourse.toString())
 //                        }
-                        Toast.makeText(activity, "已保存", Toast.LENGTH_SHORT).show()
+                        if(activity is MainActivity) {
+                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
                         // viewModel.saveAccount(userName, userPassword)
                     }
                     "no" -> {
                         Toast.makeText(activity, "登陆成功，解析异常，请务必检查课程表是否正确", Toast.LENGTH_SHORT).show()
+                        if(activity is MainActivity) {
+                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                                putExtra("isSaved", true)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
                         // viewModel.saveAccount(userName, userPassword)
                     }
                     else -> {
@@ -70,14 +84,7 @@ class ImportLoginFragment: Fragment() {
                     }
                 }
 
-                if(activity is MainActivity) {
-                    val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                        putExtra("isSaved", true)
-                    }
-                    startActivity(intent)
-                    activity?.finish()
-                    return@Observer
-                }
+
             }
         })
 

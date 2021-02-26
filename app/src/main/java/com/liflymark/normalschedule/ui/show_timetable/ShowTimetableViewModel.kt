@@ -1,5 +1,6 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.liflymark.normalschedule.logic.Repository
@@ -24,5 +25,11 @@ class ShowTimetableViewModel: ViewModel() {
 
     fun saveTextWidth(width: Float) {
         myHandler.set(TEXTVIEW_WIDTH, width)
+    }
+
+
+    suspend fun insertOriginalCourse(allCourseList: List<AllCourse>) {
+        Log.d("CourseViewModel", "获取到课程")
+        Repository.insertCourse2(allCourseList)
     }
 }

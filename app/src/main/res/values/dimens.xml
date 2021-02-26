@@ -1,9 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="perCourseHeight">70dp</dimen>
     <dimen name="paddingTop">50dp</dimen>
-    <dimen name="paddingLeft">40dp</dimen>
-    <dimen name="textSize">12sp</dimen>
+    <dimen name="paddingLeft">30dp</dimen>
+    <dimen name="textSize" tools:ignore="SmallSp">10sp</dimen>
+    <dimen name="weekSize">12sp</dimen>
     <dimen name="coursePadding">2dp</dimen>
-    <dimen name="numberSize">14sp</dimen>
+    <dimen name="numberSize">18sp</dimen>
 </resources>

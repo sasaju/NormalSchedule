@@ -12,7 +12,8 @@ abstract class IcyColInfoDecoration(
     private val selectedTextColor: Int,
     private val selectedBackGroundColor: Int, // 选中背景颜色
     private val colTextSize: Float,
-    private val backGroundColor: Int = Color.WHITE
+    private val backGroundColor: Int = Color.WHITE,
+    private val position: Int
 ) : RecyclerView.ItemDecoration() {
 
     private val textPaint = Paint().apply {
@@ -42,11 +43,18 @@ abstract class IcyColInfoDecoration(
         val columnWidth = leftView.width//宽度
         val top = 0
         val bottom = height
+
+        val leftUp = leftView.left - columnWidth / 3
+        val right_ = leftUp + 10
+        val rect_ = Rect(leftUp, top, right_, columnWidth / 2)
+        c.drawTextAtCenterUp(getDayOfDate(0), rect_, textPaint)
+        c.drawTextAtCenterDown("月", rect_, textPaint)
+
         for (i in 1..columnCount) {
             val left = leftView.left + (i - 1) * columnWidth
             val right = left + columnWidth
             val rect = Rect(left, top, right, bottom)
-            if (isSelected(i)) { // selected
+            if (isSelected(i, position+1)) { // selected
                 val rx = rect.width() / 6f
                 val ry = rect.height() / 6f
                 val roundRect =
@@ -66,7 +74,7 @@ abstract class IcyColInfoDecoration(
 
     }
 
-    abstract fun isSelected(nowColumn: Int): Boolean //当前列是否被选中
+    abstract fun isSelected(nowColumn: Int, whichWeek: Int): Boolean //当前列是否被选中
     open fun getDayOfWeek(nowColumn: Int): String {// 当前列是星期几  星期一,星期二....
         return when (nowColumn) {
             1 -> "一"

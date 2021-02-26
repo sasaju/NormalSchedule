@@ -1,5 +1,7 @@
 package com.liflymark.normalschedule.logic.utils
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
@@ -38,6 +40,17 @@ internal object Convert {
             allOneCourseList.add(oneCourseList)
         }
         return allOneCourseList
+    }
+
+    fun allCourseToJson(allCourseList: List<AllCourse>) : String{
+        return Gson().toJson(allCourseList)
+    }
+
+    fun jsonToAllCourse(str: String) : List<AllCourse>{
+        lateinit var a: List<AllCourse>
+        val listType = object : TypeToken<List<AllCourse>>() {}.type
+        a =  Gson().fromJson(str, listType)
+        return a
     }
 
 //    fun getAllOneCourse(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {

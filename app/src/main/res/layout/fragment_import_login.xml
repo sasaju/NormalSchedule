@@ -170,10 +170,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:textSize="12sp"
+        android:textColor="@color/lightBlue"
+        android:visibility="visible"
         tools:text="感谢 WakeUp课程表作者@YZune\n该界面来源于WakeUp课程表" />
 
 

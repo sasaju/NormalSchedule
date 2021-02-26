@@ -25,10 +25,10 @@ abstract class IcyRowTimeInfoDecoration(
         isAntiAlias = true
         textSize = numberTextSize
     }
-    private val timePaint = TextPaint().apply {
+    private val timePaint = Paint().apply {
         color = textColor
         isAntiAlias = true
-        textSize = numberTextSize - 10.toFloat()
+        textSize = timeTextSize
     }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -48,8 +48,8 @@ abstract class IcyRowTimeInfoDecoration(
             val bottom=top+perCourseHeight
             // timePaint.textSize = 2.toFloat()
             c.drawTextAtTop(startRow.toString(),Rect(0,top,width,bottom),rowNumberPaint)
-            c.drawTextAtCenter(getStartTime(startRow),Rect(0,top,width,bottom),timePaint)
-            c.drawTextAtBottom(getEndTime(startRow),Rect(0,top,width,bottom),timePaint)
+            c.drawTextAtCenterUp(getStartTime(startRow),Rect(0,top,width,bottom),timePaint)
+            c.drawTextAtCenterDown(getEndTime(startRow),Rect(0,top,width,bottom),timePaint)
             if (bottom > parent.height-parent.paddingBottom)
                 break
             startRow++

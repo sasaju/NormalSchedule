@@ -9,14 +9,15 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/backgroundColor"
+        android:background="@color/white"
         android:title="">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            >
 
             <TextView
                 android:id="@+id/tv_date"
@@ -35,7 +36,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="第1周    周四"
+                android:text="第1周    非本周"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </RelativeLayout>
