@@ -77,5 +77,8 @@ object Repository {
             emit(result)
         }
 
-    fun saveAccount(account: IdResponse) = AccountDao.saveAccount(account)
+    fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
+    fun getSavedAccount() = AccountDao.getSavedAccount()
+    fun isAccountSaved() = AccountDao.isAccountSaved()
+
 }

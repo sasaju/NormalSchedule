@@ -106,16 +106,16 @@
             tools:ignore="MissingConstraints"
             app:layout_constraintTop_toBottomOf="@id/input_code"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/testButton"
-            style="@style/DialogButtonStyle"
-            android:backgroundTint="@color/green"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="读取"
-            tools:ignore="MissingConstraints"
-            app:layout_constraintTop_toBottomOf="@id/btnSign"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/testButton"-->
+<!--            style="@style/DialogButtonStyle"-->
+<!--            android:backgroundTint="@color/green"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:text="读取"-->
+<!--            tools:ignore="MissingConstraints"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/btnSign"/>-->
 
         <RelativeLayout
             android:id="@+id/rl_code"

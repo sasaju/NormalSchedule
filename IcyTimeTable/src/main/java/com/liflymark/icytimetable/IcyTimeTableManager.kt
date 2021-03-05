@@ -75,6 +75,7 @@ class IcyTimeTableManager(
             return
         }
 
+
         columnWidth = (width - paddingLeft - paddingRight) / columnCount
 
         calculateColumns()

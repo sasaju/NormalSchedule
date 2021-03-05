@@ -9,17 +9,38 @@ import com.liflymark.normalschedule.logic.model.AllCourse
 internal object Convert {
     lateinit var oneCourse: OneByOneCourseBean
 
-    fun courseResponseToBean(courseResponse: AllCourse) = CourseBean(
-            courseResponse.campusName,
-            courseResponse.classDay,
-            courseResponse.classSessions,
-            courseResponse.classWeek,
-            courseResponse.continuingSession,
-            courseResponse.courseName,
-            courseResponse.teacher,
-            courseResponse.teachingBuildName
-    )
-
+    fun courseResponseToBean(courseResponse: AllCourse) : CourseBean {
+        val colorList = arrayListOf<String>()
+        colorList.apply {
+            add("#12c2e9")
+            add("#376B78")
+            add("#f64f59")
+            add("#CBA689")
+            add("#ffffbb33")
+            add("#8202F2")
+            add("#F77CC2")
+            add("#4b5cc4")
+            add("#426666")
+            add("#40de5a")
+            add("#f0c239")
+            add("#725e82")
+            add("#c32136")
+            add("#b35c44")
+        }
+        val num = string2Unicode(courseResponse.courseName).toInt()
+        val color = colorList[num % colorList.count()]
+        return CourseBean(
+                courseResponse.campusName,
+                courseResponse.classDay,
+                courseResponse.classSessions,
+                courseResponse.classWeek,
+                courseResponse.continuingSession,
+                courseResponse.courseName,
+                courseResponse.teacher,
+                courseResponse.teachingBuildName,
+                color
+        )
+    }
     fun courseBeanToOneByOne(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {
         val allOneCourseList = mutableListOf<List<OneByOneCourseBean>>()
         for (i in 0..19){
@@ -29,10 +50,11 @@ internal object Convert {
 
                 when(courseBean.classWeek[i].toString()){
                     "1" -> oneCourseList.add(OneByOneCourseBean(
-                        name,
-                        courseBean.classSessions-1,
-                        courseBean.classSessions+courseBean.continuingSession-1,
-                        courseBean.classDay-1))
+                            name,
+                            courseBean.classSessions - 1,
+                            courseBean.classSessions + courseBean.continuingSession - 1,
+                            courseBean.classDay - 1,
+                            courseBean.color))
 //                    "0" -> oneCourseList.add(OneByOneCourseBean("0",courseBean.classDay, 0, 0))
 //                    else -> oneCourseList.add(OneByOneCourseBean("0",courseBean.classDay, 0, 0))
                 }
@@ -51,6 +73,21 @@ internal object Convert {
         val listType = object : TypeToken<List<AllCourse>>() {}.type
         a =  Gson().fromJson(str, listType)
         return a
+    }
+
+    fun string2Unicode(string: String): String {
+        val unicode = StringBuffer()
+        for (i in 0 until string.length) {
+            // 取出每一个字符
+            val c = string[i]
+            // 转换为unicode
+            // unicode.append("\\u" + Integer.toHexString(c.toInt()))
+            unicode.append(Integer.toHexString(c.toInt())[0])
+            if (i > 2) {
+                break
+            }
+        }
+        return unicode.toString()
     }
 
 //    fun getAllOneCourse(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {

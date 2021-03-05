@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 internal object GetDataUtil {
-    private val firstWeekMondayDate = Date(121, 3, 1)
+    private val firstWeekMondayDate = Date(121, 2, 1)
     //获取当前完整的日期和时间
     @SuppressLint("SimpleDateFormat")
     fun getNowDateTime(): String? {
@@ -24,7 +24,7 @@ internal object GetDataUtil {
     @SuppressLint("SimpleDateFormat")
     fun getNowWeekNum(): Int {
         val sdf = SimpleDateFormat("E")
-        Log.d("GEtDataUtil", sdf.format(Date()))
+        // Log.d("GEtDataUtil", sdf.format(Date()))
         return when(sdf.format(Date())){
             "周一" -> 1
             "周二" -> 2
@@ -39,8 +39,11 @@ internal object GetDataUtil {
 
     fun dateMinusDate(first: SimpleDateFormat, second: SimpleDateFormat): Int{
         var result = 0
-        if (first.calendar[1] == first.calendar[1]){
-            result = first.calendar[6] - first.calendar[6]
+        if (first.calendar[1] == second.calendar[1]){
+            result = first.calendar[6] - second.calendar[6]
+//            print(first.calendar[6])
+//            print("\n")
+//            print(second.calendar[6].toString())
         }
         if (result < 0) {
             result = -1
@@ -54,7 +57,7 @@ internal object GetDataUtil {
         sdf.format(startDate)
         val now = getNowSimpleDateFormat()
         val result = dateMinusDate(now, sdf)
-        return result % 7 + 1
+        return result / 7 + 1
     }
 
     //@SuppressLint("SimpleDateFormat")

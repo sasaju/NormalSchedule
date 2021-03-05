@@ -7,11 +7,27 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.xwray.groupie.viewbinding.BindableItem
 
 class CourseItem(private val data: OneByOneCourseBean) : BindableItem<ItemCourseBinding>() {
-    override fun getLayout(): Int = R.layout.item_course
+    override fun getLayout(): Int {
+        return R.layout.item_course
+    }
+
 
     override fun bind(viewBinding: ItemCourseBinding, position: Int) {
        // viewBinding.num=position.toString()
+        //最优解决办法为在data中获取颜色
+        val colorList = arrayListOf<String>()
+        colorList.apply {
+            add("#12c2e9")
+            add("#376B78")
+            add("#f64f59")
+            add("#CBA689")
+            add("#ffffbb33")
+            add("#8202F2")
+            add("#F77CC2")
+        }
         viewBinding.num = data.courseName
+        viewBinding.color = data.color
     }
+
     override fun initializeViewBinding(view: View): ItemCourseBinding = ItemCourseBinding.bind(view)
 }

@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import com.liflymark.icytimetable.IcyColInfoDecoration
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import java.text.SimpleDateFormat
@@ -28,11 +29,14 @@ class MyColInfoDecoration(
 
         val nowDay = GetDataUtil.getNowWeekNum()
         val nowWeek = GetDataUtil.whichWeekNow(firstWeekMondayDate)
+        val firstWeekMonthDayDate = GetDataUtil.getFirstWeekMondayDate()
         val sdf = SimpleDateFormat()
         sdf.format(firstWeekMondayDate)
-        if (nowColumn==nowDay && whichWeek == nowWeek && GetDataUtil.dateMinusDate(
-                sdf,GetDataUtil.getNowTime()) > 0)
+        if (nowColumn==nowDay && position+1 == nowWeek &&
+                GetDataUtil.dateMinusDate(sdf, GetDataUtil.getNowTime()) >= 0){
             return true
+        }
+
         return false
     }
 

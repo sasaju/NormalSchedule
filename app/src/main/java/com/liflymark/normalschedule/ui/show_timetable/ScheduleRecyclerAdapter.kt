@@ -60,7 +60,7 @@ class ScheduleRecyclerAdapter(
 //
         val data = Convert.courseBeanToOneByOne(courseList).toList()
 
-        val totalCoursePerDay = 10
+        val totalCoursePerDay = 11
         val columnCount = 7
         val gapFilling = IcyTimeTableHelper.gapFilling(data[position], totalCoursePerDay, columnCount)
         val icyRowInfo = IcyTimeTableHelper.getIcyRowInfo(gapFilling)

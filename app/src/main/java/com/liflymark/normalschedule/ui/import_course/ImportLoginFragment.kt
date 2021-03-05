@@ -29,6 +29,14 @@ class ImportLoginFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (viewModel.isAccountSaved()){
+            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                putExtra("isSaved", true)
+            }
+            startActivity(intent)
+            activity?.finish()
+            return
+        }
         viewModel.getId()// 获取cookie
         viewModel.idLiveData.observe(viewLifecycleOwner, Observer { result ->
             // 仅装有id
@@ -52,6 +60,7 @@ class ImportLoginFragment: Fragment() {
                 val allCourseList = course.allCourse
                 when (course.status) {
                     "yes" -> {
+                        saveAccount()
                         Toast.makeText(activity, "登陆成功，解析成功", Toast.LENGTH_SHORT).show()
 //                        viewModel.insertOriginalCourse(allCourseList)
 //                        for (singleCourse in allCourseList) {
@@ -61,6 +70,8 @@ class ImportLoginFragment: Fragment() {
                             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                                 putExtra("isSaved", false)
                                 putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
                             }
                             startActivity(intent)
                             activity?.finish()
@@ -123,22 +134,28 @@ class ImportLoginFragment: Fragment() {
         }
 
 
-        testButton.setOnClickListener {
-//            thread {
-//                val a = viewModel.loadAllCourse()
-//                var n = 0
-//                for (i in a) {
-//                    Log.d("ImportResult", i.toString())
-//                    n++
-//                }
-//                Log.d("ImportResult", n.toString())
+//        testButton.setOnClickListener {
+////            thread {
+////                val a = viewModel.loadAllCourse()
+////                var n = 0
+////                for (i in a) {
+////                    Log.d("ImportResult", i.toString())
+////                    n++
+////                }
+////                Log.d("ImportResult", n.toString())
+////            }
+//            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+//                putExtra("isSaved", true)
 //            }
-            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                putExtra("isSaved", true)
-            }
-            startActivity(intent)
-            activity?.finish()
-            return@setOnClickListener
-        }
+//            startActivity(intent)
+//            activity?.finish()
+//            return@setOnClickListener
+//        }
+    }
+
+    private fun saveAccount() {
+        userName = user.text.toString()
+        userPassword = password.text.toString()
+        viewModel.saveAccount(userName, userPassword)
     }
 }

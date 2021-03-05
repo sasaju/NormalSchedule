@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.graphics.Color"/>
         <variable
             name="num"
+            type="String" />
+        <variable
+            name="color"
             type="String" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alpha="0.7"
         android:padding="2px">
 
         <androidx.cardview.widget.CardView
@@ -21,15 +26,16 @@
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/single_course"
                 android:layout_width="match_parent"
-                android:background="#000"
+                android:background="@{Color.parseColor(color)}"
                 android:layout_height="match_parent">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_horizontal"
-                    android:padding="0dp"
+                    android:padding="0.1dp"
                     android:text="@{num}"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"

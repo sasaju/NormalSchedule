@@ -12,7 +12,8 @@ data class CourseBean(
     var continuingSession: Int,
     var courseName: String,
     var teacher: String,
-    var teachingBuildName: String
+    var teachingBuildName: String,
+    var color: String
 ) {
     @PrimaryKey(autoGenerate = false)
     var id = courseName+teacher+classWeek+classDay.toString()

@@ -7,6 +7,7 @@ import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
+import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.model.AllCourse
 
 class ShowTimetableViewModel: ViewModel() {
@@ -27,6 +28,9 @@ class ShowTimetableViewModel: ViewModel() {
         myHandler.set(TEXTVIEW_WIDTH, width)
     }
 
+    fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
+    fun getSavedAccount() = AccountDao.getSavedAccount()
+    fun isAccountSaved() = AccountDao.isAccountSaved()
 
     suspend fun insertOriginalCourse(allCourseList: List<AllCourse>) {
         Log.d("CourseViewModel", "获取到课程")

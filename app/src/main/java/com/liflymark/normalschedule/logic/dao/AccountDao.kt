@@ -11,18 +11,20 @@ import com.liflymark.normalschedule.logic.model.IdResponse
 * */
 
 object AccountDao {
-    fun saveAccount(account: IdResponse){
+    fun saveAccount(user: String, password: String){
         sharedPreferences().edit {
-            putString("account", Gson().toJson(account))
+            putString("user", user)
+            putString("password", password)
         }
     }
 
-    fun getSavedAccount(): IdResponse {
-        val idJson = sharedPreferences().getString("account", "")
-        return Gson().fromJson(idJson, IdResponse::class.java)
+    fun getSavedAccount(): Map<String?, String?> {
+        val user = sharedPreferences().getString("user", "")
+        val password = sharedPreferences().getString("password", "")
+        return mapOf("user" to user, "password" to password)
     }
 
-    fun isPlaceSaved() = sharedPreferences().contains("account")
+    fun isAccountSaved() = sharedPreferences().contains("user")
 
     private fun sharedPreferences() = NormalScheduleApplication.context.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
 }

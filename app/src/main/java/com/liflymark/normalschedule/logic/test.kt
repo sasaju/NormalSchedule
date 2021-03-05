@@ -1,6 +1,7 @@
 package com.liflymark.normalschedule.logic
 
 import android.annotation.SuppressLint
+import com.liflymark.normalschedule.logic.utils.Convert
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,11 +26,13 @@ fun main(){
 //    if (sdf.calendar[1] == sdf0.calendar[1]) {
 //        print((sdf0.calendar[6] - sdf.calendar[6]).toString())
 //    }
-    val firstWeekMondayDate = Date(121, 2, 22)
-    val calendar = GregorianCalendar()
-    calendar.time = firstWeekMondayDate
-    calendar.add(Calendar.DATE, 30)
-    print(calendar.time.day)
+
+//    val firstWeekMondayDate = Date(121, 2, 22)
+//    val calendar = GregorianCalendar()
+//    calendar.time = firstWeekMondayDate
+//    calendar.add(Calendar.DATE, 30)
+//    print(calendar.time.day)
+
 //    var date: Date? = Date() // 取时间
 //
 //    val calendar: Calendar = GregorianCalendar()
@@ -43,4 +46,13 @@ fun main(){
 //    val dateString = formatter.format(date)
 //
 //    println(dateString)
+
+//    val a = "药物合成反应"
+//    print(Convert.string2Unicode(a))
+
+    val a = (0+1) / 7
+    print(a.toString())
+
+
+
 }

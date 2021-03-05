@@ -18,7 +18,7 @@ class CourseViewModel: ViewModel() {
     private var getIdOrNotLiveData = MutableLiveData<Int>(0)
     private var getImageTimesLiveData = MutableLiveData(0)
     private var courseListLiveData = MutableLiveData<List<AllCourse>>()
-    private var courseDatabaseLiveData = MutableLiveData(0)
+//    private var courseDatabaseLiveData = MutableLiveData(0)
 
     val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
         Repository.getId()
@@ -32,9 +32,9 @@ class CourseViewModel: ViewModel() {
     val insertCourseLiveData = Transformations.switchMap(courseListLiveData) { it ->
         Repository.insertCourse(it)
     }
-    val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
-        Repository.loadAllCourse()
-    }
+//    val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
+//        Repository.loadAllCourse()
+//    }
 //    val allCourseList = Transformations.switchMap(courseDatabaseLiveData) {
 //        Repository.loadAllCourse()
 //    }
@@ -72,15 +72,20 @@ class CourseViewModel: ViewModel() {
         formMapLiveData.value = user + password + yzm
     }
 
-    fun insertOriginalCourse(allCourseList: List<AllCourse>) {
-        Log.d("CourseViewModel", "获取到课程")
-        courseListLiveData.value = allCourseList
-    }
 
+    fun saveAccount(user: String, password: String) = Repository.saveAccount(user, password)
+    fun getSavedAccount() = Repository.getSavedAccount()
+    fun isAccountSaved() = Repository.isAccountSaved()
 
-    fun loadAllCourse() {
-        courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
-    }
+//    fun insertOriginalCourse(allCourseList: List<AllCourse>) {
+//        Log.d("CourseViewModel", "获取到课程")
+//        courseListLiveData.value = allCourseList
+//    }
+//
+//
+//    fun loadAllCourse() {
+//        courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
+//    }
 
     // fun saveAccount(account: Account) = Repository.saveAccount(account)
 }

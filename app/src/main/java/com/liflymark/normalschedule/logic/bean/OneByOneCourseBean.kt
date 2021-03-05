@@ -6,5 +6,6 @@ data class OneByOneCourseBean(
     val courseName: String,
     override val start: Int,
     override val end: Int,
-    override val whichColumn: Int
+    override val whichColumn: Int,
+    val color: String
 ) : IcyTimeTableManager.BaseCourse()
