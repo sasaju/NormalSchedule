@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.model.Grade
 
 internal object Convert {
     lateinit var oneCourse: OneByOneCourseBean
@@ -68,9 +69,20 @@ internal object Convert {
         return Gson().toJson(allCourseList)
     }
 
+    fun allGradeToJson(allGradeList: List<Grade>): String {
+        return Gson().toJson(allGradeList)
+    }
+
     fun jsonToAllCourse(str: String) : List<AllCourse>{
         lateinit var a: List<AllCourse>
         val listType = object : TypeToken<List<AllCourse>>() {}.type
+        a =  Gson().fromJson(str, listType)
+        return a
+    }
+
+    fun jsonToAllGrade(str:String): List<Grade>{
+        lateinit var a: List<Grade>
+        val listType = object : TypeToken<List<Grade>>() {}.type
         a =  Gson().fromJson(str, listType)
         return a
     }

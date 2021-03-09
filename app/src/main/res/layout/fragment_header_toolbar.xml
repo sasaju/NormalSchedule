@@ -10,14 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/white"
-        android:title="">
+        android:title=""
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp">
 
         <RelativeLayout
             android:id="@+id/all_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:fitsSystemWindows="true"
             >
 
             <TextView

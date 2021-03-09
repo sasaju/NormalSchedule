@@ -50,6 +50,11 @@ object Repository {
 
         Result.success("0")
     }
+
+    fun getScore(user: String, password: String, id:String) = fire(Dispatchers.IO) {
+        val scoreResponse = NormalScheduleNetwork.getScore(user, password, id)
+        Result.success(scoreResponse)
+    }
     suspend fun insertCourse2(courseList: List<AllCourse>) {
         for (singleCourse in courseList) {
             try {
@@ -61,6 +66,8 @@ object Repository {
             // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
         }
     }
+
+
 
 
     fun loadAllCourse() = fire(Dispatchers.IO){

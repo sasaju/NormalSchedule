@@ -15,9 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
-        <activity android:name=".ui.show_timetable.ShowTimetableActivity">
-
-        </activity>
+        <activity android:name=".ui.import_show_score.ShowScoreActivity"></activity>
+        <activity android:name=".ui.import_show_score.ImportScoreActivity" />
+        <activity android:name=".ui.show_timetable.ShowTimetableActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

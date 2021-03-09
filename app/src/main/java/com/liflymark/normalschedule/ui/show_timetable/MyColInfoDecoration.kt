@@ -23,17 +23,20 @@ class MyColInfoDecoration(
     columnCount, height,
     colTextColor, selectedTextColor, selectedBackGroundColor,colTextSize, backGroundColor, position
 ) {
-    private val firstWeekMondayDate = Date(121, 3, 1)
+    private val firstWeekMondayDate = GetDataUtil.getFirstWeekMondayDate()
     @SuppressLint("SimpleDateFormat")
     override fun isSelected(nowColumn: Int, whichWeek: Int): Boolean {
 
         val nowDay = GetDataUtil.getNowWeekNum()
-        val nowWeek = GetDataUtil.whichWeekNow(firstWeekMondayDate)
+        val nowWeek = GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate())
         val firstWeekMonthDayDate = GetDataUtil.getFirstWeekMondayDate()
         val sdf = SimpleDateFormat()
         sdf.format(firstWeekMondayDate)
+//        Log.d("postion",(position+1).toString())
+//        // Log.d("nowWeek", nowWeek.toString())
+//        Log.d("position+1 == nowWeek", (position+1 == nowWeek).toString())
         if (nowColumn==nowDay && position+1 == nowWeek &&
-                GetDataUtil.dateMinusDate(sdf, GetDataUtil.getNowTime()) >= 0){
+                GetDataUtil.dateMinusDate(GetDataUtil.getNowTime(),sdf) >= 0){
             return true
         }
 
@@ -49,7 +52,7 @@ class MyColInfoDecoration(
         return when(nowColumn){
             0->{
                 calendar.add(Calendar.DATE, nowColumn + position*7)
-                calendar.time.month.toString()
+                (calendar.time.month+1).toString()
             }
             1->{
                 calendar.add(Calendar.DATE, nowColumn-1 + position*7)

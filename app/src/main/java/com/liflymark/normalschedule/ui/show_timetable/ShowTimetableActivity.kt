@@ -1,15 +1,19 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +21,10 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
+import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
+import com.liflymark.normalschedule.ui.import_show_score.ImportScoreViewModel
+import com.zackratos.ultimatebarx.library.UltimateBarX
+import com.zackratos.ultimatebarx.library.bean.BarConfig
 import kotlinx.android.synthetic.main.activity_show_timetable.*
 import kotlinx.android.synthetic.main.fragment_header_toolbar.*
 import kotlinx.android.synthetic.main.fragment_import_login.view.*
@@ -38,16 +46,41 @@ class ShowTimetableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //        // 设置toolbar和状态栏
-        val decorView = window.decorView
-        decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        window.statusBarColor = Color.TRANSPARENT
+//        val decorView = window.decorView
+//        decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//        window.statusBarColor = Color.TRANSPARENT
+        val config = BarConfig.newInstance()          // 创建配置对象
+                .fitWindow(true)                          // 布局是否侵入状态栏（true 不侵入，false 侵入）
+                .color(Color.TRANSPARENT)                         // 状态栏背景颜色（色值）
+                .light(true)
         setContentView(R.layout.activity_show_timetable)
         toolbar.title=""
         setSupportActionBar(toolbar)
+        UltimateBarX.with(this)                       // 对当前 Activity 或 Fragment 生效
+                .config(config)                           // 使用配置
+                .applyStatusBar()                         // 应用到状态栏
         // setContentView(R.layout.activity_show_timetable)
         tv_date.text = GetDataUtil.getNowDateTime()
         refreshToolbar(0)
+
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
+        navView.setCheckedItem(R.id.blank)
+        navView.setNavigationItemSelectedListener {
+
+            drawerLayout.closeDrawers()
+            when(it.itemId){
+                R.id.navGrade -> {
+                    val intent = Intent(this, ImportScoreActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            true
+        }
 
 //        val tv1 = findViewById<View>(R.id.add_course)
 //        val typeface = Typeface.createFromAsset(assets,
@@ -69,8 +102,8 @@ class ShowTimetableActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         viewModel.courseDatabaseLiveDataVal.observe(this, Observer { it ->
-            if (intent.getBooleanExtra("isSaved", false)) {
-                courseList = it.getOrNull()!!
+            courseList = if (intent.getBooleanExtra("isSaved", false)) {
+                it.getOrNull()!!
             } else {
                 val allCourseListJson = intent.getStringExtra("courseList") ?: ""
                 val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
@@ -79,7 +112,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                     courseList_.add(Convert.courseResponseToBean(singleCourse))
                     // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
                 }
-                courseList = courseList_
+                courseList_
             }
             all_week_schedule_recyclerview.layoutManager = layoutManager
             adapter = ScheduleRecyclerAdapter(this, courseList)
@@ -109,6 +142,7 @@ class ShowTimetableActivity : AppCompatActivity() {
             R.id.add_course -> {
                 Toast.makeText(this, "暂未开发", Toast.LENGTH_SHORT).show()
             }
+            android.R.id.home -> drawerLayout.openDrawer(GravityCompat.START)
         }
         return true
     }
@@ -126,7 +160,7 @@ class ShowTimetableActivity : AppCompatActivity() {
     }
 
 
-    fun moveToPosition(manager:LinearLayoutManager, n:Int) {
+    private fun moveToPosition(manager:LinearLayoutManager, n:Int) {
         manager.scrollToPositionWithOffset(n, 0);
         manager.stackFromEnd = true;
     }

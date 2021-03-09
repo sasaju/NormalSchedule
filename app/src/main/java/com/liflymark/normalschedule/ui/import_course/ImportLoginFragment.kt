@@ -14,6 +14,7 @@ import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
+import com.zackratos.ultimatebarx.library.UltimateBarX
 import kotlinx.android.synthetic.main.fragment_import_login.*
 
 class ImportLoginFragment: Fragment() {
@@ -29,6 +30,9 @@ class ImportLoginFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        UltimateBarX.with(this)
+                .transparent()
+                .applyStatusBar()
         if (viewModel.isAccountSaved()){
             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                 putExtra("isSaved", true)
@@ -99,14 +103,14 @@ class ImportLoginFragment: Fragment() {
             }
         })
 
-        viewModel.insertCourseLiveData.observe(viewLifecycleOwner, Observer { result->
-            val number = result.getOrNull()
-            if (number == "0") {
-                Log.d("ImportLoginFragment", "成功")
-            } else {
-                Log.d("ImportLoginFragment", "错误")
-           }
-        })
+//        viewModel.insertCourseLiveData.observe(viewLifecycleOwner, Observer { result->
+//            val number = result.getOrNull()
+//            if (number == "0") {
+//                Log.d("ImportLoginFragment", "成功")
+//            } else {
+//                Log.d("ImportLoginFragment", "错误")
+//           }
+//        })
 
         ivCode.setOnClickListener {
             progress_bar.visibility = View.VISIBLE
