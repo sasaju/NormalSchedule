@@ -1,18 +1,12 @@
 package com.liflymark.normalschedule.logic.utils.betterrecyclerview
 
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
-
 import android.view.ViewConfiguration
-import androidx.annotation.NonNull
 import androidx.core.view.MotionEventCompat
 import androidx.core.view.ViewConfigurationCompat
-
 import androidx.recyclerview.widget.RecyclerView
-import org.jetbrains.annotations.Nullable
 
 
 open class BetterRecyclerView : RecyclerView {

@@ -37,4 +37,8 @@ class ImportScoreViewModel:ViewModel() {
         this.id = id
         formMapLiveData.value = user + password
     }
+
+    fun saveAccount(user: String, password: String) = Repository.saveAccount(user, password)
+    fun getSavedAccount() = Repository.getSavedAccount()
+    fun isAccountSaved() = Repository.isAccountSaved()
 }

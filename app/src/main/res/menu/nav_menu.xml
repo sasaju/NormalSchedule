@@ -11,10 +11,6 @@
             android:icon="@drawable/ic_action_info"
             android:checkable="false"
             android:title="关于"/>
-        <item
-            android:id="@+id/blank"
-            android:checkable="false"
-            android:title=""/>
 
     </group>
 

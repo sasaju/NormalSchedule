@@ -1,10 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:id="@+id/single_week_schedule"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false">
 
 <!--    <LinearLayout-->
 <!--        android:id="@+id/weekName"-->
@@ -68,20 +69,16 @@
 <!--            android:layout_weight="1" />-->
 
 <!--    </LinearLayout>-->
-    <TextView
-        android:layout_width="40dp"
-        android:layout_height="50dp"
-        android:text="3\n月"
-        android:gravity="center"
-        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/schedule_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@null"
         android:overScrollMode="never"
-        android:paddingTop="@dimen/paddingTop"
-        android:paddingLeft="@dimen/paddingLeft"
-        android:divider="@null" />
+        android:clipToPadding="true"
+        android:paddingStart="@dimen/paddingLeft"
+        android:paddingTop="@dimen/paddingTop" />
 
     <!--    <ImageView-->
     <!--        android:id="@+id/iv_next"-->

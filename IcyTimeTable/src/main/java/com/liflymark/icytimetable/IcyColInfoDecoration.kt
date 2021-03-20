@@ -47,7 +47,7 @@ abstract class IcyColInfoDecoration(
         val leftUp = leftView.left - columnWidth / 3
         val right_ = leftUp + 10
         val rect_ = Rect(leftUp, top, right_, columnWidth / 2)
-        c.drawTextAtCenterUp(getDayOfDate(0), rect_, textPaint)
+        c.drawTextAtCenterUp(getDayOfDate(0, position), rect_, textPaint)
         c.drawTextAtCenterDown("月", rect_, textPaint)
 
         for (i in 1..columnCount) {
@@ -62,15 +62,18 @@ abstract class IcyColInfoDecoration(
                 c.drawRoundRect(roundRect, rx, ry, selectedBackGroundPaint)
                 c.drawTextAtTop(getDayOfWeek(i), rect, selectedTextPaint)
                 c.drawTextAtBottom(
-                    getDayOfDate(i),
+                    getDayOfDate(i, position),
                     rect,
                     selectedTextPaint
                 )
             } else {
                 c.drawTextAtTop(getDayOfWeek(i), rect, textPaint)
-                c.drawTextAtBottom(getDayOfDate(i), rect, textPaint)
+                c.drawTextAtBottom(getDayOfDate(i,position), rect, textPaint)
             }
+            Log.d("transparentDebug", getDayOfDate(i, position)+"decoration绘制一次")
         }
+        Log.d("transparentDebug", "本次加载列数$columnCount")
+        Log.d("transparentDebug", "本次positon值$position")
 
     }
 
@@ -88,7 +91,7 @@ abstract class IcyColInfoDecoration(
         }
     }
 
-    abstract fun getDayOfDate(nowColumn: Int): String // 当前列的日期 11,12,13......
+    abstract fun getDayOfDate(nowColumn: Int, position: Int): String // 当前列的日期 11,12,13......
 
 
     companion object {

@@ -15,6 +15,7 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
 import com.zackratos.ultimatebarx.library.UltimateBarX
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
 
 class ImportLoginFragment: Fragment() {
@@ -47,10 +48,10 @@ class ImportLoginFragment: Fragment() {
             // Log.d("ImportLoginFragment", result.getOrNull().toString())
             val idResponse = result.getOrNull()
             if (idResponse == null){
-                Toast.makeText(activity, "服务异常，无法登陆", Toast.LENGTH_SHORT).show()
+                activity?.let { Toasty.error(it, "服务异常，无法登陆", Toast.LENGTH_SHORT).show() }
             } else {
                 this.id = idResponse.id
-                Toast.makeText(activity, "服务正常，可以登陆", Toast.LENGTH_SHORT).show()
+                activity?.let { Toasty.success(it, "服务正常，可以登陆", Toast.LENGTH_SHORT).show() }
             }
         })
 
@@ -65,7 +66,7 @@ class ImportLoginFragment: Fragment() {
                 when (course.status) {
                     "yes" -> {
                         saveAccount()
-                        Toast.makeText(activity, "登陆成功，解析成功", Toast.LENGTH_SHORT).show()
+                        activity?.let { Toasty.success(it, "登陆成功，解析成功", Toast.LENGTH_SHORT).show() }
 //                        viewModel.insertOriginalCourse(allCourseList)
 //                        for (singleCourse in allCourseList) {
 //                            Log.d("ImportLoginFragment", singleCourse.toString())
@@ -83,7 +84,7 @@ class ImportLoginFragment: Fragment() {
                         // viewModel.saveAccount(userName, userPassword)
                     }
                     "no" -> {
-                        Toast.makeText(activity, "登陆成功，解析异常，请务必检查课程表是否正确", Toast.LENGTH_SHORT).show()
+                        activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toast.LENGTH_LONG).show() }
                         if(activity is MainActivity) {
                             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                                 putExtra("isSaved", true)

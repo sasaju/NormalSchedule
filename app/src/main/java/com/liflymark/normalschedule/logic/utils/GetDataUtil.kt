@@ -26,7 +26,7 @@ internal object GetDataUtil {
         val sdf = SimpleDateFormat("E")
         // Log.d("GEtDataUtil", sdf.format(Date()))
         return when(sdf.format(Date())){
-            "周一" -> 1
+            "周一"  -> 1
             "周二" -> 2
             "周三" -> 3
             "周四" -> 4
@@ -46,7 +46,7 @@ internal object GetDataUtil {
 //            print(second.calendar[6].toString())
         }
         if (result < 0) {
-            result = -1
+            result = 0
         }
         return result
     }

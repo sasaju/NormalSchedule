@@ -16,7 +16,7 @@ class ViewPagerSnapHelper(private val activity: ShowTimetableActivity) : PagerSn
         ) {
             0
         } else {
-            super.findTargetSnapPosition(layoutManager, velocityX, velocityY)
+            position
         }
     }
 }

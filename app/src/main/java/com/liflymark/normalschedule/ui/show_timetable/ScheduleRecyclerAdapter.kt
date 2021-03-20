@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,7 @@ class ScheduleRecyclerAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         refreshUi(holder.scheduleRecyclerView, courseList, position)
+        Log.d("transparentDebug", "viewholder绑定一次当前postion$position")
 //        Log.d("ScheduleRecyclerAdapter", position.toString())
 //        activity.tv_date.text = "第${position+1}周  周四"
     }
@@ -68,6 +70,12 @@ class ScheduleRecyclerAdapter(
         // Log.d("ShowTimetableActivity",data[0].toString())
 
         val adapter = GroupAdapter<GroupieViewHolder>()
+        if (schedule_recyclerview.itemDecorationCount > 0){
+            schedule_recyclerview.removeItemDecorationAt(0)
+            schedule_recyclerview.removeItemDecorationAt(0)
+        }
+
+        Log.d("transparentDebug","当前itendecoration数量${schedule_recyclerview.itemDecorationCount}")
         schedule_recyclerview.addItemDecoration(
                 MyRowInfoDecoration(
                         activity.resources.getDimensionPixelSize(R.dimen.paddingLeft),
@@ -80,9 +88,10 @@ class ScheduleRecyclerAdapter(
                         totalCoursePerDay
                 )
         )
+
         schedule_recyclerview.addItemDecoration(
                 MyColInfoDecoration(columnCount,activity.resources.getDimensionPixelSize(R.dimen.paddingTop),Color.GRAY,Color.WHITE,Color.BLUE,
-                        activity.resources.getDimension(R.dimen.weekSize), position=position)
+                        activity.resources.getDimension(R.dimen.weekSize), position=position, backGroundColor = Color.TRANSPARENT)
         )
         schedule_recyclerview.layoutManager = IcyTimeTableManager(
                 45,
@@ -93,6 +102,7 @@ class ScheduleRecyclerAdapter(
             gapFilling[it]
         }
         schedule_recyclerview.adapter = adapter
+
         gapFilling.map {
             when (it) {
                 is IcyTimeTableManager.EmptyCourseInfo -> SpaceItem()
@@ -100,5 +110,7 @@ class ScheduleRecyclerAdapter(
                 else -> SpaceItem()
             }
         }.let(adapter::update)
+        Log.d("transparentDebug", "refreshUi执行一次本次positon$position")
     }
+
 }

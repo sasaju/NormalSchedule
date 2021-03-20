@@ -45,7 +45,7 @@ class MyColInfoDecoration(
 
 
 
-    override fun getDayOfDate(nowColumn: Int): String {
+    override fun getDayOfDate(nowColumn: Int, position: Int): String {
         val calendar = GregorianCalendar()
         calendar.time = firstWeekMondayDate
 //        calendar.add(Calendar.DATE, 30)

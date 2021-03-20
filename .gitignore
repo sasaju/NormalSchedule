@@ -15,3 +15,6 @@
 local.properties
 libs/
 app/src/main/java/com/liflymark/normalschedule/logic/network/ServiceCreator.kt
+release/0.0.1beta4-1.apk
+src/main/java/com/liflymark/normalschedule/ui/add_course/
+src/main/java/com/liflymark/normalschedule/ui/base/

@@ -1,2 +1,3 @@
 /build
 !/src/main/java/com/liflymark/normalschedule/logic/network/ServiceCreator.kt
+!/src/main/java/com/liflymark/normalschedule/logic/utils/AES.kt
