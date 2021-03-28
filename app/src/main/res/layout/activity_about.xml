@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center_horizontal"
-        android:text="关于我"
+        android:text="关于开发人员"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -62,7 +62,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="河北大学 | 大二药物制剂专业在读"
+        android:text="河北大学 | 大二药物制剂专业在读 @符号"
+        android:textSize="12sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:text="关于背景图和Logo绘制"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="河北大学 | 大二药学专业在读 @Mr."
         android:textSize="12sp" />
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -4,16 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import android.widget.Toast.makeText
+import androidx.annotation.LongDef
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -21,16 +27,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.utils.Convert
+import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.logic.utils.betterrecyclerview.EndlessRecyclerOnScrollListener
 import com.liflymark.normalschedule.ui.about.AboutActivity
+import com.liflymark.normalschedule.ui.course_detail.CourseDetailActivity
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
+import com.liflymark.normalschedule.ui.set_background.DefaultBackground
+import com.xwray.groupie.OnItemClickListener
+import com.xwray.groupie.OnItemLongClickListener
+import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_import_score.*
 import kotlinx.android.synthetic.main.activity_show_timetable.*
 import kotlinx.android.synthetic.main.fragment_header_toolbar.*
 import kotlinx.android.synthetic.main.fragment_import_login.view.*
 import kotlinx.android.synthetic.main.fragment_show_course_list.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -67,15 +82,7 @@ class ShowTimetableActivity : AppCompatActivity() {
         // setContentView(R.layout.activity_show_timetable)
         tv_date.text = GetDataUtil.getNowDateTime()
         refreshToolbar(0)
-        Glide.with(this).load(R.drawable.main_background_3)
-            .into(object : SimpleTarget<Drawable?>() {
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable?>?
-                ) {
-                    drawerLayout.background = resource
-                }
-            })
+
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_menu)
@@ -84,6 +91,10 @@ class ShowTimetableActivity : AppCompatActivity() {
 
             drawerLayout.closeDrawers()
             when(it.itemId){
+                R.id.set_background -> {
+                    val intent = Intent(this, DefaultBackground::class.java)
+                    startActivity(intent)
+                }
                 R.id.navGrade -> {
                     val intent = Intent(this, ImportScoreActivity::class.java)
                     startActivity(intent)
@@ -122,7 +133,7 @@ class ShowTimetableActivity : AppCompatActivity() {
 
 
         val layoutManager = LinearLayoutManager(this)
-        val endlessScrollListener = object : EndlessRecyclerOnScrollListener(layoutManager) {
+        object : EndlessRecyclerOnScrollListener(layoutManager) {
             override fun onLoadMore(current_page: Int) {
                 TODO()
             }
@@ -146,7 +157,7 @@ class ShowTimetableActivity : AppCompatActivity() {
             all_week_schedule_recyclerview.adapter = adapter
             val snapHelper = ViewPagerSnapHelper(this)
             snapHelper.attachToRecyclerView(all_week_schedule_recyclerview)
-            layoutManager.isItemPrefetchEnabled = false
+            layoutManager.isItemPrefetchEnabled = true
             layoutManager.orientation = LinearLayoutManager.HORIZONTAL
             adapter.notifyDataSetChanged()
             moveToPosition(layoutManager, nowWeek - 1)
@@ -154,10 +165,42 @@ class ShowTimetableActivity : AppCompatActivity() {
         })
         viewModel.loadAllCourse()
 
+        viewModel.backgroundUriStringLiveData.observe(this, Observer { it ->
+            val result = it.getOrNull()
+            if (result == null){
+                Log.d("ShowTimetableAc", "result is null")
+                setBackground(R.drawable.main_background_4)
+            } else {
+                val imageUri = Uri.parse(result.userBackground)
+                setBackground(imageUri)
+            }
+        })
+        viewModel.setBackground()
+
         all_date.setOnClickListener{
             moveToPosition(layoutManager, nowWeek - 1)
             refreshToolbar(nowWeek - 1)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.backgroundUriStringLiveData.observe(this, Observer { it ->
+            val result = it.getOrNull()
+            when {
+                result == null -> {
+                    setBackground(R.drawable.main_background_4)
+                }
+                result.userBackground == "0" -> {
+                    setBackground(R.drawable.main_background_4)
+                }
+                else -> {
+                    val imageUri = Uri.parse(result.userBackground)
+                    setBackground(imageUri)
+                }
+            }
+        })
+        viewModel.setBackground()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -168,7 +211,7 @@ class ShowTimetableActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_course -> {
-                Toast.makeText(this, "暂未开发", Toast.LENGTH_SHORT).show()
+                Toasty.info(this, "暂未开发", Toasty.LENGTH_SHORT).show()
             }
             android.R.id.home -> drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -204,6 +247,74 @@ class ShowTimetableActivity : AppCompatActivity() {
      */
 
     }
+
+    private fun setBackground(path:Uri){
+        Glide.with(this).load(path)
+                .into(object : SimpleTarget<Drawable?>() {
+                    override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable?>?
+                    ) {
+                        drawerLayout.background = resource
+                    }
+                })
+    }
+
+    private fun setBackground(backgroundId: Int){
+        Glide.with(this).load(backgroundId)
+                .into(object : SimpleTarget<Drawable?>() {
+                    override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable?>?
+                    ) {
+                        drawerLayout.background = resource
+                    }
+                })
+    }
+
+    val onItemClickListener = OnItemClickListener { item, _ ->
+        if (item is CourseItem) {
+            val realCourseMessage = item.getData().courseName.split("\n")
+            GlobalScope.launch{
+                val courseBeanList = viewModel.loadCourseByNameAndStart(realCourseMessage[0],
+                        item.getData().start+1,
+                        item.getData().whichColumn+1)
+                runOnUiThread{
+                    val dialog = Dialog.getClassDetailDialog(this@ShowTimetableActivity, courseBeanList[0])
+                    dialog.show()
+                }
+            }
+
+        }
+    }
+
+
+    val onItemLongClickListener = OnItemLongClickListener { item, _ ->
+        if (item is CourseItem) {
+            val realCourseName = item.getData().courseName.split("\n")[0]
+            viewModel.deleteCourseBeanByNameLiveData.observe(this, Observer {
+                if (it.isFailure){
+                    Toasty.error(this,"删除操作失败", Toasty.LENGTH_SHORT).show()
+                }
+            })
+
+            val dialog = MaterialDialog(this)
+                    .title(text = "你在进行一步敏感操作")
+                    .message(text = "你将删除《${realCourseName}》的所有课程\n无法恢复，务必谨慎删除！！！\n如失误删除请重新导入")
+                    .positiveButton(text = "我已知晓，仍然删除") { _ ->
+                        viewModel.deleteCourse(realCourseName)
+                        Toasty.success(this, "删除成功，重启app生效", Toasty.LENGTH_LONG).show()
+                    }
+                    .negativeButton(text = "取消") { _ ->
+                        Toasty.info(this,"删除操作取消", Toasty.LENGTH_SHORT).show()
+                    }
+                    .cancelOnTouchOutside(false)
+            dialog.show()
+            return@OnItemLongClickListener true
+        }
+        false
+    }
+
 
 
 }

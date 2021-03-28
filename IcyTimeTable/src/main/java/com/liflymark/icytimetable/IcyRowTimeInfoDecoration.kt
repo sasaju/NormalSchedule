@@ -3,7 +3,6 @@ package com.liflymark.icytimetable
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.text.TextPaint
 import android.view.View
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
@@ -45,12 +44,18 @@ abstract class IcyRowTimeInfoDecoration(
                 break
             val top=topView.top+gap
             val bottom=top+perCourseHeight
+            if (topView.top < 80 - (startRow-1)*perCourseHeight){
+                startRow ++
+                gap += perCourseHeight
+                continue
+            }
             // timePaint.textSize = 2.toFloat()
             c.drawTextAtTop(startRow.toString(),Rect(0,top,width,bottom),rowNumberPaint)
             c.drawTextAtCenterUp(getStartTime(startRow),Rect(0,top,width,bottom),timePaint)
             c.drawTextAtCenterDown(getEndTime(startRow),Rect(0,top,width,bottom),timePaint)
             if (bottom > parent.height-parent.paddingBottom)
                 break
+
             startRow++
             gap+=perCourseHeight
         }

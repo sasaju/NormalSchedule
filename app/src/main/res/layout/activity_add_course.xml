@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.add_course.AddCourseActivity">
 
-    <com.liflymark.normalschedule.logic.utils.wheelview.WheelView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <include layout="@layout/empty_toolbar"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

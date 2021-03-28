@@ -49,10 +49,14 @@ fun main(){
 
 //    val a = "药物合成反应"
 //    print(Convert.string2Unicode(a))
+//
+//    val a = (0+1) / 7
+//    print(a.toString())
+    val a = "abcde"
 
-    val a = (0+1) / 7
-    print(a.toString())
-
+    for (i in a.indices){
+        print(i)
+    }
 
 
 }

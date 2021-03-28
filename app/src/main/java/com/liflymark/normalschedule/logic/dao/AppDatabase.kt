@@ -4,14 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 
-@Database(version = 1, entities = [CourseBean::class])
+@Database(version = 2, entities = [CourseBean::class, UserBackgroundBean::class])
 abstract class AppDatabase: RoomDatabase() {
     abstract fun courseDao(): CourseOriginalDao
+    abstract fun backgroundDao(): BackgroundDao
 
     companion object {
-
+        private val MIGRATION_1_2 = object : Migration(1, 2){
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("create table UserBackgroundBean (id integer primary key autoincrement not null, userBackground text not null)")
+            }
+        }
         private var instance: AppDatabase? = null
 
         @Synchronized
@@ -21,9 +29,10 @@ abstract class AppDatabase: RoomDatabase() {
             }
             return Room.databaseBuilder(context.applicationContext,
                 AppDatabase::class.java, "app_database.db")
-                .build().apply {
+                    .addMigrations(MIGRATION_1_2)
+                    .build().apply {
                     instance = this
-                }
+                    }
         }
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
 import com.liflymark.normalschedule.logic.model.AllCourse
@@ -20,6 +21,7 @@ object Repository {
 
     private val dataBase = AppDatabase.getDatabase(NormalScheduleApplication.context)
     private val courseDao = dataBase.courseDao()
+    private val backgroundDao = dataBase.backgroundDao()
 
     fun getId() = fire(Dispatchers.IO) {
         val id =NormalScheduleNetwork.getId()
@@ -51,10 +53,28 @@ object Repository {
         Result.success("0")
     }
 
+    fun loadAllCourse() = fire(Dispatchers.IO){
+        Result.success(courseDao.loadAllCourse())
+    }
+
+    fun deleteCourseByName(courseName:String) = fire(Dispatchers.IO){
+        courseDao.deleteCourseByName(courseName)
+        Result.success("0")
+    }
+
+    fun loadCourseByName(courseName: String) = fire(Dispatchers.IO){
+        val courseList = courseDao.loadCourseByName(courseName)
+        Result.success(courseList)
+    }
+
+    suspend fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int) =
+            courseDao.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
+
     fun getScore(user: String, password: String, id:String) = fire(Dispatchers.IO) {
         val scoreResponse = NormalScheduleNetwork.getScore(user, password, id)
         Result.success(scoreResponse)
     }
+
     suspend fun insertCourse2(courseList: List<AllCourse>) {
         for (singleCourse in courseList) {
             try {
@@ -69,23 +89,39 @@ object Repository {
 
 
 
+    suspend fun insertBackground(background: UserBackgroundBean) = backgroundDao.insertBackground(background)
 
-    fun loadAllCourse() = fire(Dispatchers.IO){
-        Result.success(courseDao.loadAllCourse())
+    suspend fun updateBackground(background: UserBackgroundBean) {
+        Log.d("Repository", background.userBackground)
+        return try {
+            backgroundDao.insertBackground(background)
+        } catch (e:Exception){
+            backgroundDao.updateBackground(background)
+        }
     }
 
+    fun loadBackground() = fire(Dispatchers.IO){
+        Log.d("Repository", backgroundDao.loadLastBackground().toString())
+        Result.success(backgroundDao.loadLastBackground())
+    }
+
+    suspend fun deleteBackground(background: UserBackgroundBean) = backgroundDao.deleteAllBackground(background)
+
+
+
+
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
-        liveData<Result<T>>(context) {
-            val result = try {
-                block()
-            } catch (e: Exception) {
-                Result.failure<T>(e)
+            liveData<Result<T>>(context) {
+                val result = try {
+                    block()
+                } catch (e: Exception) {
+                    Result.failure<T>(e)
+                }
+                emit(result)
             }
-            emit(result)
-        }
 
     fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
     fun getSavedAccount() = AccountDao.getSavedAccount()
     fun isAccountSaved() = AccountDao.isAccountSaved()
-
 }
+

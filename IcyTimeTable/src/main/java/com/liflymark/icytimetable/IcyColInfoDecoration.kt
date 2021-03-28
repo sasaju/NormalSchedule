@@ -70,10 +70,7 @@ abstract class IcyColInfoDecoration(
                 c.drawTextAtTop(getDayOfWeek(i), rect, textPaint)
                 c.drawTextAtBottom(getDayOfDate(i,position), rect, textPaint)
             }
-            Log.d("transparentDebug", getDayOfDate(i, position)+"decoration绘制一次")
         }
-        Log.d("transparentDebug", "本次加载列数$columnCount")
-        Log.d("transparentDebug", "本次positon值$position")
 
     }
 

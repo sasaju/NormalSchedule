@@ -1,7 +1,5 @@
 package com.liflymark.icytimetable
 
-import android.util.Log
-
 
 /*
        Helper class for gapFilling
