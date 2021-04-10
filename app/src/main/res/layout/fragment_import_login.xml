@@ -5,166 +5,257 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loginFragment"
+    android:background="@drawable/main_background_4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:alpha="0.85"
+        >
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:paddingTop="16dp"
-            android:text="@string/text_login_web_title"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_id"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:hint="@string/hint_student_id"
-            app:endIconMode="clear_text"
-            app:errorEnabled="true"
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toBottomOf="@id/tv_title">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_pwd"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/hint_password"
-            app:endIconMode="password_toggle"
-            app:errorEnabled="true"
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toBottomOf="@id/input_id">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_code"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="168dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="8dp"
-            android:hint="@string/hint_check_code"
-            app:endIconMode="clear_text"
-            app:errorEnabled="true"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toStartOf="@id/rl_code"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_pwd">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textVisiblePassword" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/scrim"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="?attr/scrimBackground"
-                android:visibility="invisible"
-                app:layout_behavior="@string/fab_transformation_scrim_behavior" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSign"
-            style="@style/DialogButtonStyle"
-            android:backgroundTint="@color/green"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="登陆并导入"
-            tools:ignore="MissingConstraints"
-            app:layout_constraintTop_toBottomOf="@id/input_code"/>
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/testButton"-->
-<!--            style="@style/DialogButtonStyle"-->
-<!--            android:backgroundTint="@color/green"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:text="读取"-->
-<!--            tools:ignore="MissingConstraints"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/btnSign"/>-->
-
-        <RelativeLayout
-            android:id="@+id/rl_code"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/input_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/input_code"
-            app:layout_constraintTop_toTopOf="@id/input_code">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerInParent="true"
-                android:visibility="invisible"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text"
-                style="@style/IconTextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_centerInParent="true"
-                android:text="点击此处加载验证码"
-                android:textSize="10dp"
-                android:textColor="@color/orange" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivCode"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_centerInParent="true"
-                />
-        </RelativeLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_mask"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="#96ffffff"
-            android:visibility="gone" />
+
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="20dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingTop="16dp"
+                android:text="@string/text_login_web_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/select_sign_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="72dp"
+                android:padding="0dp"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textTint="#D8575757" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_id"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:hint="@string/hint_student_id"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                tools:layout_editor_absoluteX="24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_pwd"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/hint_password"
+                app:endIconMode="password_toggle"
+                app:errorEnabled="true"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@id/input_id">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tips_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="50dp"
+                android:text="默认统一认证密码为：身份证号末6位@hbu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/input_pwd" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_code"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="168dp"
+                android:layout_height="62dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/hint_check_code"
+                android:visibility="invisible"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:helperTextEnabled="true"
+                app:layout_constraintEnd_toStartOf="@id/rl_code"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/input_pwd">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textVisiblePassword" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/scrim"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="?attr/scrimBackground"
+                    android:visibility="invisible"
+                    app:layout_behavior="@string/fab_transformation_scrim_behavior" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/agree_or_not"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="我已阅读并同意"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/input_code" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/blue"
+                android:text=" 《使用协议》"
+                app:layout_constraintStart_toEndOf="@+id/agree_or_not"
+                app:layout_constraintTop_toBottomOf="@+id/input_code" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSign"
+                style="@style/DialogButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="@color/green"
+                android:text="登陆并导入"
+                app:layout_constraintTop_toBottomOf="@+id/agree_or_not"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="32dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignByClass"
+                style="@style/DialogButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/green"
+                android:text="按班级导入(登陆出现异常时使用)"
+                app:layout_constraintTop_toBottomOf="@id/btnSign"
+                tools:ignore="MissingConstraints" />
 
 
+            <!--        <com.google.android.material.button.MaterialButton-->
+            <!--            android:id="@+id/testButton"-->
+            <!--            style="@style/DialogButtonStyle"-->
+            <!--            android:backgroundTint="@color/green"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginTop="10dp"-->
+            <!--            android:text="读取"-->
+            <!--            tools:ignore="MissingConstraints"-->
+            <!--            app:layout_constraintTop_toBottomOf="@id/btnSign"/>-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <RelativeLayout
+                android:id="@+id/rl_code"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/input_code"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/input_code"
+                app:layout_constraintTop_toTopOf="@id/input_code">
 
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text"
+                    style="@style/IconTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_centerInParent="true"
+                    android:text="点击此处加载验证码"
+                    android:textColor="@color/orange"
+                    android:textSize="10dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="#96ffffff"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:text="登陆方式："
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        android:text="使用说明：如无特别需要只需输入学号 密码\n点击“登陆并导入”即可" />
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_thanks"
         android:layout_width="wrap_content"
@@ -174,9 +265,9 @@
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:textSize="12sp"
-        android:textColor="@color/lightBlue"
+        android:textColor="@color/white"
         android:visibility="visible"
-        tools:text="感谢 WakeUp课程表作者@YZune\n该界面来源于WakeUp课程表" />
+        android:text="感谢 WakeUp课程表作者@YZune\n该界面部分内容来源于WakeUp课程表" />
 
 
 <!--    <ProgressBar-->

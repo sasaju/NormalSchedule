@@ -26,17 +26,23 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.logic.utils.betterrecyclerview.EndlessRecyclerOnScrollListener
 import com.liflymark.normalschedule.ui.about.AboutActivity
+import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
 import com.liflymark.normalschedule.ui.course_detail.CourseDetailActivity
+import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.OnItemLongClickListener
 import es.dmoral.toasty.Toasty
@@ -76,10 +82,6 @@ class ShowTimetableActivity : AppCompatActivity() {
         setContentView(R.layout.activity_show_timetable)
         toolbar.title=""
         setSupportActionBar(toolbar)
-//        UltimateBarX.with(this)                       // 对当前 Activity 或 Fragment 生效
-//                .config(config)                           // 使用配置
-//                .applyStatusBar()                         // 应用到状态栏
-        // setContentView(R.layout.activity_show_timetable)
         tv_date.text = GetDataUtil.getNowDateTime()
         refreshToolbar(0)
 
@@ -108,25 +110,17 @@ class ShowTimetableActivity : AppCompatActivity() {
             true
         }
 
-        val dialog = MaterialDialog(this@ShowTimetableActivity).apply {
-            title(text = "保存课程表至本地")
-            message(text = "正在保存中....请不要关闭APP！")
-        }
         GlobalScope.launch {
             if (!intent.getBooleanExtra("isSaved", false)) {
                 val allCourseListJson = intent.getStringExtra("courseList")?:""
                 val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
                 val user = intent.getStringExtra("user")?:""
                 val password = intent.getStringExtra("password")?:""
-                runOnUiThread {
-                    dialog.show()
-                }
                 viewModel.insertOriginalCourse(allCourseList)
-                viewModel.saveAccount(user, password)
-                runOnUiThread{
-                    dialog.message(text = "当前课表已保存")
-                    dialog.positiveButton(text = "知道了")
-                }
+//                runOnUiThread {
+//                    Toasty.warning(this@ShowTimetableActivity, "请不要关闭该界面，正在保存至本地....", Toast.LENGTH_SHORT).show()
+//                    Toasty.success(this@ShowTimetableActivity, "保存成功，请随意", Toasty.LENGTH_LONG).show()
+//                }
             }
         }
 
@@ -139,43 +133,54 @@ class ShowTimetableActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.courseDatabaseLiveDataVal.observe(this, Observer { it ->
-            courseList = if (intent.getBooleanExtra("isSaved", false)) {
-                it.getOrNull()!!
+        viewModel.courseDatabaseLiveDataVal.observe(this, Observer {
+            if (intent.getBooleanExtra("isSaved", true)) {
+                courseList = it.getOrNull()!!
             } else {
                 val allCourseListJson = intent.getStringExtra("courseList") ?: ""
                 val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
-                val courseList_ = mutableListOf<CourseBean>()
+                val courseList0 = mutableListOf<CourseBean>()
                 for (singleCourse in allCourseList) {
-                    courseList_.add(Convert.courseResponseToBean(singleCourse))
+                    courseList0.add(Convert.courseResponseToBean(singleCourse))
                     // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
                 }
-                courseList_
+                courseList = courseList0.toList()
             }
-            all_week_schedule_recyclerview.layoutManager = layoutManager
+            Log.d("ShowTimetableActivity", courseList.toString())
             adapter = ScheduleRecyclerAdapter(this, courseList)
             all_week_schedule_recyclerview.adapter = adapter
+            all_week_schedule_recyclerview.layoutManager = layoutManager
             val snapHelper = ViewPagerSnapHelper(this)
             snapHelper.attachToRecyclerView(all_week_schedule_recyclerview)
             layoutManager.isItemPrefetchEnabled = true
             layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            adapter.notifyDataSetChanged()
+            // adapter.notifyDataSetChanged()
             moveToPosition(layoutManager, nowWeek - 1)
             refreshToolbar(nowWeek - 1)
         })
         viewModel.loadAllCourse()
 
-        viewModel.backgroundUriStringLiveData.observe(this, Observer { it ->
-            val result = it.getOrNull()
-            if (result == null){
-                Log.d("ShowTimetableAc", "result is null")
-                setBackground(R.drawable.main_background_4)
-            } else {
-                val imageUri = Uri.parse(result.userBackground)
-                setBackground(imageUri)
-            }
-        })
+//        viewModel.updateCourseLiveDataVal.observe(this, Observer {
+//            val courseList = it.getOrNull()
+//            if (courseList != null){
+//                Log.d("updateCourseLiveDataVal", courseList.toString())
+//                adapter = ScheduleRecyclerAdapter(this, courseList)
+//                all_week_schedule_recyclerview.adapter = adapter
+//            }
+//        })
+
+//        viewModel.backgroundUriStringLiveData.observe(this, Observer { it ->
+//            val result = it.getOrNull()
+//            if (result == null){
+//                Log.d("ShowTimetableAc", "result is null")
+//                setBackground(R.drawable.main_background_4)
+//            } else {
+//                val imageUri = Uri.parse(result.userBackground)
+//                setBackground(imageUri)
+//            }
+//        })
         viewModel.setBackground()
+
 
         all_date.setOnClickListener{
             moveToPosition(layoutManager, nowWeek - 1)
@@ -211,7 +216,14 @@ class ShowTimetableActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_course -> {
-                Toasty.info(this, "暂未开发", Toasty.LENGTH_SHORT).show()
+                val intent = Intent(this, AddCourseActivity::class.java)
+                startActivity(intent)
+                // Toasty.info(this, "暂未开发", Toasty.LENGTH_SHORT).show()
+            }
+            R.id.import_course -> {
+                val intent = Intent(this, ImportCourseAgain::class.java)
+                startActivity(intent)
+                this.finish()
             }
             android.R.id.home -> drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -236,7 +248,7 @@ class ShowTimetableActivity : AppCompatActivity() {
 
     private fun moveToPosition(manager: LinearLayoutManager, n: Int) {
         manager.scrollToPositionWithOffset(n, 0);
-        manager.stackFromEnd = true;
+//        manager.stackFromEnd = true
     }
 
 
@@ -301,9 +313,10 @@ class ShowTimetableActivity : AppCompatActivity() {
             val dialog = MaterialDialog(this)
                     .title(text = "你在进行一步敏感操作")
                     .message(text = "你将删除《${realCourseName}》的所有课程\n无法恢复，务必谨慎删除！！！\n如失误删除请重新导入")
-                    .positiveButton(text = "我已知晓，仍然删除") { _ ->
+                    .positiveButton(text = "仍然删除") { _ ->
                         viewModel.deleteCourse(realCourseName)
-                        Toasty.success(this, "删除成功，重启app生效", Toasty.LENGTH_LONG).show()
+                        viewModel.updateCourse()
+                        Toasty.success(this, "成功，重启app生效", Toasty.LENGTH_LONG).show()
                     }
                     .negativeButton(text = "取消") { _ ->
                         Toasty.info(this,"删除操作取消", Toasty.LENGTH_SHORT).show()

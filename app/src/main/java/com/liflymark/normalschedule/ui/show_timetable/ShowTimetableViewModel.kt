@@ -3,12 +3,9 @@ package com.liflymark.normalschedule.ui.show_timetable
 import android.content.Context
 import android.util.Log
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.Transformations
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -24,10 +21,13 @@ class ShowTimetableViewModel: ViewModel() {
     private var backgroundId = MutableLiveData(0)
     private var updateCourseLiveData = MutableLiveData(0)
     private var needDeleteCourseNameLiveData = MutableLiveData("")
+    private val saveClassToSQLLiveData = MutableLiveData<Boolean>()
+
 
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
         Repository.loadAllCourse()
     }
+
 
     val backgroundUriStringLiveData = Transformations.switchMap(backgroundId){
         Repository.loadBackground()
@@ -39,6 +39,10 @@ class ShowTimetableViewModel: ViewModel() {
 
     val updateCourseLiveDataVal = Transformations.switchMap(updateCourseLiveData) {
         Repository.loadAllCourse()
+    }
+
+    val saveClassOrNot = Transformations.map(saveClassToSQLLiveData){
+        true
     }
 
     fun loadAllCourse() {
@@ -60,6 +64,10 @@ class ShowTimetableViewModel: ViewModel() {
     fun setBackground(){
         Log.d("ShowViewModel", "setback")
         backgroundId.value = backgroundId.value?.plus(1)
+    }
+
+    fun savedClass(){
+        saveClassToSQLLiveData.value = true
     }
 
     suspend fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int) =

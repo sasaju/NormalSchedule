@@ -15,12 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
-        <activity android:name=".ui.course_detail.CourseDetailActivity"></activity>
+        <activity android:name=".ui.import_again.ImportCourseAgain"></activity>
+        <activity android:name=".ui.course_detail.CourseDetailActivity" />
         <activity
             android:name=".ui.set_background.DefaultBackground"
             android:label="选择背景"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ui.add_course.AddCourseActivity" />
+        <activity
+            android:name=".ui.add_course.AddCourseActivity"
+            android:label="增加课程"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".ui.about.AboutActivity" />
         <activity
             android:name=".ui.import_show_score.ShowScoreActivity"

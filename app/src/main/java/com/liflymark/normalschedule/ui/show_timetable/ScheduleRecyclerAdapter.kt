@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,9 +32,9 @@ class ScheduleRecyclerAdapter(
         return ViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         refreshUi(holder.scheduleRecyclerView, courseList, position)
+
 //        Log.d("ScheduleRecyclerAdapter", position.toString())
 //        activity.tv_date.text = "第${position+1}周  周四"
     }
@@ -59,7 +60,8 @@ class ScheduleRecyclerAdapter(
 //        val adapter = ScheduleRecyclerAdapter(courseList, 0)
 //        schedule_recyclerview.adapter = adapter
 //
-        val data = Convert.courseBeanToOneByOne(courseList).toList()
+
+        val data = Convert.courseBeanToOneByOne(courseList)
 
         val totalCoursePerDay = 11
         val columnCount = 7

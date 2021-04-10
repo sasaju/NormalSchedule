@@ -1,11 +1,13 @@
 package com.liflymark.normalschedule.logic.utils
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Grade
+import java.lang.Exception
 
 internal object Convert {
     lateinit var oneCourse: OneByOneCourseBean
@@ -29,7 +31,11 @@ internal object Convert {
             add("#b35c44")
         }
         val num = string2Unicode(courseResponse.courseName).toInt()
-        val color = colorList[num % colorList.count()]
+        val color = try {
+            colorList[num % colorList.count()]
+        } catch (e: Exception){
+            colorList[0]
+        }
         return CourseBean(
                 courseResponse.campusName,
                 courseResponse.classDay,
@@ -43,25 +49,29 @@ internal object Convert {
         )
     }
     fun courseBeanToOneByOne(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {
+//        Log.d("Convert0", courseBeanList.toString())
         val allOneCourseList = mutableListOf<List<OneByOneCourseBean>>()
-        for (i in 0..19){
+        for (i in 0..20){
             val oneCourseList = mutableListOf<OneByOneCourseBean>()
             for (courseBean in courseBeanList) {
                 val name = courseBean.courseName + "\n" + courseBean.teachingBuildName + "\n" + courseBean.teacher
-
                 when(courseBean.classWeek[i].toString()){
-                    "1" -> oneCourseList.add(OneByOneCourseBean(
+                    "1" -> {
+                        val a = OneByOneCourseBean(
                             name,
                             courseBean.classSessions - 1,
                             courseBean.classSessions + courseBean.continuingSession - 1,
                             courseBean.classDay - 1,
-                            courseBean.color))
+                            courseBean.color)
+                        oneCourseList.add(a)
+                    }
 //                    "0" -> oneCourseList.add(OneByOneCourseBean("0",courseBean.classDay, 0, 0))
 //                    else -> oneCourseList.add(OneByOneCourseBean("0",courseBean.classDay, 0, 0))
                 }
             }
             allOneCourseList.add(oneCourseList)
         }
+//        Log.d("Convert3", allOneCourseList.toString())
         return allOneCourseList
     }
 

@@ -25,8 +25,10 @@ class CourseItem(private val data: OneByOneCourseBean) : BindableItem<ItemCourse
 //            add("#8202F2")
 //            add("#F77CC2")
 //        }
-        viewBinding.num = data.courseName
+        val list = data.courseName.split("\n")
+        viewBinding.num = list[0] + "\n" + list[1]
         viewBinding.color = data.color
+        viewBinding.teacher = list[2]
     }
 
 

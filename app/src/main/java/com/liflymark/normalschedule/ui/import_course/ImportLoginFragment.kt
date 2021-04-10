@@ -6,15 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
+import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
-import com.zackratos.ultimatebarx.library.UltimateBarX
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
 
@@ -31,9 +31,7 @@ class ImportLoginFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        UltimateBarX.with(this)
-                .transparent()
-                .applyStatusBar()
+        ImmersionBar.with(this).init()
         if (viewModel.isAccountSaved()){
             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                 putExtra("isSaved", true)
@@ -42,16 +40,34 @@ class ImportLoginFragment: Fragment() {
             activity?.finish()
             return
         }
+        select_sign_method.attachDataSource(listOf("统一认证", "URP登陆"))
+        select_sign_method.setOnSpinnerItemSelectedListener { parent, view, position, id ->
+            when(position){
+                0 -> {
+                    Log.d("ImportLoginFragment", "统一")
+                    input_code.visibility = View.INVISIBLE
+                    rl_code.visibility = View.INVISIBLE
+                    tips_text.visibility = View.VISIBLE
+                    et_code.setText("")
+                }
+                1 -> {
+                    Log.d("ImportLoginFragment", "urp")
+                    input_code.visibility = View.VISIBLE
+                    rl_code.visibility = View.VISIBLE
+                    tips_text.visibility = View.INVISIBLE
+                }
+            }
+        }
         viewModel.getId()// 获取cookie
         viewModel.idLiveData.observe(viewLifecycleOwner, Observer { result ->
             // 仅装有id
             // Log.d("ImportLoginFragment", result.getOrNull().toString())
             val idResponse = result.getOrNull()
             if (idResponse == null){
-                activity?.let { Toasty.error(it, "服务异常，无法登陆", Toast.LENGTH_SHORT).show() }
+                activity?.let { Toasty.error(it, "服务异常，无法登陆", Toasty.LENGTH_SHORT).show() }
             } else {
                 this.id = idResponse.id
-                activity?.let { Toasty.success(it, "服务正常，可以登陆", Toast.LENGTH_SHORT).show() }
+                activity?.let { Toasty.success(it, "服务正常，可以登陆", Toasty.LENGTH_SHORT).show() }
             }
         })
 
@@ -60,13 +76,13 @@ class ImportLoginFragment: Fragment() {
             val course = result.getOrNull()
 
             if (course == null) {
-                Toast.makeText(activity, "登陆异常，重启app试试", Toast.LENGTH_SHORT).show()
+                activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
             } else {
                 val allCourseList = course.allCourse
                 when (course.status) {
                     "yes" -> {
                         saveAccount()
-                        activity?.let { Toasty.success(it, "登陆成功，解析成功", Toast.LENGTH_SHORT).show() }
+                        activity?.let { Toasty.success(it, "登陆成功，解析成功", Toasty.LENGTH_SHORT).show() }
 //                        viewModel.insertOriginalCourse(allCourseList)
 //                        for (singleCourse in allCourseList) {
 //                            Log.d("ImportLoginFragment", singleCourse.toString())
@@ -84,7 +100,7 @@ class ImportLoginFragment: Fragment() {
                         // viewModel.saveAccount(userName, userPassword)
                     }
                     "no" -> {
-                        activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toast.LENGTH_LONG).show() }
+                        activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toasty.LENGTH_LONG).show() }
                         if(activity is MainActivity) {
                             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                                 putExtra("isSaved", true)
@@ -95,7 +111,7 @@ class ImportLoginFragment: Fragment() {
                         // viewModel.saveAccount(userName, userPassword)
                     }
                     else -> {
-                        Toast.makeText(activity, result.getOrNull()!!.status, Toast.LENGTH_SHORT).show()
+                        activity?.let { Toasty.error(it, result.getOrNull()!!.status, Toasty.LENGTH_SHORT).show() }
                         viewModel.getImage(id)
                     }
                 }
@@ -132,10 +148,19 @@ class ImportLoginFragment: Fragment() {
             userPassword = password.text.toString()
             val yzm = et_code.text.toString()
             when {
-                userName == "" -> Toast.makeText(activity, "请输入学号", Toast.LENGTH_SHORT).show()
-                userPassword == "" -> Toast.makeText(activity, "请输入密码", Toast.LENGTH_SHORT).show()
+                !agree_or_not.isChecked ->  activity?.let { it1 -> Toasty.warning(it1, "您未同意用户协议", Toasty.LENGTH_SHORT).show() }
+                userName == "" -> activity?.let { it1 -> Toasty.warning(it1, "请输入学号", Toasty.LENGTH_SHORT).show() }
+                userPassword == "" -> activity?.let { it1 -> Toasty.warning(it1, "请输入密码", Toasty.LENGTH_SHORT).show() }
                 else -> viewModel.putValue(userName, userPassword, yzm, id)
             }
+        }
+
+        contact.setOnClickListener {
+            context?.let { it1 -> Dialog.getContractDialog(it1) }?.show()
+        }
+
+        btnSignByClass.setOnClickListener {
+            activity?.let { it1 -> Toasty.info(it1, "暂未开发 敬请期待", Toasty.LENGTH_SHORT).show() }
         }
 
 
