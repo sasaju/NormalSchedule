@@ -84,6 +84,7 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.2'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

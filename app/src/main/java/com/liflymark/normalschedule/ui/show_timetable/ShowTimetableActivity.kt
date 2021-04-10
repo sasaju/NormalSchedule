@@ -1,48 +1,42 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import android.widget.Toast.makeText
-import androidx.annotation.LongDef
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.liflymark.normalschedule.MainActivity
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
-import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.logic.utils.betterrecyclerview.EndlessRecyclerOnScrollListener
 import com.liflymark.normalschedule.ui.about.AboutActivity
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
-import com.liflymark.normalschedule.ui.course_detail.CourseDetailActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.OnItemLongClickListener
 import es.dmoral.toasty.Toasty
@@ -51,7 +45,6 @@ import kotlinx.android.synthetic.main.activity_show_timetable.*
 import kotlinx.android.synthetic.main.fragment_header_toolbar.*
 import kotlinx.android.synthetic.main.fragment_import_login.view.*
 import kotlinx.android.synthetic.main.fragment_show_course_list.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -81,6 +74,7 @@ class ShowTimetableActivity : AppCompatActivity() {
 //                .light(true)
         setContentView(R.layout.activity_show_timetable)
         toolbar.title=""
+        toolbar.inflateMenu(R.menu.menu_main)
         setSupportActionBar(toolbar)
         tv_date.text = GetDataUtil.getNowDateTime()
         refreshToolbar(0)
@@ -109,18 +103,27 @@ class ShowTimetableActivity : AppCompatActivity() {
 
             true
         }
+        if (viewModel.getNewUserOrNot())
+            newUserGuide()
+
+        val dialog = MaterialDialog(this)
+                .title(text = "保存课表至本地")
+                .message(text = "正在保存请不要关闭APP....")
+                .positiveButton(text = "知道了")
 
         GlobalScope.launch {
             if (!intent.getBooleanExtra("isSaved", false)) {
+                runOnUiThread {
+                    dialog.show()
+                }
                 val allCourseListJson = intent.getStringExtra("courseList")?:""
                 val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
                 val user = intent.getStringExtra("user")?:""
                 val password = intent.getStringExtra("password")?:""
                 viewModel.insertOriginalCourse(allCourseList)
-//                runOnUiThread {
-//                    Toasty.warning(this@ShowTimetableActivity, "请不要关闭该界面，正在保存至本地....", Toast.LENGTH_SHORT).show()
-//                    Toasty.success(this@ShowTimetableActivity, "保存成功，请随意", Toasty.LENGTH_LONG).show()
-//                }
+                runOnUiThread {
+                    dialog.message(text = "已保存至本地")
+                }
             }
         }
 
@@ -221,9 +224,17 @@ class ShowTimetableActivity : AppCompatActivity() {
                 // Toasty.info(this, "暂未开发", Toasty.LENGTH_SHORT).show()
             }
             R.id.import_course -> {
-                val intent = Intent(this, ImportCourseAgain::class.java)
-                startActivity(intent)
-                this.finish()
+                val dialog = Dialog.getImportAgain(this)
+                dialog.show()
+                dialog.positiveButton {
+                    val intent = Intent(this, ImportCourseAgain::class.java)
+                    val p = this.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
+                    val edit = p.edit()
+                    edit.clear()
+                    edit.apply()
+                    startActivity(intent)
+                    this.finish()
+                }
             }
             android.R.id.home -> drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -260,12 +271,12 @@ class ShowTimetableActivity : AppCompatActivity() {
 
     }
 
-    private fun setBackground(path:Uri){
+    private fun setBackground(path: Uri){
         Glide.with(this).load(path)
                 .into(object : SimpleTarget<Drawable?>() {
                     override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
+                        resource: Drawable,
+                        transition: Transition<in Drawable?>?
                     ) {
                         drawerLayout.background = resource
                     }
@@ -276,23 +287,97 @@ class ShowTimetableActivity : AppCompatActivity() {
         Glide.with(this).load(backgroundId)
                 .into(object : SimpleTarget<Drawable?>() {
                     override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
+                        resource: Drawable,
+                        transition: Transition<in Drawable?>?
                     ) {
                         drawerLayout.background = resource
                     }
                 })
     }
 
+    private fun newUserGuide(){
+        val display = windowManager.defaultDisplay
+        // Load our little droid guy
+        val droid = ContextCompat.getDrawable(this, R.drawable.add)
+        val droidTarget = Rect(0, 0, (droid?.getIntrinsicWidth() ?: 0) * 2, (droid?.getIntrinsicHeight()
+            ?: 0) * 2)
+        droidTarget.offset((display.getWidth()*0.45).toInt(), (display.getHeight() * 0.2).toInt())
+        TapTargetSequence(this)
+            .targets(
+                TapTarget.forToolbarNavigationIcon(
+                    toolbar, "请仔细阅读提示", "这里被点击或者向左滑动可以查看更多功能\n" +
+                            "点击指示位置以继续"
+                ).cancelable(false),
+                TapTarget.forView(
+                    findViewById(R.id.all_date),
+                    "日期显示栏 | 点击跳转至当前周",
+                    "点击此处立即跳转至当前周 \n点击指示位置以继续"
+                )
+                    .cancelable(
+                        false
+                    ),
+                // Likewise, this tap target will target the search button
+                TapTarget.forToolbarMenuItem(
+                    toolbar,
+                    R.id.add_course,
+                    "点击这里可以增加单个课程",
+                    "主要是调课时使用"
+                )
+                    .dimColor(android.R.color.black)
+                    .outerCircleColor(R.color.colorAccent)
+                    .targetCircleColor(android.R.color.black)
+                    .transparentTarget(true)
+                    .textColor(android.R.color.black)
+                    .cancelable(false),
+                TapTarget.forToolbarMenuItem(
+                    toolbar,
+                    R.id.import_course,
+                    "点击这里可以重新导入课程 | 请谨慎使用该功能",
+                    "重新导课将会清空当前课表，请谨慎使用"
+                )
+                    .dimColor(android.R.color.black)
+                    .outerCircleColor(R.color.colorAccent)
+                    .targetCircleColor(android.R.color.black)
+                    .transparentTarget(true)
+                    .textColor(android.R.color.black)
+                    .cancelable(false),
+                TapTarget.forBounds(droidTarget, "长按可以选择删除该课程 \n单击可以查看课程详情")
+                    .transparentTarget(true)
+                    .cancelable(false)
+//                TapTarget.forToolbarMenuItem(toolbar, R.id.add_course, "").cancelable(false)
+            )
+            .listener(object : TapTargetSequence.Listener {
+                // This listener will tell us when interesting(tm) events happen in regards
+                // to the sequence
+                override fun onSequenceFinish() {
+                    viewModel.saveUserVersion()
+                }
+
+                override fun onSequenceStep(lastTarget: TapTarget, targetClicked: Boolean) {
+                    // Perform action for the current target
+                }
+
+                override fun onSequenceCanceled(lastTarget: TapTarget) {
+                    // Boo
+                }
+            })
+            .start()
+    }
+
     val onItemClickListener = OnItemClickListener { item, _ ->
         if (item is CourseItem) {
             val realCourseMessage = item.getData().courseName.split("\n")
             GlobalScope.launch{
-                val courseBeanList = viewModel.loadCourseByNameAndStart(realCourseMessage[0],
-                        item.getData().start+1,
-                        item.getData().whichColumn+1)
+                val courseBeanList = viewModel.loadCourseByNameAndStart(
+                    realCourseMessage[0],
+                    item.getData().start + 1,
+                    item.getData().whichColumn + 1
+                )
                 runOnUiThread{
-                    val dialog = Dialog.getClassDetailDialog(this@ShowTimetableActivity, courseBeanList[0])
+                    val dialog = Dialog.getClassDetailDialog(
+                        this@ShowTimetableActivity,
+                        courseBeanList[0]
+                    )
                     dialog.show()
                 }
             }
@@ -305,8 +390,8 @@ class ShowTimetableActivity : AppCompatActivity() {
         if (item is CourseItem) {
             val realCourseName = item.getData().courseName.split("\n")[0]
             viewModel.deleteCourseBeanByNameLiveData.observe(this, Observer {
-                if (it.isFailure){
-                    Toasty.error(this,"删除操作失败", Toasty.LENGTH_SHORT).show()
+                if (it.isFailure) {
+                    Toasty.error(this, "删除操作失败", Toasty.LENGTH_SHORT).show()
                 }
             })
 
@@ -319,7 +404,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                         Toasty.success(this, "成功，重启app生效", Toasty.LENGTH_LONG).show()
                     }
                     .negativeButton(text = "取消") { _ ->
-                        Toasty.info(this,"删除操作取消", Toasty.LENGTH_SHORT).show()
+                        Toasty.info(this, "删除操作取消", Toasty.LENGTH_SHORT).show()
                     }
                     .cancelOnTouchOutside(false)
             dialog.show()

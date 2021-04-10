@@ -32,5 +32,16 @@ object AccountDao {
 
     fun isAccountSaved() = sharedPreferences().contains("userYes")
 
+    fun newUserShowed(){
+        sharedPreferences().edit(){
+            putInt("version", 1)
+        }
+    }
+
+    fun getNewUserOrNot(): Boolean {
+        val userVersion = sharedPreferences().getInt("version", 0)
+        return userVersion < 1
+    }
+
     private fun sharedPreferences() = NormalScheduleApplication.context.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
 }

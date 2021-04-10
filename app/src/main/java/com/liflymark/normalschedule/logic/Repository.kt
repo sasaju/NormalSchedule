@@ -123,5 +123,8 @@ object Repository {
     fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
     fun getSavedAccount() = AccountDao.getSavedAccount()
     fun isAccountSaved() = AccountDao.isAccountSaved()
+
+    fun saveUserVersion() = AccountDao.newUserShowed()
+    fun getNewUserOrNot() = AccountDao.getNewUserOrNot()
 }
 

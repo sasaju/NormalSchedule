@@ -36,6 +36,15 @@ object Dialog {
         return dialog
     }
 
+    fun getImportAgain(_context: Context): MaterialDialog{
+        val dialog = MaterialDialog(_context)
+                .title(text ="请谨慎使用此功能")
+                .message(text = "即将进入重新导入界面，需要将清除当前课表")
+                .positiveButton(text = "清空当前课表")
+                .negativeButton(text = "取消")
+        return dialog
+    }
+
     fun getClassDetailDialog(_context: Context, courseBean: CourseBean): MaterialDialog {
         val dialog = MaterialDialog(_context)
                 .customView(R.layout.item_course_detail)

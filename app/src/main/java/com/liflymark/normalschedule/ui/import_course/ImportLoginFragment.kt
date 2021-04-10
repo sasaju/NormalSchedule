@@ -14,6 +14,7 @@ import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
+import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
@@ -88,6 +89,16 @@ class ImportLoginFragment: Fragment() {
 //                            Log.d("ImportLoginFragment", singleCourse.toString())
 //                        }
                         if(activity is MainActivity) {
+                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        if (activity is ImportCourseAgain) {
                             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                                 putExtra("isSaved", false)
                                 putExtra("courseList", Convert.allCourseToJson(allCourseList))

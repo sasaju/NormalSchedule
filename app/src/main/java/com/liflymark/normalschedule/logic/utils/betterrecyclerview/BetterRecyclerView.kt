@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.logic.utils.betterrecyclerview
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import androidx.core.view.MotionEventCompat
@@ -71,6 +72,7 @@ open class BetterRecyclerView : RecyclerView {
                     val dy = y - initialTouchY
                     var startScroll = false;
                     if(layoutManager!!.canScrollHorizontally() && Math.abs(dx) > touchSlop && (layoutManager!!.canScrollVertically() || Math.abs(dx) > Math.abs(dy))) {
+
                         startScroll = true
                     }
                     if(layoutManager!!.canScrollVertically() && Math.abs(dy) > touchSlop && (layoutManager!!.canScrollHorizontally() || Math.abs(dy) > Math.abs(dx))) {

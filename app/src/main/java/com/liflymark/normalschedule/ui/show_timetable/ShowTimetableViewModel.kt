@@ -77,10 +77,14 @@ class ShowTimetableViewModel: ViewModel() {
     fun getSavedAccount() = AccountDao.getSavedAccount()
     fun isAccountSaved() = AccountDao.isAccountSaved()
 
+    fun saveUserVersion() = Repository.saveUserVersion()
+    fun getNewUserOrNot() = Repository.getNewUserOrNot()
+
     suspend fun insertOriginalCourse(allCourseList: List<AllCourse>) {
         Log.d("CourseViewModel", "获取到课程")
         Repository.insertCourse2(allCourseList)
     }
+
 
     fun getClassDetailDialog(_context: Context, courseBean: CourseBean): MaterialDialog {
         Log.d("dialog", 123456.toString())
