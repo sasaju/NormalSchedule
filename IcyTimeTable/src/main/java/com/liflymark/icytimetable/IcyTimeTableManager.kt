@@ -59,8 +59,9 @@ class IcyTimeTableManager(
 
     override fun collectAdjacentPrefetchPositions(dx: Int, dy: Int, state: RecyclerView.State?, layoutPrefetchRegistry: LayoutPrefetchRegistry?) {
         super.collectAdjacentPrefetchPositions(dx, dy, state, layoutPrefetchRegistry)
-
     }
+
+
 
     private fun resetInternal() {
         top.clear()

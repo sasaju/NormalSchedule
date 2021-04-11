@@ -18,6 +18,7 @@ class CourseViewModel: ViewModel() {
     private var getIdOrNotLiveData = MutableLiveData<Int>(0)
     private var getImageTimesLiveData = MutableLiveData(0)
     private var courseListLiveData = MutableLiveData<List<AllCourse>>()
+    private var deleteCourseBean = MutableLiveData<Int>()
 //    private var courseDatabaseLiveData = MutableLiveData(0)
 
     val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
@@ -31,6 +32,11 @@ class CourseViewModel: ViewModel() {
     }
     val insertCourseLiveData = Transformations.switchMap(courseListLiveData) { it ->
         Repository.insertCourse(it)
+    }
+
+    val deleteCourseLiveData = Transformations.map(deleteCourseBean){
+        Repository.deleteAllCourseBean()
+        Log.d("CourseViewModel", "执行完毕")
     }
 //    val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
 //        Repository.loadAllCourse()
@@ -70,6 +76,10 @@ class CourseViewModel: ViewModel() {
             this.yzm = yzm
         }
         formMapLiveData.value = user + password + yzm
+    }
+
+    fun deleteAllCourseBean(){
+        deleteCourseBean.value = deleteCourseBean.value?.plus(1)
     }
 
 

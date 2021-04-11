@@ -40,7 +40,6 @@ object Repository {
 
     fun getCourse(user:String, password:String, yzm:String, headers:String) = fire(Dispatchers.IO) {
         val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
-        Log.d("Repository", "获取到课程")
         Result.success(courseResponse)
     }
 
@@ -67,6 +66,12 @@ object Repository {
         Result.success(courseList)
     }
 
+    fun deleteAllCourseBean() = fire(Dispatchers.IO){
+        courseDao.deleteAllCourseBean()
+        Log.d("CourseViewModel", "执行完毕")
+        Result.success("0")
+    }
+
     suspend fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int) =
             courseDao.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
 
@@ -84,6 +89,14 @@ object Repository {
             }
 
             // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
+        }
+    }
+
+    suspend fun deleteAllCourseBean2(){
+        try {
+            courseDao.deleteAllCourseBean()
+        } catch (e:Exception){
+            Result.failure<Exception>(e)
         }
     }
 

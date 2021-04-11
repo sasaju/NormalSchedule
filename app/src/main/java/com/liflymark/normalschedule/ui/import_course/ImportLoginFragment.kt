@@ -106,7 +106,6 @@ class ImportLoginFragment: Fragment() {
                                 putExtra("password", userPassword)
                             }
                             startActivity(intent)
-                            activity?.finish()
                         }
                         // viewModel.saveAccount(userName, userPassword)
                     }
@@ -131,27 +130,18 @@ class ImportLoginFragment: Fragment() {
             }
         })
 
-//        viewModel.insertCourseLiveData.observe(viewLifecycleOwner, Observer { result->
-//            val number = result.getOrNull()
-//            if (number == "0") {
-//                Log.d("ImportLoginFragment", "成功")
-//            } else {
-//                Log.d("ImportLoginFragment", "错误")
-//           }
-//        })
-
         ivCode.setOnClickListener {
             progress_bar.visibility = View.VISIBLE
-            // Toast.makeText(activity, "正在尝试获取图片", Toast.LENGTH_SHORT).show()
             viewModel.getImage(id)
             viewModel.imageLiveData.observe(viewLifecycleOwner, Observer { image ->
-                // Toast.makeText(activity, "正在尝试加载图片", Toast.LENGTH_SHORT).show()
                 ivCode.visibility = View.VISIBLE
                 progress_bar.visibility = View.INVISIBLE
                 val inputStream = image.getOrNull()
                 ivCode.setImageBitmap(inputStream)
             })
         }
+
+
 
         btnSign.setOnClickListener {
             // 判断是否输入学号密码并提交数据至ViewModel层以更新数据
@@ -174,24 +164,6 @@ class ImportLoginFragment: Fragment() {
             activity?.let { it1 -> Toasty.info(it1, "暂未开发 敬请期待", Toasty.LENGTH_SHORT).show() }
         }
 
-
-//        testButton.setOnClickListener {
-////            thread {
-////                val a = viewModel.loadAllCourse()
-////                var n = 0
-////                for (i in a) {
-////                    Log.d("ImportResult", i.toString())
-////                    n++
-////                }
-////                Log.d("ImportResult", n.toString())
-////            }
-//            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-//                putExtra("isSaved", true)
-//            }
-//            startActivity(intent)
-//            activity?.finish()
-//            return@setOnClickListener
-//        }
     }
 
     private fun saveAccount() {

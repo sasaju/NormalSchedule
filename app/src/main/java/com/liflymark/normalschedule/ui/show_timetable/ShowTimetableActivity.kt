@@ -99,6 +99,9 @@ class ShowTimetableActivity : AppCompatActivity() {
                     val intent = Intent(this, AboutActivity::class.java)
                     startActivity(intent)
                 }
+                R.id.spaceRoom -> {
+                    Toasty.info(this, "暂未开发，敬请期待", Toasty.LENGTH_SHORT).show()
+                }
             }
 
             true
@@ -120,6 +123,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                 val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
                 val user = intent.getStringExtra("user")?:""
                 val password = intent.getStringExtra("password")?:""
+                viewModel.deleteAllCourse()
                 viewModel.insertOriginalCourse(allCourseList)
                 runOnUiThread {
                     dialog.message(text = "已保存至本地")
@@ -153,10 +157,11 @@ class ShowTimetableActivity : AppCompatActivity() {
             adapter = ScheduleRecyclerAdapter(this, courseList)
             all_week_schedule_recyclerview.adapter = adapter
             all_week_schedule_recyclerview.layoutManager = layoutManager
-            val snapHelper = ViewPagerSnapHelper(this)
+            val snapHelper = ViewPagerSnapHelper(this, courseList)
             snapHelper.attachToRecyclerView(all_week_schedule_recyclerview)
             layoutManager.isItemPrefetchEnabled = true
             layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            layoutManager.initialPrefetchItemCount
             // adapter.notifyDataSetChanged()
             moveToPosition(layoutManager, nowWeek - 1)
             refreshToolbar(nowWeek - 1)

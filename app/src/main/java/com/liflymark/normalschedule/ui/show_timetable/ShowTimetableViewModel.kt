@@ -22,6 +22,7 @@ class ShowTimetableViewModel: ViewModel() {
     private var updateCourseLiveData = MutableLiveData(0)
     private var needDeleteCourseNameLiveData = MutableLiveData("")
     private val saveClassToSQLLiveData = MutableLiveData<Boolean>()
+    private var deleteCourseBean = MutableLiveData<Int>()
 
 
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
@@ -35,6 +36,11 @@ class ShowTimetableViewModel: ViewModel() {
 
     val deleteCourseBeanByNameLiveData = Transformations.switchMap(needDeleteCourseNameLiveData){
         needDeleteCourseNameLiveData.value?.let { it1 -> Repository.deleteCourseByName(it1) }
+    }
+
+    val deleteCourseLiveData = Transformations.map(deleteCourseBean){
+        Repository.deleteAllCourseBean()
+        Log.d("CourseViewModel", "执行完毕")
     }
 
     val updateCourseLiveDataVal = Transformations.switchMap(updateCourseLiveData) {
@@ -66,6 +72,10 @@ class ShowTimetableViewModel: ViewModel() {
         backgroundId.value = backgroundId.value?.plus(1)
     }
 
+    fun deleteAllCourseBean(){
+        deleteCourseBean.value = deleteCourseBean.value?.plus(1)
+    }
+
     fun savedClass(){
         saveClassToSQLLiveData.value = true
     }
@@ -85,6 +95,9 @@ class ShowTimetableViewModel: ViewModel() {
         Repository.insertCourse2(allCourseList)
     }
 
+    suspend fun deleteAllCourse(){
+        Repository.deleteAllCourseBean2()
+    }
 
     fun getClassDetailDialog(_context: Context, courseBean: CourseBean): MaterialDialog {
         Log.d("dialog", 123456.toString())

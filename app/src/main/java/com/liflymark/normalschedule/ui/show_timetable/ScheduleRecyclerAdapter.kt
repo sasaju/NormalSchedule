@@ -106,6 +106,8 @@ class ScheduleRecyclerAdapter(
             gapFilling[it]
         }
         schedule_recyclerview.adapter = adapter
+        val a = gapFilling.size
+        Log.d("ScheduleRecyclerAdapter", "$a $position")
 
         gapFilling.map {
             when (it) {

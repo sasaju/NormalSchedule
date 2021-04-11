@@ -16,6 +16,11 @@
             android:checkable="false"
             android:title="成绩查询"/>
         <item
+            android:id="@+id/spaceRoom"
+            android:icon="@drawable/ic_action_armchair"
+            android:checkable="false"
+            android:title="空教室查询"/>
+        <item
             android:id="@+id/about"
             android:icon="@drawable/ic_action_info"
             android:checkable="false"

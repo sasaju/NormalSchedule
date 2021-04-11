@@ -188,7 +188,7 @@
         android:layout_width="161dp"
         android:layout_height="49dp"
         android:layout_marginTop="50dp"
-        android:shadowRadius="50"
+        android:backgroundTint="@color/lightBlue"
         android:text="保存"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
