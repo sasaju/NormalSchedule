@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.logic.network
 import android.graphics.Bitmap
 import android.media.Image
 import com.liflymark.normalschedule.logic.model.CourseResponse
+import com.liflymark.normalschedule.logic.model.DepartmentList
 import com.liflymark.normalschedule.logic.model.IdResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -22,4 +23,16 @@ interface CourseService {
                   @Field("password") passWord: String,
                   @Field("yzm") captcha: String,
                   @Field("headers") headers: String):Call<CourseResponse>
+
+    @GET("class/departmentList/")
+    fun getDepartmentList():Call<DepartmentList>
+
+    @GET("class/{department}/{major}")
+    fun getCourseByClass(@Path("department")department:String,
+                         @Path("major")major: String): Call<CourseResponse>
+
+    @FormUrlEncoded
+    @POST("newtimetable/")
+    fun getCourseByNew(@Field("user")user: String,
+                       @Field("password")passWord: String): Call<CourseResponse>
 }

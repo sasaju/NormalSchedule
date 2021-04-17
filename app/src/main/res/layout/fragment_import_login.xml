@@ -9,16 +9,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="50dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="10dp"
+        android:layout_marginEnd="10dp"
         android:alpha="0.85"
-        >
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -147,9 +148,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:textSize="15sp"
-                android:textColor="@color/blue"
                 android:text=" 《使用协议》"
+                android:textColor="@color/blue"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/agree_or_not"
                 app:layout_constraintTop_toBottomOf="@+id/input_code" />
 
@@ -242,6 +243,17 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+            <TextView
+                android:id="@+id/server_status"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="36dp"
+                android:text="正在请求连接服务器.....    "
+                android:textColor="@color/lightBlue"
+                app:layout_constraintStart_toEndOf="@+id/tv_title"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
     <androidx.appcompat.widget.AppCompatTextView

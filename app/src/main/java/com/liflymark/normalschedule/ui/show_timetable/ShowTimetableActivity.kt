@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -27,6 +28,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
@@ -58,12 +60,13 @@ class ShowTimetableActivity : AppCompatActivity() {
     private lateinit var adapter: ScheduleRecyclerAdapter
     private val nowWeek =  GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate())
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //        // 设置toolbar和状态栏
         val decorView = window.decorView
+        if (Build.VERSION.SDK_INT >= 29)
+            decorView.isForceDarkAllowed = false
         decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 //        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -84,8 +87,6 @@ class ShowTimetableActivity : AppCompatActivity() {
             it.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
         navView.setNavigationItemSelectedListener {
-
-            drawerLayout.closeDrawers()
             when(it.itemId){
                 R.id.set_background -> {
                     val intent = Intent(this, DefaultBackground::class.java)
@@ -103,6 +104,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                     Toasty.info(this, "暂未开发，敬请期待", Toasty.LENGTH_SHORT).show()
                 }
             }
+
 
             true
         }
@@ -214,6 +216,18 @@ class ShowTimetableActivity : AppCompatActivity() {
             }
         })
         viewModel.setBackground()
+        drawerLayout.closeDrawers()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+            } // Night mode is not active, we're using the light theme
+            Configuration.UI_MODE_NIGHT_YES -> {
+
+            } // Night mode is active, we're using dark theme
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -233,10 +247,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                 dialog.show()
                 dialog.positiveButton {
                     val intent = Intent(this, ImportCourseAgain::class.java)
-                    val p = this.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
-                    val edit = p.edit()
-                    edit.clear()
-                    edit.apply()
+                    Repository.clearSharePreference()
                     startActivity(intent)
                     this.finish()
                 }
@@ -277,6 +288,9 @@ class ShowTimetableActivity : AppCompatActivity() {
     }
 
     private fun setBackground(path: Uri){
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES){
+            return
+        }
         Glide.with(this).load(path)
                 .into(object : SimpleTarget<Drawable?>() {
                     override fun onResourceReady(
@@ -289,6 +303,9 @@ class ShowTimetableActivity : AppCompatActivity() {
     }
 
     private fun setBackground(backgroundId: Int){
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES){
+            return
+        }
         Glide.with(this).load(backgroundId)
                 .into(object : SimpleTarget<Drawable?>() {
                     override fun onResourceReady(
@@ -304,20 +321,25 @@ class ShowTimetableActivity : AppCompatActivity() {
         val display = windowManager.defaultDisplay
         // Load our little droid guy
         val droid = ContextCompat.getDrawable(this, R.drawable.add)
-        val droidTarget = Rect(0, 0, (droid?.getIntrinsicWidth() ?: 0) * 2, (droid?.getIntrinsicHeight()
-            ?: 0) * 2)
-        droidTarget.offset((display.getWidth()*0.45).toInt(), (display.getHeight() * 0.2).toInt())
+        val droidTarget = Rect(
+            0, 0, (droid?.getIntrinsicWidth() ?: 0) * 2, (droid?.getIntrinsicHeight()
+                ?: 0) * 2
+        )
+        droidTarget.offset((display.getWidth() * 0.45).toInt(), (display.getHeight() * 0.2).toInt())
         TapTargetSequence(this)
             .targets(
                 TapTarget.forToolbarNavigationIcon(
                     toolbar, "请仔细阅读提示", "这里被点击或者向左滑动可以查看更多功能\n" +
                             "点击指示位置以继续"
-                ).cancelable(false),
+                )
+                    .outerCircleColor(R.color.lightBlue)
+                    .cancelable(false),
                 TapTarget.forView(
                     findViewById(R.id.all_date),
                     "日期显示栏 | 点击跳转至当前周",
                     "点击此处立即跳转至当前周 \n点击指示位置以继续"
                 )
+                    .outerCircleColor(R.color.lightBlue)
                     .cancelable(
                         false
                     ),
@@ -329,7 +351,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                     "主要是调课时使用"
                 )
                     .dimColor(android.R.color.black)
-                    .outerCircleColor(R.color.colorAccent)
+                    .outerCircleColor(R.color.lightBlue)
                     .targetCircleColor(android.R.color.black)
                     .transparentTarget(true)
                     .textColor(android.R.color.black)
@@ -341,13 +363,14 @@ class ShowTimetableActivity : AppCompatActivity() {
                     "重新导课将会清空当前课表，请谨慎使用"
                 )
                     .dimColor(android.R.color.black)
-                    .outerCircleColor(R.color.colorAccent)
+                    .outerCircleColor(R.color.lightBlue)
                     .targetCircleColor(android.R.color.black)
                     .transparentTarget(true)
                     .textColor(android.R.color.black)
                     .cancelable(false),
                 TapTarget.forBounds(droidTarget, "长按可以选择删除该课程 \n单击可以查看课程详情")
                     .transparentTarget(true)
+                    .outerCircleColor(R.color.lightBlue)
                     .cancelable(false)
 //                TapTarget.forToolbarMenuItem(toolbar, R.id.add_course, "").cancelable(false)
             )

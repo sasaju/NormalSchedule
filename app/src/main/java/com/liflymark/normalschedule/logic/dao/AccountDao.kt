@@ -1,47 +1,70 @@
 package com.liflymark.normalschedule.logic.dao
 
 import android.content.Context
-import android.util.Log
-import com.google.gson.Gson
 import androidx.core.content.edit
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.liflymark.normalschedule.NormalScheduleApplication
-import com.liflymark.normalschedule.logic.model.IdResponse
-import com.liflymark.normalschedule.logic.utils.AESUtils
 
 /*
 * 此功能在未对密码进行md5加密时不建议使用
 * */
 
 object AccountDao {
-    private val aes = AESUtils
-    private var PASSWORD_STRING = "qws871bz73msl9x8"
+    private const val sharedPrefsFile = "userAccount"
+    private val mainKey = MasterKey.Builder(NormalScheduleApplication.context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
 
     fun saveAccount(user: String, password: String){
-        sharedPreferences().edit {
+        with (sharedPreferences().edit()) {
+            putString("passwordEncrypt", password)
+            apply()
+        }
+        with(normalSharePreferences().edit()) {
             putString("userYes", user)
-            putString("password", aes.encrypt(PASSWORD_STRING, password))
-            aes.encrypt(PASSWORD_STRING, password)?.let { Log.d("AccountDao", it) }
+            commit()
         }
     }
 
     fun getSavedAccount(): Map<String?, String?> {
-        val user = sharedPreferences().getString("userYes", "")
-        val password =  aes.decrypt(PASSWORD_STRING,sharedPreferences().getString("password", "")?:"")
+        val user = normalSharePreferences().getString("userYes", "")
+        val password =  sharedPreferences().getString("passwordEncrypt", "")
         return mapOf("user" to user, "password" to password)
     }
 
-    fun isAccountSaved() = sharedPreferences().contains("userYes")
+    fun isAccountSaved() = normalSharePreferences().contains("userYes")
 
     fun newUserShowed(){
-        sharedPreferences().edit(){
+        normalSharePreferences().edit(){
             putInt("version", 1)
         }
     }
 
     fun getNewUserOrNot(): Boolean {
-        val userVersion = sharedPreferences().getInt("version", 0)
+        val userVersion = normalSharePreferences().getInt("version", 0)
         return userVersion < 1
     }
 
-    private fun sharedPreferences() = NormalScheduleApplication.context.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
+    fun clearSharePreferences(){
+        with(sharedPreferences().edit()){
+            clear()
+            apply()
+        }
+        with(normalSharePreferences().edit()){
+            clear()
+            apply()
+        }
+    }
+
+//    private fun sharedPreferences() = NormalScheduleApplication.context.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
+    private fun sharedPreferences() = EncryptedSharedPreferences.create(
+        NormalScheduleApplication.context,
+        sharedPrefsFile,
+        mainKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
+    private fun normalSharePreferences() = NormalScheduleApplication.context.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
 }

@@ -1,8 +1,9 @@
 package com.liflymark.normalschedule.ui.import_course
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,14 +46,12 @@ class ImportLoginFragment: Fragment() {
         select_sign_method.setOnSpinnerItemSelectedListener { parent, view, position, id ->
             when(position){
                 0 -> {
-                    Log.d("ImportLoginFragment", "统一")
                     input_code.visibility = View.INVISIBLE
                     rl_code.visibility = View.INVISIBLE
                     tips_text.visibility = View.VISIBLE
                     et_code.setText("")
                 }
                 1 -> {
-                    Log.d("ImportLoginFragment", "urp")
                     input_code.visibility = View.VISIBLE
                     rl_code.visibility = View.VISIBLE
                     tips_text.visibility = View.INVISIBLE
@@ -65,17 +64,76 @@ class ImportLoginFragment: Fragment() {
             // Log.d("ImportLoginFragment", result.getOrNull().toString())
             val idResponse = result.getOrNull()
             if (idResponse == null){
-                activity?.let { Toasty.error(it, "服务异常，无法登陆", Toasty.LENGTH_SHORT).show() }
+                server_status.text = "目前仅允许“统一认证”登陆，登陆可能会很慢请耐心等待"
+                select_sign_method.attachDataSource(listOf("统一认证"))
+                id = ""
+                server_status.setTextColor(Color.RED)
             } else {
                 this.id = idResponse.id
-                activity?.let { Toasty.success(it, "服务正常，可以登陆", Toasty.LENGTH_SHORT).show() }
+                server_status.text = "服务器正常"
+            }
+        })
+
+        viewModel.courseNewLiveData.observe(viewLifecycleOwner, Observer { result ->
+            val course = result.getOrNull()
+            if (course == null) {
+                activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
+            } else {
+                val allCourseList = course.allCourse
+                when (course.status) {
+                    "yes" -> {
+                        saveAccount()
+                        activity?.let { Toasty.success(it, "登陆成功，解析成功", Toasty.LENGTH_SHORT).show() }
+    //                        viewModel.insertOriginalCourse(allCourseList)
+    //                        for (singleCourse in allCourseList) {
+    //                            Log.d("ImportLoginFragment", singleCourse.toString())
+    //                        }
+                        if(activity is MainActivity) {
+                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        if (activity is ImportCourseAgain) {
+                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        // viewModel.saveAccount(userName, userPassword)
+                    }
+                    "no" -> {
+                        activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toasty.LENGTH_LONG).show() }
+                        if(activity is MainActivity) {
+                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                                putExtra("isSaved", true)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        // viewModel.saveAccount(userName, userPassword)
+                    }
+                    else -> {
+                        activity?.let { Toasty.error(it, result.getOrNull()!!.status, Toasty.LENGTH_SHORT).show() }
+                        viewModel.getImage(id)
+                    }
+                }
+
+
             }
         })
 
         viewModel.courseLiveData.observe(viewLifecycleOwner, Observer { result ->
 
             val course = result.getOrNull()
-
             if (course == null) {
                 activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
             } else {
@@ -106,6 +164,7 @@ class ImportLoginFragment: Fragment() {
                                 putExtra("password", userPassword)
                             }
                             startActivity(intent)
+                            activity?.finish()
                         }
                         // viewModel.saveAccount(userName, userPassword)
                     }
@@ -152,6 +211,7 @@ class ImportLoginFragment: Fragment() {
                 !agree_or_not.isChecked ->  activity?.let { it1 -> Toasty.warning(it1, "您未同意用户协议", Toasty.LENGTH_SHORT).show() }
                 userName == "" -> activity?.let { it1 -> Toasty.warning(it1, "请输入学号", Toasty.LENGTH_SHORT).show() }
                 userPassword == "" -> activity?.let { it1 -> Toasty.warning(it1, "请输入密码", Toasty.LENGTH_SHORT).show() }
+                id == "" -> viewModel.putValue(userName, userPassword)
                 else -> viewModel.putValue(userName, userPassword, yzm, id)
             }
         }

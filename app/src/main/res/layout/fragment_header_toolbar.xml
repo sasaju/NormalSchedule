@@ -13,6 +13,7 @@
         android:layout_height="?actionBarSize"
         android:background="@android:color/transparent"
         android:title=""
+        style="@style/Theme.NormalSchedule.NoActionBar"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp">

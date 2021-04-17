@@ -19,6 +19,12 @@ object NormalScheduleNetwork {
     suspend fun getCourse(user:String,password:String, yzm:String, headers:String) =
         CourseService.getCourse(user, password, yzm, headers).await()
 
+    suspend fun getCourse(user: String, password: String) =
+            CourseService.getCourseByNew(user, password).await()
+
+    suspend fun getDepartmentList() =
+            CourseService.getDepartmentList().await()
+
     suspend fun getScore(user:String, password:String, id:String) =
             ScoreService.getScore(user, password, id).await()
 

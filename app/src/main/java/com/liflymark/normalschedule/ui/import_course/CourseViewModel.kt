@@ -15,6 +15,7 @@ class CourseViewModel: ViewModel() {
     private var password = ""
     private var yzm = ""
     private var formMapLiveData = MutableLiveData<String>()
+    private var formMapNewLiveData = MutableLiveData<String>()
     private var getIdOrNotLiveData = MutableLiveData<Int>(0)
     private var getImageTimesLiveData = MutableLiveData(0)
     private var courseListLiveData = MutableLiveData<List<AllCourse>>()
@@ -26,6 +27,9 @@ class CourseViewModel: ViewModel() {
     }
     val courseLiveData = Transformations.switchMap(formMapLiveData) { _ ->
         Repository.getCourse(user, password, yzm, id)
+    }
+    val courseNewLiveData = Transformations.switchMap(formMapNewLiveData){
+        Repository.getCourse(user, password)
     }
     val imageLiveData = Transformations.switchMap(getImageTimesLiveData) {
         Repository.getCaptcha(id)
@@ -76,6 +80,12 @@ class CourseViewModel: ViewModel() {
             this.yzm = yzm
         }
         formMapLiveData.value = user + password + yzm
+    }
+
+    fun putValue(user: String, password: String){
+        this.user = user
+        this.password = password
+        formMapNewLiveData.value = user + password
     }
 
     fun deleteAllCourseBean(){

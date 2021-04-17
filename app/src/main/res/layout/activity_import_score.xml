@@ -9,13 +9,13 @@
     >
 
     <androidx.appcompat.widget.Toolbar
-    android:id="@+id/import_toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/lightBlue"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:layout_constraintTop_toTopOf="parent"
-    app:popupTheme="@style/Theme.AppCompat.Light"
+        android:id="@+id/import_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightBlue"
+        android:fitsSystemWindows="true"
+        style="@style/Theme.NormalSchedule.NoActionBar"
+        app:layout_constraintTop_toTopOf="parent"
     />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="90dp"
             android:paddingTop="16dp"
             android:text="@string/text_login_web_title"
             android:textSize="20sp"
@@ -82,50 +82,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="11dp"
             android:text="记住密码"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_pwd" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_code"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="168dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="8dp"
-            android:hint=""
-            app:endIconMode="clear_text"
-            app:errorEnabled="true"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toStartOf="@id/rl_code"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_pwd">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textVisiblePassword" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/scrim"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="?attr/scrimBackground"
-                android:visibility="invisible"
-                app:layout_behavior="@string/fab_transformation_scrim_behavior" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSign"
-            style="@style/DialogButtonStyle"
-            android:backgroundTint="@color/green"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="登陆并导入"
-            tools:ignore="MissingConstraints"
-            app:layout_constraintTop_toBottomOf="@id/input_code"/>
 
         <!--                <com.google.android.material.button.MaterialButton-->
         <!--                    android:id="@+id/testButton"-->
@@ -138,40 +98,6 @@
         <!--                    tools:ignore="MissingConstraints"-->
         <!--                    app:layout_constraintTop_toBottomOf="@id/btnSign"/>-->
 
-        <RelativeLayout
-            android:id="@+id/rl_code"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/input_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/input_code"
-            app:layout_constraintTop_toTopOf="@id/input_code">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerInParent="true"
-                android:visibility="invisible"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text"
-                style="@style/IconTextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_centerInParent="true"
-                android:text="点击此处加载验证码"
-                android:textSize="10dp"
-                android:textColor="@color/orange" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_mask"
             android:layout_width="match_parent"
@@ -181,6 +107,17 @@
             android:src="#96ffffff"
             android:visibility="gone" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSign"
+            style="@style/DialogButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/green"
+            android:text="登陆并导入"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/save_or_not" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -197,7 +134,6 @@
         android:textColor="@color/lightBlue"
         android:visibility="visible"
         android:text="感谢 WakeUp课程表作者@YZune\n该界面布局源码参考 WakeUp课程表" />
-
 
 
     <!--        <ProgressBar-->

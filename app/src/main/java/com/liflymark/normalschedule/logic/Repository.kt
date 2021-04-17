@@ -12,12 +12,14 @@ import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.IdResponse
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
+import com.liflymark.normalschedule.logic.utils.Dialog
 import kotlinx.coroutines.Dispatchers
+import okhttp3.Dispatcher
 import java.lang.Exception
 import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
-object Repository {
+object  Repository {
 
     private val dataBase = AppDatabase.getDatabase(NormalScheduleApplication.context)
     private val courseDao = dataBase.courseDao()
@@ -40,6 +42,11 @@ object Repository {
 
     fun getCourse(user:String, password:String, yzm:String, headers:String) = fire(Dispatchers.IO) {
         val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
+        Result.success(courseResponse)
+    }
+
+    fun getCourse(user: String, password: String) = fire(Dispatchers.IO){
+        val courseResponse = NormalScheduleNetwork.getCourse(user, password)
         Result.success(courseResponse)
     }
 
@@ -136,6 +143,7 @@ object Repository {
     fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
     fun getSavedAccount() = AccountDao.getSavedAccount()
     fun isAccountSaved() = AccountDao.isAccountSaved()
+    fun clearSharePreference() = AccountDao.clearSharePreferences()
 
     fun saveUserVersion() = AccountDao.newUserShowed()
     fun getNewUserOrNot() = AccountDao.getNewUserOrNot()
