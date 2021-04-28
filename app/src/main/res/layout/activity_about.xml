@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/about_page"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".ui.about.AboutActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -34,100 +37,14 @@
         android:paddingLeft="48dp"
         android:paddingRight="48dp"
         android:text="@string/app_name"
-        android:textSize="12sp" />
+        android:textSize="20sp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <ScrollView
+        android:id="@+id/scroll_about"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autoLink="web"
-        android:gravity="center_horizontal"
-        android:lineSpacingExtra="8dp"
-        android:paddingLeft="48dp"
-        android:paddingRight="48dp"
-        android:paddingBottom="16dp"
-        android:text="版本：0.0.1beta4"
-        android:textSize="12sp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center_horizontal"
-        android:text="关于开发人员"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="河北大学 | 大二药物制剂专业在读 @符号"
-        android:textSize="12sp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center_horizontal"
-        android:text="关于背景图和Logo绘制"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="河北大学 | 大二药学专业在读 @Mr."
-        android:textSize="12sp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:gravity="center_horizontal"
-        android:text="联系方式"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal"
-        android:text="以下文字均可长按复制"
-        android:textIsSelectable="true"
-        android:textSize="12sp" />
+        android:layout_height="wrap_content"/>
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal"
-        android:text="河大课表交流群交流群：857332578"
-        android:textIsSelectable="true"
-        android:textSize="12sp" />
-
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal"
-        android:text="作者QQ：1289142675"
-        android:textIsSelectable="true"
-        android:textSize="12sp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal"
-        android:text="作者邮箱：liflymark@gmail.com"
-        android:textIsSelectable="true"
-        android:textSize="12sp" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

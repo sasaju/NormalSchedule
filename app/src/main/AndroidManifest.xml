@@ -11,25 +11,26 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_config"
+        android:resizeableActivity="false"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.NormalSchedule"
-        android:resizeableActivity="false"
-        android:screenOrientation="portrait"
         tools:targetApi="n">
         <activity android:name=".ui.import_again.ImportCourseAgain" />
         <activity
             android:name=".ui.set_background.DefaultBackground"
             android:label="选择背景"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.add_course.AddCourseActivity"
             android:label="增加课程"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar"/>
-        <activity android:name=".ui.about.AboutActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar"/>
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.about.AboutActivity"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.import_show_score.ShowScoreActivity"
             android:label="成绩单"
@@ -38,14 +39,15 @@
         <activity
             android:name=".ui.import_show_score.ImportScoreActivity"
             android:label="成绩查询"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".ui.show_timetable.ShowTimetableActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar"/>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.show_timetable.ShowTimetableActivity"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar">
+            android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,11 +55,13 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".logic.utils.appwidget.AppwidgetTodayProvider" >
+        <receiver android:name=".logic.utils.appwidget.AppwidgetTodayProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@layout/appwidget_course_day" />
         </receiver>
     </application>

@@ -3383,6 +3383,8 @@ androidx.databinding.PropertyChangeRegistry:
 com.yalantis.ucrop.UCropActivity$GestureTypes
 androidx.activity.result.contract.ActivityResultContracts$PickContact
 kotlinx.coroutines.channels.AbstractSendChannel$onSend$1
+com.jaredrummler.materialspinner.R$styleable:
+    private void <init>()
 com.google.crypto.tink.shaded.protobuf.BooleanArrayList:
     public static com.google.crypto.tink.shaded.protobuf.BooleanArrayList emptyList()
 org.bouncycastle.jcajce.provider.asymmetric.dh.BCDHPrivateKey
@@ -3604,6 +3606,7 @@ com.liflymark.normalschedule.ui.import_show_score.ShowScoreViewModel
 org.bouncycastle.jcajce.provider.symmetric.DESede$Mappings
 androidx.core.location.LocationManagerCompat$PreRGnssStatusTransport$1
 com.liflymark.normalschedule.R$integer
+mehdi.sakout.aboutpage.R$interpolator
 androidx.core.ktx.R$dimen
 okio.Buffer$UnsafeCursor
 kotlinx.coroutines.flow.FlowKt__ShareKt$launchSharing$1$1
@@ -3680,6 +3683,7 @@ androidx.activity.ComponentActivity$2$2
 androidx.recyclerview.widget.ItemTouchUIUtilImpl
 androidx.dynamicanimation.R$color
 kotlin.Suppress
+com.jaredrummler.materialspinner.BuildConfig
 kotlin.collections.GroupingKt
 com.google.crypto.tink.proto.AesGcmKeyFormat$Builder:
     public int getKeySize()
@@ -4491,6 +4495,7 @@ androidx.databinding.adapters.AbsSeekBarBindingAdapter
 org.bouncycastle.jcajce.spec.OpenSSHPrivateKeySpec
 kotlin.text.CharDirectionality$Companion$directionalityMap$2
 com.google.android.material.shape.TriangleEdgeTreatment
+mehdi.sakout.aboutpage.R$integer
 androidx.appcompat.app.WindowDecorActionBar$ActionModeImpl:
     public void onCloseMenu(androidx.appcompat.view.menu.MenuBuilder,boolean)
     public boolean onSubMenuSelected(androidx.appcompat.view.menu.SubMenuBuilder)
@@ -7693,7 +7698,6 @@ kotlin.NumbersKt__NumbersKt
 androidx.transition.R$attr
 org.bouncycastle.jcajce.provider.asymmetric.x509.ExtCRLException
 androidx.appcompat.resources.R
-com.liflymark.normalschedule.logic.model.DepartmentList
 androidx.camera.core.ImageCapture$Builder:
     static androidx.camera.core.ImageCapture$Builder fromConfig(androidx.camera.core.impl.ImageCaptureConfig)
     public androidx.camera.core.ImageCapture$Builder setCaptureMode(int)
@@ -7728,6 +7732,8 @@ androidx.camera.core.ImageCapture$Builder:
     public synthetic bridge java.lang.Object setDefaultResolution(android.util.Size)
     public synthetic bridge java.lang.Object setTargetAspectRatio(int)
     public synthetic bridge java.lang.Object setIoExecutor(java.util.concurrent.Executor)
+com.jaredrummler.materialspinner.R$layout:
+    private void <init>()
 androidx.databinding.library.R$style
 androidx.appcompat.widget.ButtonBarLayout:
     private static final int PEEK_BUTTON_DP
@@ -8641,6 +8647,364 @@ org.bouncycastle.crypto.digests.NullDigest$1
 org.bouncycastle.jcajce.provider.asymmetric.ecgost.KeyAgreementSpi$1
 org.bouncycastle.cert.ocsp.CertificateID
 org.bouncycastle.operator.InputDecryptor
+mehdi.sakout.aboutpage.R$style:
+    private void <init>()
+    public static final int AlertDialog_AppCompat
+    public static final int AlertDialog_AppCompat_Light
+    public static final int Animation_AppCompat_Dialog
+    public static final int Animation_AppCompat_DropDownUp
+    public static final int Animation_AppCompat_Tooltip
+    public static final int Base_AlertDialog_AppCompat
+    public static final int Base_AlertDialog_AppCompat_Light
+    public static final int Base_Animation_AppCompat_Dialog
+    public static final int Base_Animation_AppCompat_DropDownUp
+    public static final int Base_Animation_AppCompat_Tooltip
+    public static final int Base_DialogWindowTitleBackground_AppCompat
+    public static final int Base_DialogWindowTitle_AppCompat
+    public static final int Base_TextAppearance_AppCompat
+    public static final int Base_TextAppearance_AppCompat_Body1
+    public static final int Base_TextAppearance_AppCompat_Body2
+    public static final int Base_TextAppearance_AppCompat_Button
+    public static final int Base_TextAppearance_AppCompat_Caption
+    public static final int Base_TextAppearance_AppCompat_Display1
+    public static final int Base_TextAppearance_AppCompat_Display2
+    public static final int Base_TextAppearance_AppCompat_Display3
+    public static final int Base_TextAppearance_AppCompat_Display4
+    public static final int Base_TextAppearance_AppCompat_Headline
+    public static final int Base_TextAppearance_AppCompat_Inverse
+    public static final int Base_TextAppearance_AppCompat_Large
+    public static final int Base_TextAppearance_AppCompat_Large_Inverse
+    public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large
+    public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small
+    public static final int Base_TextAppearance_AppCompat_Medium
+    public static final int Base_TextAppearance_AppCompat_Medium_Inverse
+    public static final int Base_TextAppearance_AppCompat_Menu
+    public static final int Base_TextAppearance_AppCompat_SearchResult
+    public static final int Base_TextAppearance_AppCompat_SearchResult_Subtitle
+    public static final int Base_TextAppearance_AppCompat_SearchResult_Title
+    public static final int Base_TextAppearance_AppCompat_Small
+    public static final int Base_TextAppearance_AppCompat_Small_Inverse
+    public static final int Base_TextAppearance_AppCompat_Subhead
+    public static final int Base_TextAppearance_AppCompat_Subhead_Inverse
+    public static final int Base_TextAppearance_AppCompat_Title
+    public static final int Base_TextAppearance_AppCompat_Title_Inverse
+    public static final int Base_TextAppearance_AppCompat_Tooltip
+    public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Menu
+    public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle
+    public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse
+    public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title
+    public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse
+    public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle
+    public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Title
+    public static final int Base_TextAppearance_AppCompat_Widget_Button
+    public static final int Base_TextAppearance_AppCompat_Widget_Button_Borderless_Colored
+    public static final int Base_TextAppearance_AppCompat_Widget_Button_Colored
+    public static final int Base_TextAppearance_AppCompat_Widget_Button_Inverse
+    public static final int Base_TextAppearance_AppCompat_Widget_DropDownItem
+    public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Header
+    public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Large
+    public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Small
+    public static final int Base_TextAppearance_AppCompat_Widget_Switch
+    public static final int Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem
+    public static final int Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item
+    public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle
+    public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Title
+    public static final int Base_ThemeOverlay_AppCompat
+    public static final int Base_ThemeOverlay_AppCompat_ActionBar
+    public static final int Base_ThemeOverlay_AppCompat_Dark
+    public static final int Base_ThemeOverlay_AppCompat_Dark_ActionBar
+    public static final int Base_ThemeOverlay_AppCompat_Dialog
+    public static final int Base_ThemeOverlay_AppCompat_Dialog_Alert
+    public static final int Base_ThemeOverlay_AppCompat_Light
+    public static final int Base_Theme_AppCompat
+    public static final int Base_Theme_AppCompat_CompactMenu
+    public static final int Base_Theme_AppCompat_Dialog
+    public static final int Base_Theme_AppCompat_DialogWhenLarge
+    public static final int Base_Theme_AppCompat_Dialog_Alert
+    public static final int Base_Theme_AppCompat_Dialog_FixedSize
+    public static final int Base_Theme_AppCompat_Dialog_MinWidth
+    public static final int Base_Theme_AppCompat_Light
+    public static final int Base_Theme_AppCompat_Light_DarkActionBar
+    public static final int Base_Theme_AppCompat_Light_Dialog
+    public static final int Base_Theme_AppCompat_Light_DialogWhenLarge
+    public static final int Base_Theme_AppCompat_Light_Dialog_Alert
+    public static final int Base_Theme_AppCompat_Light_Dialog_FixedSize
+    public static final int Base_Theme_AppCompat_Light_Dialog_MinWidth
+    public static final int Base_V21_ThemeOverlay_AppCompat_Dialog
+    public static final int Base_V21_Theme_AppCompat
+    public static final int Base_V21_Theme_AppCompat_Dialog
+    public static final int Base_V21_Theme_AppCompat_Light
+    public static final int Base_V21_Theme_AppCompat_Light_Dialog
+    public static final int Base_V22_Theme_AppCompat
+    public static final int Base_V22_Theme_AppCompat_Light
+    public static final int Base_V23_Theme_AppCompat
+    public static final int Base_V23_Theme_AppCompat_Light
+    public static final int Base_V26_Theme_AppCompat
+    public static final int Base_V26_Theme_AppCompat_Light
+    public static final int Base_V26_Widget_AppCompat_Toolbar
+    public static final int Base_V28_Theme_AppCompat
+    public static final int Base_V28_Theme_AppCompat_Light
+    public static final int Base_V7_ThemeOverlay_AppCompat_Dialog
+    public static final int Base_V7_Theme_AppCompat
+    public static final int Base_V7_Theme_AppCompat_Dialog
+    public static final int Base_V7_Theme_AppCompat_Light
+    public static final int Base_V7_Theme_AppCompat_Light_Dialog
+    public static final int Base_V7_Widget_AppCompat_AutoCompleteTextView
+    public static final int Base_V7_Widget_AppCompat_EditText
+    public static final int Base_V7_Widget_AppCompat_Toolbar
+    public static final int Base_Widget_AppCompat_ActionBar
+    public static final int Base_Widget_AppCompat_ActionBar_Solid
+    public static final int Base_Widget_AppCompat_ActionBar_TabBar
+    public static final int Base_Widget_AppCompat_ActionBar_TabText
+    public static final int Base_Widget_AppCompat_ActionBar_TabView
+    public static final int Base_Widget_AppCompat_ActionButton
+    public static final int Base_Widget_AppCompat_ActionButton_CloseMode
+    public static final int Base_Widget_AppCompat_ActionButton_Overflow
+    public static final int Base_Widget_AppCompat_ActionMode
+    public static final int Base_Widget_AppCompat_ActivityChooserView
+    public static final int Base_Widget_AppCompat_AutoCompleteTextView
+    public static final int Base_Widget_AppCompat_Button
+    public static final int Base_Widget_AppCompat_ButtonBar
+    public static final int Base_Widget_AppCompat_ButtonBar_AlertDialog
+    public static final int Base_Widget_AppCompat_Button_Borderless
+    public static final int Base_Widget_AppCompat_Button_Borderless_Colored
+    public static final int Base_Widget_AppCompat_Button_ButtonBar_AlertDialog
+    public static final int Base_Widget_AppCompat_Button_Colored
+    public static final int Base_Widget_AppCompat_Button_Small
+    public static final int Base_Widget_AppCompat_CompoundButton_CheckBox
+    public static final int Base_Widget_AppCompat_CompoundButton_RadioButton
+    public static final int Base_Widget_AppCompat_CompoundButton_Switch
+    public static final int Base_Widget_AppCompat_DrawerArrowToggle
+    public static final int Base_Widget_AppCompat_DrawerArrowToggle_Common
+    public static final int Base_Widget_AppCompat_DropDownItem_Spinner
+    public static final int Base_Widget_AppCompat_EditText
+    public static final int Base_Widget_AppCompat_ImageButton
+    public static final int Base_Widget_AppCompat_Light_ActionBar
+    public static final int Base_Widget_AppCompat_Light_ActionBar_Solid
+    public static final int Base_Widget_AppCompat_Light_ActionBar_TabBar
+    public static final int Base_Widget_AppCompat_Light_ActionBar_TabText
+    public static final int Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse
+    public static final int Base_Widget_AppCompat_Light_ActionBar_TabView
+    public static final int Base_Widget_AppCompat_Light_PopupMenu
+    public static final int Base_Widget_AppCompat_Light_PopupMenu_Overflow
+    public static final int Base_Widget_AppCompat_ListMenuView
+    public static final int Base_Widget_AppCompat_ListPopupWindow
+    public static final int Base_Widget_AppCompat_ListView
+    public static final int Base_Widget_AppCompat_ListView_DropDown
+    public static final int Base_Widget_AppCompat_ListView_Menu
+    public static final int Base_Widget_AppCompat_PopupMenu
+    public static final int Base_Widget_AppCompat_PopupMenu_Overflow
+    public static final int Base_Widget_AppCompat_PopupWindow
+    public static final int Base_Widget_AppCompat_ProgressBar
+    public static final int Base_Widget_AppCompat_ProgressBar_Horizontal
+    public static final int Base_Widget_AppCompat_RatingBar
+    public static final int Base_Widget_AppCompat_RatingBar_Indicator
+    public static final int Base_Widget_AppCompat_RatingBar_Small
+    public static final int Base_Widget_AppCompat_SearchView
+    public static final int Base_Widget_AppCompat_SearchView_ActionBar
+    public static final int Base_Widget_AppCompat_SeekBar
+    public static final int Base_Widget_AppCompat_SeekBar_Discrete
+    public static final int Base_Widget_AppCompat_Spinner
+    public static final int Base_Widget_AppCompat_Spinner_Underlined
+    public static final int Base_Widget_AppCompat_TextView
+    public static final int Base_Widget_AppCompat_TextView_SpinnerItem
+    public static final int Base_Widget_AppCompat_Toolbar
+    public static final int Base_Widget_AppCompat_Toolbar_Button_Navigation
+    public static final int Platform_AppCompat
+    public static final int Platform_AppCompat_Light
+    public static final int Platform_ThemeOverlay_AppCompat
+    public static final int Platform_ThemeOverlay_AppCompat_Dark
+    public static final int Platform_ThemeOverlay_AppCompat_Light
+    public static final int Platform_V21_AppCompat
+    public static final int Platform_V21_AppCompat_Light
+    public static final int Platform_V25_AppCompat
+    public static final int Platform_V25_AppCompat_Light
+    public static final int Platform_Widget_AppCompat_Spinner
+    public static final int RtlOverlay_DialogWindowTitle_AppCompat
+    public static final int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem
+    public static final int RtlOverlay_Widget_AppCompat_DialogTitle_Icon
+    public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem
+    public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup
+    public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_Shortcut
+    public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_SubmenuArrow
+    public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_Text
+    public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_Title
+    public static final int RtlOverlay_Widget_AppCompat_SearchView_MagIcon
+    public static final int RtlOverlay_Widget_AppCompat_Search_DropDown
+    public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1
+    public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2
+    public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Query
+    public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Text
+    public static final int RtlUnderlay_Widget_AppCompat_ActionButton
+    public static final int RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
+    public static final int TextAppearance_AppCompat
+    public static final int TextAppearance_AppCompat_Body1
+    public static final int TextAppearance_AppCompat_Body2
+    public static final int TextAppearance_AppCompat_Button
+    public static final int TextAppearance_AppCompat_Caption
+    public static final int TextAppearance_AppCompat_Display1
+    public static final int TextAppearance_AppCompat_Display2
+    public static final int TextAppearance_AppCompat_Display3
+    public static final int TextAppearance_AppCompat_Display4
+    public static final int TextAppearance_AppCompat_Headline
+    public static final int TextAppearance_AppCompat_Inverse
+    public static final int TextAppearance_AppCompat_Large
+    public static final int TextAppearance_AppCompat_Large_Inverse
+    public static final int TextAppearance_AppCompat_Light_SearchResult_Subtitle
+    public static final int TextAppearance_AppCompat_Light_SearchResult_Title
+    public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Large
+    public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Small
+    public static final int TextAppearance_AppCompat_Medium
+    public static final int TextAppearance_AppCompat_Medium_Inverse
+    public static final int TextAppearance_AppCompat_Menu
+    public static final int TextAppearance_AppCompat_SearchResult_Subtitle
+    public static final int TextAppearance_AppCompat_SearchResult_Title
+    public static final int TextAppearance_AppCompat_Small
+    public static final int TextAppearance_AppCompat_Small_Inverse
+    public static final int TextAppearance_AppCompat_Subhead
+    public static final int TextAppearance_AppCompat_Subhead_Inverse
+    public static final int TextAppearance_AppCompat_Title
+    public static final int TextAppearance_AppCompat_Title_Inverse
+    public static final int TextAppearance_AppCompat_Tooltip
+    public static final int TextAppearance_AppCompat_Widget_ActionBar_Menu
+    public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle
+    public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse
+    public static final int TextAppearance_AppCompat_Widget_ActionBar_Title
+    public static final int TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse
+    public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle
+    public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse
+    public static final int TextAppearance_AppCompat_Widget_ActionMode_Title
+    public static final int TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse
+    public static final int TextAppearance_AppCompat_Widget_Button
+    public static final int TextAppearance_AppCompat_Widget_Button_Borderless_Colored
+    public static final int TextAppearance_AppCompat_Widget_Button_Colored
+    public static final int TextAppearance_AppCompat_Widget_Button_Inverse
+    public static final int TextAppearance_AppCompat_Widget_DropDownItem
+    public static final int TextAppearance_AppCompat_Widget_PopupMenu_Header
+    public static final int TextAppearance_AppCompat_Widget_PopupMenu_Large
+    public static final int TextAppearance_AppCompat_Widget_PopupMenu_Small
+    public static final int TextAppearance_AppCompat_Widget_Switch
+    public static final int TextAppearance_AppCompat_Widget_TextView_SpinnerItem
+    public static final int TextAppearance_Compat_Notification
+    public static final int TextAppearance_Compat_Notification_Info
+    public static final int TextAppearance_Compat_Notification_Line2
+    public static final int TextAppearance_Compat_Notification_Time
+    public static final int TextAppearance_Compat_Notification_Title
+    public static final int TextAppearance_Widget_AppCompat_ExpandedMenu_Item
+    public static final int TextAppearance_Widget_AppCompat_Toolbar_Subtitle
+    public static final int TextAppearance_Widget_AppCompat_Toolbar_Title
+    public static final int ThemeOverlay_AppCompat
+    public static final int ThemeOverlay_AppCompat_ActionBar
+    public static final int ThemeOverlay_AppCompat_Dark
+    public static final int ThemeOverlay_AppCompat_Dark_ActionBar
+    public static final int ThemeOverlay_AppCompat_DayNight
+    public static final int ThemeOverlay_AppCompat_DayNight_ActionBar
+    public static final int ThemeOverlay_AppCompat_Dialog
+    public static final int ThemeOverlay_AppCompat_Dialog_Alert
+    public static final int ThemeOverlay_AppCompat_Light
+    public static final int Theme_AppCompat
+    public static final int Theme_AppCompat_CompactMenu
+    public static final int Theme_AppCompat_DayNight
+    public static final int Theme_AppCompat_DayNight_DarkActionBar
+    public static final int Theme_AppCompat_DayNight_Dialog
+    public static final int Theme_AppCompat_DayNight_DialogWhenLarge
+    public static final int Theme_AppCompat_DayNight_Dialog_Alert
+    public static final int Theme_AppCompat_DayNight_Dialog_MinWidth
+    public static final int Theme_AppCompat_DayNight_NoActionBar
+    public static final int Theme_AppCompat_Dialog
+    public static final int Theme_AppCompat_DialogWhenLarge
+    public static final int Theme_AppCompat_Dialog_Alert
+    public static final int Theme_AppCompat_Dialog_MinWidth
+    public static final int Theme_AppCompat_Light
+    public static final int Theme_AppCompat_Light_DarkActionBar
+    public static final int Theme_AppCompat_Light_Dialog
+    public static final int Theme_AppCompat_Light_DialogWhenLarge
+    public static final int Theme_AppCompat_Light_Dialog_Alert
+    public static final int Theme_AppCompat_Light_Dialog_MinWidth
+    public static final int Theme_AppCompat_Light_NoActionBar
+    public static final int Theme_AppCompat_NoActionBar
+    public static final int Widget_AppCompat_ActionBar
+    public static final int Widget_AppCompat_ActionBar_Solid
+    public static final int Widget_AppCompat_ActionBar_TabBar
+    public static final int Widget_AppCompat_ActionBar_TabText
+    public static final int Widget_AppCompat_ActionBar_TabView
+    public static final int Widget_AppCompat_ActionButton
+    public static final int Widget_AppCompat_ActionButton_CloseMode
+    public static final int Widget_AppCompat_ActionButton_Overflow
+    public static final int Widget_AppCompat_ActionMode
+    public static final int Widget_AppCompat_ActivityChooserView
+    public static final int Widget_AppCompat_AutoCompleteTextView
+    public static final int Widget_AppCompat_Button
+    public static final int Widget_AppCompat_ButtonBar
+    public static final int Widget_AppCompat_ButtonBar_AlertDialog
+    public static final int Widget_AppCompat_Button_Borderless
+    public static final int Widget_AppCompat_Button_Borderless_Colored
+    public static final int Widget_AppCompat_Button_ButtonBar_AlertDialog
+    public static final int Widget_AppCompat_Button_Colored
+    public static final int Widget_AppCompat_Button_Small
+    public static final int Widget_AppCompat_CompoundButton_CheckBox
+    public static final int Widget_AppCompat_CompoundButton_RadioButton
+    public static final int Widget_AppCompat_CompoundButton_Switch
+    public static final int Widget_AppCompat_DrawerArrowToggle
+    public static final int Widget_AppCompat_DropDownItem_Spinner
+    public static final int Widget_AppCompat_EditText
+    public static final int Widget_AppCompat_ImageButton
+    public static final int Widget_AppCompat_Light_ActionBar
+    public static final int Widget_AppCompat_Light_ActionBar_Solid
+    public static final int Widget_AppCompat_Light_ActionBar_Solid_Inverse
+    public static final int Widget_AppCompat_Light_ActionBar_TabBar
+    public static final int Widget_AppCompat_Light_ActionBar_TabBar_Inverse
+    public static final int Widget_AppCompat_Light_ActionBar_TabText
+    public static final int Widget_AppCompat_Light_ActionBar_TabText_Inverse
+    public static final int Widget_AppCompat_Light_ActionBar_TabView
+    public static final int Widget_AppCompat_Light_ActionBar_TabView_Inverse
+    public static final int Widget_AppCompat_Light_ActionButton
+    public static final int Widget_AppCompat_Light_ActionButton_CloseMode
+    public static final int Widget_AppCompat_Light_ActionButton_Overflow
+    public static final int Widget_AppCompat_Light_ActionMode_Inverse
+    public static final int Widget_AppCompat_Light_ActivityChooserView
+    public static final int Widget_AppCompat_Light_AutoCompleteTextView
+    public static final int Widget_AppCompat_Light_DropDownItem_Spinner
+    public static final int Widget_AppCompat_Light_ListPopupWindow
+    public static final int Widget_AppCompat_Light_ListView_DropDown
+    public static final int Widget_AppCompat_Light_PopupMenu
+    public static final int Widget_AppCompat_Light_PopupMenu_Overflow
+    public static final int Widget_AppCompat_Light_SearchView
+    public static final int Widget_AppCompat_Light_Spinner_DropDown_ActionBar
+    public static final int Widget_AppCompat_ListMenuView
+    public static final int Widget_AppCompat_ListPopupWindow
+    public static final int Widget_AppCompat_ListView
+    public static final int Widget_AppCompat_ListView_DropDown
+    public static final int Widget_AppCompat_ListView_Menu
+    public static final int Widget_AppCompat_PopupMenu
+    public static final int Widget_AppCompat_PopupMenu_Overflow
+    public static final int Widget_AppCompat_PopupWindow
+    public static final int Widget_AppCompat_ProgressBar
+    public static final int Widget_AppCompat_ProgressBar_Horizontal
+    public static final int Widget_AppCompat_RatingBar
+    public static final int Widget_AppCompat_RatingBar_Indicator
+    public static final int Widget_AppCompat_RatingBar_Small
+    public static final int Widget_AppCompat_SearchView
+    public static final int Widget_AppCompat_SearchView_ActionBar
+    public static final int Widget_AppCompat_SeekBar
+    public static final int Widget_AppCompat_SeekBar_Discrete
+    public static final int Widget_AppCompat_Spinner
+    public static final int Widget_AppCompat_Spinner_DropDown
+    public static final int Widget_AppCompat_Spinner_DropDown_ActionBar
+    public static final int Widget_AppCompat_Spinner_Underlined
+    public static final int Widget_AppCompat_TextView
+    public static final int Widget_AppCompat_TextView_SpinnerItem
+    public static final int Widget_AppCompat_Toolbar
+    public static final int Widget_AppCompat_Toolbar_Button_Navigation
+    public static final int Widget_Compat_NotificationActionContainer
+    public static final int Widget_Compat_NotificationActionText
+    public static final int about_About
+    public static final int about_About_wrapper
+    public static final int about_description
+    public static final int about_groupTextAppearance
+    public static final int about_image
+    public static final int about_separator
+    public static final int about_sub_wrapper
 com.google.crypto.tink.proto.EcPointFormat
 androidx.biometric.R$array
 kotlinx.coroutines.flow.FlowKt__TransformKt$mapNotNull$$inlined$unsafeTransform$1
@@ -8777,6 +9141,7 @@ androidx.constraintlayout.motion.widget.KeyTrigger$Loader
 org.bouncycastle.jcajce.provider.asymmetric.dh.KeyAgreementSpi$DHwithSHA224CKDF
 org.bouncycastle.crypto.engines.Grainv1Engine
 org.intellij.lang.annotations.JdkConstants$InputEventMask
+com.liflymark.icytimetable.R$mipmap
 kotlinx.coroutines.channels.ChannelsKt__Channels_commonKt$lastOrNull$3
 org.bouncycastle.jcajce.spec.EdDSAParameterSpec
 android.support.v4.media.session.MediaSessionCompat$Token:
@@ -9412,7 +9777,6 @@ androidx.camera.core.impl.CameraControlInternal$1:
     public com.google.common.util.concurrent.ListenableFuture cancelFocusAndMetering()
     public com.google.common.util.concurrent.ListenableFuture setLinearZoom(float)
 org.bouncycastle.cert.bc.BcX509ExtensionUtils$SHA1DigestCalculator
-com.liflymark.normalschedule.logic.model.TimeTableBean
 org.bouncycastle.jcajce.BCFKSStoreParameter
 org.bouncycastle.math.ec.ECPoint$1
 com.google.android.material.snackbar.BaseTransientBottomBar$5
@@ -9445,7 +9809,6 @@ com.liflymark.normalschedule.ui.import_course.CourseViewModel:
     public static final synthetic void access$setPassword$p(com.liflymark.normalschedule.ui.import_course.CourseViewModel,java.lang.String)
     public static final synthetic void access$setYzm$p(com.liflymark.normalschedule.ui.import_course.CourseViewModel,java.lang.String)
     public static final synthetic void access$setId$p(com.liflymark.normalschedule.ui.import_course.CourseViewModel,java.lang.String)
-    public final androidx.lifecycle.LiveData getCourseNewLiveData()
     public final androidx.lifecycle.LiveData getInsertCourseLiveData()
     public final androidx.lifecycle.LiveData getDeleteCourseLiveData()
     public final void refreshId()
@@ -9617,7 +9980,6 @@ androidx.recyclerview.widget.PagerSnapHelper:
 com.google.crypto.tink.shaded.protobuf.AbstractMessageLite$Builder$LimitedInputStream
 androidx.core.database.sqlite.SQLiteCursorCompat
 org.bouncycastle.jcajce.provider.digest.SHA512
-com.liflymark.normalschedule.logic.model.Structure
 org.bouncycastle.jcajce.provider.symmetric.AES$1
 org.bouncycastle.eac.jcajce.NamedEACHelper
 androidx.legacy.v4.R$dimen
@@ -10524,13 +10886,6 @@ org.bouncycastle.pqc.jcajce.provider.mceliece.McElieceKeyFactorySpi:
     public java.security.PublicKey generatePublic(org.bouncycastle.asn1.x509.SubjectPublicKeyInfo)
     public java.security.PrivateKey generatePrivate(org.bouncycastle.asn1.pkcs.PrivateKeyInfo)
     public static final java.lang.String OID
-com.liflymark.normalschedule.logic.model.Grade:
-    public void <init>(java.lang.String,java.util.List)
-    public static synthetic com.liflymark.normalschedule.logic.model.Grade copy$default(com.liflymark.normalschedule.logic.model.Grade,java.lang.String,java.util.List,int,java.lang.Object)
-    public final java.lang.String getProject()
-    public final java.lang.String component1()
-    public final java.util.List component2()
-    public final com.liflymark.normalschedule.logic.model.Grade copy(java.lang.String,java.util.List)
 androidx.slidingpanelayout.R$style
 com.google.android.material.chip.ChipDrawable:
     public static com.google.android.material.chip.ChipDrawable createFromResource(android.content.Context,int)
@@ -11193,6 +11548,285 @@ org.bouncycastle.jcajce.provider.symmetric.CAST5$CBC
 kotlin.properties.PropertyDelegateProvider
 org.bouncycastle.math.ec.custom.sec.SecP160R2FieldElement
 kotlinx.coroutines.sync.MutexImpl$registerSelectClause2$$inlined$addLastIf$1
+mehdi.sakout.aboutpage.R$attr:
+    private void <init>()
+    public static final int actionBarDivider
+    public static final int actionBarItemBackground
+    public static final int actionBarPopupTheme
+    public static final int actionBarSize
+    public static final int actionBarSplitStyle
+    public static final int actionBarStyle
+    public static final int actionBarTabBarStyle
+    public static final int actionBarTabStyle
+    public static final int actionBarTabTextStyle
+    public static final int actionBarTheme
+    public static final int actionBarWidgetTheme
+    public static final int actionButtonStyle
+    public static final int actionDropDownStyle
+    public static final int actionLayout
+    public static final int actionMenuTextAppearance
+    public static final int actionMenuTextColor
+    public static final int actionModeBackground
+    public static final int actionModeCloseButtonStyle
+    public static final int actionModeCloseDrawable
+    public static final int actionModeCopyDrawable
+    public static final int actionModeCutDrawable
+    public static final int actionModeFindDrawable
+    public static final int actionModePasteDrawable
+    public static final int actionModePopupWindowStyle
+    public static final int actionModeSelectAllDrawable
+    public static final int actionModeShareDrawable
+    public static final int actionModeSplitBackground
+    public static final int actionModeStyle
+    public static final int actionModeWebSearchDrawable
+    public static final int actionOverflowButtonStyle
+    public static final int actionOverflowMenuStyle
+    public static final int actionProviderClass
+    public static final int actionViewClass
+    public static final int activityChooserViewStyle
+    public static final int alertDialogButtonGroupStyle
+    public static final int alertDialogCenterButtons
+    public static final int alertDialogStyle
+    public static final int alertDialogTheme
+    public static final int allowStacking
+    public static final int alpha
+    public static final int alphabeticModifiers
+    public static final int arrowHeadLength
+    public static final int arrowShaftLength
+    public static final int autoCompleteTextViewStyle
+    public static final int autoSizeMaxTextSize
+    public static final int autoSizeMinTextSize
+    public static final int autoSizePresetSizes
+    public static final int autoSizeStepGranularity
+    public static final int autoSizeTextType
+    public static final int background
+    public static final int backgroundSplit
+    public static final int backgroundStacked
+    public static final int backgroundTint
+    public static final int backgroundTintMode
+    public static final int barLength
+    public static final int borderlessButtonStyle
+    public static final int buttonBarButtonStyle
+    public static final int buttonBarNegativeButtonStyle
+    public static final int buttonBarNeutralButtonStyle
+    public static final int buttonBarPositiveButtonStyle
+    public static final int buttonBarStyle
+    public static final int buttonCompat
+    public static final int buttonGravity
+    public static final int buttonIconDimen
+    public static final int buttonPanelSideLayout
+    public static final int buttonStyle
+    public static final int buttonStyleSmall
+    public static final int buttonTint
+    public static final int buttonTintMode
+    public static final int checkboxStyle
+    public static final int checkedTextViewStyle
+    public static final int closeIcon
+    public static final int closeItemLayout
+    public static final int collapseContentDescription
+    public static final int collapseIcon
+    public static final int color
+    public static final int colorAccent
+    public static final int colorBackgroundFloating
+    public static final int colorButtonNormal
+    public static final int colorControlActivated
+    public static final int colorControlHighlight
+    public static final int colorControlNormal
+    public static final int colorError
+    public static final int colorPrimary
+    public static final int colorPrimaryDark
+    public static final int colorSwitchThumbNormal
+    public static final int commitIcon
+    public static final int contentDescription
+    public static final int contentInsetEnd
+    public static final int contentInsetEndWithActions
+    public static final int contentInsetLeft
+    public static final int contentInsetRight
+    public static final int contentInsetStart
+    public static final int contentInsetStartWithNavigation
+    public static final int controlBackground
+    public static final int customNavigationLayout
+    public static final int defaultQueryHint
+    public static final int dialogCornerRadius
+    public static final int dialogPreferredPadding
+    public static final int dialogTheme
+    public static final int displayOptions
+    public static final int divider
+    public static final int dividerHorizontal
+    public static final int dividerPadding
+    public static final int dividerVertical
+    public static final int drawableBottomCompat
+    public static final int drawableEndCompat
+    public static final int drawableLeftCompat
+    public static final int drawableRightCompat
+    public static final int drawableSize
+    public static final int drawableStartCompat
+    public static final int drawableTint
+    public static final int drawableTintMode
+    public static final int drawableTopCompat
+    public static final int drawerArrowStyle
+    public static final int dropDownListViewStyle
+    public static final int dropdownListPreferredItemHeight
+    public static final int editTextBackground
+    public static final int editTextColor
+    public static final int editTextStyle
+    public static final int elevation
+    public static final int expandActivityOverflowButtonDrawable
+    public static final int firstBaselineToTopHeight
+    public static final int font
+    public static final int fontFamily
+    public static final int fontProviderAuthority
+    public static final int fontProviderCerts
+    public static final int fontProviderFetchStrategy
+    public static final int fontProviderFetchTimeout
+    public static final int fontProviderPackage
+    public static final int fontProviderQuery
+    public static final int fontStyle
+    public static final int fontVariationSettings
+    public static final int fontWeight
+    public static final int gapBetweenBars
+    public static final int goIcon
+    public static final int height
+    public static final int hideOnContentScroll
+    public static final int homeAsUpIndicator
+    public static final int homeLayout
+    public static final int icon
+    public static final int iconTint
+    public static final int iconTintMode
+    public static final int iconifiedByDefault
+    public static final int imageButtonStyle
+    public static final int indeterminateProgressStyle
+    public static final int initialActivityCount
+    public static final int isLightTheme
+    public static final int itemPadding
+    public static final int lastBaselineToBottomHeight
+    public static final int layout
+    public static final int lineHeight
+    public static final int listChoiceBackgroundIndicator
+    public static final int listChoiceIndicatorMultipleAnimated
+    public static final int listChoiceIndicatorSingleAnimated
+    public static final int listDividerAlertDialog
+    public static final int listItemLayout
+    public static final int listLayout
+    public static final int listMenuViewStyle
+    public static final int listPopupWindowStyle
+    public static final int listPreferredItemHeight
+    public static final int listPreferredItemHeightLarge
+    public static final int listPreferredItemHeightSmall
+    public static final int listPreferredItemPaddingEnd
+    public static final int listPreferredItemPaddingLeft
+    public static final int listPreferredItemPaddingRight
+    public static final int listPreferredItemPaddingStart
+    public static final int logo
+    public static final int logoDescription
+    public static final int maxButtonHeight
+    public static final int measureWithLargestChild
+    public static final int menu
+    public static final int multiChoiceItemLayout
+    public static final int navigationContentDescription
+    public static final int navigationIcon
+    public static final int navigationMode
+    public static final int numericModifiers
+    public static final int overlapAnchor
+    public static final int paddingBottomNoButtons
+    public static final int paddingEnd
+    public static final int paddingStart
+    public static final int paddingTopNoTitle
+    public static final int panelBackground
+    public static final int panelMenuListTheme
+    public static final int panelMenuListWidth
+    public static final int popupMenuStyle
+    public static final int popupTheme
+    public static final int popupWindowStyle
+    public static final int preserveIconSpacing
+    public static final int progressBarPadding
+    public static final int progressBarStyle
+    public static final int queryBackground
+    public static final int queryHint
+    public static final int radioButtonStyle
+    public static final int ratingBarStyle
+    public static final int ratingBarStyleIndicator
+    public static final int ratingBarStyleSmall
+    public static final int searchHintIcon
+    public static final int searchIcon
+    public static final int searchViewStyle
+    public static final int seekBarStyle
+    public static final int selectableItemBackgroundBorderless
+    public static final int showAsAction
+    public static final int showDividers
+    public static final int showText
+    public static final int showTitle
+    public static final int singleChoiceItemLayout
+    public static final int spinBars
+    public static final int spinnerDropDownItemStyle
+    public static final int spinnerStyle
+    public static final int splitTrack
+    public static final int srcCompat
+    public static final int state_above_anchor
+    public static final int subMenuArrow
+    public static final int submitBackground
+    public static final int subtitle
+    public static final int subtitleTextAppearance
+    public static final int subtitleTextColor
+    public static final int subtitleTextStyle
+    public static final int suggestionRowLayout
+    public static final int switchMinWidth
+    public static final int switchPadding
+    public static final int switchStyle
+    public static final int switchTextAppearance
+    public static final int textAllCaps
+    public static final int textAppearanceLargePopupMenu
+    public static final int textAppearanceListItem
+    public static final int textAppearanceListItemSecondary
+    public static final int textAppearanceListItemSmall
+    public static final int textAppearancePopupMenuHeader
+    public static final int textAppearanceSearchResultSubtitle
+    public static final int textAppearanceSearchResultTitle
+    public static final int textAppearanceSmallPopupMenu
+    public static final int textColorAlertDialogListItem
+    public static final int textColorSearchUrl
+    public static final int textLocale
+    public static final int theme
+    public static final int thickness
+    public static final int thumbTextPadding
+    public static final int thumbTint
+    public static final int thumbTintMode
+    public static final int tickMark
+    public static final int tickMarkTint
+    public static final int tickMarkTintMode
+    public static final int tint
+    public static final int tintMode
+    public static final int title
+    public static final int titleMargin
+    public static final int titleMarginBottom
+    public static final int titleMarginEnd
+    public static final int titleMarginStart
+    public static final int titleMarginTop
+    public static final int titleMargins
+    public static final int titleTextAppearance
+    public static final int titleTextColor
+    public static final int titleTextStyle
+    public static final int toolbarNavigationButtonStyle
+    public static final int toolbarStyle
+    public static final int tooltipForegroundColor
+    public static final int tooltipFrameBackground
+    public static final int tooltipText
+    public static final int track
+    public static final int trackTint
+    public static final int trackTintMode
+    public static final int ttcIndex
+    public static final int viewInflaterClass
+    public static final int voiceIcon
+    public static final int windowActionBar
+    public static final int windowActionBarOverlay
+    public static final int windowActionModeOverlay
+    public static final int windowFixedHeightMajor
+    public static final int windowFixedHeightMinor
+    public static final int windowFixedWidthMajor
+    public static final int windowFixedWidthMinor
+    public static final int windowMinWidthMajor
+    public static final int windowMinWidthMinor
+    public static final int windowNoTitle
 androidx.navigation.fragment.R$style
 org.bouncycastle.x509.CertPathReviewerException
 org.bouncycastle.asn1.teletrust.TeleTrusTNamedCurves$10
@@ -11371,12 +12005,6 @@ androidx.collection.LruCacheKt$lruCache$2
 com.luck.picture.lib.immersive.ImmersiveManage:
     public void <init>()
 org.bouncycastle.jcajce.provider.keystore.pkcs12.PKCS12KeyStoreSpi$DefPKCS12KeyStore
-com.liflymark.normalschedule.logic.model.ScoreResponse:
-    public void <init>(java.util.List,java.lang.String)
-    public static synthetic com.liflymark.normalschedule.logic.model.ScoreResponse copy$default(com.liflymark.normalschedule.logic.model.ScoreResponse,java.util.List,java.lang.String,int,java.lang.Object)
-    public final java.util.List component1()
-    public final java.lang.String component2()
-    public final com.liflymark.normalschedule.logic.model.ScoreResponse copy(java.util.List,java.lang.String)
 org.bouncycastle.crypto.prng.BasicEntropySourceProvider$1
 org.bouncycastle.jcajce.provider.asymmetric.ec.SignatureSpi$ecNR256
 androidx.annotation.experimental.UseExperimental
@@ -11923,6 +12551,10 @@ kotlinx.coroutines.flow.FlowKt__ZipKt$combineUnsafe$$inlined$unsafeFlow$2$1
 org.bouncycastle.jcajce.provider.symmetric.SEED$AlgParamGen
 com.google.crypto.tink.streamingaead.StreamingAeadWrapper
 com.google.android.material.progressindicator.BaseProgressIndicator$1
+com.jaredrummler.materialspinner.R$drawable:
+    private void <init>()
+    public static final int ms__menu_down
+    public static final int ms__shadow_background
 androidx.arch.core.R
 androidx.transition.Slide$4
 org.bouncycastle.asn1.crmf.CertId
@@ -12785,6 +13417,7 @@ androidx.cardview.widget.CardView:
 androidx.camera.lifecycle.R$drawable
 org.bouncycastle.crypto.modes.ChaCha20Poly1305$State
 org.bouncycastle.crypto.params.ParametersWithSBox
+com.jaredrummler.materialspinner.R
 kotlin.sequences.FlatteningSequence
 org.bouncycastle.jcajce.provider.symmetric.PBEPBKDF2$Mappings
 kotlin.concurrent.TimersKt
@@ -13118,6 +13751,7 @@ androidx.appcompat.resources.R$attr
 org.bouncycastle.mozilla.jcajce.JcaSignedPublicKeyAndChallenge
 org.bouncycastle.asn1.cms.ContentInfo
 org.bouncycastle.asn1.pkcs.DHParameter
+mehdi.sakout.aboutpage.R$bool
 kotlinx.coroutines.flow.internal.NoOpContinuation
 androidx.biometric.BiometricFragment$4
 com.google.crypto.tink.Registry$1
@@ -14441,6 +15075,7 @@ kotlinx.coroutines.channels.AbstractChannelKt
 co.nstant.in.cbor.model.SpecialType
 org.bouncycastle.dvcs.DVCSRequest
 okio.HashingSource
+mehdi.sakout.aboutpage.BuildConfig
 org.bouncycastle.asn1.x509.qualified.RFC3739QCObjectIdentifiers
 org.bouncycastle.crypto.params.ECDomainParameters
 org.bouncycastle.asn1.misc.NetscapeRevocationURL
@@ -15289,6 +15924,26 @@ org.bouncycastle.jcajce.provider.asymmetric.ec.SignatureSpi$ecDetDSA384
 org.bouncycastle.asn1.cmp.PKIHeaderBuilder
 org.bouncycastle.math.ec.custom.djb.Curve25519FieldElement
 org.bouncycastle.pqc.crypto.ExchangePair
+mehdi.sakout.aboutpage.AboutPage:
+    public mehdi.sakout.aboutpage.AboutPage setCustomFont(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addEmail(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addEmail(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addFacebook(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addFacebook(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addTwitter(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addTwitter(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addPlayStore(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addPlayStore(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addYoutube(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addYoutube(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addInstagram(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addInstagram(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addGitHub(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addGitHub(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addWebsite(java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage addWebsite(java.lang.String,java.lang.String)
+    public mehdi.sakout.aboutpage.AboutPage setImage(int)
+    public mehdi.sakout.aboutpage.AboutPage addGroup(java.lang.String)
 androidx.camera.core.ImageReaderFormatRecommender$FormatCombo
 com.google.android.material.bottomappbar.BottomAppBar$2
 androidx.dynamicanimation.animation.DynamicAnimation$OnAnimationEndListener
@@ -17052,6 +17707,18 @@ org.bouncycastle.crypto.util.DigestFactory:
     public static org.bouncycastle.crypto.Digest createSHA3_512()
 com.google.android.material.internal.NavigationMenuView:
     public void <init>(android.content.Context)
+mehdi.sakout.aboutpage.Element:
+    public void <init>(java.lang.String,java.lang.Integer)
+    public mehdi.sakout.aboutpage.Element setGravity(java.lang.Integer)
+    public mehdi.sakout.aboutpage.Element setIconDrawable(java.lang.Integer)
+    public mehdi.sakout.aboutpage.Element setIconTint(java.lang.Integer)
+    public mehdi.sakout.aboutpage.Element setIconNightTint(java.lang.Integer)
+    public java.lang.String getValue()
+    public mehdi.sakout.aboutpage.Element setValue(java.lang.String)
+    public mehdi.sakout.aboutpage.Element setIntent(android.content.Intent)
+    public mehdi.sakout.aboutpage.Element setAutoApplyIconTint(java.lang.Boolean)
+    public void setSkipTint(java.lang.Boolean)
+    private java.lang.String value
 org.bouncycastle.asn1.DLBitString:
     public static org.bouncycastle.asn1.ASN1BitString getInstance(java.lang.Object)
     public static org.bouncycastle.asn1.ASN1BitString getInstance(org.bouncycastle.asn1.ASN1TaggedObject,boolean)
@@ -17612,10 +18279,10 @@ org.bouncycastle.crypto.SkippingCipher
 kotlinx.coroutines.flow.internal.FlowExceptions_commonKt
 org.bouncycastle.pkcs.bc.BcPKCS12PBEInputDecryptorProviderBuilder$1$1
 org.bouncycastle.cms.CMSEnvelopedData
+com.google.android.material.slider.Slider
 okhttp3.internal.http.HttpDate:
     private void <init>()
     public static final long MAX_DATE
-com.google.android.material.slider.Slider
 org.bouncycastle.cert.crmf.RegTokenControl
 org.bouncycastle.cms.KEKRecipientInfoGenerator
 org.bouncycastle.asn1.DERTaggedObject:
@@ -17653,14 +18320,6 @@ androidx.core.graphics.drawable.DrawableCompat:
 org.bouncycastle.math.Primes$1
 org.bouncycastle.jcajce.provider.asymmetric.rsa.DigestSignatureSpi$SHA3_384
 com.google.android.material.snackbar.BaseTransientBottomBar$Duration
-com.liflymark.normalschedule.logic.bean.OneByOneCourseBean:
-    public static synthetic com.liflymark.normalschedule.logic.bean.OneByOneCourseBean copy$default(com.liflymark.normalschedule.logic.bean.OneByOneCourseBean,java.lang.String,int,int,int,java.lang.String,int,java.lang.Object)
-    public final java.lang.String component1()
-    public final int component2()
-    public final int component3()
-    public final int component4()
-    public final java.lang.String component5()
-    public final com.liflymark.normalschedule.logic.bean.OneByOneCourseBean copy(java.lang.String,int,int,int,java.lang.String)
 okio.CipherSink
 org.bouncycastle.openssl.bc.BcPEMDecryptorProvider
 org.bouncycastle.util.io.pem.PemWriter
@@ -18158,6 +18817,7 @@ org.bouncycastle.math.ec.FixedPointUtil
 kotlinx.coroutines.channels.ChannelsKt__Channels_commonKt$toCollection$1
 android.support.v4.media.session.ParcelableVolumeInfo:
     public void <init>(int,int,int,int,int)
+mehdi.sakout.aboutpage.R$string
 org.bouncycastle.cms.jcajce.JceKeyAgreeAuthenticatedRecipient
 androidx.core.ktx.R$integer
 com.google.crypto.tink.subtle.EllipticCurves$EcdsaEncoding
@@ -18349,6 +19009,47 @@ org.bouncycastle.cms.CMSAuthenticatedData
 okio.internal.RealBufferedSinkKt
 org.bouncycastle.cert.dane.DANECertificateFetcher
 org.bouncycastle.jcajce.provider.symmetric.Zuc$Zuc128
+mehdi.sakout.aboutpage.R$layout:
+    private void <init>()
+    public static final int abc_action_bar_title_item
+    public static final int abc_action_bar_up_container
+    public static final int abc_action_menu_item_layout
+    public static final int abc_action_menu_layout
+    public static final int abc_action_mode_bar
+    public static final int abc_action_mode_close_item_material
+    public static final int abc_activity_chooser_view
+    public static final int abc_activity_chooser_view_list_item
+    public static final int abc_alert_dialog_button_bar_material
+    public static final int abc_alert_dialog_material
+    public static final int abc_alert_dialog_title_material
+    public static final int abc_cascading_menu_item_layout
+    public static final int abc_dialog_title_material
+    public static final int abc_expanded_menu_layout
+    public static final int abc_list_menu_item_checkbox
+    public static final int abc_list_menu_item_icon
+    public static final int abc_list_menu_item_layout
+    public static final int abc_list_menu_item_radio
+    public static final int abc_popup_menu_header_item_layout
+    public static final int abc_popup_menu_item_layout
+    public static final int abc_screen_content_include
+    public static final int abc_screen_simple
+    public static final int abc_screen_simple_overlay_action_mode
+    public static final int abc_screen_toolbar
+    public static final int abc_search_dropdown_item_icons_2line
+    public static final int abc_search_view
+    public static final int abc_select_dialog_material
+    public static final int abc_tooltip
+    public static final int custom_dialog
+    public static final int notification_action
+    public static final int notification_action_tombstone
+    public static final int notification_template_custom_big
+    public static final int notification_template_icon_group
+    public static final int notification_template_part_chronometer
+    public static final int notification_template_part_time
+    public static final int select_dialog_item_material
+    public static final int select_dialog_multichoice_material
+    public static final int select_dialog_singlechoice_material
+    public static final int support_simple_spinner_dropdown_item
 com.bigkoo.pickerview.view.WheelTime$2
 com.google.crypto.tink.proto.AesCtrKey:
     private void clearVersion()
@@ -19235,11 +19936,6 @@ kotlin.collections.ArraysKt___ArraysJvmKt:
     public void <init>()
 androidx.databinding.library.baseAdapters.DataBinderMapperImpl$InnerBrLookup
 kotlinx.coroutines.internal.LocalAtomics_commonKt
-com.liflymark.normalschedule.logic.model.IdResponse:
-    public void <init>(java.lang.String)
-    public static synthetic com.liflymark.normalschedule.logic.model.IdResponse copy$default(com.liflymark.normalschedule.logic.model.IdResponse,java.lang.String,int,java.lang.Object)
-    public final java.lang.String component1()
-    public final com.liflymark.normalschedule.logic.model.IdResponse copy(java.lang.String)
 androidx.camera.core.ImageReaderProxys
 kotlinx.coroutines.channels.ChannelsKt
 androidx.vectordrawable.R$layout
@@ -19722,6 +20418,7 @@ com.google.android.material.color.MaterialColors:
     public static final float ALPHA_DISABLED
     public static final float ALPHA_LOW
     public static final float ALPHA_DISABLED_LOW
+mehdi.sakout.aboutpage.R$anim
 org.bouncycastle.jce.spec.GOST3410PrivateKeySpec
 androidx.biometric.FingerprintDialogFragment$3
 kotlin.jvm.internal.markers.KMutableCollection
@@ -19989,7 +20686,6 @@ es.dmoral.toasty.Toasty:
     public static android.widget.Toast success(android.content.Context,int,int)
     public static android.widget.Toast success(android.content.Context,int,int,boolean)
     public static android.widget.Toast error(android.content.Context,int)
-    public static android.widget.Toast error(android.content.Context,java.lang.CharSequence)
     public static android.widget.Toast error(android.content.Context,int,int)
     public static android.widget.Toast error(android.content.Context,int,int,boolean)
     public static android.widget.Toast custom(android.content.Context,int,android.graphics.drawable.Drawable,int,boolean)
@@ -20188,6 +20884,9 @@ androidx.databinding.adapters.SearchViewBindingAdapter$1
 org.bouncycastle.jcajce.provider.symmetric.SipHash$KeyGen
 org.bouncycastle.pqc.crypto.lms.HSSKeyPairGenerator
 androidx.core.view.MenuKt$children$1
+mehdi.sakout.aboutpage.AboutPageUtils:
+    void <init>()
+    static java.lang.Boolean isAppInstalled(android.content.Context,java.lang.String)
 org.bouncycastle.jcajce.provider.digest.Keccak$DigestKeccak
 androidx.lifecycle.LiveDataKt
 kotlinx.coroutines.channels.ChannelsKt__Channels_commonKt$reduceIndexed$1
@@ -20366,6 +21065,129 @@ com.bumptech.glide.load.model.StreamEncoder:
     private static final java.lang.String TAG
 androidx.core.content.pm.ShortcutManagerCompat$1
 androidx.core.app.JobIntentService$CompatWorkItem
+mehdi.sakout.aboutpage.R$dimen:
+    private void <init>()
+    public static final int abc_action_bar_content_inset_material
+    public static final int abc_action_bar_content_inset_with_nav
+    public static final int abc_action_bar_default_height_material
+    public static final int abc_action_bar_default_padding_end_material
+    public static final int abc_action_bar_default_padding_start_material
+    public static final int abc_action_bar_elevation_material
+    public static final int abc_action_bar_icon_vertical_padding_material
+    public static final int abc_action_bar_overflow_padding_end_material
+    public static final int abc_action_bar_overflow_padding_start_material
+    public static final int abc_action_bar_stacked_max_height
+    public static final int abc_action_bar_stacked_tab_max_width
+    public static final int abc_action_bar_subtitle_bottom_margin_material
+    public static final int abc_action_bar_subtitle_top_margin_material
+    public static final int abc_action_button_min_height_material
+    public static final int abc_action_button_min_width_material
+    public static final int abc_action_button_min_width_overflow_material
+    public static final int abc_alert_dialog_button_bar_height
+    public static final int abc_alert_dialog_button_dimen
+    public static final int abc_button_inset_horizontal_material
+    public static final int abc_button_inset_vertical_material
+    public static final int abc_button_padding_horizontal_material
+    public static final int abc_button_padding_vertical_material
+    public static final int abc_cascading_menus_min_smallest_width
+    public static final int abc_config_prefDialogWidth
+    public static final int abc_control_corner_material
+    public static final int abc_control_inset_material
+    public static final int abc_control_padding_material
+    public static final int abc_dialog_corner_radius_material
+    public static final int abc_dialog_fixed_height_major
+    public static final int abc_dialog_fixed_height_minor
+    public static final int abc_dialog_fixed_width_major
+    public static final int abc_dialog_fixed_width_minor
+    public static final int abc_dialog_list_padding_bottom_no_buttons
+    public static final int abc_dialog_list_padding_top_no_title
+    public static final int abc_dialog_min_width_major
+    public static final int abc_dialog_min_width_minor
+    public static final int abc_dialog_padding_material
+    public static final int abc_dialog_padding_top_material
+    public static final int abc_dialog_title_divider_material
+    public static final int abc_disabled_alpha_material_dark
+    public static final int abc_disabled_alpha_material_light
+    public static final int abc_dropdownitem_icon_width
+    public static final int abc_dropdownitem_text_padding_left
+    public static final int abc_dropdownitem_text_padding_right
+    public static final int abc_edit_text_inset_bottom_material
+    public static final int abc_edit_text_inset_horizontal_material
+    public static final int abc_edit_text_inset_top_material
+    public static final int abc_floating_window_z
+    public static final int abc_list_item_height_large_material
+    public static final int abc_list_item_height_material
+    public static final int abc_list_item_height_small_material
+    public static final int abc_list_item_padding_horizontal_material
+    public static final int abc_panel_menu_list_width
+    public static final int abc_progress_bar_height_material
+    public static final int abc_search_view_preferred_height
+    public static final int abc_search_view_preferred_width
+    public static final int abc_seekbar_track_background_height_material
+    public static final int abc_seekbar_track_progress_height_material
+    public static final int abc_select_dialog_padding_start_material
+    public static final int abc_switch_padding
+    public static final int abc_text_size_body_1_material
+    public static final int abc_text_size_body_2_material
+    public static final int abc_text_size_button_material
+    public static final int abc_text_size_caption_material
+    public static final int abc_text_size_display_1_material
+    public static final int abc_text_size_display_2_material
+    public static final int abc_text_size_display_3_material
+    public static final int abc_text_size_display_4_material
+    public static final int abc_text_size_headline_material
+    public static final int abc_text_size_large_material
+    public static final int abc_text_size_medium_material
+    public static final int abc_text_size_menu_header_material
+    public static final int abc_text_size_menu_material
+    public static final int abc_text_size_small_material
+    public static final int abc_text_size_subhead_material
+    public static final int abc_text_size_subtitle_material_toolbar
+    public static final int abc_text_size_title_material
+    public static final int abc_text_size_title_material_toolbar
+    public static final int about_description_text_size
+    public static final int about_group_item_text_size
+    public static final int about_group_text_padding
+    public static final int about_item_text_size
+    public static final int compat_button_inset_horizontal_material
+    public static final int compat_button_inset_vertical_material
+    public static final int compat_button_padding_horizontal_material
+    public static final int compat_button_padding_vertical_material
+    public static final int compat_control_corner_material
+    public static final int compat_notification_large_icon_max_height
+    public static final int compat_notification_large_icon_max_width
+    public static final int disabled_alpha_material_dark
+    public static final int disabled_alpha_material_light
+    public static final int highlight_alpha_material_colored
+    public static final int highlight_alpha_material_dark
+    public static final int highlight_alpha_material_light
+    public static final int hint_alpha_material_dark
+    public static final int hint_alpha_material_light
+    public static final int hint_pressed_alpha_material_dark
+    public static final int hint_pressed_alpha_material_light
+    public static final int notification_action_icon_size
+    public static final int notification_action_text_size
+    public static final int notification_big_circle_margin
+    public static final int notification_content_margin_start
+    public static final int notification_large_icon_height
+    public static final int notification_large_icon_width
+    public static final int notification_main_column_padding_top
+    public static final int notification_media_narrow_margin
+    public static final int notification_right_icon_size
+    public static final int notification_right_side_padding_top
+    public static final int notification_small_icon_background_padding
+    public static final int notification_small_icon_size_as_large
+    public static final int notification_subtext_size
+    public static final int notification_top_pad
+    public static final int notification_top_pad_large_text
+    public static final int tooltip_corner_radius
+    public static final int tooltip_horizontal_padding
+    public static final int tooltip_margin
+    public static final int tooltip_precise_anchor_extra_offset
+    public static final int tooltip_precise_anchor_threshold
+    public static final int tooltip_vertical_padding
+    public static final int tooltip_y_offset_non_touch
+    public static final int tooltip_y_offset_touch
 org.bouncycastle.jcajce.provider.asymmetric.x509.X509CertificateInternal
 org.bouncycastle.openssl.bc.PEMUtilities
 org.bouncycastle.math.ec.custom.sec.SecP192R1Curve
@@ -20631,12 +21453,6 @@ org.bouncycastle.jcajce.provider.symmetric.ARC4$Mappings
 androidx.constraintlayout.motion.widget.TransitionAdapter
 androidx.exifinterface.media.ExifInterface$OsApi21Impl:
     private void <init>()
-com.liflymark.normalschedule.logic.model.CourseResponse:
-    public void <init>(java.util.List,java.lang.String)
-    public static synthetic com.liflymark.normalschedule.logic.model.CourseResponse copy$default(com.liflymark.normalschedule.logic.model.CourseResponse,java.util.List,java.lang.String,int,java.lang.Object)
-    public final java.util.List component1()
-    public final java.lang.String component2()
-    public final com.liflymark.normalschedule.logic.model.CourseResponse copy(java.util.List,java.lang.String)
 androidx.camera.core.ViewPort$ScaleType
 com.google.android.material.bottomsheet.BottomSheetDialog$4
 androidx.core.content.SharedPreferencesKt
@@ -20710,6 +21526,8 @@ org.bouncycastle.cms.CMSEnvelopedDataStreamGenerator
 org.bouncycastle.jcajce.PBKDF2Key
 androidx.viewpager2.widget.ViewPager2$PageAwareAccessibilityProvider$2
 org.bouncycastle.jcajce.provider.asymmetric.ECGOST
+com.jaredrummler.materialspinner.R$dimen:
+    private void <init>()
 org.bouncycastle.math.ec.tools.DiscoverEndomorphisms
 com.chad.library.adapter.base.binder.QuickItemBinder
 androidx.camera.core.Preview$1:
@@ -22876,6 +23694,7 @@ kotlinx.coroutines.channels.ConflatedChannel
 org.bouncycastle.asn1.x509.AttCertValidityPeriod
 org.bouncycastle.jcajce.provider.symmetric.DSTU7624$AlgParamGen512
 androidx.viewpager2.widget.AnimateLayoutChangeDetector
+mehdi.sakout.aboutpage.R$styleable
 org.bouncycastle.jcajce.provider.asymmetric.rsa.AlgorithmParametersSpi$PSS
 kotlin.ranges.UIntProgressionIterator
 org.bouncycastle.pqc.jcajce.provider.mceliece.BCMcElieceCCA2PrivateKey:
@@ -22894,6 +23713,8 @@ kotlinx.coroutines.flow.FlowKt__ReduceKt$fold$$inlined$collect$1$1
 androidx.legacy.coreutils.R$color
 androidx.camera.view.preview.transform.ScaleTransform$FloatBiFunction
 kotlinx.coroutines.SelectAwaitOnCompletion
+com.jaredrummler.materialspinner.Utils:
+    void <init>()
 kotlin.io.LinesSequence
 androidx.camera.core.ImageAnalysis$BackpressureStrategy
 com.google.android.material.R$id:
@@ -23663,17 +24484,6 @@ com.google.crypto.tink.streamingaead.StreamingAeadUtil$1
 androidx.core.provider.FontsContractCompat$4$4
 com.google.crypto.tink.shaded.protobuf.MapEntryLite$Metadata:
     public void <init>(com.google.crypto.tink.shaded.protobuf.WireFormat$FieldType,java.lang.Object,com.google.crypto.tink.shaded.protobuf.WireFormat$FieldType,java.lang.Object)
-com.liflymark.normalschedule.logic.model.AllCourse:
-    public static synthetic com.liflymark.normalschedule.logic.model.AllCourse copy$default(com.liflymark.normalschedule.logic.model.AllCourse,java.lang.String,int,int,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,int,java.lang.Object)
-    public final java.lang.String component1()
-    public final int component2()
-    public final int component3()
-    public final java.lang.String component4()
-    public final int component5()
-    public final java.lang.String component6()
-    public final java.lang.String component7()
-    public final java.lang.String component8()
-    public final com.liflymark.normalschedule.logic.model.AllCourse copy(java.lang.String,int,int,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String)
 com.bumptech.glide.load.engine.GlideException:
     public java.lang.Exception getOrigin()
     private static final long serialVersionUID
@@ -24460,6 +25270,7 @@ org.bouncycastle.pqc.jcajce.spec.LMSHSSParameterSpec
 com.google.android.material.transition.MaterialContainerTransform
 com.zackratos.ultimatebarx.library.bean.BarConfig:
     public static synthetic com.zackratos.ultimatebarx.library.bean.BarConfig copy$default(com.zackratos.ultimatebarx.library.bean.BarConfig,boolean,int,int,int,boolean,int,java.lang.Object)
+    public final com.zackratos.ultimatebarx.library.bean.BarConfig color(int)
     public final com.zackratos.ultimatebarx.library.bean.BarConfig drawableRes(int)
     public final boolean component1$library_release()
     public final int component2$library_release()
@@ -25330,6 +26141,7 @@ org.bouncycastle.asn1.gm.GMObjectIdentifiers
 org.bouncycastle.math.ec.custom.sec.SecP224K1Field
 org.bouncycastle.asn1.isismtt.x509.DeclarationOfMajority
 org.bouncycastle.asn1.x9.X9FieldID
+mehdi.sakout.aboutpage.R
 org.bouncycastle.jcajce.provider.digest.Skein$Digest_1024_1024
 org.bouncycastle.jcajce.provider.symmetric.Shacal2$CBC
 androidx.viewpager2.widget.MarginPageTransformer
@@ -26642,6 +27454,7 @@ kotlin.sequences.SequencesKt___SequencesKt$onEachIndexed$1
 org.bouncycastle.jcajce.provider.asymmetric.edec.KeyAgreementSpi$X25519withSHA384CKDF
 org.bouncycastle.cert.dane.DANEEntrySelectorFactory
 org.bouncycastle.asn1.cmp.PKIStatus
+com.jaredrummler.materialspinner.R$attr
 org.bouncycastle.jcajce.provider.asymmetric.rsa.CipherSpi
 org.bouncycastle.jcajce.provider.digest.Skein$HashMac_512_256
 org.bouncycastle.crypto.modes.AEADBlockCipher
@@ -30847,6 +31660,9 @@ androidx.camera.core.impl.utils.futures.package-info
 androidx.media.MediaBrowserServiceCompat$MediaBrowserServiceImplApi21$2
 androidx.transition.ChangeScroll
 org.bouncycastle.dvcs.CCPDRequestBuilder
+com.jaredrummler.materialspinner.MaterialSpinner:
+    public void <init>(android.content.Context)
+    public void <init>(android.content.Context,android.util.AttributeSet,int)
 org.bouncycastle.jcajce.provider.asymmetric.util.ECUtil
 org.bouncycastle.crypto.util.ScryptConfig$Builder
 androidx.appcompat.widget.ActionMenuView$LayoutParams:
@@ -31129,8 +31945,6 @@ androidx.collection.ArrayMap:
     public boolean removeAll(java.util.Collection)
 org.bouncycastle.asn1.x509.X509DefaultEntryConverter
 androidx.media.MediaBrowserServiceCompat$ServiceBinderImpl
-com.liflymark.normalschedule.logic.utils.Dialog:
-    public final void getSelectDepartmentAndClass(android.content.Context)
 com.google.android.material.transformation.TransformationChildCard:
     public void <init>(android.content.Context)
     public void <init>(android.content.Context,android.util.AttributeSet)
@@ -32420,6 +33234,7 @@ org.bouncycastle.asn1.ASN1ObjectIdentifier:
     private static final long LONG_LIMIT
 androidx.fragment.app.FragmentTabHost$SavedState
 org.bouncycastle.jce.spec.ECPublicKeySpec
+mehdi.sakout.aboutpage.R$drawable
 com.google.android.material.appbar.CollapsingToolbarLayout$2
 androidx.asynclayoutinflater.view.AsyncLayoutInflater$BasicInflater
 androidx.annotation.Nullable
@@ -33297,11 +34112,6 @@ org.bouncycastle.cms.jcajce.JcaSignerInfoVerifierBuilder$NamedHelper
 org.bouncycastle.math.ec.endo.EndoUtil
 org.bouncycastle.jcajce.provider.digest.Blake2s$Blake2s224
 co.nstant.in.cbor.encoder.AbstractEncoder
-com.liflymark.normalschedule.logic.bean.UserBackgroundBean:
-    public static synthetic com.liflymark.normalschedule.logic.bean.UserBackgroundBean copy$default(com.liflymark.normalschedule.logic.bean.UserBackgroundBean,java.lang.String,int,java.lang.Object)
-    public final void setUserBackground(java.lang.String)
-    public final java.lang.String component1()
-    public final com.liflymark.normalschedule.logic.bean.UserBackgroundBean copy(java.lang.String)
 androidx.activity.R$integer
 kotlinx.coroutines.debug.internal.DebuggerInfo
 kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3
@@ -33415,6 +34225,11 @@ androidx.cardview.R$dimen:
     public static final int cardview_default_elevation
     public static final int cardview_default_radius
 org.bouncycastle.asn1.ocsp.ResponderID
+com.jaredrummler.materialspinner.R$id:
+    private void <init>()
+    public static final int fill_parent
+    public static final int match_parent
+    public static final int wrap_content
 org.bouncycastle.jcajce.provider.digest.SM3$Digest
 org.bouncycastle.jcajce.provider.drbg.DRBG$HybridRandomProvider
 org.bouncycastle.pqc.jcajce.provider.rainbow.BCRainbowPrivateKey:
@@ -35634,6 +36449,149 @@ com.bumptech.glide.load.model.AssetUriLoader$FileDescriptorFactory:
 org.bouncycastle.jcajce.provider.asymmetric.dh.KeyAgreementSpi$DHUwithSHA384CKDF
 org.bouncycastle.jcajce.provider.symmetric.DSTU7624$AlgParamGen
 androidx.activity.result.contract.ActivityResultContracts$OpenDocument
+mehdi.sakout.aboutpage.R$id:
+    private void <init>()
+    public static final int accessibility_action_clickable_span
+    public static final int accessibility_custom_action_0
+    public static final int accessibility_custom_action_1
+    public static final int accessibility_custom_action_10
+    public static final int accessibility_custom_action_11
+    public static final int accessibility_custom_action_12
+    public static final int accessibility_custom_action_13
+    public static final int accessibility_custom_action_14
+    public static final int accessibility_custom_action_15
+    public static final int accessibility_custom_action_16
+    public static final int accessibility_custom_action_17
+    public static final int accessibility_custom_action_18
+    public static final int accessibility_custom_action_19
+    public static final int accessibility_custom_action_2
+    public static final int accessibility_custom_action_20
+    public static final int accessibility_custom_action_21
+    public static final int accessibility_custom_action_22
+    public static final int accessibility_custom_action_23
+    public static final int accessibility_custom_action_24
+    public static final int accessibility_custom_action_25
+    public static final int accessibility_custom_action_26
+    public static final int accessibility_custom_action_27
+    public static final int accessibility_custom_action_28
+    public static final int accessibility_custom_action_29
+    public static final int accessibility_custom_action_3
+    public static final int accessibility_custom_action_30
+    public static final int accessibility_custom_action_31
+    public static final int accessibility_custom_action_4
+    public static final int accessibility_custom_action_5
+    public static final int accessibility_custom_action_6
+    public static final int accessibility_custom_action_7
+    public static final int accessibility_custom_action_8
+    public static final int accessibility_custom_action_9
+    public static final int action_bar
+    public static final int action_bar_activity_content
+    public static final int action_bar_container
+    public static final int action_bar_root
+    public static final int action_bar_spinner
+    public static final int action_bar_subtitle
+    public static final int action_bar_title
+    public static final int action_container
+    public static final int action_context_bar
+    public static final int action_divider
+    public static final int action_image
+    public static final int action_menu_divider
+    public static final int action_menu_presenter
+    public static final int action_mode_bar
+    public static final int action_mode_bar_stub
+    public static final int action_mode_close_button
+    public static final int action_text
+    public static final int actions
+    public static final int activity_chooser_view_content
+    public static final int add
+    public static final int alertTitle
+    public static final int async
+    public static final int blocking
+    public static final int buttonPanel
+    public static final int checkbox
+    public static final int checked
+    public static final int chronometer
+    public static final int content
+    public static final int contentPanel
+    public static final int custom
+    public static final int customPanel
+    public static final int decor_content_parent
+    public static final int default_activity_button
+    public static final int dialog_button
+    public static final int edit_query
+    public static final int expand_activities_button
+    public static final int expanded_menu
+    public static final int forever
+    public static final int group_divider
+    public static final int home
+    public static final int icon
+    public static final int icon_group
+    public static final int info
+    public static final int italic
+    public static final int line1
+    public static final int line3
+    public static final int listMode
+    public static final int list_item
+    public static final int message
+    public static final int multiply
+    public static final int none
+    public static final int normal
+    public static final int notification_background
+    public static final int notification_main_column
+    public static final int notification_main_column_container
+    public static final int off
+    public static final int on
+    public static final int parentPanel
+    public static final int progress_circular
+    public static final int progress_horizontal
+    public static final int radio
+    public static final int right_icon
+    public static final int right_side
+    public static final int screen
+    public static final int scrollIndicatorDown
+    public static final int scrollIndicatorUp
+    public static final int scrollView
+    public static final int search_badge
+    public static final int search_bar
+    public static final int search_button
+    public static final int search_close_btn
+    public static final int search_edit_frame
+    public static final int search_go_btn
+    public static final int search_mag_icon
+    public static final int search_plate
+    public static final int search_src_text
+    public static final int search_voice_btn
+    public static final int select_dialog_listview
+    public static final int shortcut
+    public static final int spacer
+    public static final int split_action_bar
+    public static final int src_atop
+    public static final int src_in
+    public static final int src_over
+    public static final int submenuarrow
+    public static final int submit_area
+    public static final int tabMode
+    public static final int tag_accessibility_actions
+    public static final int tag_accessibility_clickable_spans
+    public static final int tag_accessibility_heading
+    public static final int tag_accessibility_pane_title
+    public static final int tag_screen_reader_focusable
+    public static final int tag_transition_group
+    public static final int tag_unhandled_key_event_manager
+    public static final int tag_unhandled_key_listeners
+    public static final int text
+    public static final int text2
+    public static final int textSpacerNoButtons
+    public static final int textSpacerNoTitle
+    public static final int time
+    public static final int title
+    public static final int titleDividerNoCustom
+    public static final int title_template
+    public static final int topPanel
+    public static final int unchecked
+    public static final int uniform
+    public static final int up
+    public static final int wrap_content
 org.bouncycastle.asn1.pkcs.CertificationRequest
 org.bouncycastle.crypto.params.ECPublicKeyParameters
 org.bouncycastle.pqc.jcajce.interfaces.XMSSPrivateKey
@@ -36524,6 +37482,101 @@ com.bumptech.glide.request.SingleRequest:
     private static final java.lang.String TAG
     private static final java.lang.String GLIDE_TAG
 org.bouncycastle.cert.crmf.jcajce.CRMFHelper$JCECallback
+mehdi.sakout.aboutpage.R$color:
+    private void <init>()
+    public static final int abc_background_cache_hint_selector_material_dark
+    public static final int abc_background_cache_hint_selector_material_light
+    public static final int abc_btn_colored_borderless_text_material
+    public static final int abc_btn_colored_text_material
+    public static final int abc_color_highlight_material
+    public static final int abc_hint_foreground_material_dark
+    public static final int abc_hint_foreground_material_light
+    public static final int abc_primary_text_disable_only_material_dark
+    public static final int abc_primary_text_disable_only_material_light
+    public static final int abc_primary_text_material_dark
+    public static final int abc_primary_text_material_light
+    public static final int abc_search_url_text
+    public static final int abc_search_url_text_normal
+    public static final int abc_search_url_text_pressed
+    public static final int abc_search_url_text_selected
+    public static final int abc_secondary_text_material_dark
+    public static final int abc_secondary_text_material_light
+    public static final int abc_tint_btn_checkable
+    public static final int abc_tint_default
+    public static final int abc_tint_edittext
+    public static final int abc_tint_seek_thumb
+    public static final int abc_tint_spinner
+    public static final int abc_tint_switch_track
+    public static final int about_description_dark_text_color
+    public static final int about_description_text_color
+    public static final int about_facebook_color
+    public static final int about_github_color
+    public static final int about_instagram_color
+    public static final int about_item_dark_text_color
+    public static final int about_item_text_color
+    public static final int about_play_store_color
+    public static final int about_twitter_color
+    public static final int about_youtube_color
+    public static final int accent_material_dark
+    public static final int accent_material_light
+    public static final int background_floating_material_dark
+    public static final int background_floating_material_light
+    public static final int background_material_dark
+    public static final int background_material_light
+    public static final int bright_foreground_disabled_material_dark
+    public static final int bright_foreground_disabled_material_light
+    public static final int bright_foreground_inverse_material_dark
+    public static final int bright_foreground_inverse_material_light
+    public static final int bright_foreground_material_dark
+    public static final int bright_foreground_material_light
+    public static final int button_material_dark
+    public static final int button_material_light
+    public static final int dim_foreground_disabled_material_dark
+    public static final int dim_foreground_disabled_material_light
+    public static final int dim_foreground_material_dark
+    public static final int dim_foreground_material_light
+    public static final int error_color_material_dark
+    public static final int error_color_material_light
+    public static final int foreground_material_dark
+    public static final int foreground_material_light
+    public static final int highlighted_text_material_dark
+    public static final int highlighted_text_material_light
+    public static final int material_blue_grey_800
+    public static final int material_blue_grey_900
+    public static final int material_blue_grey_950
+    public static final int material_deep_teal_200
+    public static final int material_deep_teal_500
+    public static final int material_grey_100
+    public static final int material_grey_300
+    public static final int material_grey_50
+    public static final int material_grey_600
+    public static final int material_grey_800
+    public static final int material_grey_850
+    public static final int material_grey_900
+    public static final int notification_action_color_filter
+    public static final int notification_icon_bg_color
+    public static final int primary_dark_material_dark
+    public static final int primary_dark_material_light
+    public static final int primary_material_dark
+    public static final int primary_material_light
+    public static final int primary_text_default_material_dark
+    public static final int primary_text_default_material_light
+    public static final int primary_text_disabled_material_dark
+    public static final int primary_text_disabled_material_light
+    public static final int ripple_material_dark
+    public static final int ripple_material_light
+    public static final int secondary_text_default_material_dark
+    public static final int secondary_text_default_material_light
+    public static final int secondary_text_disabled_material_dark
+    public static final int secondary_text_disabled_material_light
+    public static final int switch_thumb_disabled_material_dark
+    public static final int switch_thumb_disabled_material_light
+    public static final int switch_thumb_material_dark
+    public static final int switch_thumb_material_light
+    public static final int switch_thumb_normal_material_dark
+    public static final int switch_thumb_normal_material_light
+    public static final int tooltip_background_dark
+    public static final int tooltip_background_light
 org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoVerifierBuilder$ProviderHelper
 com.google.android.material.internal.ViewOverlayApi14$OverlayViewGroup
 org.bouncycastle.crypto.modes.kgcm.KGCMUtil_256
@@ -41088,9 +42141,7 @@ com.google.gson.internal.bind.util.ISO8601Utils:
     private static final java.lang.String UTC_ID
 androidx.viewpager.R$dimen
 com.liflymark.normalschedule.ui.about.AboutActivity:
-    public android.view.View _$_findCachedViewById(int)
     public void _$_clearFindViewByIdCache()
-    private java.util.HashMap _$_findViewCache
 org.bouncycastle.asn1.x9.X962Parameters
 co.nstant.in.cbor.decoder.DoublePrecisionFloatDecoder
 org.bouncycastle.crypto.encodings.ISO9796d1Encoding
@@ -41273,15 +42324,6 @@ androidx.camera.core.ImageCapture$ImageCaptureError
 org.bouncycastle.LICENSE
 androidx.navigation.ktx.R$dimen
 com.google.crypto.tink.proto.EcdsaKeyFormat$Builder
-com.liflymark.normalschedule.logic.model.ThisProjectGrade:
-    public void <init>(java.lang.String,java.lang.String,double,java.lang.String)
-    public static synthetic com.liflymark.normalschedule.logic.model.ThisProjectGrade copy$default(com.liflymark.normalschedule.logic.model.ThisProjectGrade,java.lang.String,java.lang.String,double,java.lang.String,int,java.lang.Object)
-    public final java.lang.String getTime()
-    public final java.lang.String component1()
-    public final java.lang.String component2()
-    public final double component3()
-    public final java.lang.String component4()
-    public final com.liflymark.normalschedule.logic.model.ThisProjectGrade copy(java.lang.String,java.lang.String,double,java.lang.String)
 com.google.crypto.tink.shaded.protobuf.MessageLite$Builder:
     public abstract com.google.crypto.tink.shaded.protobuf.MessageLite$Builder clear()
     public abstract com.google.crypto.tink.shaded.protobuf.MessageLite$Builder clone()
@@ -41446,27 +42488,6 @@ com.google.crypto.tink.shaded.protobuf.CodedOutputStream$ArrayEncoder:
     public final void writeLazy(java.nio.ByteBuffer)
     public void flush()
     public final int getTotalBytesWritten()
-com.liflymark.normalschedule.logic.bean.CourseBean:
-    public static synthetic com.liflymark.normalschedule.logic.bean.CourseBean copy$default(com.liflymark.normalschedule.logic.bean.CourseBean,java.lang.String,int,int,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,java.lang.Object)
-    public final void setCampusName(java.lang.String)
-    public final void setClassDay(int)
-    public final void setClassSessions(int)
-    public final void setClassWeek(java.lang.String)
-    public final void setContinuingSession(int)
-    public final void setCourseName(java.lang.String)
-    public final void setTeacher(java.lang.String)
-    public final void setTeachingBuildName(java.lang.String)
-    public final void setColor(java.lang.String)
-    public final java.lang.String component1()
-    public final int component2()
-    public final int component3()
-    public final java.lang.String component4()
-    public final int component5()
-    public final java.lang.String component6()
-    public final java.lang.String component7()
-    public final java.lang.String component8()
-    public final java.lang.String component9()
-    public final com.liflymark.normalschedule.logic.bean.CourseBean copy(java.lang.String,int,int,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
 org.bouncycastle.jcajce.provider.asymmetric.rsa.ISOSignatureSpi$WhirlpoolWithRSAEncryption
 androidx.transition.TransitionUtils$MatrixEvaluator
 androidx.recyclerview.widget.DividerItemDecoration
@@ -41984,6 +43005,8 @@ com.liflymark.normalschedule.R$id:
     public static final int TOP_END
     public static final int TOP_START
     public static final int about
+    public static final int about_page
+    public static final int about_providers
     public static final int accelerate
     public static final int accessibility_action_clickable_span
     public static final int accessibility_custom_action_0
@@ -42127,6 +43150,8 @@ com.liflymark.normalschedule.R$id:
     public static final int department
     public static final int department_text
     public static final int dependency_ordering
+    public static final int description
+    public static final int description_separator
     public static final int design_bottom_sheet
     public static final int design_menu_item_action_area
     public static final int design_menu_item_action_area_stub
@@ -42167,6 +43192,7 @@ com.liflymark.normalschedule.R$id:
     public static final int fillEnd
     public static final int fillStart
     public static final int fill_horizontal
+    public static final int fill_parent
     public static final int fill_vertical
     public static final int filled
     public static final int fingerprint_description
@@ -42271,6 +43297,7 @@ com.liflymark.normalschedule.R$id:
     public static final int lv_course
     public static final int major
     public static final int masked
+    public static final int match_parent
     public static final int material_clock_display
     public static final int material_clock_face
     public static final int material_clock_hand
@@ -42490,6 +43517,7 @@ com.liflymark.normalschedule.R$id:
     public static final int status_bar_latest_event_content
     public static final int stop
     public static final int stretch
+    public static final int sub_wrapper
     public static final int submenuarrow
     public static final int submit_area
     public static final int tabMode
@@ -42589,6 +43617,7 @@ com.liflymark.normalschedule.R$id:
     public static final int tv_selected
     public static final int tv_sign
     public static final int tv_thanks
+    public static final int tv_tinted_spinner
     public static final int tv_title
     public static final int tv_version
     public static final int ucrop
@@ -42703,9 +43732,9 @@ com.google.android.material.transformation.ExpandableBehavior:
     private static final int STATE_EXPANDED
     private static final int STATE_COLLAPSED
 org.bouncycastle.crypto.prng.drbg.CTRSP800DRBG
-androidx.camera.core.-$$Lambda$ImageCapture$uWyJYreAIltff04ZNJP8TzL7NOQ:
-    public final void onError(androidx.camera.core.impl.SessionConfig,androidx.camera.core.impl.SessionConfig$SessionError)
 androidx.camera.core.-$$Lambda$Preview$WtQW2Zy9cGuDwxes3k4z9U6d1nc:
+    public final void onError(androidx.camera.core.impl.SessionConfig,androidx.camera.core.impl.SessionConfig$SessionError)
+androidx.camera.core.-$$Lambda$ImageCapture$uWyJYreAIltff04ZNJP8TzL7NOQ:
     public final void onError(androidx.camera.core.impl.SessionConfig,androidx.camera.core.impl.SessionConfig$SessionError)
 kotlinx.coroutines.scheduling.ExperimentalCoroutineDispatcher:
     public void <init>(int,int,long,java.lang.String)
@@ -43012,8 +44041,8 @@ androidx.camera.core.AndroidImageReaderProxy:
     public synchronized int getWidth()
     public synchronized int getImageFormat()
     public synchronized void clearOnImageAvailableListener()
-    public synthetic void lambda$setOnImageAvailableListener$0$AndroidImageReaderProxy(androidx.camera.core.impl.ImageReaderProxy$OnImageAvailableListener)
     public synthetic void lambda$setOnImageAvailableListener$1$AndroidImageReaderProxy(java.util.concurrent.Executor,androidx.camera.core.impl.ImageReaderProxy$OnImageAvailableListener,android.media.ImageReader)
+    public synthetic void lambda$setOnImageAvailableListener$0$AndroidImageReaderProxy(androidx.camera.core.impl.ImageReaderProxy$OnImageAvailableListener)
     public final boolean isImageReaderContextNotInitializedException(java.lang.RuntimeException)
 com.google.android.material.internal.TextDrawableHelper:
     public static synthetic boolean access$002(com.google.android.material.internal.TextDrawableHelper,boolean)
@@ -43142,10 +44171,10 @@ androidx.camera.core.CameraX:
     public androidx.camera.core.impl.CameraDeviceSurfaceManager getCameraDeviceSurfaceManager()
     public androidx.camera.core.impl.CameraRepository getCameraRepository()
     public androidx.camera.core.impl.UseCaseConfigFactory getDefaultConfigFactory()
-    public java.lang.Object lambda$shutdownInternal$11$CameraX(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
-    public java.lang.Object lambda$initInternal$7$CameraX(android.content.Context,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
-    public synthetic void lambda$shutdownInternal$10$CameraX(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public void lambda$initAndRetryRecursively$8$CameraX(java.util.concurrent.Executor,long,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
+    public synthetic void lambda$shutdownInternal$10$CameraX(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
+    public java.lang.Object lambda$initInternal$7$CameraX(android.content.Context,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
+    public java.lang.Object lambda$shutdownInternal$11$CameraX(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public void lambda$initAndRetryRecursively$9$CameraX(android.content.Context,java.util.concurrent.Executor,androidx.concurrent.futures.CallbackToFutureAdapter$Completer,long)
     public final java.lang.Object mInitializeLock
     public final androidx.camera.core.CameraXConfig mCameraXConfig
@@ -43405,8 +44434,8 @@ com.luck.picture.lib.PicturePlayAudioActivity:
     public static synthetic android.widget.TextView access$100(com.luck.picture.lib.PicturePlayAudioActivity)
     public static synthetic android.widget.SeekBar access$200(com.luck.picture.lib.PicturePlayAudioActivity)
     public static synthetic android.widget.TextView access$300(com.luck.picture.lib.PicturePlayAudioActivity)
-    public void lambda$initWidgets$0$PicturePlayAudioActivity()
     public synthetic void lambda$onClick$1$PicturePlayAudioActivity()
+    public void lambda$initWidgets$0$PicturePlayAudioActivity()
     public final void initPlayer(java.lang.String)
 androidx.transition.ChangeBounds:
     public final boolean parentMatches(android.view.View,android.view.View)
@@ -44157,6 +45186,24 @@ kotlin.internal.PlatformImplementations$ReflectThrowable:
     public void <init>()
     public static final java.lang.reflect.Method getSuppressed
     public static final kotlin.internal.PlatformImplementations$ReflectThrowable INSTANCE
+com.jaredrummler.materialspinner.R$styleable:
+    public static final int MaterialSpinner_ms_arrow_tint
+    public static final int MaterialSpinner_ms_background_color
+    public static final int MaterialSpinner_ms_background_selector
+    public static final int MaterialSpinner_ms_dropdown_height
+    public static final int MaterialSpinner_ms_dropdown_max_height
+    public static final int MaterialSpinner_ms_hide_arrow
+    public static final int MaterialSpinner_ms_hint
+    public static final int MaterialSpinner_ms_hint_color
+    public static final int MaterialSpinner_ms_padding_bottom
+    public static final int MaterialSpinner_ms_padding_left
+    public static final int MaterialSpinner_ms_padding_right
+    public static final int MaterialSpinner_ms_padding_top
+    public static final int MaterialSpinner_ms_popup_padding_bottom
+    public static final int MaterialSpinner_ms_popup_padding_left
+    public static final int MaterialSpinner_ms_popup_padding_right
+    public static final int MaterialSpinner_ms_popup_padding_top
+    public static final int MaterialSpinner_ms_text_color
 com.google.crypto.tink.shaded.protobuf.BooleanArrayList:
     public com.google.crypto.tink.shaded.protobuf.Internal$BooleanList mutableCopyWithCapacity(int)
     public java.lang.Boolean get(int)
@@ -45025,6 +46072,9 @@ com.google.crypto.tink.proto.AesEaxKey$Builder:
     public com.google.crypto.tink.proto.AesEaxKey$Builder setVersion(int)
     public com.google.crypto.tink.proto.AesEaxKey$Builder setParams(com.google.crypto.tink.proto.AesEaxParams)
     public com.google.crypto.tink.proto.AesEaxKey$Builder setKeyValue(com.google.crypto.tink.shaded.protobuf.ByteString)
+com.jaredrummler.materialspinner.MaterialSpinnerBaseAdapter$ViewHolder:
+    public void <init>(android.widget.TextView)
+    public static synthetic android.widget.TextView access$100(com.jaredrummler.materialspinner.MaterialSpinnerBaseAdapter$ViewHolder)
 org.bouncycastle.crypto.digests.KeccakDigest
 androidx.appcompat.app.AppCompatDelegateImpl$1
 com.google.crypto.tink.aead.KmsEnvelopeAeadKeyManager$2:
@@ -45183,7 +46233,6 @@ com.google.gson.JsonPrimitive:
 com.liflymark.normalschedule.ui.import_course.ImportLoginFragment:
     public static final synthetic java.lang.String access$getId$p(com.liflymark.normalschedule.ui.import_course.ImportLoginFragment)
     public static final synthetic void access$setId$p(com.liflymark.normalschedule.ui.import_course.ImportLoginFragment,java.lang.String)
-    public static final void access$saveAccount(com.liflymark.normalschedule.ui.import_course.ImportLoginFragment)
     public static final synthetic com.liflymark.normalschedule.ui.import_course.CourseViewModel access$getViewModel$p(com.liflymark.normalschedule.ui.import_course.ImportLoginFragment)
     public final java.lang.String getUserName()
     public final void setUserName(java.lang.String)
@@ -45866,6 +46915,7 @@ androidx.camera.core.ImageCapture$Builder:
     public androidx.camera.core.ImageCapture$Builder setTargetRotation(int)
     public androidx.camera.core.ImageCapture$Builder setTargetResolution(android.util.Size)
     public androidx.camera.core.ImageCapture$Builder setSurfaceOccupancyPriority(int)
+com.jaredrummler.materialspinner.R$layout
 androidx.appcompat.widget.ButtonBarLayout:
     public int mMinimumHeight
 com.google.android.material.timepicker.TimePickerView:
@@ -46140,6 +47190,7 @@ com.google.android.material.internal.DescendantOffsetUtils:
 androidx.recyclerview.widget.OpReorderer$Callback:
     public abstract androidx.recyclerview.widget.AdapterHelper$UpdateOp obtainUpdateOp(int,int,int,java.lang.Object)
     public abstract void recycleUpdateOp(androidx.recyclerview.widget.AdapterHelper$UpdateOp)
+mehdi.sakout.aboutpage.R$style
 okhttp3.internal.http2.Http2Reader$ContinuationSource:
     public final void readContinuationHeader()
 com.google.android.material.internal.StaticLayoutBuilderCompat$StaticLayoutBuilderCompatException:
@@ -46507,13 +47558,13 @@ com.liflymark.normalschedule.ui.import_course.CourseViewModel:
     public static final synthetic java.lang.String access$getId$p(com.liflymark.normalschedule.ui.import_course.CourseViewModel)
     public final androidx.lifecycle.LiveData getIdLiveData()
     public final androidx.lifecycle.LiveData getCourseLiveData()
+    public final androidx.lifecycle.LiveData getCourseNewLiveData()
     public final androidx.lifecycle.LiveData getImageLiveData()
     public final void getId()
     public final void putValue(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
     public final void putValue(java.lang.String,java.lang.String)
     public final void saveAccount(java.lang.String,java.lang.String)
     public final boolean isAccountSaved()
-    public final androidx.lifecycle.LiveData courseNewLiveData
     public final androidx.lifecycle.LiveData insertCourseLiveData
     public final androidx.lifecycle.LiveData deleteCourseLiveData
 com.bumptech.glide.load.engine.bitmap_recycle.ByteArrayAdapter:
@@ -46776,10 +47827,6 @@ com.google.crypto.tink.proto.KmsEnvelopeAeadKeyFormat$1:
     public static void <clinit>()
     public static final synthetic int[] $SwitchMap$com$google$protobuf$GeneratedMessageLite$MethodToInvoke
 org.bouncycastle.pqc.jcajce.provider.mceliece.McElieceKeyFactorySpi
-com.liflymark.normalschedule.logic.model.Grade:
-    public final java.util.List getThisProjectGradeList()
-    public final java.lang.String project
-    public final java.util.List thisProjectGradeList
 com.google.android.material.chip.ChipDrawable:
     public static com.google.android.material.chip.ChipDrawable createFromAttributes(android.content.Context,android.util.AttributeSet,int,int)
     public static boolean isStateful(com.google.android.material.resources.TextAppearance)
@@ -47198,6 +48245,7 @@ androidx.camera.core.impl.utils.MainThreadAsyncHandler:
 com.luck.picture.lib.PictureSelectorCameraEmptyActivity$1:
     public com.luck.picture.lib.entity.LocalMedia doInBackground()
     public void onSuccess(com.luck.picture.lib.entity.LocalMedia)
+mehdi.sakout.aboutpage.R$attr
 androidx.constraintlayout.widget.ConstraintAttribute$1
 androidx.core.os.HandlerCompat
 com.luck.picture.lib.compress.Luban$Builder:
@@ -47289,6 +48337,7 @@ androidx.fragment.app.Fragment$AnimationInfo:
     public androidx.core.app.SharedElementCallback mEnterTransitionCallback
     public androidx.core.app.SharedElementCallback mExitTransitionCallback
     public boolean mEnterTransitionPostponed
+com.liflymark.normalschedule.ui.about.AboutActivity$onCreate$1
 androidx.transition.ChangeBounds$3:
     public void set(androidx.transition.ChangeBounds$ViewBounds,android.graphics.PointF)
     public android.graphics.PointF get()
@@ -47302,11 +48351,6 @@ androidx.constraintlayout.solver.widgets.analyzer.RunGroup:
     public int direction
 org.bouncycastle.crypto.digests.SHAKEDigest
 com.luck.picture.lib.immersive.ImmersiveManage
-com.liflymark.normalschedule.logic.model.ScoreResponse:
-    public final java.util.List getGrade_list()
-    public final java.lang.String getResult()
-    public final java.util.List grade_list
-    public final java.lang.String result
 androidx.security.crypto.EncryptedSharedPreferences$PrefKeyEncryptionScheme:
     public com.google.crypto.tink.KeyTemplate getKeyTemplate()
 retrofit2.BuiltInConverters$RequestBodyConverter:
@@ -47595,6 +48639,7 @@ okhttp3.HttpUrl:
     public okhttp3.HttpUrl resolve(java.lang.String)
     public okhttp3.HttpUrl$Builder newBuilder()
 org.bouncycastle.asn1.ASN1OutputStream
+com.jaredrummler.materialspinner.R$drawable
 androidx.cardview.widget.CardViewApi17Impl
 com.luck.picture.lib.camera.CustomCameraView$1$1$1:
     public java.lang.Boolean doInBackground()
@@ -48167,11 +49212,11 @@ com.luck.picture.lib.camera.view.CaptureLayout:
     public final void initView()
     public void initEvent()
     public void startAlphaAnimation()
-    public void lambda$initView$1$CaptureLayout(android.view.View)
-    public synthetic void lambda$initView$2$CaptureLayout(android.view.View)
-    public synthetic void lambda$initView$3$CaptureLayout(android.view.View)
     public synthetic void lambda$initView$4$CaptureLayout(android.view.View)
     public void lambda$initView$0$CaptureLayout(android.view.View)
+    public void lambda$initView$1$CaptureLayout(android.view.View)
+    public synthetic void lambda$initView$3$CaptureLayout(android.view.View)
+    public synthetic void lambda$initView$2$CaptureLayout(android.view.View)
     public int iconLeft
     public int iconRight
 retrofit2.ParameterHandler:
@@ -48640,10 +49685,8 @@ com.google.gson.Gson:
     public final com.google.gson.TypeAdapter doubleAdapter(boolean)
     public final com.google.gson.TypeAdapter floatAdapter(boolean)
     public com.google.gson.TypeAdapter getAdapter(java.lang.Class)
-    public java.lang.String toJson(java.lang.Object)
     public java.lang.String toJson(java.lang.Object,java.lang.reflect.Type)
     public void toJson(java.lang.Object,java.lang.reflect.Type,java.lang.Appendable)
-    public void toJson(java.lang.Object,java.lang.reflect.Type,com.google.gson.stream.JsonWriter)
     public java.lang.String toJson(com.google.gson.JsonElement)
     public void toJson(com.google.gson.JsonElement,java.lang.Appendable)
     public com.google.gson.stream.JsonReader newJsonReader(java.io.Reader)
@@ -49514,109 +50557,17 @@ com.bumptech.glide.load.resource.gif.GifDrawableEncoder:
 androidx.fragment.app.FragmentState$1:
     public androidx.fragment.app.FragmentState createFromParcel(android.os.Parcel)
     public androidx.fragment.app.FragmentState[] newArray(int)
+mehdi.sakout.aboutpage.AboutPage:
+    public static synthetic android.content.Context access$000(mehdi.sakout.aboutpage.AboutPage)
+    public mehdi.sakout.aboutpage.AboutPage setCustomFont(android.graphics.Typeface)
+    public mehdi.sakout.aboutpage.AboutPage isRTL(boolean)
+    public mehdi.sakout.aboutpage.AboutPage setDescription(java.lang.CharSequence)
+    public android.view.View create()
+    public final android.view.View createItem(mehdi.sakout.aboutpage.Element)
+    public final android.view.View getSeparator()
+    public int mImage
 com.xwray.groupie.GroupAdapter$2
-org.angmarch.views.R$layout:
-    public static org.bouncycastle.crypto.Digest createSHA1()
-    public static org.bouncycastle.crypto.Digest createSHA224()
-    public static org.bouncycastle.crypto.Digest createSHA256()
-    public static org.bouncycastle.crypto.Digest createSHA384()
-    public static org.bouncycastle.crypto.Digest createSHA512()
-    public static java.lang.Class loadClass(java.lang.Class,java.lang.String)
-    public static byte[] lms_ots_generatePublicKey(org.bouncycastle.pqc.crypto.lms.LMOtsParameters,byte[],int,byte[])
-    public static void u32str(int,org.bouncycastle.crypto.Digest)
-    public static void u16str(short,org.bouncycastle.crypto.Digest)
-    public static void byteArray(byte[],org.bouncycastle.crypto.Digest)
-    public static int getPrivateSize(int)
-    public static int getPublicSize(int)
-    public static java.lang.String getName(int)
-    public static int[] convertArraytoInt(byte[])
-    public static short[] convertArray(byte[])
-    public static short[][] convertArray(byte[][])
-    public static short[][][] convertArray(byte[][][])
-    public static byte[] convertIntArray(int[])
-    public static byte[] convertArray(short[])
-    public static byte[][] convertArray(short[][])
-    public static byte[][][] convertArray(short[][][])
-    public static boolean equals(short[],short[])
-    public static boolean equals(short[][],short[][])
-    public static boolean equals(short[][][],short[][][])
-    public static org.bouncycastle.crypto.params.AsymmetricKeyParameter createKey(org.bouncycastle.asn1.pkcs.PrivateKeyInfo)
-    public static short[] convert(byte[])
-    public static org.bouncycastle.asn1.pkcs.PrivateKeyInfo createPrivateKeyInfo(org.bouncycastle.crypto.params.AsymmetricKeyParameter,org.bouncycastle.asn1.ASN1Set)
-    public static org.bouncycastle.pqc.asn1.XMSSPrivateKey xmssCreateKeyStructure(org.bouncycastle.pqc.crypto.xmss.XMSSPrivateKeyParameters)
-    public static org.bouncycastle.pqc.asn1.XMSSMTPrivateKey xmssmtCreateKeyStructure(org.bouncycastle.pqc.crypto.xmss.XMSSMTPrivateKeyParameters)
-    public static org.bouncycastle.asn1.x509.SubjectPublicKeyInfo createSubjectPublicKeyInfo(org.bouncycastle.crypto.params.AsymmetricKeyParameter)
-    public static org.bouncycastle.pqc.crypto.xmss.XMSSNode lTree(org.bouncycastle.pqc.crypto.xmss.WOTSPlus,org.bouncycastle.pqc.crypto.xmss.WOTSPlusPublicKeyParameters,org.bouncycastle.pqc.crypto.xmss.LTreeAddress)
-    public static org.bouncycastle.pqc.crypto.xmss.XMSSNode randomizeHash(org.bouncycastle.pqc.crypto.xmss.WOTSPlus,org.bouncycastle.pqc.crypto.xmss.XMSSNode,org.bouncycastle.pqc.crypto.xmss.XMSSNode,org.bouncycastle.pqc.crypto.xmss.XMSSAddress)
-    public static int log2(int)
-    public static byte[] toBytesBigEndian(long,int)
-    public static long bytesToXBigEndian(byte[],int,int)
-    public static byte[] cloneArray(byte[])
-    public static byte[][] cloneArray(byte[][])
-    public static boolean hasNullPointer(byte[][])
-    public static void copyBytesAtOffset(byte[],byte[],int)
-    public static byte[] extractBytesAtOffset(byte[],int,int)
-    public static boolean isIndexValid(int,long)
-    public static int getDigestSize(org.bouncycastle.crypto.Digest)
-    public static long getTreeIndex(long,int)
-    public static int getLeafIndex(long,int)
-    public static byte[] serialize(java.lang.Object)
-    public static java.lang.Object deserialize(byte[],java.lang.Class)
-    public static int calculateTau(int,int)
-    public static boolean isNewBDSInitNeeded(long,int,int)
-    public static boolean isNewAuthenticationPathNeeded(long,int,int)
-    public static org.bouncycastle.asn1.x509.AlgorithmIdentifier getDigAlgId(java.lang.String)
-    public static org.bouncycastle.crypto.Digest getDigest(org.bouncycastle.asn1.x509.AlgorithmIdentifier)
-    public static byte[] getEncodedSubjectPublicKeyInfo(org.bouncycastle.asn1.x509.AlgorithmIdentifier,org.bouncycastle.asn1.ASN1Encodable)
-    public static byte[] getEncodedSubjectPublicKeyInfo(org.bouncycastle.asn1.x509.SubjectPublicKeyInfo)
-    public static org.bouncycastle.asn1.ASN1ObjectIdentifier getDigestOID(java.lang.String)
-    public static org.bouncycastle.pqc.math.linearalgebra.GF2Matrix createCanonicalCheckMatrix(org.bouncycastle.pqc.math.linearalgebra.GF2mField,org.bouncycastle.pqc.math.linearalgebra.PolynomialGF2mSmallM)
-    public static boolean equals(int[],int[])
-    public static int[] clone(int[])
-    public static int OS2IP(byte[])
-    public static int OS2IP(byte[],int)
-    public static int OS2IP(byte[],int,int)
-    public static byte[] I2OSP(int)
-    public static void I2OSP(int,byte[],int)
-    public static void I2OSP(int,byte[],int,int)
-    public static int modMultiply(int,int,int)
-    public static int degree(int)
-    public static int remainder(int,int)
-    public static int gcd(int,int)
-    public static boolean isIrreducible(int)
-    public static boolean areEqual(byte[],byte[])
-    public static boolean areEqual(char[],char[])
-    public static boolean areEqual(short[],short[])
-    public static void fill(byte[],byte)
-    public static int hashCode(byte[])
-    public static int hashCode(byte[],int,int)
-    public static int hashCode(char[])
-    public static int hashCode(int[])
-    public static int hashCode(short[][][])
-    public static int hashCode(short[][])
-    public static int hashCode(short[])
-    public static byte[] clone(byte[])
-    public static short[] clone(short[])
-    public static byte[] copyOfRange(byte[],int,int)
-    public static int getLength(int,int)
-    public static byte[] concatenate(byte[],byte[])
-    public static java.lang.Integer valueOf(int)
-    public static int bigEndianToInt(byte[],int)
-    public static void intToBigEndian(int,byte[],int)
-    public static long bigEndianToLong(byte[],int)
-    public static void longToBigEndian(long,byte[],int)
-    public static short littleEndianToShort(byte[],int)
-    public static int littleEndianToInt(byte[],int)
-    public static void shortToLittleEndian(short,byte[],int)
-    public static void shortToBigEndian(short,byte[],int)
-    public static void intToLittleEndian(int,byte[],int)
-    public static long littleEndianToLong(byte[],int)
-    public static void longToLittleEndian(long,byte[],int)
-    public static void longToLittleEndian(long[],int,int,byte[],int)
-    public static final java.lang.Object await(retrofit2.Call,kotlin.coroutines.Continuation)
-    public static final java.lang.Object awaitNullable(retrofit2.Call,kotlin.coroutines.Continuation)
-    public static final java.lang.Object awaitResponse(retrofit2.Call,kotlin.coroutines.Continuation)
-    public static final int spinner_list_item
+org.angmarch.views.R$layout
 androidx.appcompat.widget.SearchView$SearchAutoComplete:
     public void <init>(android.content.Context,android.util.AttributeSet,int)
     public boolean isEmpty()
@@ -50167,6 +51118,8 @@ androidx.collection.MapCollections:
     public java.util.Set getEntrySet()
     public java.util.Set getKeySet()
     public java.util.Collection getValues()
+com.liflymark.normalschedule.ui.import_course.ImportLoginFragment$onActivityCreated$5$1:
+    public final void onChanged(kotlin.Result)
 androidx.lifecycle.LiveData:
     public void postValue(java.lang.Object)
     public int getVersion()
@@ -50255,6 +51208,25 @@ com.google.android.material.internal.NavigationMenuView:
     public void <init>(android.content.Context,android.util.AttributeSet,int)
 com.bumptech.glide.load.engine.Engine$EngineJobFactory$1:
     public com.bumptech.glide.load.engine.EngineJob create()
+mehdi.sakout.aboutpage.Element:
+    public android.view.View$OnClickListener getOnClickListener()
+    public mehdi.sakout.aboutpage.Element setOnClickListener(android.view.View$OnClickListener)
+    public java.lang.Integer getGravity()
+    public java.lang.String getTitle()
+    public mehdi.sakout.aboutpage.Element setTitle(java.lang.String)
+    public java.lang.Integer getIconDrawable()
+    public java.lang.Integer getIconTint()
+    public java.lang.Integer getIconNightTint()
+    public android.content.Intent getIntent()
+    public java.lang.Boolean getAutoApplyIconTint()
+    public java.lang.Boolean getSkipTint()
+    public java.lang.Integer iconDrawable
+    public java.lang.Integer colorDay
+    public java.lang.Integer colorNight
+    public android.content.Intent intent
+    public java.lang.Integer gravity
+    public java.lang.Boolean autoIconColor
+    public java.lang.Boolean skipTint
 androidx.core.widget.TintableImageSourceView
 org.bouncycastle.asn1.DLBitString
 com.luck.picture.lib.PictureExternalPreviewActivity$2:
@@ -50463,12 +51435,12 @@ androidx.camera.core.VideoCapture:
     public void setTargetRotation(int)
     public boolean videoEncode(androidx.camera.core.VideoCapture$OnVideoSavedCallback)
     public boolean audioEncode(androidx.camera.core.VideoCapture$OnVideoSavedCallback)
-    public void lambda$startRecording$3$VideoCapture(androidx.camera.core.VideoCapture$OnVideoSavedCallback)
-    public void lambda$startRecording$4$VideoCapture(androidx.camera.core.VideoCapture$OnVideoSavedCallback,java.lang.String,android.util.Size,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
-    public synthetic void lambda$startRecording$0$VideoCapture(androidx.camera.core.VideoCapture$OutputFileOptions,java.util.concurrent.Executor,androidx.camera.core.VideoCapture$OnVideoSavedCallback)
-    public void lambda$startRecording$2$VideoCapture()
     public synthetic void lambda$stopRecording$5$VideoCapture()
+    public synthetic void lambda$startRecording$0$VideoCapture(androidx.camera.core.VideoCapture$OutputFileOptions,java.util.concurrent.Executor,androidx.camera.core.VideoCapture$OnVideoSavedCallback)
+    public void lambda$startRecording$4$VideoCapture(androidx.camera.core.VideoCapture$OnVideoSavedCallback,java.lang.String,android.util.Size,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public synthetic void lambda$onDetached$6$VideoCapture()
+    public void lambda$startRecording$2$VideoCapture()
+    public void lambda$startRecording$3$VideoCapture(androidx.camera.core.VideoCapture$OnVideoSavedCallback)
     public android.os.HandlerThread mVideoHandlerThread
     public android.os.HandlerThread mAudioHandlerThread
 androidx.camera.core.ImageCapture$Defaults:
@@ -50523,9 +51495,6 @@ com.google.crypto.tink.aead.subtle.AesGcmSiv$1:
     public javax.crypto.Cipher initialValue()
 androidx.camera.core.impl.CameraConfig
 androidx.core.graphics.drawable.DrawableCompat
-com.liflymark.normalschedule.logic.bean.OneByOneCourseBean:
-    public final java.lang.String getCourseName()
-    public final java.lang.String getColor()
 com.afollestad.materialdialogs.MaterialDialog$WhenMappings
 com.luck.picture.lib.thread.PictureThreadUtils$ThreadPoolExecutor4Util:
     public static java.util.concurrent.ExecutorService createPool(int,int)
@@ -50661,6 +51630,7 @@ androidx.core.graphics.TypefaceCompatApi21Impl:
     public static android.graphics.Typeface createFromFamiliesWithDefault(java.lang.Object)
     public static void <clinit>()
     public final java.io.File getFile(android.os.ParcelFileDescriptor)
+mehdi.sakout.aboutpage.R$layout
 com.google.crypto.tink.proto.AesCtrKey:
     public final void setVersion(int)
     public final void setParams(com.google.crypto.tink.proto.AesCtrParams)
@@ -50788,9 +51758,9 @@ com.luck.picture.lib.PicturePreviewActivity:
     public void onCheckedComplete()
     public void onComplete()
     public void onActivityBackPressed()
-    public void lambda$loadMoreData$2$PicturePreviewActivity(java.util.List,int,boolean)
-    public synthetic void lambda$initWidgets$0$PicturePreviewActivity(android.widget.CompoundButton,boolean)
     public void lambda$loadData$1$PicturePreviewActivity(java.util.List,int,boolean)
+    public synthetic void lambda$initWidgets$0$PicturePreviewActivity(android.widget.CompoundButton,boolean)
+    public void lambda$loadMoreData$2$PicturePreviewActivity(java.util.List,int,boolean)
     public int index
     public static final java.lang.String TAG
 com.afollestad.materialdialogs.internal.main.DialogScrollView:
@@ -50981,7 +51951,6 @@ com.liflymark.normalschedule.logic.Repository:
     public final java.lang.Object loadCourseByNameAndStart(java.lang.String,int,int,kotlin.coroutines.Continuation)
     public final androidx.lifecycle.LiveData getScore(java.lang.String,java.lang.String,java.lang.String)
     public final androidx.lifecycle.LiveData loadBackground()
-    public final void saveAccount(java.lang.String,java.lang.String)
     public final java.util.Map getSavedAccount()
     public final boolean isAccountSaved()
     public final void clearSharePreference()
@@ -51010,9 +51979,6 @@ android.support.v4.media.MediaDescriptionCompat:
     public java.lang.Object getMediaDescription()
 kotlin.collections.ArraysKt___ArraysJvmKt
 androidx.cardview.widget.RoundRectDrawableWithShadow$RoundRectHelper
-com.liflymark.normalschedule.logic.model.IdResponse:
-    public final java.lang.String getId()
-    public final java.lang.String id
 androidx.appcompat.app.AlertController$2:
     public void <init>(androidx.appcompat.app.AlertController,android.view.View,android.view.View)
     public void onScrollChange(androidx.core.widget.NestedScrollView,int,int,int,int)
@@ -51156,6 +52122,7 @@ com.google.android.material.appbar.HeaderBehavior:
     public abstract int getMaxDragOffset(android.view.View)
     public abstract int getScrollRangeForDragFling(android.view.View)
     public final void ensureVelocityTracker()
+com.liflymark.normalschedule.ui.import_course.ImportLoginFragment$onActivityCreated$8
 kotlin.collections.MapsKt__MapsJVMKt
 com.google.crypto.tink.subtle.SubtleUtil
 com.google.android.material.color.MaterialColors
@@ -51247,7 +52214,7 @@ es.dmoral.toasty.Toasty:
     public static android.widget.Toast warning(android.content.Context,java.lang.CharSequence,int,boolean)
     public static android.widget.Toast info(android.content.Context,java.lang.CharSequence,int,boolean)
     public static android.widget.Toast success(android.content.Context,java.lang.CharSequence,int,boolean)
-    public static android.widget.Toast error(android.content.Context,java.lang.CharSequence,int,boolean)
+    public static android.widget.Toast error(android.content.Context,java.lang.CharSequence)
     public static synthetic android.graphics.Typeface access$000()
     public static synthetic int access$100()
     public static synthetic boolean access$200()
@@ -51318,10 +52285,10 @@ com.luck.picture.lib.PictureCustomCameraActivity:
     private void lambda$initView$0(java.io.File,android.widget.ImageView)
     public static synthetic java.lang.String access$000()
     public void initView()
-    public void lambda$initView$0$PictureCustomCameraActivity(java.io.File,android.widget.ImageView)
-    public void lambda$showPermissionsDialog$3$PictureCustomCameraActivity(com.luck.picture.lib.dialog.PictureCustomDialog,android.view.View)
-    public synthetic void lambda$initView$1$PictureCustomCameraActivity()
     public synthetic void lambda$showPermissionsDialog$2$PictureCustomCameraActivity(com.luck.picture.lib.dialog.PictureCustomDialog,android.view.View)
+    public void lambda$initView$0$PictureCustomCameraActivity(java.io.File,android.widget.ImageView)
+    public synthetic void lambda$initView$1$PictureCustomCameraActivity()
+    public void lambda$showPermissionsDialog$3$PictureCustomCameraActivity(com.luck.picture.lib.dialog.PictureCustomDialog,android.view.View)
 androidx.fragment.app.FragmentStateManager:
     public androidx.fragment.app.Fragment getFragment()
     public void setFragmentManagerState(int)
@@ -51336,10 +52303,10 @@ com.luck.picture.lib.PictureExternalPreviewActivity$SimpleFragmentAdapter:
     private synthetic void lambda$instantiateItem$0(android.view.View,float,float)
     public static void access$900(com.luck.picture.lib.PictureExternalPreviewActivity$SimpleFragmentAdapter)
     public void removeCacheView(int)
-    public synthetic void lambda$instantiateItem$0$PictureExternalPreviewActivity$SimpleFragmentAdapter(android.view.View,float,float)
     public synthetic void lambda$instantiateItem$1$PictureExternalPreviewActivity$SimpleFragmentAdapter(android.view.View)
-    public boolean lambda$instantiateItem$3$PictureExternalPreviewActivity$SimpleFragmentAdapter(java.lang.String,com.luck.picture.lib.entity.LocalMedia,android.view.View)
+    public synthetic void lambda$instantiateItem$0$PictureExternalPreviewActivity$SimpleFragmentAdapter(android.view.View,float,float)
     public boolean lambda$instantiateItem$2$PictureExternalPreviewActivity$SimpleFragmentAdapter(java.lang.String,com.luck.picture.lib.entity.LocalMedia,android.view.View)
+    public boolean lambda$instantiateItem$3$PictureExternalPreviewActivity$SimpleFragmentAdapter(java.lang.String,com.luck.picture.lib.entity.LocalMedia,android.view.View)
     public final void clear()
 org.bouncycastle.pqc.crypto.xmss.XMSSPrivateKeyParameters$1
 androidx.appcompat.widget.ScrollingTabContainerView$TabClickListener
@@ -51420,6 +52387,7 @@ com.google.crypto.tink.aead.AesCtrKeyManager$1:
     public com.google.crypto.tink.subtle.IndCpaCipher getPrimitive(com.google.crypto.tink.proto.AesCtrKey)
 androidx.room.util.TableInfo$ForeignKeyWithSequence:
     public int compareTo(androidx.room.util.TableInfo$ForeignKeyWithSequence)
+mehdi.sakout.aboutpage.AboutPageUtils
 org.bouncycastle.pqc.jcajce.provider.mceliece.BCMcElieceCCA2PublicKey
 kotlinx.coroutines.internal.MissingMainCoroutineDispatcher
 com.google.crypto.tink.daead.AesSivKeyManager:
@@ -51470,6 +52438,7 @@ com.google.android.material.shape.CutCornerTreatment:
     public float size
 com.bumptech.glide.load.model.StreamEncoder:
     public boolean encode(java.io.InputStream,java.io.File)
+mehdi.sakout.aboutpage.R$dimen
 kotlin.random.Random$Default:
     public void <init>()
     public int nextBits(int)
@@ -51644,8 +52613,8 @@ androidx.camera.core.MetadataImageReader:
     public void clearOnImageAvailableListener()
     public androidx.camera.core.impl.CameraCaptureCallback getCameraCaptureCallback()
     public void imageIncoming(androidx.camera.core.impl.ImageReaderProxy)
-    public synthetic void lambda$enqueueImageProxy$1$MetadataImageReader(androidx.camera.core.impl.ImageReaderProxy$OnImageAvailableListener)
     public void lambda$new$0$MetadataImageReader(androidx.camera.core.impl.ImageReaderProxy)
+    public synthetic void lambda$enqueueImageProxy$1$MetadataImageReader(androidx.camera.core.impl.ImageReaderProxy$OnImageAvailableListener)
     public final void dequeImageProxy(androidx.camera.core.ImageProxy)
 kotlin.collections.SetsKt__SetsKt
 org.bouncycastle.pqc.crypto.rainbow.Layer
@@ -51694,11 +52663,6 @@ com.luck.picture.lib.compress.OnCompressListener:
 androidx.camera.core.VideoCapture$OutputFileResults:
     public android.net.Uri getSavedUri()
 androidx.exifinterface.media.ExifInterface$OsApi21Impl
-com.liflymark.normalschedule.logic.model.CourseResponse:
-    public final java.util.List getAllCourse()
-    public final java.lang.String getStatus()
-    public final java.util.List allCourse
-    public final java.lang.String status
 com.bumptech.glide.load.engine.bitmap_recycle.LruArrayPool$Key:
     public void init(int,java.lang.Class)
 com.afollestad.materialdialogs.callbacks.DialogCallbackExtKt
@@ -51740,6 +52704,21 @@ com.liflymark.normalschedule.logic.dao.BackgroundDao_Impl:
     public java.lang.Object updateBackground(com.liflymark.normalschedule.logic.bean.UserBackgroundBean,kotlin.coroutines.Continuation)
     public java.lang.Object loadLastBackground(kotlin.coroutines.Continuation)
     public final androidx.room.EntityDeletionOrUpdateAdapter __deletionAdapterOfUserBackgroundBean
+com.jaredrummler.materialspinner.R$dimen:
+    public static int darker(int,float)
+    public static boolean isRtl(android.content.Context)
+    public static android.graphics.drawable.Drawable getDrawable(android.content.Context,int)
+    public static final int ms__item_height
+    public static final int ms__padding_left
+    public static final int ms__padding_top
+    public static final int ms__popup_padding_left
+    public static final int ms__popup_padding_top
+    public static final int ms__arrow
+    public static final int ms__drawable
+    public static final int ms__drop_down_shadow
+    public static final int ms__selector
+    public static final int tv_tinted_spinner
+    public static final int ms__list_item
 androidx.camera.core.Preview$1:
     public final synthetic androidx.camera.core.Preview this$0
 com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity:
@@ -51976,16 +52955,16 @@ com.luck.picture.lib.PictureSelectorActivity:
     public void multiCropHandleResult(android.content.Intent)
     public void onItemClick(android.view.View,int)
     public void onPictureClick(java.lang.Object,int)
-    public void lambda$onItemClick$7$PictureSelectorActivity(java.util.List,int,boolean)
-    public synthetic void lambda$null$5$PictureSelectorActivity(java.lang.String)
-    public synthetic void lambda$AudioDialog$6$PictureSelectorActivity(java.lang.String,android.content.DialogInterface)
-    public void lambda$initPageModel$3$PictureSelectorActivity(java.util.List,int,boolean)
-    public void lambda$loadMoreData$1$PictureSelectorActivity(long,java.util.List,int,boolean)
-    public void lambda$showPermissionsDialog$9$PictureSelectorActivity(com.luck.picture.lib.dialog.PictureCustomDialog,android.view.View)
-    public synthetic void lambda$initWidgets$0$PictureSelectorActivity(android.widget.CompoundButton,boolean)
-    public void lambda$AudioDialog$4$PictureSelectorActivity(java.lang.String)
-    public synthetic void lambda$showPermissionsDialog$8$PictureSelectorActivity(com.luck.picture.lib.dialog.PictureCustomDialog,boolean,android.view.View)
     public void lambda$readLocalMedia$2$PictureSelectorActivity(java.util.List,int,boolean)
+    public void lambda$loadMoreData$1$PictureSelectorActivity(long,java.util.List,int,boolean)
+    public void lambda$AudioDialog$4$PictureSelectorActivity(java.lang.String)
+    public synthetic void lambda$initWidgets$0$PictureSelectorActivity(android.widget.CompoundButton,boolean)
+    public void lambda$onItemClick$7$PictureSelectorActivity(java.util.List,int,boolean)
+    public synthetic void lambda$showPermissionsDialog$8$PictureSelectorActivity(com.luck.picture.lib.dialog.PictureCustomDialog,boolean,android.view.View)
+    public synthetic void lambda$AudioDialog$6$PictureSelectorActivity(java.lang.String,android.content.DialogInterface)
+    public void lambda$showPermissionsDialog$9$PictureSelectorActivity(com.luck.picture.lib.dialog.PictureCustomDialog,android.view.View)
+    public synthetic void lambda$null$5$PictureSelectorActivity(java.lang.String)
+    public void lambda$initPageModel$3$PictureSelectorActivity(java.util.List,int,boolean)
     public static final java.lang.String TAG
 androidx.lifecycle.ViewModelProvider$AndroidViewModelFactory:
     public static androidx.lifecycle.ViewModelProvider$AndroidViewModelFactory getInstance(android.app.Application)
@@ -52057,6 +53036,14 @@ com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView:
     public void onImageLoaded()
     public android.graphics.Rect sRegion
     public android.graphics.Rect pRegion
+com.jaredrummler.materialspinner.MaterialSpinnerBaseAdapter:
+    public java.lang.String getItemText(int)
+    public int getSelectedIndex()
+    public void notifyItemSelected(int)
+    public void setHintEnabled(boolean)
+    public boolean isHintEnabled()
+    public com.jaredrummler.materialspinner.MaterialSpinnerBaseAdapter setTextColor(int)
+    public com.jaredrummler.materialspinner.MaterialSpinnerBaseAdapter setBackgroundSelector(int)
 okhttp3.ConnectionPool:
     public void <init>(int,long,java.util.concurrent.TimeUnit)
 com.google.crypto.tink.subtle.EngineWrapper$TKeyPairGenerator
@@ -52080,6 +53067,7 @@ com.bumptech.glide.util.pool.StateVerifier:
     public void <init>()
     public abstract void setRecycled(boolean)
 androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat$AnimatedVectorDrawableDelegateState
+com.jaredrummler.materialspinner.Utils
 com.google.android.material.R$id
 org.bouncycastle.pqc.crypto.lms.DigestUtil
 okhttp3.Headers$Builder:
@@ -52193,9 +53181,9 @@ androidx.camera.view.TextureViewImplementation:
     private java.lang.Object lambda$tryToProvidePreviewSurface$1(android.view.Surface,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     private void lambda$onSurfaceRequested$0(androidx.camera.core.SurfaceRequest)
     public void initializePreview()
-    public java.lang.Object lambda$tryToProvidePreviewSurface$1$TextureViewImplementation(android.view.Surface,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public void lambda$tryToProvidePreviewSurface$2$TextureViewImplementation(android.view.Surface,com.google.common.util.concurrent.ListenableFuture,androidx.camera.core.SurfaceRequest)
     public void lambda$onSurfaceRequested$0$TextureViewImplementation(androidx.camera.core.SurfaceRequest)
+    public java.lang.Object lambda$tryToProvidePreviewSurface$1$TextureViewImplementation(android.view.Surface,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public final void notifySurfaceNotInUse()
     public final void reattachSurfaceTexture()
 kotlin.sequences.SequencesKt__SequencesJVMKt
@@ -52234,15 +53222,6 @@ com.google.crypto.tink.shaded.protobuf.MapEntryLite$Metadata:
     public final java.lang.Object defaultKey
     public final com.google.crypto.tink.shaded.protobuf.WireFormat$FieldType valueType
     public final java.lang.Object defaultValue
-com.liflymark.normalschedule.logic.model.AllCourse:
-    public final java.lang.String getCampusName()
-    public final int getClassDay()
-    public final int getClassSessions()
-    public final java.lang.String getClassWeek()
-    public final int getContinuingSession()
-    public final java.lang.String getCourseName()
-    public final java.lang.String getTeacher()
-    public final java.lang.String getTeachingBuildName()
 org.bouncycastle.asn1.DEROctetStringParser
 com.bumptech.glide.load.engine.GlideException:
     public void setLoggingDetails(com.bumptech.glide.load.Key,com.bumptech.glide.load.DataSource)
@@ -52453,7 +53432,6 @@ com.zackratos.ultimatebarx.library.bean.BarConfig:
     public static void <clinit>()
     public static final com.zackratos.ultimatebarx.library.bean.BarConfig newInstance()
     public final com.zackratos.ultimatebarx.library.bean.BarConfig fitWindow(boolean)
-    public final com.zackratos.ultimatebarx.library.bean.BarConfig color(int)
     public final com.zackratos.ultimatebarx.library.bean.BarConfig colorRes(int)
     public final com.zackratos.ultimatebarx.library.bean.BarConfig light(boolean)
     public final com.zackratos.ultimatebarx.library.bean.BarConfig transparent()
@@ -52784,8 +53762,7 @@ androidx.fragment.app.FragmentActivity$HostCallbacks:
     public androidx.fragment.app.FragmentActivity onGetHost()
 org.bouncycastle.asn1.LazyEncodedSequence
 androidx.core.widget.TextViewCompat
-com.liflymark.normalschedule.ui.import_course.ImportLoginFragment$onActivityCreated$3:
-    public final void onChanged(kotlin.Result)
+com.liflymark.normalschedule.ui.import_course.ImportLoginFragment$onActivityCreated$3
 androidx.core.graphics.PathParser
 androidx.camera.core.CaptureBundles$CaptureBundleImpl
 androidx.core.graphics.TypefaceCompatBaseImpl$2
@@ -52844,8 +53821,6 @@ androidx.cardview.R$attr
 com.luck.picture.lib.R$layout
 org.bouncycastle.asn1.isara.IsaraObjectIdentifiers
 com.liflymark.normalschedule.ui.show_timetable.ShowTimetableViewModel$courseDatabaseLiveDataVal$1
-com.liflymark.normalschedule.ui.import_course.ImportLoginFragment$onActivityCreated$4$1:
-    public final void onChanged(kotlin.Result)
 androidx.constraintlayout.solver.widgets.ChainHead:
     public static boolean isMatchConstraintEqualityCandidate(androidx.constraintlayout.solver.widgets.ConstraintWidget,int)
     public void define()
@@ -52961,6 +53936,7 @@ androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityAction
 com.luck.picture.lib.config.PictureSelectionConfig$1:
     public com.luck.picture.lib.config.PictureSelectionConfig createFromParcel(android.os.Parcel)
     public com.luck.picture.lib.config.PictureSelectionConfig[] newArray(int)
+mehdi.sakout.aboutpage.AboutPage$1
 androidx.camera.core.UseCase$EventCallback
 androidx.sqlite.db.framework.FrameworkSQLiteDatabase$1:
     public final synthetic androidx.sqlite.db.framework.FrameworkSQLiteDatabase this$0
@@ -53488,6 +54464,7 @@ com.google.android.material.appbar.AppBarLayout$BaseBehavior$SavedState$1:
     public com.google.android.material.appbar.AppBarLayout$BaseBehavior$SavedState[] newArray(int)
 com.google.android.material.animation.AnimatorSetCompat
 com.luck.picture.lib.engine.PictureSelectorEngine
+com.liflymark.normalschedule.ui.about.AboutActivity$onCreate$2
 androidx.camera.core.impl.DeferrableSurface:
     private void lambda$new$1(java.lang.String)
     private synthetic java.lang.Object lambda$new$0(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
@@ -53952,7 +54929,6 @@ androidx.navigation.fragment.DialogFragmentNavigator$1:
 com.google.android.material.circularreveal.CircularRevealWidget$CircularRevealScrimColorProperty:
     public java.lang.Integer get(com.google.android.material.circularreveal.CircularRevealWidget)
     public void set(com.google.android.material.circularreveal.CircularRevealWidget,java.lang.Integer)
-com.liflymark.normalschedule.ui.import_course.ImportLoginFragment$onActivityCreated$5
 com.google.gson.internal.Streams$AppendableWriter$CurrentWrite
 com.zackratos.ultimatebarx.library.operator.DoubleOperator$Companion
 androidx.constraintlayout.solver.widgets.ConstraintAnchor:
@@ -54282,6 +55258,7 @@ com.google.crypto.tink.proto.HmacParams$1:
     public static final synthetic int[] $SwitchMap$com$google$protobuf$GeneratedMessageLite$MethodToInvoke
 androidx.core.view.NestedScrollingParent
 org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
+com.liflymark.normalschedule.ui.import_course.ImportLoginFragment$onActivityCreated$4
 androidx.appcompat.widget.MenuPopupWindow:
     public void setEnterTransition(java.lang.Object)
     public void setExitTransition(java.lang.Object)
@@ -54693,6 +55670,20 @@ com.luck.picture.lib.tools.VoiceUtils:
     public void play()
     public void releaseSoundPool()
     public final void initPool(android.content.Context)
+com.jaredrummler.materialspinner.MaterialSpinner:
+    public static synthetic int access$000(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic com.jaredrummler.materialspinner.MaterialSpinnerBaseAdapter access$100(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic java.lang.String access$200(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic int access$002(com.jaredrummler.materialspinner.MaterialSpinner,int)
+    public static synthetic boolean access$302(com.jaredrummler.materialspinner.MaterialSpinner,boolean)
+    public static synthetic int access$400(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic com.jaredrummler.materialspinner.MaterialSpinner$OnItemSelectedListener access$500(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic boolean access$300(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic com.jaredrummler.materialspinner.MaterialSpinner$OnNothingSelectedListener access$600(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic boolean access$700(com.jaredrummler.materialspinner.MaterialSpinner)
+    public static synthetic void access$800(com.jaredrummler.materialspinner.MaterialSpinner,boolean)
+    public final void init(android.content.Context,android.util.AttributeSet)
+    public final boolean canShowPopup()
 com.google.android.material.internal.ThemeEnforcement:
     public static varargs androidx.appcompat.widget.TintTypedArray obtainTintedStyledAttributes(android.content.Context,android.util.AttributeSet,int[],int,int,int[])
     public static varargs boolean isCustomTextAppearanceValid(android.content.Context,android.util.AttributeSet,int[],int,int,int[])
@@ -54922,14 +55913,14 @@ androidx.camera.core.ImageCapture:
     public com.google.common.util.concurrent.ListenableFuture triggerAePrecapture(androidx.camera.core.ImageCapture$TakePictureState)
     public void cancelAfAeTrigger(androidx.camera.core.ImageCapture$TakePictureState)
     public com.google.common.util.concurrent.ListenableFuture issueTakePicture(androidx.camera.core.ImageCapture$ImageCaptureRequest)
-    public com.google.common.util.concurrent.ListenableFuture lambda$createPipeline$1$ImageCapture(androidx.camera.core.ImageCapture$ImageCaptureRequest)
-    public com.google.common.util.concurrent.ListenableFuture lambda$preTakePicture$11$ImageCapture(androidx.camera.core.ImageCapture$TakePictureState,androidx.camera.core.impl.CameraCaptureResult)
-    public synthetic java.lang.Object lambda$issueTakePicture$15$ImageCapture(androidx.camera.core.impl.CaptureConfig$Builder,java.util.List,androidx.camera.core.impl.CaptureStage,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
-    public com.google.common.util.concurrent.ListenableFuture lambda$takePictureInternal$8$ImageCapture(androidx.camera.core.ImageCapture$ImageCaptureRequest,java.lang.Void)
-    public com.google.common.util.concurrent.ListenableFuture lambda$preTakePicture$12$ImageCapture(androidx.camera.core.ImageCapture$TakePictureState,androidx.camera.core.impl.CameraCaptureResult)
-    public void lambda$sendImageCaptureRequest$6$ImageCapture(androidx.camera.core.ImageCapture$OnImageCapturedCallback)
     public synthetic void lambda$takePicture$4$ImageCapture(androidx.camera.core.ImageCapture$OutputFileOptions,java.util.concurrent.Executor,androidx.camera.core.ImageCapture$OnImageSavedCallback)
+    public com.google.common.util.concurrent.ListenableFuture lambda$preTakePicture$12$ImageCapture(androidx.camera.core.ImageCapture$TakePictureState,androidx.camera.core.impl.CameraCaptureResult)
+    public com.google.common.util.concurrent.ListenableFuture lambda$createPipeline$1$ImageCapture(androidx.camera.core.ImageCapture$ImageCaptureRequest)
+    public void lambda$sendImageCaptureRequest$6$ImageCapture(androidx.camera.core.ImageCapture$OnImageCapturedCallback)
     public java.lang.Object lambda$takePictureInternal$10$ImageCapture(androidx.camera.core.ImageCapture$ImageCaptureRequest,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
+    public com.google.common.util.concurrent.ListenableFuture lambda$takePictureInternal$8$ImageCapture(androidx.camera.core.ImageCapture$ImageCaptureRequest,java.lang.Void)
+    public synthetic java.lang.Object lambda$issueTakePicture$15$ImageCapture(androidx.camera.core.impl.CaptureConfig$Builder,java.util.List,androidx.camera.core.impl.CaptureStage,androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
+    public com.google.common.util.concurrent.ListenableFuture lambda$preTakePicture$11$ImageCapture(androidx.camera.core.ImageCapture$TakePictureState,androidx.camera.core.impl.CameraCaptureResult)
     public java.util.concurrent.ExecutorService mExecutor
     public androidx.camera.core.impl.CaptureConfig mCaptureConfig
     public androidx.camera.core.impl.CaptureBundle mCaptureBundle
@@ -55590,8 +56581,8 @@ androidx.camera.core.impl.CameraRepository:
     private synthetic java.lang.Object lambda$deinit$0(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public void init(androidx.camera.core.impl.CameraFactory)
     public com.google.common.util.concurrent.ListenableFuture deinit()
-    public synthetic java.lang.Object lambda$deinit$0$CameraRepository(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public void lambda$deinit$1$CameraRepository(androidx.camera.core.impl.CameraInternal)
+    public synthetic java.lang.Object lambda$deinit$0$CameraRepository(androidx.concurrent.futures.CallbackToFutureAdapter$Completer)
     public final java.lang.Object mCamerasLock
     public final java.util.Map mCameras
     public final java.util.Set mReleasingCameras
@@ -55708,11 +56699,6 @@ androidx.recyclerview.widget.RecyclerView$State:
 org.bouncycastle.pqc.crypto.xmss.HashTreeAddress$Builder
 androidx.constraintlayout.motion.widget.Debug
 org.bouncycastle.asn1.BERApplicationSpecificParser
-com.liflymark.normalschedule.logic.bean.UserBackgroundBean:
-    public synthetic void <init>(java.lang.String,int)
-    public final int getId()
-    public final void setId(int)
-    public final java.lang.String getUserBackground()
 retrofit2.CompletableFutureCallAdapterFactory$BodyCallAdapter$BodyCallback:
     public final synthetic retrofit2.CompletableFutureCallAdapterFactory$BodyCallAdapter this$0
 kotlin.coroutines.jvm.internal.DebugProbesKt
@@ -55784,6 +56770,7 @@ okhttp3.internal.http2.Huffman:
 com.bumptech.glide.load.resource.bytes.ByteBufferRewinder$Factory:
     public com.bumptech.glide.load.data.DataRewinder build(java.nio.ByteBuffer)
 androidx.cardview.R$dimen
+com.jaredrummler.materialspinner.R$id
 org.bouncycastle.pqc.jcajce.provider.rainbow.BCRainbowPrivateKey
 org.bouncycastle.pqc.crypto.xmss.WOTSPlusPublicKeyParameters
 com.zackratos.ultimatebarx.library.view.FragmentTag$Companion
@@ -55881,9 +56868,9 @@ com.luck.picture.lib.adapter.PictureImageGridAdapter:
     public com.luck.picture.lib.entity.LocalMedia getItem(int)
     public boolean isSelected(com.luck.picture.lib.entity.LocalMedia)
     public void setOnPhotoSelectChangedListener(com.luck.picture.lib.listener.OnPhotoSelectChangedListener)
+    public synthetic void lambda$onBindViewHolder$0$PictureImageGridAdapter(android.view.View)
     public void lambda$onBindViewHolder$1$PictureImageGridAdapter(com.luck.picture.lib.entity.LocalMedia,com.luck.picture.lib.adapter.PictureImageGridAdapter$ViewHolder,java.lang.String,android.view.View)
     public void lambda$onBindViewHolder$2$PictureImageGridAdapter(com.luck.picture.lib.entity.LocalMedia,java.lang.String,int,com.luck.picture.lib.adapter.PictureImageGridAdapter$ViewHolder,android.view.View)
-    public synthetic void lambda$onBindViewHolder$0$PictureImageGridAdapter(android.view.View)
 com.google.gson.internal.ConstructorConstructor:
     public final com.google.gson.internal.ObjectConstructor newDefaultConstructor(java.lang.Class)
     public final com.google.gson.internal.ObjectConstructor newDefaultImplementationConstructor(java.lang.reflect.Type,java.lang.Class)
@@ -56769,10 +57756,10 @@ com.luck.picture.lib.camera.CustomCameraView:
     public void initView()
     public java.io.File createImageFile()
     public java.io.File createVideoFile()
-    public synthetic void lambda$startVideoPlay$4$CustomCameraView(android.media.MediaPlayer)
-    public synthetic void lambda$initView$1$CustomCameraView(android.view.View)
-    public synthetic void lambda$initView$2$CustomCameraView()
     public synthetic void lambda$initView$0$CustomCameraView(android.view.View)
+    public synthetic void lambda$startVideoPlay$4$CustomCameraView(android.media.MediaPlayer)
+    public synthetic void lambda$initView$2$CustomCameraView()
+    public synthetic void lambda$initView$1$CustomCameraView(android.view.View)
 com.bumptech.glide.load.resource.bitmap.BitmapResource:
     public android.graphics.Bitmap get()
 com.google.android.material.internal.NavigationMenuPresenter$NavigationMenuSeparatorItem:
@@ -56858,6 +57845,7 @@ com.bumptech.glide.request.target.DrawableImageViewTarget:
 com.bumptech.glide.load.model.MediaStoreFileLoader:
     public com.bumptech.glide.load.model.ModelLoader$LoadData buildLoadData(android.net.Uri)
     public boolean handles(android.net.Uri)
+mehdi.sakout.aboutpage.R$id
 com.zackratos.ultimatebarx.library.UltimateBarXManager$navDefMap$2
 kotlin.random.RandomKt
 com.bumptech.glide.load.resource.bitmap.StreamBitmapDecoder:
@@ -57251,6 +58239,153 @@ com.bumptech.glide.request.SingleRequest:
     public final void notifyLoadFailed()
     public void onLoadFailed(com.bumptech.glide.load.engine.GlideException)
     public java.lang.Object getLock()
+mehdi.sakout.aboutpage.R$color:
+    public static java.lang.String userAgent()
+    public static boolean invalidatesCache(java.lang.String)
+    public static boolean requiresRequestBody(java.lang.String)
+    public static boolean redirectsWithBody(java.lang.String)
+    public static boolean redirectsToGet(java.lang.String)
+    public static java.lang.String get(okhttp3.Request,java.net.Proxy$Type)
+    public static boolean includeAuthorityInRequestLine(okhttp3.Request,java.net.Proxy$Type)
+    public static final java.lang.String toUtf8String(byte[])
+    public static final byte[] asUtf8ToByteArray(java.lang.String)
+    public static final short reverseBytes(short)
+    public static final int reverseBytes(int)
+    public static final java.lang.String toHexString(byte)
+    public static final java.lang.String toHexString(int)
+    public static final okio.Sink sink(java.io.File,boolean)
+    public static okio.Sink sink$default(java.io.File,boolean,int,java.lang.Object)
+    public static final okio.Sink sink(java.io.File)
+    public static final okio.Source source(java.io.File)
+    public static final okio.BufferedSource buffer1(okio.Source)
+    public static final okio.BufferedSink buffer1(okio.Sink)
+    public static final okio.internal.HashFunction newHashFunction(java.lang.String)
+    public static final int binarySearch(int[],int,int,int)
+    public static org.bouncycastle.crypto.Digest createSHA1()
+    public static org.bouncycastle.crypto.Digest createSHA224()
+    public static org.bouncycastle.crypto.Digest createSHA256()
+    public static org.bouncycastle.crypto.Digest createSHA384()
+    public static org.bouncycastle.crypto.Digest createSHA512()
+    public static java.lang.Class loadClass(java.lang.Class,java.lang.String)
+    public static byte[] lms_ots_generatePublicKey(org.bouncycastle.pqc.crypto.lms.LMOtsParameters,byte[],int,byte[])
+    public static void u32str(int,org.bouncycastle.crypto.Digest)
+    public static void u16str(short,org.bouncycastle.crypto.Digest)
+    public static void byteArray(byte[],org.bouncycastle.crypto.Digest)
+    public static int getPrivateSize(int)
+    public static int getPublicSize(int)
+    public static java.lang.String getName(int)
+    public static int[] convertArraytoInt(byte[])
+    public static short[] convertArray(byte[])
+    public static short[][] convertArray(byte[][])
+    public static short[][][] convertArray(byte[][][])
+    public static byte[] convertIntArray(int[])
+    public static byte[] convertArray(short[])
+    public static byte[][] convertArray(short[][])
+    public static byte[][][] convertArray(short[][][])
+    public static boolean equals(short[],short[])
+    public static boolean equals(short[][],short[][])
+    public static boolean equals(short[][][],short[][][])
+    public static org.bouncycastle.crypto.params.AsymmetricKeyParameter createKey(org.bouncycastle.asn1.pkcs.PrivateKeyInfo)
+    public static short[] convert(byte[])
+    public static org.bouncycastle.asn1.pkcs.PrivateKeyInfo createPrivateKeyInfo(org.bouncycastle.crypto.params.AsymmetricKeyParameter,org.bouncycastle.asn1.ASN1Set)
+    public static org.bouncycastle.pqc.asn1.XMSSPrivateKey xmssCreateKeyStructure(org.bouncycastle.pqc.crypto.xmss.XMSSPrivateKeyParameters)
+    public static org.bouncycastle.pqc.asn1.XMSSMTPrivateKey xmssmtCreateKeyStructure(org.bouncycastle.pqc.crypto.xmss.XMSSMTPrivateKeyParameters)
+    public static org.bouncycastle.asn1.x509.SubjectPublicKeyInfo createSubjectPublicKeyInfo(org.bouncycastle.crypto.params.AsymmetricKeyParameter)
+    public static org.bouncycastle.pqc.crypto.xmss.XMSSNode lTree(org.bouncycastle.pqc.crypto.xmss.WOTSPlus,org.bouncycastle.pqc.crypto.xmss.WOTSPlusPublicKeyParameters,org.bouncycastle.pqc.crypto.xmss.LTreeAddress)
+    public static org.bouncycastle.pqc.crypto.xmss.XMSSNode randomizeHash(org.bouncycastle.pqc.crypto.xmss.WOTSPlus,org.bouncycastle.pqc.crypto.xmss.XMSSNode,org.bouncycastle.pqc.crypto.xmss.XMSSNode,org.bouncycastle.pqc.crypto.xmss.XMSSAddress)
+    public static int log2(int)
+    public static byte[] toBytesBigEndian(long,int)
+    public static long bytesToXBigEndian(byte[],int,int)
+    public static byte[] cloneArray(byte[])
+    public static byte[][] cloneArray(byte[][])
+    public static boolean hasNullPointer(byte[][])
+    public static void copyBytesAtOffset(byte[],byte[],int)
+    public static byte[] extractBytesAtOffset(byte[],int,int)
+    public static boolean isIndexValid(int,long)
+    public static int getDigestSize(org.bouncycastle.crypto.Digest)
+    public static long getTreeIndex(long,int)
+    public static int getLeafIndex(long,int)
+    public static byte[] serialize(java.lang.Object)
+    public static java.lang.Object deserialize(byte[],java.lang.Class)
+    public static int calculateTau(int,int)
+    public static boolean isNewBDSInitNeeded(long,int,int)
+    public static boolean isNewAuthenticationPathNeeded(long,int,int)
+    public static org.bouncycastle.asn1.x509.AlgorithmIdentifier getDigAlgId(java.lang.String)
+    public static org.bouncycastle.crypto.Digest getDigest(org.bouncycastle.asn1.x509.AlgorithmIdentifier)
+    public static byte[] getEncodedSubjectPublicKeyInfo(org.bouncycastle.asn1.x509.AlgorithmIdentifier,org.bouncycastle.asn1.ASN1Encodable)
+    public static byte[] getEncodedSubjectPublicKeyInfo(org.bouncycastle.asn1.x509.SubjectPublicKeyInfo)
+    public static org.bouncycastle.asn1.ASN1ObjectIdentifier getDigestOID(java.lang.String)
+    public static org.bouncycastle.pqc.math.linearalgebra.GF2Matrix createCanonicalCheckMatrix(org.bouncycastle.pqc.math.linearalgebra.GF2mField,org.bouncycastle.pqc.math.linearalgebra.PolynomialGF2mSmallM)
+    public static boolean equals(int[],int[])
+    public static int[] clone(int[])
+    public static int OS2IP(byte[])
+    public static int OS2IP(byte[],int)
+    public static int OS2IP(byte[],int,int)
+    public static byte[] I2OSP(int)
+    public static void I2OSP(int,byte[],int)
+    public static void I2OSP(int,byte[],int,int)
+    public static int modMultiply(int,int,int)
+    public static int degree(int)
+    public static int remainder(int,int)
+    public static int gcd(int,int)
+    public static boolean isIrreducible(int)
+    public static boolean areEqual(byte[],byte[])
+    public static boolean areEqual(char[],char[])
+    public static boolean areEqual(short[],short[])
+    public static void fill(byte[],byte)
+    public static int hashCode(byte[])
+    public static int hashCode(byte[],int,int)
+    public static int hashCode(char[])
+    public static int hashCode(int[])
+    public static int hashCode(short[][][])
+    public static int hashCode(short[][])
+    public static int hashCode(short[])
+    public static byte[] clone(byte[])
+    public static short[] clone(short[])
+    public static byte[] copyOfRange(byte[],int,int)
+    public static int getLength(int,int)
+    public static byte[] concatenate(byte[],byte[])
+    public static java.lang.Integer valueOf(int)
+    public static int bigEndianToInt(byte[],int)
+    public static void intToBigEndian(int,byte[],int)
+    public static long bigEndianToLong(byte[],int)
+    public static void longToBigEndian(long,byte[],int)
+    public static short littleEndianToShort(byte[],int)
+    public static int littleEndianToInt(byte[],int)
+    public static void shortToLittleEndian(short,byte[],int)
+    public static void shortToBigEndian(short,byte[],int)
+    public static void intToLittleEndian(int,byte[],int)
+    public static long littleEndianToLong(byte[],int)
+    public static void longToLittleEndian(long,byte[],int)
+    public static void longToLittleEndian(long[],int,int,byte[],int)
+    public static final java.lang.Object await(retrofit2.Call,kotlin.coroutines.Continuation)
+    public static final java.lang.Object awaitNullable(retrofit2.Call,kotlin.coroutines.Continuation)
+    public static final java.lang.Object awaitResponse(retrofit2.Call,kotlin.coroutines.Continuation)
+    public static final int about_background_color
+    public static final int about_background_dark_color
+    public static final int about_item_icon_color
+    public static final int about_separator_color
+    public static final int about_separator_dark_color
+    public static final int about_text_color
+    public static final int about_text_dark_color
+    public static final int about_icon_padding
+    public static final int about_icon_size
+    public static final int about_separator_height
+    public static final int about_text_padding
+    public static final int about_providers
+    public static final int description
+    public static final int description_separator
+    public static final int image
+    public static final int sub_wrapper
+    public static final int about_page
+    public static final int about_page_separator
+    public static final int about_elementTextAppearance
+    public static final int one_and_a_half_grid_unit
+    public static final int three_grid_unit
+    public static final int arrow
+    public static final int selector
+    public static final int text_view_spinner
+    public static final int spinner_list_item
 kotlinx.coroutines.ExecutorCoroutineDispatcher$Key
 kotlinx.coroutines.EventLoopImplBase:
     public static final boolean access$isCompleted$p(kotlinx.coroutines.EventLoopImplBase)
@@ -57397,27 +58532,7 @@ com.yalantis.ucrop.R$layout:
     public static final void startCoroutineCancellable(kotlin.jvm.functions.Function2,java.lang.Object,kotlin.coroutines.Continuation,kotlin.jvm.functions.Function1)
     public static final void startCoroutineCancellable(kotlin.coroutines.Continuation,kotlin.coroutines.Continuation)
     public static final void startCoroutineUndispatched(kotlin.jvm.functions.Function2,java.lang.Object,kotlin.coroutines.Continuation)
-    public static java.lang.String userAgent()
-    public static boolean invalidatesCache(java.lang.String)
-    public static boolean requiresRequestBody(java.lang.String)
-    public static boolean redirectsWithBody(java.lang.String)
-    public static boolean redirectsToGet(java.lang.String)
-    public static java.lang.String get(okhttp3.Request,java.net.Proxy$Type)
-    public static boolean includeAuthorityInRequestLine(okhttp3.Request,java.net.Proxy$Type)
-    public static final java.lang.String toUtf8String(byte[])
-    public static final byte[] asUtf8ToByteArray(java.lang.String)
-    public static final short reverseBytes(short)
-    public static final int reverseBytes(int)
-    public static final java.lang.String toHexString(byte)
-    public static final java.lang.String toHexString(int)
-    public static final okio.Sink sink(java.io.File,boolean)
-    public static okio.Sink sink$default(java.io.File,boolean,int,java.lang.Object)
-    public static final okio.Sink sink(java.io.File)
-    public static final okio.Source source(java.io.File)
-    public static final okio.BufferedSource buffer1(okio.Source)
-    public static final okio.BufferedSink buffer1(okio.Sink)
-    public static final okio.internal.HashFunction newHashFunction(java.lang.String)
-    public static final int binarySearch(int[],int,int,int)
+    public static int getThemeAccentColor(android.content.Context)
     public static final int ucrop_activity_photobox
     public static final int ucrop_aspect_ratio
     public static final int ucrop_controls
@@ -57442,11 +58557,7 @@ com.yalantis.ucrop.R$layout:
     public static final int toast_text
     public static final int toast_layout
     public static kotlinx.coroutines.TimeSource timeSource
-    public static final int one_and_a_half_grid_unit
-    public static final int three_grid_unit
-    public static final int arrow
-    public static final int selector
-    public static final int text_view_spinner
+    public static final int selectableItemBackground
 com.zackratos.ultimatebarx.library.operator.FragmentOperator$Companion
 org.bouncycastle.asn1.DERVideotexString
 com.google.crypto.tink.PrimitiveSet$Prefix:
@@ -57788,8 +58899,8 @@ com.luck.picture.lib.camera.view.CaptureButton:
     public final void startCaptureAnimation(float)
     public final void updateProgress(long)
     public void resetState()
-    public synthetic void lambda$startRecordAnimation$1$CaptureButton(android.animation.ValueAnimator)
     public synthetic void lambda$startCaptureAnimation$0$CaptureButton(android.animation.ValueAnimator)
+    public synthetic void lambda$startRecordAnimation$1$CaptureButton(android.animation.ValueAnimator)
     public synthetic void lambda$startRecordAnimation$2$CaptureButton(android.animation.ValueAnimator)
 okhttp3.internal.http.HttpMethod
 com.google.gson.internal.ConstructorConstructor$11:
@@ -57895,9 +59006,9 @@ androidx.camera.view.PreviewView$1:
     private void lambda$onSurfaceRequested$2(androidx.camera.view.PreviewStreamStateObserver,androidx.camera.core.impl.CameraInternal)
     private void lambda$onSurfaceRequested$1(androidx.camera.core.impl.CameraInternal,androidx.camera.core.SurfaceRequest,androidx.camera.core.SurfaceRequest$TransformationInfo)
     private synthetic void lambda$onSurfaceRequested$0(androidx.camera.core.SurfaceRequest)
+    public synthetic void lambda$onSurfaceRequested$0$PreviewView$1(androidx.camera.core.SurfaceRequest)
     public void lambda$onSurfaceRequested$1$PreviewView$1(androidx.camera.core.impl.CameraInternal,androidx.camera.core.SurfaceRequest,androidx.camera.core.SurfaceRequest$TransformationInfo)
     public void lambda$onSurfaceRequested$2$PreviewView$1(androidx.camera.view.PreviewStreamStateObserver,androidx.camera.core.impl.CameraInternal)
-    public synthetic void lambda$onSurfaceRequested$0$PreviewView$1(androidx.camera.core.SurfaceRequest)
 kotlin.collections.AbstractList:
     public static void <clinit>()
     public static final void checkElementIndex$kotlin_stdlib(int,int)
@@ -59040,6 +60151,8 @@ androidx.room.util.TableInfo$Column:
     public boolean isPrimaryKey()
 com.google.gson.internal.bind.util.ISO8601Utils:
     public static int indexOfNonDigit(java.lang.String,int)
+com.liflymark.normalschedule.ui.about.AboutActivity:
+    public android.view.View _$_findCachedViewById(int)
 com.afollestad.materialdialogs.internal.button.DialogActionButton:
     public static void <clinit>()
     public java.lang.Integer enabledColorOverride
@@ -59113,7 +60226,6 @@ com.google.crypto.tink.shaded.protobuf.MessageLite:
     public abstract com.google.crypto.tink.shaded.protobuf.Parser getParserForType()
 kotlin.comparisons.ComparisonsKt__ComparisonsKt
 androidx.appcompat.app.AlertController$5
-com.liflymark.normalschedule.logic.model.ThisProjectGrade
 com.google.crypto.tink.shaded.protobuf.MessageLite$Builder:
     public abstract com.google.crypto.tink.shaded.protobuf.MessageLite build()
     public abstract com.google.crypto.tink.shaded.protobuf.MessageLite buildPartial()
@@ -59166,18 +60278,6 @@ com.google.crypto.tink.shaded.protobuf.CodedOutputStream$ArrayEncoder:
     public final void writeMessageNoTag(com.google.crypto.tink.shaded.protobuf.MessageLite)
     public final void writeLazy(byte[],int,int)
     public final int offset
-com.liflymark.normalschedule.logic.bean.CourseBean:
-    public final java.lang.String getId()
-    public final void setId(java.lang.String)
-    public final java.lang.String getCampusName()
-    public final int getClassDay()
-    public final int getClassSessions()
-    public final java.lang.String getClassWeek()
-    public final int getContinuingSession()
-    public final java.lang.String getCourseName()
-    public final java.lang.String getTeacher()
-    public final java.lang.String getTeachingBuildName()
-    public final java.lang.String getColor()
 okhttp3.internal.http2.Http2Reader:
     public final void readHeaders(okhttp3.internal.http2.Http2Reader$Handler,int,byte,int)
     public final void readData(okhttp3.internal.http2.Http2Reader$Handler,int,byte,int)
@@ -59432,61 +60532,63 @@ androidx.appcompat.view.StandaloneActionMode:
 com.google.android.material.transformation.ExpandableBehavior:
     public static synthetic int access$000(com.google.android.material.transformation.ExpandableBehavior)
     public com.google.android.material.expandable.ExpandableWidget findExpandableWidget(androidx.coordinatorlayout.widget.CoordinatorLayout,android.view.View)
-androidx.camera.core.-$$Lambda$CameraX$yNqv1-zc7V2dy95SuM5Lj7_v8Ag
-androidx.camera.core.-$$Lambda$ImageCapture$dEs0505hp533eS_OvSgKFG8DS9Y
-androidx.camera.core.-$$Lambda$ImageCapture$uWyJYreAIltff04ZNJP8TzL7NOQ
-androidx.camera.core.-$$Lambda$SafeCloseImageReaderProxy$zycm9fElMBko0VBGypZhA8l8cGU
-androidx.camera.core.-$$Lambda$_HsY_HLKVfTHfh0rHMSnjRiMSRI
-androidx.camera.core.impl.-$$Lambda$CameraRepository$DF6ZWAiq0xxY2Akj6wKHgfzWkmM
-okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
-    public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
-androidx.camera.core.-$$Lambda$ImageSaver$2cOdLlQLf7oIXLW3Uxg7jMjL9J4
-androidx.camera.core.-$$Lambda$ImageCapture$hNJSeidLIX2rWb4EMfMMa1P0f84
-androidx.camera.core.-$$Lambda$CameraX$D0_uQXmcCjI8AFqdOVvB39qqJxc
-androidx.camera.core.-$$Lambda$ImageCapture$bakQbkMAq4gEBTLNH-27t75c7WM
-androidx.camera.core.-$$Lambda$CameraX$aTURASQUy-g_hw4MWQjP0vylM-4
-androidx.camera.core.-$$Lambda$CameraX$4YqlBn33jrknu58EFhsMoZ-gt_Q
+androidx.camera.core.-$$Lambda$CameraX$HvpQZ8aiR9sGmK6KQpnUy2OHbmg
 androidx.camera.core.-$$Lambda$ImageCapture$bMicSYysg7FuiULVmubTg6sYOQM
-androidx.camera.core.-$$Lambda$ImageCapture$G6rKjyVpdztjcIW27kSA5XWeUFU
+androidx.camera.core.-$$Lambda$CameraX$vVo-4eBMCJ7AuV27BVi_liTg-8I
+androidx.camera.core.-$$Lambda$ImageCapture$ImageCaptureRequest$qoA5qq09pd6WiAozSV4_F8ZuXL4
+androidx.camera.core.-$$Lambda$CameraX$itKuWZKs0Mog45HAs4PbL622TTg
+androidx.camera.core.-$$Lambda$CameraX$4YqlBn33jrknu58EFhsMoZ-gt_Q
+androidx.camera.core.-$$Lambda$ImageCapture$Y6jvpuXva0-uw4x8hn2rjaxqU3M
+androidx.camera.core.-$$Lambda$ImageCapture$CaptureCallbackChecker$vr1i6IVvXgLbUYQvb6pxvnqON0I
+com.luck.picture.lib.widget.-$$Lambda$FolderPopWindow$jpymuBEWcdbd9bjh1oVGv4mdW28
+androidx.camera.core.-$$Lambda$ImageCapture$dEs0505hp533eS_OvSgKFG8DS9Y
+androidx.camera.core.-$$Lambda$CameraX$aTURASQUy-g_hw4MWQjP0vylM-4
 okhttp3.-$$Lambda$Dns$9evC3uO-H_z08sS9O-4-hLhZ8es:
     public final java.util.List lookup(java.lang.String)
-androidx.camera.core.-$$Lambda$CameraX$itKuWZKs0Mog45HAs4PbL622TTg
-androidx.camera.core.-$$Lambda$ImageCapture$aLoJphDyE5tyovYa54zSwulejjs
-androidx.camera.core.-$$Lambda$ImageCapture$UmkeL2mjd9rg_EWxEeQkRNcHvEQ
-com.luck.picture.lib.-$$Lambda$PictureCustomCameraActivity$YcRSjxTGLM-p629OUtjfQeM7hDo:
-    public final void onLoadImage(java.io.File,android.widget.ImageView)
-androidx.camera.core.-$$Lambda$ImageSaver$-JRZLUaKK7DQ1iBdZ_1qTGbYQrk
-androidx.camera.core.-$$Lambda$ImageCapture$OpDA3xKMli8AiXtGyy9FdWPkNPk
-androidx.camera.core.-$$Lambda$CameraX$vVo-4eBMCJ7AuV27BVi_liTg-8I
-androidx.camera.core.-$$Lambda$ImageCapture$Y6jvpuXva0-uw4x8hn2rjaxqU3M
-androidx.camera.core.-$$Lambda$VideoCapture$pFXPMCy4Z1n_8LWnkUvVoDWdli0
-androidx.camera.core.-$$Lambda$ImageCapture$ImageCaptureRequest$qoA5qq09pd6WiAozSV4_F8ZuXL4
-androidx.camera.core.-$$Lambda$ImageCapture$CaptureCallbackChecker$vr1i6IVvXgLbUYQvb6pxvnqON0I
-androidx.camera.core.-$$Lambda$ImageCapture$ImageCaptureRequest$KlqAxzwB-08wcOFrjThjf8ncF2g
-com.luck.picture.lib.widget.-$$Lambda$FolderPopWindow$jpymuBEWcdbd9bjh1oVGv4mdW28
-okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
-    public final okhttp3.EventListener create(okhttp3.Call)
-androidx.camera.core.-$$Lambda$SafeCloseImageReaderProxy$vlVuGMKvMVqmwbJFm3dTgGgUzu4
-androidx.camera.core.-$$Lambda$ImageCapture$_WfH2DY_Y7w7gVRaJtj4Dkx9afc
 com.luck.picture.lib.-$$Lambda$PictureSelectorPreviewWeChatStyleActivity$OPfZyLFzwsEzDq_oNaYNkXQw0sU:
     public final void onItemClick(int,com.luck.picture.lib.entity.LocalMedia,android.view.View)
-androidx.camera.core.-$$Lambda$ProcessingImageReader$2$9BhRoTqwTfB3AroiolqV1-Oor0w
+androidx.camera.core.impl.-$$Lambda$CameraRepository$Xsz-bCePoZbGG6IyvKcmaAgiB0w
+androidx.camera.core.-$$Lambda$VideoCapture$pFXPMCy4Z1n_8LWnkUvVoDWdli0
+androidx.camera.core.-$$Lambda$ImageCapture$bbnz71YiDMP6bZjiWLFVvJ73O98
+androidx.camera.core.-$$Lambda$ImageCapture$OpDA3xKMli8AiXtGyy9FdWPkNPk
+androidx.camera.core.-$$Lambda$ImageCapture$G6rKjyVpdztjcIW27kSA5XWeUFU
+androidx.camera.core.-$$Lambda$CameraX$C62zkJ1udKM1UB9RvhtoCMSt3W4
+androidx.camera.core.-$$Lambda$ImageCapture$_WfH2DY_Y7w7gVRaJtj4Dkx9afc
+androidx.camera.core.-$$Lambda$SafeCloseImageReaderProxy$vlVuGMKvMVqmwbJFm3dTgGgUzu4
 com.luck.picture.lib.-$$Lambda$PictureSelectorCameraEmptyActivity$lgrSZBZGDIXk1HWIWfK2t06nG6E:
     public final void onCall(java.lang.Object)
+okhttp3.-$$Lambda$EventListener$OXICzLQ3RHlsN3BZyIksLMm-GlQ:
+    public final okhttp3.EventListener create(okhttp3.Call)
 androidx.camera.core.-$$Lambda$CameraX$xO6pSPsxANC1dlqPHC2JhkOtJwI
-androidx.camera.core.impl.-$$Lambda$CameraRepository$Xsz-bCePoZbGG6IyvKcmaAgiB0w
+androidx.camera.core.-$$Lambda$CameraX$D0_uQXmcCjI8AFqdOVvB39qqJxc
+androidx.camera.core.-$$Lambda$CameraX$yNqv1-zc7V2dy95SuM5Lj7_v8Ag
+okhttp3.-$$Lambda$Authenticator$esJoevooYalsFzydukZpZJT5arU:
+    public final okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)
+androidx.camera.core.-$$Lambda$ProcessingImageReader$2$9BhRoTqwTfB3AroiolqV1-Oor0w
+androidx.camera.core.-$$Lambda$SafeCloseImageReaderProxy$zycm9fElMBko0VBGypZhA8l8cGU
 com.luck.picture.lib.-$$Lambda$PictureExternalPreviewActivity$GRsvN49RJI-ixV-yTx9loVLbYg8:
     public final void onScanFinish()
-androidx.camera.core.-$$Lambda$CameraX$HvpQZ8aiR9sGmK6KQpnUy2OHbmg
+androidx.camera.core.-$$Lambda$ImageCapture$bakQbkMAq4gEBTLNH-27t75c7WM
+com.luck.picture.lib.-$$Lambda$PictureCustomCameraActivity$YcRSjxTGLM-p629OUtjfQeM7hDo:
+    public final void onLoadImage(java.io.File,android.widget.ImageView)
+androidx.camera.core.-$$Lambda$ImageCapture$hNJSeidLIX2rWb4EMfMMa1P0f84
+androidx.camera.core.-$$Lambda$_HsY_HLKVfTHfh0rHMSnjRiMSRI
+androidx.camera.core.-$$Lambda$ImageCapture$ImageCaptureRequest$KlqAxzwB-08wcOFrjThjf8ncF2g
 androidx.camera.core.-$$Lambda$CameraX$u-Xx2b6YXY5GXNXRh-mDiDnHdpQ
-androidx.camera.core.-$$Lambda$ImageCapture$bbnz71YiDMP6bZjiWLFVvJ73O98
-androidx.camera.core.-$$Lambda$CameraX$C62zkJ1udKM1UB9RvhtoCMSt3W4
+androidx.camera.core.impl.-$$Lambda$CameraRepository$DF6ZWAiq0xxY2Akj6wKHgfzWkmM
+androidx.camera.core.-$$Lambda$ImageCapture$UmkeL2mjd9rg_EWxEeQkRNcHvEQ
+androidx.camera.core.-$$Lambda$ImageSaver$2cOdLlQLf7oIXLW3Uxg7jMjL9J4
+androidx.camera.core.-$$Lambda$ImageCapture$aLoJphDyE5tyovYa54zSwulejjs
+androidx.camera.core.-$$Lambda$ImageSaver$-JRZLUaKK7DQ1iBdZ_1qTGbYQrk
+androidx.camera.core.-$$Lambda$ImageCapture$uWyJYreAIltff04ZNJP8TzL7NOQ
 -$$LambdaGroup$ks$A8mimUcI1Ebxbqwz6hXCHnUczEk:
     public final int invoke()
 -$$LambdaGroup$ks$cF6jFVUadiabPMN254-Sgj48m-g:
     public final int invoke()
 -$$LambdaGroup$js$DiJexje2_BVwghz95LC3AbCcWjg:
     public final androidx.lifecycle.LiveData apply()
+-$$LambdaGroup$js$2n4UA3ndbe7h6ivqoGTlzyMcjFk:
+    public final void onChanged(kotlin.Result)
 -$$LambdaGroup$js$USm3-O-86CYbf6-LVoNKisuE5v4:
     public final androidx.lifecycle.LiveData apply()
 -$$LambdaGroup$ks$S6AsOEwuZS5zB9M982A7flhnPns:

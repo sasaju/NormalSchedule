@@ -1,7 +1,6 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
@@ -63,6 +62,8 @@ class ShowTimetableActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         //        // 设置toolbar和状态栏
         val decorView = window.decorView
         if (Build.VERSION.SDK_INT >= 29)
@@ -264,9 +265,9 @@ class ShowTimetableActivity : AppCompatActivity() {
         sdf.format(firstWeekMonthDayDate)
         tv_week.text = "第${position+1}周  非本周"
         if (position+1 == GetDataUtil.whichWeekNow(firstWeekMonthDayDate) && GetDataUtil.dateMinusDate(
-                GetDataUtil.getNowTime(),
-                sdf
-            ) >= 0){
+                        GetDataUtil.getNowTime(),
+                        sdf
+                ) >= 0){
             tv_week.text = "第${position+1}周  当前周"
         }
 
@@ -294,8 +295,8 @@ class ShowTimetableActivity : AppCompatActivity() {
         Glide.with(this).load(path)
                 .into(object : SimpleTarget<Drawable?>() {
                     override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable?>?
+                            resource: Drawable,
+                            transition: Transition<in Drawable?>?
                     ) {
                         drawerLayout.background = resource
                     }
@@ -309,8 +310,8 @@ class ShowTimetableActivity : AppCompatActivity() {
         Glide.with(this).load(backgroundId)
                 .into(object : SimpleTarget<Drawable?>() {
                     override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable?>?
+                            resource: Drawable,
+                            transition: Transition<in Drawable?>?
                     ) {
                         drawerLayout.background = resource
                     }
@@ -322,56 +323,56 @@ class ShowTimetableActivity : AppCompatActivity() {
         // Load our little droid guy
         val droid = ContextCompat.getDrawable(this, R.drawable.add)
         val droidTarget = Rect(
-            0, 0, (droid?.getIntrinsicWidth() ?: 0) * 2, (droid?.getIntrinsicHeight()
+                0, 0, (droid?.getIntrinsicWidth() ?: 0) * 2, (droid?.getIntrinsicHeight()
                 ?: 0) * 2
         )
         droidTarget.offset((display.getWidth() * 0.45).toInt(), (display.getHeight() * 0.2).toInt())
         TapTargetSequence(this)
             .targets(
-                TapTarget.forToolbarNavigationIcon(
-                    toolbar, "请仔细阅读提示", "这里被点击或者向左滑动可以查看更多功能\n" +
+                    TapTarget.forToolbarNavigationIcon(
+                            toolbar, "请仔细阅读提示", "这里被点击或者向左滑动可以查看更多功能\n" +
                             "点击指示位置以继续"
-                )
-                    .outerCircleColor(R.color.lightBlue)
-                    .cancelable(false),
-                TapTarget.forView(
-                    findViewById(R.id.all_date),
-                    "日期显示栏 | 点击跳转至当前周",
-                    "点击此处立即跳转至当前周 \n点击指示位置以继续"
-                )
-                    .outerCircleColor(R.color.lightBlue)
-                    .cancelable(
-                        false
-                    ),
-                // Likewise, this tap target will target the search button
-                TapTarget.forToolbarMenuItem(
-                    toolbar,
-                    R.id.add_course,
-                    "点击这里可以增加单个课程",
-                    "主要是调课时使用"
-                )
-                    .dimColor(android.R.color.black)
-                    .outerCircleColor(R.color.lightBlue)
-                    .targetCircleColor(android.R.color.black)
-                    .transparentTarget(true)
-                    .textColor(android.R.color.black)
-                    .cancelable(false),
-                TapTarget.forToolbarMenuItem(
-                    toolbar,
-                    R.id.import_course,
-                    "点击这里可以重新导入课程 | 请谨慎使用该功能",
-                    "重新导课将会清空当前课表，请谨慎使用"
-                )
-                    .dimColor(android.R.color.black)
-                    .outerCircleColor(R.color.lightBlue)
-                    .targetCircleColor(android.R.color.black)
-                    .transparentTarget(true)
-                    .textColor(android.R.color.black)
-                    .cancelable(false),
-                TapTarget.forBounds(droidTarget, "长按可以选择删除该课程 \n单击可以查看课程详情")
-                    .transparentTarget(true)
-                    .outerCircleColor(R.color.lightBlue)
-                    .cancelable(false)
+                    )
+                            .outerCircleColor(R.color.lightBlue)
+                            .cancelable(false),
+                    TapTarget.forView(
+                            findViewById(R.id.all_date),
+                            "日期显示栏 | 点击跳转至当前周",
+                            "点击此处立即跳转至当前周 \n点击指示位置以继续"
+                    )
+                            .outerCircleColor(R.color.lightBlue)
+                            .cancelable(
+                                    false
+                            ),
+                    // Likewise, this tap target will target the search button
+                    TapTarget.forToolbarMenuItem(
+                            toolbar,
+                            R.id.add_course,
+                            "点击这里可以增加单个课程",
+                            "主要是调课时使用"
+                    )
+                            .dimColor(android.R.color.black)
+                            .outerCircleColor(R.color.lightBlue)
+                            .targetCircleColor(android.R.color.black)
+                            .transparentTarget(true)
+                            .textColor(android.R.color.black)
+                            .cancelable(false),
+                    TapTarget.forToolbarMenuItem(
+                            toolbar,
+                            R.id.import_course,
+                            "点击这里可以重新导入课程 | 请谨慎使用该功能",
+                            "重新导课将会清空当前课表，请谨慎使用"
+                    )
+                            .dimColor(android.R.color.black)
+                            .outerCircleColor(R.color.lightBlue)
+                            .targetCircleColor(android.R.color.black)
+                            .transparentTarget(true)
+                            .textColor(android.R.color.black)
+                            .cancelable(false),
+                    TapTarget.forBounds(droidTarget, "长按可以选择删除该课程 \n单击可以查看课程详情")
+                            .transparentTarget(true)
+                            .outerCircleColor(R.color.lightBlue)
+                            .cancelable(false)
 //                TapTarget.forToolbarMenuItem(toolbar, R.id.add_course, "").cancelable(false)
             )
             .listener(object : TapTargetSequence.Listener {
@@ -397,14 +398,14 @@ class ShowTimetableActivity : AppCompatActivity() {
             val realCourseMessage = item.getData().courseName.split("\n")
             GlobalScope.launch{
                 val courseBeanList = viewModel.loadCourseByNameAndStart(
-                    realCourseMessage[0],
-                    item.getData().start + 1,
-                    item.getData().whichColumn + 1
+                        realCourseMessage[0],
+                        item.getData().start + 1,
+                        item.getData().whichColumn + 1
                 )
                 runOnUiThread{
                     val dialog = Dialog.getClassDetailDialog(
-                        this@ShowTimetableActivity,
-                        courseBeanList[0]
+                            this@ShowTimetableActivity,
+                            courseBeanList[0]
                     )
                     dialog.show()
                 }

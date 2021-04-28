@@ -9,9 +9,13 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener
 import com.bigkoo.pickerview.view.OptionsPickerView
+import com.jaredrummler.materialspinner.MaterialSpinner
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.model.DepartmentList
+import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
+import org.angmarch.views.NiceSpinner
 
 
 object Dialog {
@@ -28,7 +32,7 @@ object Dialog {
                         "2.开发者承诺本软件及其提供服务的服务器不会存储你的任何个人信息，即使是开发者也无法查看你的任何信息(包括但不限于您的姓名、性别、专业、课程表内容)\n" +
                         "3.如果您由于木马入侵、连接不安全网络等原因造成的在使用本app时造成信息泄露和损失由您本人负责\n" +
                         "\n三）信息来源及其准确性:\n" + "1.本软件所有行为未获得河北大学官方及其任何组织支持，并非官方指定的教务软件，所有功能仅为个人开发" +
-                        "\n2.本软件本软件会模拟您的登陆教务系统操作，由于您的任何行为造成无法登陆，开发者概不负责" +
+                        "\n2.本软件会模拟您的登陆教务系统操作，由于您的任何行为造成无法登陆，开发者概不负责" +
                         "\n3.如河北大学官方禁止部分信息的抓取和发布，开发者将立即停止该功能，并尽最大努力消除影响。" +
                         "\n作者：1289142675@qq.com\n" +
                                 "著作权归作者所有。")
@@ -119,9 +123,10 @@ object Dialog {
         dialog.show()
     }
 
-    fun getSelectDepartmentAndClass(_context: Context){
-        
-
+    fun getSelectDepartmentAndClass(_context: Context, departmentAndMajorList: List<Structure>): MaterialDialog {
+        val dialog = MaterialDialog(_context)
+                .customView(R.layout.dialog_select_class)
+        return dialog
     }
 
     fun String.whichIs1(): List<Int>{

@@ -11,14 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.gyf.immersionbar.ImmersionBar
+import com.jaredrummler.materialspinner.MaterialSpinner
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
+import com.liflymark.normalschedule.logic.utils.Dialog.getSelectDepartmentAndClass
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
+import org.angmarch.views.NiceSpinner
 
 class ImportLoginFragment: Fragment() {
 
@@ -42,6 +46,7 @@ class ImportLoginFragment: Fragment() {
             activity?.finish()
             return
         }
+
         select_sign_method.attachDataSource(listOf("统一认证", "URP登陆"))
         select_sign_method.setOnSpinnerItemSelectedListener { parent, view, position, id ->
             when(position){
@@ -221,10 +226,17 @@ class ImportLoginFragment: Fragment() {
         }
 
         btnSignByClass.setOnClickListener {
+            val dialog = getSelectDepartmentAndClass(requireContext(), listOf(Structure("药学院", listOf("19药物制剂"))))
+            val departmentSpinner = dialog.findViewById<MaterialSpinner>(R.id.department)
+            val majorSpinner = dialog.findViewById<MaterialSpinner>(R.id.major)
+            departmentSpinner.setItems("Ice Cream Sandwich", "Jelly Bean", "KitKat", "Lollipop", "Marshmallow")
+            majorSpinner.setItems(listOf("药物制剂", "药学"))
+            dialog.show()
             activity?.let { it1 -> Toasty.info(it1, "暂未开发 敬请期待", Toasty.LENGTH_SHORT).show() }
         }
 
     }
+
 
     private fun saveAccount() {
         userName = user.text.toString()

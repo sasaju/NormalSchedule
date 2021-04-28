@@ -1,8 +1,10 @@
 package com.liflymark.normalschedule.logic.model
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Keep
 @Entity
 data class TimeTableBean(
         @PrimaryKey(autoGenerate = true)

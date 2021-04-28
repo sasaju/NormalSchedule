@@ -102,7 +102,7 @@ class ScheduleRecyclerAdapter(
                 activity.resources.getDimensionPixelSize(R.dimen.perCourseHeight),
                 columnCount,
                 totalCoursePerDay
-        ) {
+        ){
             gapFilling[it]
         }
         schedule_recyclerview.adapter = adapter
