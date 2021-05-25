@@ -24,6 +24,9 @@ interface CourseService {
                   @Field("yzm") captcha: String,
                   @Field("headers") headers: String):Call<CourseResponse>
 
+    @GET("timetable/vist/")
+    fun getVisit(): Call<CourseResponse>
+
     @GET("class/departmentList/")
     fun getDepartmentList():Call<DepartmentList>
 
@@ -35,4 +38,5 @@ interface CourseService {
     @POST("newtimetable/")
     fun getCourseByNew(@Field("user")user: String,
                        @Field("password")passWord: String): Call<CourseResponse>
+
 }

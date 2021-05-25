@@ -62,7 +62,7 @@ object Dialog {
 
         val oneList = courseBean.classWeek.whichIs1()
         val courseStartToEnd =
-            "    第${courseBean.classSessions} - ${courseBean.classSessions+courseBean.continuingSession}节"
+            "    第${courseBean.classSessions} - ${courseBean.classSessions+courseBean.continuingSession-1}节"
 
 
         courseName.text= courseBean.courseName

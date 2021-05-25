@@ -50,6 +50,11 @@ object  Repository {
         Result.success(courseResponse)
     }
 
+    fun getVisitCourse() = fire(Dispatchers.IO){
+        val courseResponse = NormalScheduleNetwork.getVisitCourse()
+        Result.success(courseResponse)
+    }
+
     fun insertCourse(courseList: List<AllCourse>) = fire(Dispatchers.IO) {
         for (singleCourse in courseList) {
             courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))

@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Schedule/NormalSchedule/IcyTimeTable/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.24074074074074073" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_about.xml" value="0.12335359675785208" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_git_list.xml" value="0.25226449275362317" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_git_list_item.xml" value="0.25226449275362317" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_import_score.xml" value="0.12335359675785208" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_show_timetable.xml" value="0.10208333333333333" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/fragment_import_login.xml" value="0.12335359675785208" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/fragment_show_course_list.xml" value="0.10208333333333333" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/menu/nav_menu.xml" value="0.2324074074074074" />
       </map>
     </option>
   </component>

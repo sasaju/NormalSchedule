@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.gyf.immersionbar.ImmersionBar
 import com.jaredrummler.materialspinner.MaterialSpinner
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
@@ -26,7 +28,7 @@ import org.angmarch.views.NiceSpinner
 
 class ImportLoginFragment: Fragment() {
 
-    private val viewModel by lazy { ViewModelProviders.of(this).get(CourseViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(this).get(CourseViewModel::class.java) }
     var userName = ""
     var userPassword = ""
     private var id = ""
@@ -177,7 +179,10 @@ class ImportLoginFragment: Fragment() {
                         activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toasty.LENGTH_LONG).show() }
                         if(activity is MainActivity) {
                             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                                putExtra("isSaved", true)
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
                             }
                             startActivity(intent)
                             activity?.finish()
@@ -191,6 +196,41 @@ class ImportLoginFragment: Fragment() {
                 }
 
 
+            }
+        })
+
+        viewModel.courseVisitLiveData.observe(viewLifecycleOwner, Observer { result ->
+            val course = result.getOrNull()
+
+            if (course == null) {
+                val allCourseList = listOf(AllCourse(
+                    "五四路",
+                    1,
+                    1,
+                    "11111111111111111111111",
+                    1,
+                    "点击右上角导入课程",
+                    "",
+                    ""
+                ))
+                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                    putExtra("isSaved", false)
+                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                    putExtra("user", userName)
+                    putExtra("password", userPassword)
+                }
+                startActivity(intent)
+                activity?.finish()
+            } else {
+                val allCourseList = course.allCourse
+                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                    putExtra("isSaved", false)
+                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                    putExtra("user", userName)
+                    putExtra("password", userPassword)
+                }
+                startActivity(intent)
+                activity?.finish()
             }
         })
 
@@ -233,6 +273,10 @@ class ImportLoginFragment: Fragment() {
             majorSpinner.setItems(listOf("药物制剂", "药学"))
             dialog.show()
             activity?.let { it1 -> Toasty.info(it1, "暂未开发 敬请期待", Toasty.LENGTH_SHORT).show() }
+        }
+
+        btnSignByVisitor.setOnClickListener {
+            viewModel.putValue()
         }
 
     }

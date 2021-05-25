@@ -177,6 +177,17 @@
                 app:layout_constraintTop_toBottomOf="@id/btnSign"
                 tools:ignore="MissingConstraints" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignByVisitor"
+                style="@style/DialogButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/green"
+                android:text="以游客身份登入"
+                app:layout_constraintTop_toBottomOf="@id/btnSignByClass"
+                tools:ignore="MissingConstraints" />
+
 
             <!--        <com.google.android.material.button.MaterialButton-->
             <!--            android:id="@+id/testButton"-->
@@ -256,24 +267,24 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="100dp"
-        android:gravity="center"
-        android:lineSpacingExtra="4dp"
-        android:textSize="14sp"
-        android:textColor="@color/white"
-        android:visibility="visible"
-        android:text="使用说明：如无特别需要只需输入学号 密码\n点击“登陆并导入”即可" />
+<!--    <androidx.appcompat.widget.AppCompatTextView-->
+<!--        android:id="@+id/tv_dialog"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|center"-->
+<!--        android:layout_marginBottom="100dp"-->
+<!--        android:gravity="center"-->
+<!--        android:lineSpacingExtra="4dp"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:visibility="visible"-->
+<!--        android:text="使用说明：如无特别需要只需输入学号 密码\n点击“登陆并导入”即可" />-->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_thanks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:textSize="12sp"

@@ -21,6 +21,12 @@
             android:checkable="false"
             android:title="空教室查询"/>
         <item
+            android:id="@+id/libOrder"
+            android:icon="@drawable/ic_action_book"
+            android:checkable="false"
+            android:title="图书馆预约"/>
+
+        <item
             android:id="@+id/about"
             android:icon="@drawable/ic_action_info"
             android:checkable="false"

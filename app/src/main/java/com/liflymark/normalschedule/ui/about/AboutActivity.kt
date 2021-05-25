@@ -50,17 +50,26 @@ class AboutActivity : AppCompatActivity() {
             }
         }
 
+        val gitListElement = Element()
+        gitListElement.title = "\uE6D5 开源许可"
+        gitListElement.setOnClickListener {
+             val intent = Intent(this, GitListActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
 
         val aboutPage: View = AboutPage(this)
-                .isRTL(false)
-                .enableDarkMode(false)
-                .setCustomFont(ResourcesCompat.getFont(this, R.font.iconfont))
-                .setDescription("一款针对河北大学教务系统的课表APP")
-                .addItem(versionElement)
-                .addItem(joinQQGroupElement)
-                .addItem(authorElement)
-                .create()
+            .isRTL(false)
+            .enableDarkMode(false)
+            .setCustomFont(ResourcesCompat.getFont(this, R.font.iconfont))
+            .setDescription("一款针对河北大学教务系统的课表APP")
+            .addItem(versionElement)
+            .addItem(joinQQGroupElement)
+            .addItem(gitListElement)
+            .addItem(authorElement)
+            .create()
 
 
 
