@@ -39,7 +39,7 @@ abstract class IcyColInfoDecoration(
         super.onDrawOver(c, parent, state)
         c.drawRect(Rect(0, 0, parent.width, height), backGroundPaint)
         if (parent.childCount < 0) return
-        val leftView = parent.children.minBy { it.left } ?: return
+        val leftView = parent.children.minByOrNull{ it.left } ?: return
         val columnWidth = leftView.width//宽度
         val top = 0
         val bottom = height

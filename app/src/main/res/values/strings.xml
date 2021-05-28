@@ -14,4 +14,5 @@
     <string name="text_login_web_title">登陆HBU教务系统</string>
     <string name="hint_check_code">验证码</string>
     <string name="_0">0</string>
+    <string name="title_activity_new">New</string>
 </resources>

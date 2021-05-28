@@ -13,7 +13,7 @@ class ImportScoreViewModel:ViewModel() {
     private var formMapLiveData = MutableLiveData<String>()
 
     val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
-        Repository.getId()
+        Repository.getId2()
     }
     val scoreLiveData = Transformations.switchMap(formMapLiveData) { _ ->
         Repository.getScore(user, password, id)

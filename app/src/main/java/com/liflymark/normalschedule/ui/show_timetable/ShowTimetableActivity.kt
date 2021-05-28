@@ -125,7 +125,7 @@ class ShowTimetableActivity : AppCompatActivity() {
 
         viewModel.courseDatabaseLiveDataVal.observe(this, Observer {
             if (intent.getBooleanExtra("isSaved", true)) {
-                courseList = it.getOrNull()!!
+//                courseList = it.getOrNull()!!
             } else {
                 val allCourseListJson = intent.getStringExtra("courseList") ?: ""
                 val allCourseList = Convert.jsonToAllCourse(allCourseListJson)

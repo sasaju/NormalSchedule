@@ -34,6 +34,11 @@ object  Repository {
         }
     }
 
+    fun getId2() = liveData {
+        val result = NormalScheduleNetwork.getId()
+        emit(result)
+    }
+
     fun getCaptcha(sessionId: String) = fire(Dispatchers.IO) {
         val img = NormalScheduleNetwork.getCaptcha(sessionId).bytes()
         val imgStream = BitmapFactory.decodeByteArray(img, 0, img.size)
@@ -68,6 +73,9 @@ object  Repository {
         Result.success(courseDao.loadAllCourse())
     }
 
+    fun loadAllCourse2() = liveData(Dispatchers.IO) {
+        emit(Convert.courseBeanToOneByOne2(courseDao.loadAllCourse()))
+    }
     fun deleteCourseByName(courseName:String) = fire(Dispatchers.IO){
         courseDao.deleteCourseByName(courseName)
         Result.success("0")

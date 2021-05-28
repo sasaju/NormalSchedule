@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.SpannableStringBuilder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_import_login.btnSign
 import kotlinx.android.synthetic.main.fragment_import_login.input_pwd
 
 class ImportScoreActivity : AppCompatActivity() {
-    private val viewModel by lazy { ViewModelProviders.of(this).get(ImportScoreViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(this).get(ImportScoreViewModel::class.java) }
     var userName = ""
     var userPassword = ""
     private var id = ""
@@ -40,15 +41,15 @@ class ImportScoreActivity : AppCompatActivity() {
         }
 
         viewModel.getId()// 获取cookie
-        viewModel.idLiveData.observe(this, Observer { result ->
-            val idResponse = result.getOrNull()
-            if (idResponse == null){
+        viewModel.idLiveData.observe(this) {
+            val idResponse = it.id
+            if (idResponse == ""){
                 Toasty.error(this, "服务异常，无法登陆，请联系开发者", Toasty.LENGTH_SHORT).show()
             } else {
-                this.id = idResponse.id
+                this.id = idResponse
                 Toasty.success(this, "服务正常，可以登陆", Toasty.LENGTH_SHORT).show()
             }
-        })
+        }
 
         viewModel.scoreLiveData.observe(this, Observer { result ->
 

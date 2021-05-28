@@ -21,9 +21,6 @@ import androidx.lifecycle.whenStarted
 import com.bumptech.glide.Glide
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableViewModel
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
-import com.luck.picture.lib.config.PictureMimeType
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_default_background.*
 import kotlinx.android.synthetic.main.activity_show_score.*

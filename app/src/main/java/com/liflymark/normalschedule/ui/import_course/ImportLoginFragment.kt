@@ -21,7 +21,10 @@ import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.getSelectDepartmentAndClass
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
+import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
+import com.liflymark.normalschedule.ui.set_background.DefaultBackground
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
+import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
 import org.angmarch.views.NiceSpinner
@@ -41,9 +44,10 @@ class ImportLoginFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         ImmersionBar.with(this).init()
         if (viewModel.isAccountSaved()){
-            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                putExtra("isSaved", true)
-            }
+//            val intent = Intent(context, ImportScoreActivity::class.java).apply {
+//                putExtra("isSaved", true)
+//            }
+            val intent = Intent(context, ShowTimetableActivity2::class.java)
             startActivity(intent)
             activity?.finish()
             return

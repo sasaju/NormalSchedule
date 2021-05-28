@@ -26,7 +26,7 @@ class ShowTimetableViewModel: ViewModel() {
 
 
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
-        Repository.loadAllCourse()
+        Repository.loadAllCourse2()
     }
 
 
@@ -100,12 +100,9 @@ class ShowTimetableViewModel: ViewModel() {
     }
 
     fun getClassDetailDialog(_context: Context, courseBean: CourseBean): MaterialDialog {
-        Log.d("dialog", 123456.toString())
         val dialog = MaterialDialog(_context)
                 .customView(R.layout.item_course_detail)
-        Log.d("dialog", 123456.toString())
         val customView = dialog.getCustomView()
-        Log.d("dialog", 123456.toString())
         val courseTime = customView.findViewById<AppCompatTextView>(R.id.et_time)
         val weekNum = customView.findViewById<AppCompatTextView>(R.id.et_weeks)
         val courseTeacher = customView.findViewById<AppCompatTextView>(R.id.et_teacher)

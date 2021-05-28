@@ -20,3 +20,14 @@ data class CourseBean(
     @PrimaryKey(autoGenerate = false)
     var id = courseName+teacher+classWeek+classDay.toString()
 }
+
+fun getInitial(): List<CourseBean> {
+    return listOf(CourseBean(
+        campusName="五四路校区",
+        classDay=3,
+        classSessions=9, classWeek="111111111111110000000000", continuingSession=3,
+        courseName="毛泽东思想与中国特色社会主义理论概论",
+        teacher="刘卫萍* 耿金龙 ",
+        teachingBuildName="第九教学楼402",
+        color="#f0c239"))
+}
