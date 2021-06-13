@@ -73,7 +73,7 @@ class IcyTimeTableManager(
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-        super.onLayoutChildren(recycler, state)
+//        super.onLayoutChildren(recycler, state)
         if (itemCount == 0) {
             detachAndScrapAttachedViews(recycler)
             resetData()
@@ -382,6 +382,7 @@ class IcyTimeTableManager(
         }
         return minView
     }
+
 
     private inline val View.adapterPosition
         get() = (layoutParams as RecyclerView.LayoutParams).viewAdapterPosition

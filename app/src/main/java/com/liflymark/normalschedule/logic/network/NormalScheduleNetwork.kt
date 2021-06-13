@@ -28,6 +28,9 @@ object NormalScheduleNetwork {
     suspend fun getScore(user:String, password:String, id:String) =
             ScoreService.getScore(user, password, id).await()
 
+    suspend fun getVisitCourse() =
+            CourseService.getVisit().await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

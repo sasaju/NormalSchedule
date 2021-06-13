@@ -3,10 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_about.xml" value="0.12335359675785208" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_add_course.xml" value="0.12335359675785208" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_show_timetable.xml" value="0.12335359675785208" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/course_detail_fragment.xml" value="0.17300724637681159" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/item_course.xml" value="0.1" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/item_course_detail.xml" value="0.4" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/nav_header.xml" value="0.12335359675785208" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

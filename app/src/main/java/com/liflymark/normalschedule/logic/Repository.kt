@@ -1,10 +1,15 @@
 package com.liflymark.normalschedule.logic
 
+import android.content.ContentResolver
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
+import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.bean.ResultTo
 import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
@@ -14,6 +19,7 @@ import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
 import okhttp3.Dispatcher
 import java.lang.Exception
 import java.lang.RuntimeException
@@ -34,10 +40,24 @@ object  Repository {
         }
     }
 
-    fun getCaptcha(sessionId: String) = fire(Dispatchers.IO) {
-        val img = NormalScheduleNetwork.getCaptcha(sessionId).bytes()
-        val imgStream = BitmapFactory.decodeByteArray(img, 0, img.size)
-        Result.success(imgStream)
+    fun getId2() = liveData {
+        try {
+            val result = NormalScheduleNetwork.getId()
+            emit(result)
+        } catch (e: Exception){
+            emit(null)
+        }
+
+    }
+
+    fun getCaptcha(sessionId: String) =  liveData(Dispatchers.IO) {
+        try {
+            val img = NormalScheduleNetwork.getCaptcha(sessionId).bytes()
+            val imgStream = BitmapFactory.decodeByteArray(img, 0, img.size)
+            emit(imgStream)
+        } catch (e: Exception){
+            emit(null)
+        }
     }
 
     fun getCourse(user:String, password:String, yzm:String, headers:String) = fire(Dispatchers.IO) {
@@ -50,22 +70,62 @@ object  Repository {
         Result.success(courseResponse)
     }
 
-    fun insertCourse(courseList: List<AllCourse>) = fire(Dispatchers.IO) {
-        for (singleCourse in courseList) {
-            courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
-            // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
+    fun getCourse2(user:String, password:String, yzm:String, headers:String) = liveData(Dispatchers.IO){
+        try {
+            val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
+            emit(courseResponse)
+        } catch (e: Exception){
+            emit(null)
         }
 
-        Result.success("0")
+    }
+
+    fun getCourse2(user: String, password: String) = liveData(Dispatchers.IO){
+        try {
+            val courseResponse = NormalScheduleNetwork.getCourse(user, password)
+            emit(courseResponse)
+        } catch (e: Exception){
+            emit(null)
+        }
+    }
+
+    fun getVisitCourse() = liveData(Dispatchers.IO){
+        try {
+            val courseResponse = NormalScheduleNetwork.getVisitCourse()
+            emit(courseResponse)
+        } catch (e: Exception){
+            emit(null)
+        }
+    }
+
+    fun insertCourse(courseList: List<AllCourse>) = liveData(Dispatchers.IO) {
+        try {
+            for (singleCourse in courseList) {
+                courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
+                // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
+            }
+            emit(true)
+        } catch (e: Exception){
+            emit(false)
+        }
+
     }
 
     fun loadAllCourse() = fire(Dispatchers.IO){
         Result.success(courseDao.loadAllCourse())
     }
 
-    fun deleteCourseByName(courseName:String) = fire(Dispatchers.IO){
-        courseDao.deleteCourseByName(courseName)
-        Result.success("0")
+    fun loadAllCourse2() = liveData(Dispatchers.IO) {
+        emit(Convert.courseBeanToOneByOne2(courseDao.loadAllCourse()))
+    }
+    fun deleteCourseByName(courseName:String) = liveData(Dispatchers.IO){
+        try {
+            courseDao.deleteCourseByName(courseName)
+            emit(true)
+        } catch (e:Exception){
+            emit(false)
+        }
+
     }
 
     fun loadCourseByName(courseName: String) = fire(Dispatchers.IO){
@@ -73,18 +133,28 @@ object  Repository {
         Result.success(courseList)
     }
 
-    fun deleteAllCourseBean() = fire(Dispatchers.IO){
+    fun deleteAllCourseBean() = liveData(Dispatchers.IO){
         courseDao.deleteAllCourseBean()
         Log.d("CourseViewModel", "执行完毕")
-        Result.success("0")
+        emit("0")
     }
 
     suspend fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int) =
+        try {
             courseDao.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
+        } catch (e:Exception){
+            null
+        }
 
-    fun getScore(user: String, password: String, id:String) = fire(Dispatchers.IO) {
-        val scoreResponse = NormalScheduleNetwork.getScore(user, password, id)
-        Result.success(scoreResponse)
+
+    fun getScore(user: String, password: String, id:String) = liveData(Dispatchers.IO) {
+        try {
+            val scoreResponse = NormalScheduleNetwork.getScore(user, password, id)
+            emit(scoreResponse)
+        } catch (e: Exception){
+            emit(null)
+        }
+
     }
 
     suspend fun insertCourse2(courseList: List<AllCourse>) {
@@ -92,7 +162,8 @@ object  Repository {
             try {
                 courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
             } catch (e:Exception){
-                Result.failure<Exception>(e)
+//                Result.failure<Exception>(e)
+                Log.e("Repository", e.toString())
             }
 
             // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
@@ -103,7 +174,8 @@ object  Repository {
         try {
             courseDao.deleteAllCourseBean()
         } catch (e:Exception){
-            Result.failure<Exception>(e)
+//            Result.failure<Exception>(e)
+            Log.e("Repository", e.toString())
         }
     }
 
@@ -120,9 +192,48 @@ object  Repository {
         }
     }
 
-    fun loadBackground() = fire(Dispatchers.IO){
-        Log.d("Repository", backgroundDao.loadLastBackground().toString())
-        Result.success(backgroundDao.loadLastBackground())
+    fun loadBackground() = liveData(Dispatchers.IO){
+        val resources = NormalScheduleApplication.context.resources
+        val resourceId = R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
+        val uriBeepSound = Uri.Builder()
+            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+            .authority(resources.getResourcePackageName(resourceId))
+            .appendPath(resources.getResourceTypeName(resourceId))
+            .appendPath(resources.getResourceEntryName(resourceId))
+            .build()
+        try {
+            val a = backgroundDao.loadLastBackground()
+            Log.d("Repository", a.toString())
+            if (a.userBackground != "0"){
+                emit(Uri.parse(a.userBackground))
+            } else {
+                emit(uriBeepSound)
+            }
+        } catch (e:Exception){
+            emit(uriBeepSound)
+        }
+    }
+
+    fun loadBackground2() = flow {
+        val resources = NormalScheduleApplication.context.resources
+        val resourceId = R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
+        val uriBeepSound = Uri.Builder()
+            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+            .authority(resources.getResourcePackageName(resourceId))
+            .appendPath(resources.getResourceTypeName(resourceId))
+            .appendPath(resources.getResourceEntryName(resourceId))
+            .build()
+        try {
+            val a = backgroundDao.loadLastBackground()
+            Log.d("Repository", a.toString())
+            if (a.userBackground != "0"){
+                emit(Uri.parse(a.userBackground))
+            } else {
+                emit(uriBeepSound)
+            }
+        } catch (e:Exception){
+            emit(Uri.parse("0"))
+        }
     }
 
     suspend fun deleteBackground(background: UserBackgroundBean) = backgroundDao.deleteAllBackground(background)
@@ -139,6 +250,15 @@ object  Repository {
                 }
                 emit(result)
             }
+
+    private fun <T> fire2(context: CoroutineContext, block: suspend () -> T? ) =
+        liveData<T?>(context) {
+            val result = try {
+                block()
+            } catch (e: Exception) {
+                emit(null)
+            }
+        }
 
     fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
     fun getSavedAccount() = AccountDao.getSavedAccount()

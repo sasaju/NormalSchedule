@@ -69,17 +69,15 @@
 <!--            android:layout_weight="1" />-->
 
 <!--    </LinearLayout>-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/schedule_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:overScrollMode="never"
-        android:clipToPadding="true"
-        android:paddingStart="@dimen/paddingLeft"
-        android:paddingTop="@dimen/paddingTop" />
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/schedule_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="true"
+            android:divider="@null"
+            android:overScrollMode="never"
+            android:paddingStart="@dimen/paddingLeft"
+            android:paddingTop="@dimen/paddingTop" />
     <!--    <ImageView-->
     <!--        android:id="@+id/iv_next"-->
     <!--        android:layout_width="32dp"-->

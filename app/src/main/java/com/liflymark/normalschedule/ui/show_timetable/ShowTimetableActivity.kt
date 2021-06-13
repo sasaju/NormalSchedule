@@ -3,17 +3,12 @@ package com.liflymark.normalschedule.ui.show_timetable
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -26,13 +21,13 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
+import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
-import com.liflymark.normalschedule.logic.utils.betterrecyclerview.EndlessRecyclerOnScrollListener
 import com.liflymark.normalschedule.ui.about.AboutActivity
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
@@ -59,23 +54,10 @@ class ShowTimetableActivity : AppCompatActivity() {
     private lateinit var adapter: ScheduleRecyclerAdapter
     private val nowWeek =  GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate())
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ImmersionBar.with(this).init()
 
-
-        //        // 设置toolbar和状态栏
-        val decorView = window.decorView
-        if (Build.VERSION.SDK_INT >= 29)
-            decorView.isForceDarkAllowed = false
-        decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.statusBarColor = Color.TRANSPARENT
-//        val config = BarConfig.newInstance()          // 创建配置对象
-//                .fitWindow(false)                          // 布局是否侵入状态栏（true 不侵入，false 侵入）
-//                .color(Color.TRANSPARENT)                         // 状态栏背景颜色（色值）
-//                .light(true)
         setContentView(R.layout.activity_show_timetable)
         toolbar.title=""
         toolbar.inflateMenu(R.menu.menu_main)
@@ -136,16 +118,11 @@ class ShowTimetableActivity : AppCompatActivity() {
 
 
 
-        val layoutManager = LinearLayoutManager(this)
-        object : EndlessRecyclerOnScrollListener(layoutManager) {
-            override fun onLoadMore(current_page: Int) {
-                TODO()
-            }
-        }
+        val layoutManager = ParentLinearLayoutManager(this)
 
         viewModel.courseDatabaseLiveDataVal.observe(this, Observer {
             if (intent.getBooleanExtra("isSaved", true)) {
-                courseList = it.getOrNull()!!
+//                courseList = it.getOrNull()!!
             } else {
                 val allCourseListJson = intent.getStringExtra("courseList") ?: ""
                 val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
@@ -156,7 +133,6 @@ class ShowTimetableActivity : AppCompatActivity() {
                 }
                 courseList = courseList0.toList()
             }
-            Log.d("ShowTimetableActivity", courseList.toString())
             adapter = ScheduleRecyclerAdapter(this, courseList)
             all_week_schedule_recyclerview.adapter = adapter
             all_week_schedule_recyclerview.layoutManager = layoutManager
@@ -171,25 +147,6 @@ class ShowTimetableActivity : AppCompatActivity() {
         })
         viewModel.loadAllCourse()
 
-//        viewModel.updateCourseLiveDataVal.observe(this, Observer {
-//            val courseList = it.getOrNull()
-//            if (courseList != null){
-//                Log.d("updateCourseLiveDataVal", courseList.toString())
-//                adapter = ScheduleRecyclerAdapter(this, courseList)
-//                all_week_schedule_recyclerview.adapter = adapter
-//            }
-//        })
-
-//        viewModel.backgroundUriStringLiveData.observe(this, Observer { it ->
-//            val result = it.getOrNull()
-//            if (result == null){
-//                Log.d("ShowTimetableAc", "result is null")
-//                setBackground(R.drawable.main_background_4)
-//            } else {
-//                val imageUri = Uri.parse(result.userBackground)
-//                setBackground(imageUri)
-//            }
-//        })
         viewModel.setBackground()
 
 
@@ -202,19 +159,18 @@ class ShowTimetableActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.backgroundUriStringLiveData.observe(this, Observer { it ->
-            val result = it.getOrNull()
-            when {
-                result == null -> {
-                    setBackground(R.drawable.main_background_4)
-                }
-                result.userBackground == "0" -> {
-                    setBackground(R.drawable.main_background_4)
-                }
-                else -> {
-                    val imageUri = Uri.parse(result.userBackground)
-                    setBackground(imageUri)
-                }
-            }
+//            when {
+//                it == null -> {
+//                    setBackground(R.drawable.main_background_4)
+//                }
+//                it.userBackground == "0" -> {
+//                    setBackground(R.drawable.main_background_4)
+//                }
+//                else -> {
+//                    val imageUri = Uri.parse(it.userBackground)
+//                    setBackground(imageUri)
+//                }
+//            }
         })
         viewModel.setBackground()
         drawerLayout.closeDrawers()
@@ -323,7 +279,7 @@ class ShowTimetableActivity : AppCompatActivity() {
         // Load our little droid guy
         val droid = ContextCompat.getDrawable(this, R.drawable.add)
         val droidTarget = Rect(
-                0, 0, (droid?.getIntrinsicWidth() ?: 0) * 2, (droid?.getIntrinsicHeight()
+                0, 0, (droid?.intrinsicWidth ?: 0) * 2, (droid?.getIntrinsicHeight()
                 ?: 0) * 2
         )
         droidTarget.offset((display.getWidth() * 0.45).toInt(), (display.getHeight() * 0.2).toInt())
@@ -405,7 +361,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                 runOnUiThread{
                     val dialog = Dialog.getClassDetailDialog(
                             this@ShowTimetableActivity,
-                            courseBeanList[0]
+                            courseBeanList!![0]
                     )
                     dialog.show()
                 }
@@ -419,9 +375,9 @@ class ShowTimetableActivity : AppCompatActivity() {
         if (item is CourseItem) {
             val realCourseName = item.getData().courseName.split("\n")[0]
             viewModel.deleteCourseBeanByNameLiveData.observe(this, Observer {
-                if (it.isFailure) {
-                    Toasty.error(this, "删除操作失败", Toasty.LENGTH_SHORT).show()
-                }
+//                if (it.isFailure) {
+//                    Toasty.error(this, "删除操作失败", Toasty.LENGTH_SHORT).show()
+//                }
             })
 
             val dialog = MaterialDialog(this)
@@ -445,42 +401,3 @@ class ShowTimetableActivity : AppCompatActivity() {
 
 
 }
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        // 设置toolbar和状态栏
-//        val decorView = window.decorView
-//        decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//        window.statusBarColor = Color.TRANSPARENT
-//        setContentView(R.layout.activity_show_timetable)
-//        toolbar.title=""
-//        setSupportActionBar(toolbar)
-//
-//
-//        // 设置RecyclerView
-//        thread {
-//            val courseList = viewModel.loadAllCourse()
-//            refreshUi(courseList)
-//        }
-//
-//        // 获取TextView的宽度width
-//        val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-//        val dm = DisplayMetrics()
-//        wm.defaultDisplay.getMetrics(dm)    // 由于需要兼容旧API，暂时无法更新
-//        val a = dm.widthPixels
-//        Log.d("ShowTimetableActivity", DensityUtil.px2dip(this,a.toFloat()).toString())
-//
-//
-//
-//    }
-//
-
-
-//    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-//        super.onCreate(savedInstanceState, persistentState)
-//        val decorView = window.decorView
-//        decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//        window.statusBarColor = Color.TRANSPARENT
-//        setContentView(R.layout.activity_main)
-//    }

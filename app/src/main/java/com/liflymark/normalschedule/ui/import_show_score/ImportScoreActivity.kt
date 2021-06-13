@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.text.SpannableStringBuilder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_import_login.btnSign
 import kotlinx.android.synthetic.main.fragment_import_login.input_pwd
 
 class ImportScoreActivity : AppCompatActivity() {
-    private val viewModel by lazy { ViewModelProviders.of(this).get(ImportScoreViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(this).get(ImportScoreViewModel::class.java) }
     var userName = ""
     var userPassword = ""
     private var id = ""
@@ -40,29 +40,27 @@ class ImportScoreActivity : AppCompatActivity() {
         }
 
         viewModel.getId()// 获取cookie
-        viewModel.idLiveData.observe(this, Observer { result ->
-            val idResponse = result.getOrNull()
+        viewModel.idLiveData.observe(this) {
+            val idResponse = it?.id
             if (idResponse == null){
                 Toasty.error(this, "服务异常，无法登陆，请联系开发者", Toasty.LENGTH_SHORT).show()
             } else {
-                this.id = idResponse.id
+                this.id = idResponse
                 Toasty.success(this, "服务正常，可以登陆", Toasty.LENGTH_SHORT).show()
             }
-        })
+        }
 
         viewModel.scoreLiveData.observe(this, Observer { result ->
 
-            val score = result.getOrNull()
-
-            if (score == null) {
+            if (result == null) {
                 Toasty.error(this, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show()
             } else {
-                val allGradeList = score.grade_list
-                when (score.result) {
+                val allGradeList = result.grade_list
+                when (result.result) {
                     // 此处服务信息传输易造成错误 后期需修改
                     "登陆成功" -> {
                         // saveAccount()
-                        if (save_or_not.isChecked){
+                        if (save_or_not.isChecked) {
                             viewModel.saveAccount(userName, userPassword)
                         } else {
                             viewModel.saveAccount(userName, "")
@@ -75,7 +73,7 @@ class ImportScoreActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        result.getOrNull()?.result?.let { Toasty.error(this, it, Toasty.LENGTH_SHORT).show() }
+                        result.result.let { Toasty.error(this, it, Toasty.LENGTH_SHORT).show() }
                     }
                 }
 

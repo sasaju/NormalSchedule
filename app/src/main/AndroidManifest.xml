@@ -17,6 +17,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
+        <activity
+            android:name=".ui.show_timetable.New"
+            android:exported="true"
+            android:label="@string/title_activity_new"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.show_timetable.ShowTimetableActivity2"
+            android:exported="true" />
+        <activity
+            android:name=".ui.lib_order.LibOrderActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.about.GitListActivity"
+            android:exported="true" />
         <activity android:name=".ui.import_again.ImportCourseAgain" />
         <activity
             android:name=".ui.set_background.DefaultBackground"

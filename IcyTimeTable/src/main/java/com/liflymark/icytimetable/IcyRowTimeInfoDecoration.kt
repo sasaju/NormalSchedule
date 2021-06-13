@@ -35,7 +35,8 @@ abstract class IcyRowTimeInfoDecoration(
         val adapter = parent.adapter ?: return
         if (parent.childCount <= 0) return
 
-        val topView = parent.children.filter { it.top <= parent.paddingTop }.minBy { it.top } ?: return//最上方的view
+        val topView = parent.children.filter { it.top <= parent.paddingTop }
+            .minByOrNull{ it.top } ?: return//最上方的view
         val topIcyRowInfo=rowNumberList.getOrNull(topView.layoutPosition) ?:return
         var startRow=topIcyRowInfo.rowNumber // 开始行
         var gap= 0

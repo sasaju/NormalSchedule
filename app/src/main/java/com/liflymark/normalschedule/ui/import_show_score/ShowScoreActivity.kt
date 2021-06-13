@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
+import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.zackratos.ultimatebarx.library.UltimateBarX
-import com.zackratos.ultimatebarx.library.bean.BarConfig
 import kotlinx.android.synthetic.main.activity_show_score.*
 import kotlinx.android.synthetic.main.item_project_score.*
 import kotlinx.android.synthetic.main.item_score.*
@@ -23,21 +23,15 @@ class ShowScoreActivity : AppCompatActivity() {
     private val scoreList = mutableListOf<View>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val config = BarConfig.newInstance()          // 创建配置对象
-            .fitWindow(true)                          // 布局是否侵入状态栏（true 不侵入，false 侵入）
-            .colorRes(R.color.lightBlue)           // 状态栏背景颜色（色值）
-            .light(true)
-                    // 应用到状态栏
         setContentView(R.layout.activity_show_score)
         setSupportActionBar(score_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);//添加默认的返回图标
         supportActionBar?.setHomeButtonEnabled(true); //设置返回键可用
         // score_activity_layout.addStatusBarTopPadding()
-        UltimateBarX.with(this)                       // 对当前 Activity 或 Fragment 生效
-            .config(config)                           // 使用配置
-            .applyStatusBar()
 
+        ImmersionBar.with(this)
+            .statusBarDarkFont(true)
+            .init()
 
         val allGradeListString = intent.getStringExtra("grade_list_string")?:""
         val allGradeList = Convert.jsonToAllGrade(allGradeListString)
