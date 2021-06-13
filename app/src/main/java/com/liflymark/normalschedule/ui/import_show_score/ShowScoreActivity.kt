@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
@@ -22,14 +23,15 @@ class ShowScoreActivity : AppCompatActivity() {
     private val scoreList = mutableListOf<View>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ImmersionBar.with(this).init()
         setContentView(R.layout.activity_show_score)
         setSupportActionBar(score_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);//添加默认的返回图标
         supportActionBar?.setHomeButtonEnabled(true); //设置返回键可用
         // score_activity_layout.addStatusBarTopPadding()
 
-
+        ImmersionBar.with(this)
+            .statusBarDarkFont(true)
+            .init()
 
         val allGradeListString = intent.getStringExtra("grade_list_string")?:""
         val allGradeList = Convert.jsonToAllGrade(allGradeListString)

@@ -12,6 +12,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView
 import com.jaredrummler.materialspinner.MaterialSpinner
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.model.DepartmentList
 import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity

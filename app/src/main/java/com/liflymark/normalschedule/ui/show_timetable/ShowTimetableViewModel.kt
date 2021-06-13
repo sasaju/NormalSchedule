@@ -12,6 +12,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
 class ShowTimetableViewModel: ViewModel() {
     private var courseListLiveData = MutableLiveData(0)
@@ -20,7 +21,7 @@ class ShowTimetableViewModel: ViewModel() {
     private var courseDatabaseLiveData = MutableLiveData(0)
     private var backgroundId = MutableLiveData(0)
     private var updateCourseLiveData = MutableLiveData(0)
-    private var needDeleteCourseNameLiveData = MutableLiveData("")
+    private var needDeleteCourseNameLiveData = MutableLiveData<String>()
     private val saveClassToSQLLiveData = MutableLiveData<Boolean>()
     private var deleteCourseBean = MutableLiveData<Int>()
 
@@ -33,6 +34,7 @@ class ShowTimetableViewModel: ViewModel() {
     val backgroundUriStringLiveData = Transformations.switchMap(backgroundId){
         Repository.loadBackground()
     }
+    val backgroundUriStringLiveData2 = Repository.loadBackground2()
 
     val deleteCourseBeanByNameLiveData = Transformations.switchMap(needDeleteCourseNameLiveData){
         needDeleteCourseNameLiveData.value?.let { it1 -> Repository.deleteCourseByName(it1) }
@@ -53,6 +55,7 @@ class ShowTimetableViewModel: ViewModel() {
 
     fun loadAllCourse() {
         courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
+        Log.d("ShowTimetable", "loadAllCourse执行")
     }
 
     fun updateCourse(){
@@ -134,6 +137,10 @@ class ShowTimetableViewModel: ViewModel() {
 //        }
 
         return dialog
+    }
+
+    fun getNowWeek(): Int{
+        return  GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate()) - 1
     }
 
     private fun String.whichIs1(): List<Int>{

@@ -1,33 +1,28 @@
 package com.liflymark.normalschedule.ui.import_course
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.gyf.immersionbar.ImmersionBar
 import com.jaredrummler.materialspinner.MaterialSpinner
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.getSelectDepartmentAndClass
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
-import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
-import com.liflymark.normalschedule.ui.set_background.DefaultBackground
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
-import org.angmarch.views.NiceSpinner
 
 class ImportLoginFragment: Fragment() {
 
@@ -47,7 +42,9 @@ class ImportLoginFragment: Fragment() {
 //            val intent = Intent(context, ImportScoreActivity::class.java).apply {
 //                putExtra("isSaved", true)
 //            }
-            val intent = Intent(context, ShowTimetableActivity2::class.java)
+            val intent = Intent(context, ShowTimetableActivity2::class.java).apply{
+                putExtra("isSaved", true)
+            }
             startActivity(intent)
             activity?.finish()
             return
@@ -73,20 +70,19 @@ class ImportLoginFragment: Fragment() {
         viewModel.idLiveData.observe(viewLifecycleOwner, Observer { result ->
             // 仅装有id
             // Log.d("ImportLoginFragment", result.getOrNull().toString())
-            val idResponse = result.getOrNull()
-            if (idResponse == null){
+            if (result == null) {
                 server_status.text = "目前仅允许“统一认证”登陆，登陆可能会很慢请耐心等待"
                 select_sign_method.attachDataSource(listOf("统一认证"))
                 id = ""
                 server_status.setTextColor(Color.RED)
             } else {
-                this.id = idResponse.id
+                this.id = result.id
                 server_status.text = "服务器正常"
             }
         })
 
         viewModel.courseNewLiveData.observe(viewLifecycleOwner, Observer { result ->
-            val course = result.getOrNull()
+            val course = result
             if (course == null) {
                 activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
             } else {
@@ -95,10 +91,6 @@ class ImportLoginFragment: Fragment() {
                     "yes" -> {
                         saveAccount()
                         activity?.let { Toasty.success(it, "登陆成功，解析成功", Toasty.LENGTH_SHORT).show() }
-    //                        viewModel.insertOriginalCourse(allCourseList)
-    //                        for (singleCourse in allCourseList) {
-    //                            Log.d("ImportLoginFragment", singleCourse.toString())
-    //                        }
                         if(activity is MainActivity) {
                             val intent = Intent(context, ShowTimetableActivity::class.java).apply {
                                 putExtra("isSaved", false)
@@ -133,7 +125,7 @@ class ImportLoginFragment: Fragment() {
                         // viewModel.saveAccount(userName, userPassword)
                     }
                     else -> {
-                        activity?.let { Toasty.error(it, result.getOrNull()!!.status, Toasty.LENGTH_SHORT).show() }
+                        activity?.let { Toasty.error(it, result!!.status, Toasty.LENGTH_SHORT).show() }
                         viewModel.getImage(id)
                     }
                 }
@@ -144,7 +136,7 @@ class ImportLoginFragment: Fragment() {
 
         viewModel.courseLiveData.observe(viewLifecycleOwner, Observer { result ->
 
-            val course = result.getOrNull()
+            val course = result
             if (course == null) {
                 activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
             } else {
@@ -158,7 +150,7 @@ class ImportLoginFragment: Fragment() {
 //                            Log.d("ImportLoginFragment", singleCourse.toString())
 //                        }
                         if(activity is MainActivity) {
-                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                            val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
                                 putExtra("isSaved", false)
                                 putExtra("courseList", Convert.allCourseToJson(allCourseList))
                                 putExtra("user", userName)
@@ -168,7 +160,7 @@ class ImportLoginFragment: Fragment() {
                             activity?.finish()
                         }
                         if (activity is ImportCourseAgain) {
-                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                            val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
                                 putExtra("isSaved", false)
                                 putExtra("courseList", Convert.allCourseToJson(allCourseList))
                                 putExtra("user", userName)
@@ -182,7 +174,7 @@ class ImportLoginFragment: Fragment() {
                     "no" -> {
                         activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toasty.LENGTH_LONG).show() }
                         if(activity is MainActivity) {
-                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+                            val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
                                 putExtra("isSaved", false)
                                 putExtra("courseList", Convert.allCourseToJson(allCourseList))
                                 putExtra("user", userName)
@@ -194,7 +186,7 @@ class ImportLoginFragment: Fragment() {
                         // viewModel.saveAccount(userName, userPassword)
                     }
                     else -> {
-                        activity?.let { Toasty.error(it, result.getOrNull()!!.status, Toasty.LENGTH_SHORT).show() }
+                        activity?.let { Toasty.error(it, result!!.status, Toasty.LENGTH_SHORT).show() }
                         viewModel.getImage(id)
                     }
                 }
@@ -203,50 +195,49 @@ class ImportLoginFragment: Fragment() {
             }
         })
 
-        viewModel.courseVisitLiveData.observe(viewLifecycleOwner, Observer { result ->
-            val course = result.getOrNull()
-
-            if (course == null) {
-                val allCourseList = listOf(AllCourse(
-                    "五四路",
-                    1,
-                    1,
-                    "11111111111111111111111",
-                    1,
-                    "点击右上角导入课程",
-                    "",
-                    ""
-                ))
-                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                    putExtra("isSaved", false)
-                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
-                    putExtra("user", userName)
-                    putExtra("password", userPassword)
-                }
-                startActivity(intent)
-                activity?.finish()
-            } else {
-                val allCourseList = course.allCourse
-                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                    putExtra("isSaved", false)
-                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
-                    putExtra("user", userName)
-                    putExtra("password", userPassword)
-                }
-                startActivity(intent)
-                activity?.finish()
-            }
+//        viewModel.courseVisitLiveData.observe(viewLifecycleOwner, Observer { result ->
+//            val course = result.getOrNull()
+//
+//            if (course == null) {
+//                val allCourseList = listOf(AllCourse(
+//                    "五四路",
+//                    1,
+//                    1,
+//                    "11111111111111111111111",
+//                    1,
+//                    "点击右上角导入课程",
+//                    "",
+//                    ""
+//                ))
+//                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+//                    putExtra("isSaved", false)
+//                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
+//                    putExtra("user", userName)
+//                    putExtra("password", userPassword)
+//                }
+//                startActivity(intent)
+//                activity?.finish()
+//            } else {
+//                val allCourseList = course.allCourse
+//                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+//                    putExtra("isSaved", false)
+//                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
+//                    putExtra("user", userName)
+//                    putExtra("password", userPassword)
+//                }
+//                startActivity(intent)
+//                activity?.finish()
+//            }
+//        })
+        viewModel.imageLiveData.observe(viewLifecycleOwner, {
+            ivCode.visibility = View.VISIBLE
+            progress_bar.visibility = View.INVISIBLE
+            if (it != null)
+                ivCode.setImageBitmap(it)
         })
-
         ivCode.setOnClickListener {
             progress_bar.visibility = View.VISIBLE
             viewModel.getImage(id)
-            viewModel.imageLiveData.observe(viewLifecycleOwner, Observer { image ->
-                ivCode.visibility = View.VISIBLE
-                progress_bar.visibility = View.INVISIBLE
-                val inputStream = image.getOrNull()
-                ivCode.setImageBitmap(inputStream)
-            })
         }
 
 

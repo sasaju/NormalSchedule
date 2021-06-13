@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.logic.utils
 
 import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.ui.graphics.Color
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.liflymark.normalschedule.logic.bean.CourseBean
@@ -66,7 +67,7 @@ internal object Convert {
                             courseBean.classSessions - 1,
                             courseBean.classSessions + courseBean.continuingSession - 1,
                             courseBean.classDay - 1,
-                            courseBean.color
+                            Color(courseBean.color.toLong())
                         )
                         oneCourseList.add(a)
                     }
@@ -98,7 +99,7 @@ internal object Convert {
                             courseBean.classSessions,
                             courseBean.classSessions + courseBean.continuingSession - 1,
                             courseBean.classDay,
-                            courseBean.color
+                            Color(colorStringToLong(courseBean.color))
                         )
                         allWeekList[i].add(a)
                     }
@@ -107,8 +108,6 @@ internal object Convert {
                 }
             }
         }
-        Log.d("Convert", allWeekList[0].toString())
-        Log.d("Convert", allWeekList[0].size.toString())
         return allWeekList
     }
 
@@ -147,6 +146,16 @@ internal object Convert {
             }
         }
         return unicode.toString()
+    }
+
+    fun colorStringToLong(colorString: String): Long{
+        var colorStr = colorString.replace("#", "")
+        while (true){
+            if (colorStr.length >= 8)
+                break
+            colorStr = "f$colorStr"
+        }
+        return colorStr.toLong(16)
     }
 }
 //    fun getAllOneCourse(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {

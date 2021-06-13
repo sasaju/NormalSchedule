@@ -3,15 +3,12 @@ package com.liflymark.normalschedule.ui.show_timetable
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -162,19 +159,18 @@ class ShowTimetableActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.backgroundUriStringLiveData.observe(this, Observer { it ->
-            val result = it.getOrNull()
-            when {
-                result == null -> {
-                    setBackground(R.drawable.main_background_4)
-                }
-                result.userBackground == "0" -> {
-                    setBackground(R.drawable.main_background_4)
-                }
-                else -> {
-                    val imageUri = Uri.parse(result.userBackground)
-                    setBackground(imageUri)
-                }
-            }
+//            when {
+//                it == null -> {
+//                    setBackground(R.drawable.main_background_4)
+//                }
+//                it.userBackground == "0" -> {
+//                    setBackground(R.drawable.main_background_4)
+//                }
+//                else -> {
+//                    val imageUri = Uri.parse(it.userBackground)
+//                    setBackground(imageUri)
+//                }
+//            }
         })
         viewModel.setBackground()
         drawerLayout.closeDrawers()
@@ -283,7 +279,7 @@ class ShowTimetableActivity : AppCompatActivity() {
         // Load our little droid guy
         val droid = ContextCompat.getDrawable(this, R.drawable.add)
         val droidTarget = Rect(
-                0, 0, (droid?.getIntrinsicWidth() ?: 0) * 2, (droid?.getIntrinsicHeight()
+                0, 0, (droid?.intrinsicWidth ?: 0) * 2, (droid?.getIntrinsicHeight()
                 ?: 0) * 2
         )
         droidTarget.offset((display.getWidth() * 0.45).toInt(), (display.getHeight() * 0.2).toInt())
@@ -365,7 +361,7 @@ class ShowTimetableActivity : AppCompatActivity() {
                 runOnUiThread{
                     val dialog = Dialog.getClassDetailDialog(
                             this@ShowTimetableActivity,
-                            courseBeanList[0]
+                            courseBeanList!![0]
                     )
                     dialog.show()
                 }
@@ -379,9 +375,9 @@ class ShowTimetableActivity : AppCompatActivity() {
         if (item is CourseItem) {
             val realCourseName = item.getData().courseName.split("\n")[0]
             viewModel.deleteCourseBeanByNameLiveData.observe(this, Observer {
-                if (it.isFailure) {
-                    Toasty.error(this, "删除操作失败", Toasty.LENGTH_SHORT).show()
-                }
+//                if (it.isFailure) {
+//                    Toasty.error(this, "删除操作失败", Toasty.LENGTH_SHORT).show()
+//                }
             })
 
             val dialog = MaterialDialog(this)
