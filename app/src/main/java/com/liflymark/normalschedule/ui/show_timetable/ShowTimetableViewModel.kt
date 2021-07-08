@@ -12,7 +12,9 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.model.OneSentencesResponse
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
+import kotlinx.coroutines.flow.collectLatest
 
 class ShowTimetableViewModel: ViewModel() {
     private var courseListLiveData = MutableLiveData(0)
@@ -100,6 +102,12 @@ class ShowTimetableViewModel: ViewModel() {
 
     suspend fun deleteAllCourse(){
         Repository.deleteAllCourseBean2()
+    }
+
+    fun fetchSentence() = liveData {
+        Repository.getSentences().collectLatest {
+            emit(it)
+        }
     }
 
     fun getClassDetailDialog(_context: Context, courseBean: CourseBean): MaterialDialog {

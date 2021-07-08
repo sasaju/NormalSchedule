@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.liflymark.normalschedule.logic.Repository
 
 class ImportScoreViewModel:ViewModel() {
-    private var id = ""
+    var id = ""
     private var user = ""
     private var password = ""
     private var getIdOrNotLiveData = MutableLiveData<Int>(0)

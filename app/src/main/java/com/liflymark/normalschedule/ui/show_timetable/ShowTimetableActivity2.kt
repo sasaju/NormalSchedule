@@ -1,14 +1,14 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -25,8 +25,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -36,32 +37,22 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.WindowCompat
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.glide.rememberGlidePainter
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsHeight
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.accompanist.pager.*
 import com.gyf.immersionbar.ImmersionBar
-import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
-import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
-import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.test.ui.theme.TestTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
@@ -72,6 +63,9 @@ import kotlinx.coroutines.launch
 
 class ShowTimetableActivity2 : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
+    val needElementPosition = mutableListOf<Array<Float>>()
+    @ExperimentalAnimationApi
+    @ExperimentalMaterialApi
     @ExperimentalPagerApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,24 +106,15 @@ class ShowTimetableActivity2 : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
+@DelicateCoroutinesApi
 @ExperimentalPagerApi
 @Composable
 fun Drawer(viewModel: ShowTimetableViewModel){
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-//    SideEffect {
-//        // Update all of the system bar colors to be transparent, and use
-//        // dark icons if we're in light theme
-//        systemUiController.setSystemBarsColor(
-//            color = Color.Transparent,
-//            darkIcons = useDarkIcons
-//        )
-//
-//        // setStatusBarsColor() and setNavigationBarsColor() also exist
-//    }
-//    val courseList: State<List<List<OneByOneCourseBean>>?> =
-//        viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
     val courseList: State<List<List<OneByOneCourseBean>>?> =
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
     viewModel.loadAllCourse()
@@ -145,18 +130,28 @@ fun Drawer(viewModel: ShowTimetableViewModel){
                 val pagerState = rememberPagerState(
                     pageCount = 19,
                     initialOffscreenLimit = 2,
-                    initialPage = userNowWeek
+                    initialPage = userNowWeek,
+                    infiniteLoop = true
                 )
                 ScheduleToolBar(scope, drawerState, userNowWeek, pagerState)
 
-                HorizontalPager(state = pagerState) { page ->
+                HorizontalPager(
+                    state = pagerState,
+                    flingBehavior = PagerDefaults.defaultPagerFlingConfig(
+                        state = pagerState,
+                        snapAnimationSpec = spring(stiffness = 500f)
+                    )
+                ) { page ->
                     SingleLineClass(oneWeekClass = courseList, page = page, viewModel = viewModel)
                 }
 
-
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-                        userNowWeek = page
+                        userNowWeek = if (pagerState.pageCount > userNowWeek){
+                            page
+                        } else {
+                            0
+                        }
                     }
                 }
             }
@@ -222,7 +217,17 @@ fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek
                             pagerState.animateScrollToPage(GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate()) - 1)
                         }
                     }
-                    .fillMaxHeight(0.9F)) {
+                    .fillMaxHeight(0.9F)
+                    .onGloballyPositioned { coordinates ->
+                        coordinates.positionInWindow()
+                        Log.d(
+                            "ShowActivity2",
+                            coordinates
+                                .positionInWindow()
+                                .toString()
+                        )
+                    }
+            ) {
                 val nowWeekOrNot = GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate())==userNowWeek+1
                 if (!nowWeekOrNot){
                     Spacer(modifier = Modifier.height(5.dp))
@@ -357,6 +362,8 @@ fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewMo
     ) {
         val nameList = singleClass.courseName.split("\n")
 
+        val showDetailDialog = remember { mutableStateOf(false) }
+        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
 
         Text(
             buildAnnotatedString {
@@ -371,33 +378,37 @@ fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewMo
             },
             modifier = Modifier
                 .background(singleClass.color)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onLongPress = {
-                            if (activity != null) {
-                                showDeleteDialog(activity as ShowTimetableActivity2, singleClass, viewModel)
-                            }
-                        },
-                        onTap = {
-                            if (activity != null) {
-                                showDialog(activity, singleClass)
-                            }
-                        }
-                    )
+                .clickable {
+                    showDetailDialog.value = true
                 },
+//                .pointerInput(Unit) {
+//                    detectTapGestures(
+//
+//                        onLongPress = {
+//                            if (activity != null) {
+//                                showDeleteDialog(
+//                                    activity as ShowTimetableActivity2,
+//                                    singleClass,
+//                                    viewModel
+//                                )
+//                            }
+//                        },
+//                        onTap = {
+//                            if (activity != null) {
+//                                showDialog(activity, singleClass)
+//                            }
+//                        }
+//                    )
+//                },
             textAlign = TextAlign.Center
         )
     }
 }
 
 
+
 @DelicateCoroutinesApi
 fun showDialog(context: Activity, singleClass: OneByOneCourseBean) {
-//    MaterialDialog(context).show {
-//        title(text = "张子龙铁憨憨")
-//        message(text = "张子龙大笨蛋")
-//        positiveButton(text = "是的")
-//    }
     val realCourseMessage = singleClass.courseName.split("\n")
     GlobalScope.launch{
         val courseBeanList = Repository.loadCourseByNameAndStart(
@@ -441,6 +452,7 @@ fun showDeleteDialog(context: ShowTimetableActivity2, singleClass: OneByOneCours
     return
 }
 
+@DelicateCoroutinesApi
 fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: ShowTimetableViewModel){
     val dialog = MaterialDialog(activity2)
         .title(text = "保存课表至本地")

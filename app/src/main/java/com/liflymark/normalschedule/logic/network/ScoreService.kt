@@ -16,4 +16,10 @@ interface ScoreService {
     fun getScore(@Field("user") user:String,
                   @Field("password") passWord: String,
                   @Field("id") id: String): Call<ScoreResponse>
+
+    @FormUrlEncoded
+    @POST("scoredetail/")
+    fun getScoreDetail(@Field("user") user:String,
+                 @Field("password") passWord: String,
+                 @Field("id") id: String): Call<ScoreResponse>
 }

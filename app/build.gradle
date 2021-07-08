@@ -30,8 +30,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled true
+            applicationIdSuffix ".debug"
         }
     }
     compileOptions {
@@ -55,9 +59,9 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
@@ -65,7 +69,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.squareup.okhttp3:okhttp:3.14.9'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -75,8 +79,9 @@ dependencies {
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:2.3.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3"
     implementation "com.xwray:groupie:2.8.0"
     implementation "com.xwray:groupie-viewbinding:2.8.0"
@@ -94,36 +99,38 @@ dependencies {
     implementation 'com.jaredrummler:material-spinner:1.3.1'
 
     testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'androidx.compose.ui:ui:1.0.0-beta08'
+    implementation 'androidx.compose.ui:ui:1.0.0-rc01'
     // Tooling support (Previews, etc.)
-    implementation 'androidx.compose.ui:ui-tooling:1.0.0-beta08'
+    implementation 'androidx.compose.ui:ui-tooling:1.0.0-rc01'
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.0.0-rc01'
+    testImplementation "androidx.compose.ui:ui-test:1.0.0-rc01"
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation 'androidx.compose.foundation:foundation:1.0.0-beta08'
+    implementation 'androidx.compose.foundation:foundation:1.0.0-rc01'
     // Material Design
-    implementation 'androidx.compose.material:material:1.0.0-beta08'
+    implementation 'androidx.compose.material:material:1.0.0-rc01'
     // Material design icons
-    implementation 'androidx.compose.material:material-icons-core:1.0.0-beta08'
-    implementation 'androidx.compose.material:material-icons-extended:1.0.0-beta08'
+    implementation 'androidx.compose.material:material-icons-core:1.0.0-rc01'
+    implementation 'androidx.compose.material:material-icons-extended:1.0.0-rc01'
     // Integration with activities
-    implementation 'androidx.activity:activity-compose:1.3.0-beta01'
+    implementation 'androidx.activity:activity-compose:1.3.0-rc01'
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha06'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07'
     // Integration with observables
-    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-beta08'
-    implementation 'androidx.compose.runtime:runtime-rxjava2:1.0.0-beta08'
-    implementation 'com.google.accompanist:accompanist-pager:0.11.1'
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha02"
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-rc01'
+    implementation 'androidx.compose.runtime:runtime-rxjava2:1.0.0-rc01'
+    implementation 'com.google.accompanist:accompanist-pager:0.13.0'
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha04"
 
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.11.1"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.13.0"
     // UI Tests
-    implementation "com.google.accompanist:accompanist-insets:0.11.1"
+    implementation "com.google.accompanist:accompanist-insets:0.13.0"
     // If using insets-ui
-    implementation "com.google.accompanist:accompanist-insets-ui:0.11.1"
-    implementation "com.google.accompanist:accompanist-glide:0.11.1"
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0-beta08'
+    implementation "com.google.accompanist:accompanist-insets-ui:0.13.0"
+    implementation "com.google.accompanist:accompanist-glide:0.13.0"
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0-rc01'
     implementation project(":IcyTimeTable")
 
 }

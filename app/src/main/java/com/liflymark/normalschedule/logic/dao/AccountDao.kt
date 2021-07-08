@@ -6,10 +6,6 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.liflymark.normalschedule.NormalScheduleApplication
 
-/*
-* 此功能在未对密码进行md5加密时不建议使用
-* */
-
 object AccountDao {
     private const val sharedPrefsFile = "userAccount"
     private val mainKey = MasterKey.Builder(NormalScheduleApplication.context)

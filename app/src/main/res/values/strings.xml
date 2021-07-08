@@ -15,4 +15,5 @@
     <string name="hint_check_code">验证码</string>
     <string name="_0">0</string>
     <string name="title_activity_new">New</string>
+    <string name="title_activity_login_to_scroe">登陆</string>
 </resources>

@@ -19,7 +19,6 @@ import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.getSelectDepartmentAndClass
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
-import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
@@ -81,58 +80,58 @@ class ImportLoginFragment: Fragment() {
             }
         })
 
-        viewModel.courseNewLiveData.observe(viewLifecycleOwner, Observer { result ->
-            val course = result
-            if (course == null) {
-                activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
-            } else {
-                val allCourseList = course.allCourse
-                when (course.status) {
-                    "yes" -> {
-                        saveAccount()
-                        activity?.let { Toasty.success(it, "登陆成功，解析成功", Toasty.LENGTH_SHORT).show() }
-                        if(activity is MainActivity) {
-                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                                putExtra("isSaved", false)
-                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
-                                putExtra("user", userName)
-                                putExtra("password", userPassword)
-                            }
-                            startActivity(intent)
-                            activity?.finish()
-                        }
-                        if (activity is ImportCourseAgain) {
-                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                                putExtra("isSaved", false)
-                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
-                                putExtra("user", userName)
-                                putExtra("password", userPassword)
-                            }
-                            startActivity(intent)
-                            activity?.finish()
-                        }
-                        // viewModel.saveAccount(userName, userPassword)
-                    }
-                    "no" -> {
-                        activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toasty.LENGTH_LONG).show() }
-                        if(activity is MainActivity) {
-                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-                                putExtra("isSaved", true)
-                            }
-                            startActivity(intent)
-                            activity?.finish()
-                        }
-                        // viewModel.saveAccount(userName, userPassword)
-                    }
-                    else -> {
-                        activity?.let { Toasty.error(it, result!!.status, Toasty.LENGTH_SHORT).show() }
-                        viewModel.getImage(id)
-                    }
-                }
-
-
-            }
-        })
+//        viewModel.courseNewLiveData.observe(viewLifecycleOwner, Observer { result ->
+//            val course = result
+//            if (course == null) {
+//                activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
+//            } else {
+//                val allCourseList = course.allCourse
+//                when (course.status) {
+//                    "yes" -> {
+//                        saveAccount()
+//                        activity?.let { Toasty.success(it, "登陆成功，解析成功", Toasty.LENGTH_SHORT).show() }
+//                        if(activity is MainActivity) {
+//                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+//                                putExtra("isSaved", false)
+//                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+//                                putExtra("user", userName)
+//                                putExtra("password", userPassword)
+//                            }
+//                            startActivity(intent)
+//                            activity?.finish()
+//                        }
+//                        if (activity is ImportCourseAgain) {
+//                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+//                                putExtra("isSaved", false)
+//                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+//                                putExtra("user", userName)
+//                                putExtra("password", userPassword)
+//                            }
+//                            startActivity(intent)
+//                            activity?.finish()
+//                        }
+//                        // viewModel.saveAccount(userName, userPassword)
+//                    }
+//                    "no" -> {
+//                        activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toasty.LENGTH_LONG).show() }
+//                        if(activity is MainActivity) {
+//                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
+//                                putExtra("isSaved", true)
+//                            }
+//                            startActivity(intent)
+//                            activity?.finish()
+//                        }
+//                        // viewModel.saveAccount(userName, userPassword)
+//                    }
+//                    else -> {
+//                        activity?.let { Toasty.error(it, result!!.status, Toasty.LENGTH_SHORT).show() }
+//                        viewModel.getImage(id)
+//                    }
+//                }
+//
+//
+//            }
+//        })
 
         viewModel.courseLiveData.observe(viewLifecycleOwner, Observer { result ->
 

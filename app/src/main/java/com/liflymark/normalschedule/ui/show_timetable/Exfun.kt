@@ -1,10 +1,39 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.DecayAnimationSpec
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.rememberSplineBasedDecay
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollScope
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.google.accompanist.pager.*
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import java.text.SimpleDateFormat
 import java.util.*
+
+//@ExperimentalPagerApi
+//@Composable
+//fun myPagerSetting(
+//    state: PagerState
+//): Float {
+//
+//}
+
+object a : FlingBehavior{
+    override suspend fun ScrollScope.performFling(initialVelocity: Float): Float {
+        Log.d("Exfun.kt", initialVelocity.toString())
+        return 10f
+    }
+}
 
 fun getNeededClassList(originData: List<OneByOneCourseBean>): List<List<OneByOneCourseBean>>{
     val res = mutableListOf<MutableList<OneByOneCourseBean>>()

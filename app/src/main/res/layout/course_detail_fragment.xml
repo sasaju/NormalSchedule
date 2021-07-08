@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.course_detail.CourseDetailFragment">
 
-    <include layout="@layout/item_course_detail"/>
+    <include layout="@layout/item_course_detail" />
 
 </FrameLayout>

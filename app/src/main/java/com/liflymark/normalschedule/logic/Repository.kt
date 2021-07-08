@@ -13,8 +13,10 @@ import com.liflymark.normalschedule.logic.bean.ResultTo
 import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
+import com.liflymark.normalschedule.logic.dao.SentenceDao
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.IdResponse
+import com.liflymark.normalschedule.logic.model.OneSentencesResponse
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
@@ -154,7 +156,15 @@ object  Repository {
         } catch (e: Exception){
             emit(null)
         }
+    }
 
+    fun getScoreDetail(user: String, password: String, id:String) = liveData(Dispatchers.IO) {
+        try {
+            val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
+            emit(scoreDetailResponse)
+        } catch (e: Exception){
+            emit(null)
+        }
     }
 
     suspend fun insertCourse2(courseList: List<AllCourse>) {
@@ -238,8 +248,20 @@ object  Repository {
 
     suspend fun deleteBackground(background: UserBackgroundBean) = backgroundDao.deleteAllBackground(background)
 
-
-
+    fun getSentences() = flow {
+        try {
+            if (SentenceDao.isSentenceSaved()){
+                val resultList = SentenceDao.getSentences()
+                emit(OneSentencesResponse(resultList, "local"))
+            } else {
+                val result = NormalScheduleNetwork.getSentences()
+                SentenceDao.saveSentence(result.result)
+                emit(result)
+            }
+        } catch (e:Exception){
+            emit(null)
+        }
+    }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {
