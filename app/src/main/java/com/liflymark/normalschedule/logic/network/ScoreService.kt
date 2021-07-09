@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.logic.network
 
 import com.liflymark.normalschedule.logic.model.CourseResponse
 import com.liflymark.normalschedule.logic.model.IdResponse
+import com.liflymark.normalschedule.logic.model.ScoreDetail
 import com.liflymark.normalschedule.logic.model.ScoreResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -21,5 +22,5 @@ interface ScoreService {
     @POST("scoredetail/")
     fun getScoreDetail(@Field("user") user:String,
                  @Field("password") passWord: String,
-                 @Field("id") id: String): Call<ScoreResponse>
+                 @Field("id") id: String): Call<ScoreDetail>
 }

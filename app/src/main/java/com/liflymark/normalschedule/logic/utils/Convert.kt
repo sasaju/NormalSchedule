@@ -10,6 +10,7 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Grade
+import com.liflymark.normalschedule.logic.model.Grades
 import java.lang.Exception
 
 internal object Convert {
@@ -129,6 +130,17 @@ internal object Convert {
     fun jsonToAllGrade(str: String): List<Grade> {
         lateinit var a: List<Grade>
         val listType = object : TypeToken<List<Grade>>() {}.type
+        a = Gson().fromJson(str, listType)
+        return a
+    }
+
+    fun detailGradeToJson(detailGrade: List<Grades>): String{
+        return Gson().toJson(detailGrade)
+    }
+
+    fun jsonToGradesList(str: String): List<Grades>{
+        lateinit var a: List<Grades>
+        val listType = object : TypeToken<List<Grades>>() {}.type
         a = Gson().fromJson(str, listType)
         return a
     }

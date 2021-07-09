@@ -16,4 +16,5 @@
     <string name="_0">0</string>
     <string name="title_activity_new">New</string>
     <string name="title_activity_login_to_scroe">登陆</string>
+    <string name="title_activity_show_detail_score">ShowDetailScoreActivity</string>
 </resources>

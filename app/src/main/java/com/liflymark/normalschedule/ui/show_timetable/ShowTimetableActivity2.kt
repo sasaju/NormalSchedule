@@ -381,25 +381,6 @@ fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewMo
                 .clickable {
                     showDetailDialog.value = true
                 },
-//                .pointerInput(Unit) {
-//                    detectTapGestures(
-//
-//                        onLongPress = {
-//                            if (activity != null) {
-//                                showDeleteDialog(
-//                                    activity as ShowTimetableActivity2,
-//                                    singleClass,
-//                                    viewModel
-//                                )
-//                            }
-//                        },
-//                        onTap = {
-//                            if (activity != null) {
-//                                showDialog(activity, singleClass)
-//                            }
-//                        }
-//                    )
-//                },
             textAlign = TextAlign.Center
         )
     }

@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -48,33 +49,29 @@ fun ClassDetailDialog(openDialog:MutableState<Boolean>,singleClass: OneByOneCour
             onDismissRequest = { openDialog.value = false },
             title = {
                 Row() {
-                    Text(text = courseBeanListState.value.courseName, Modifier.fillMaxWidth(0.8f))
-                    Text(text = "X",
+                    Text(text = courseBeanListState.value.courseName, Modifier.fillMaxWidth(0.8f), fontSize = 20.sp)
+                    Text(text = " X ",
                         Modifier
-                            .fillMaxWidth(0.1f)
-                            .clickable { openDialog.value = false })
+                            .fillMaxWidth()
+                            .height(30.dp)
+                            .clickable { openDialog.value = false }, textAlign = TextAlign.Center)
                 }
             },
             text = {
-                Column {
-                    CourseDiaContent(courseBean = courseBeanListState.value)
-                }
+                CourseDiaContent(courseBean = courseBeanListState.value)
             },
             buttons = {
                 Row {
                     IconButton(onClick = {
                         openDialog.value = false
                         openDeleteDialog.value = true
-                    }) {
+                    }, modifier = Modifier.weight(1F)) {
                         Icon(imageVector = Icons.Outlined.DeleteForever, contentDescription = "删除课程")
                     }
                     IconButton(onClick = {
-                    }) {
+                    }, modifier = Modifier.weight(1F)) {
                         Icon(imageVector = Icons.Outlined.Edit, contentDescription = "编辑课程")
                     }
-                    Text(text="", modifier = Modifier.clickable {
-
-                    })
                 }
 
             }
@@ -102,6 +99,11 @@ fun CourseDiaContent(courseBean: CourseBean){
     val courseRoom = courseBean.teachingBuildName
 
     Column {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+            .fillMaxWidth()
+            .height(25.dp)){
+            Spacer(modifier = Modifier.height(25.dp))
+        }
         ClassLine(icon =  Icons.Outlined.DateRange , content = courseTime)
         ClassLine(icon =  Icons.Outlined.WatchLater , content = weekNum)
         ClassLine(icon = Icons.Outlined.Group, content = courseTeacher)
@@ -112,11 +114,14 @@ fun CourseDiaContent(courseBean: CourseBean){
 
 @Composable
 fun ClassLine(icon: ImageVector, content: String){
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().height(50.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+        .fillMaxWidth()
+        .height(50.dp)) {
         Icon(imageVector = icon, contentDescription = null, modifier = Modifier
-            .width(35.dp)
-            .height(35.dp))
-        Text(text = content, modifier = Modifier.fillMaxWidth(),maxLines = 2, fontSize = 10.sp)
+            .width(32.dp)
+            .height(32.dp))
+        Spacer(modifier = Modifier.width(25.dp))
+        Text(text = content, modifier = Modifier.fillMaxWidth(),maxLines = 2, fontSize = 15.sp)
     }
 }
 

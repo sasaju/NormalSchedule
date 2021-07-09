@@ -1,8 +1,9 @@
 package com.liflymark.normalschedule.ui.score_detail
 
-import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -22,18 +23,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.ui.import_show_score.ImportScoreViewModel
+import com.liflymark.normalschedule.logic.model.IdResponse
+import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.score_detail.ui.theme.NormalScheduleTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class LoginToScoreActivity : ComponentActivity() {
-    private val viewModel by lazy { ViewModelProvider(this).get(ImportScoreViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(this).get(LoginToScoreViewModel::class.java) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getId()
         setContent {
             NormalScheduleTheme {
                 Input(viewModel)
@@ -42,21 +46,30 @@ class LoginToScoreActivity : ComponentActivity() {
     }
 }
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun Input(viewModel: ImportScoreViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel(),
           scaffoldState: ScaffoldState = rememberScaffoldState()) {
     var user by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val scope = rememberCoroutineScope()
-    val activity = (LocalContext.current as? Activity)
-    scope.launch{
-        if (viewModel.isAccountSaved()){
-            user = viewModel.getSavedAccount()["user"].toString()
-            password = viewModel.getSavedAccount()["password"].toString()
+    val openWaitDialog = remember {
+        mutableStateOf(false)
+    }
+    val activity = (LocalContext.current as? LoginToScoreActivity)
+    WaitDialog(openDialog = openWaitDialog)
+    LaunchedEffect(true){
+        launch{
+            if (loginToScoreViewModel.isAccountSaved()){
+                user = loginToScoreViewModel.getSavedAccount()["user"].toString()
+                password = loginToScoreViewModel.getSavedAccount()["password"].toString()
+            }
+            loginToScoreViewModel.getId()
+            if (activity != null) {
+                refreshId(activity = activity, viewModel = loginToScoreViewModel, openDialog = openWaitDialog)
+            } else {
+                loginToScoreViewModel.id = ""
+            }
+            scaffoldState.snackbarHostState.showSnackbar("aaa")
         }
-        scaffoldState.snackbarHostState.showSnackbar("aaa")
-
     }
     Image(
         painter = painterResource(id = R.drawable.main_background_4),
@@ -95,10 +108,9 @@ fun Input(viewModel: ImportScoreViewModel = androidx.lifecycle.viewmodel.compose
                 )
                 Spacer(modifier = Modifier.height(30.dp))
                 Button(onClick = {
-                    scope.launch {
-                        checkInputAndShow(userName = user, userPassword = password, viewModel = viewModel, scaffoldState=scaffoldState)
-                    }
-
+                    checkInputAndShow(activity!!,user, password, loginToScoreViewModel,
+                        scaffoldState, loginToScoreViewModel.id)
+                    openWaitDialog.value = true
                 }) {
                     Text(text = "登陆并查看成绩")
                 }
@@ -108,18 +120,53 @@ fun Input(viewModel: ImportScoreViewModel = androidx.lifecycle.viewmodel.compose
 }
 
 
-suspend fun checkInputAndShow(userName:String, userPassword: String, viewModel: ImportScoreViewModel, scaffoldState:ScaffoldState){
-    val ids =  viewModel.id
-
+fun checkInputAndShow(
+    activity: LoginToScoreActivity,
+    userName:String, userPassword: String,
+    viewModel: LoginToScoreViewModel,
+    scaffoldState:ScaffoldState,
+    ids: String
+){
     when {
-        ids == "" -> scaffoldState.snackbarHostState.showSnackbar(message = "链接错误")
-        userName == "" -> scaffoldState.snackbarHostState.showSnackbar(message = "请输入学号")
-        userPassword == "" -> scaffoldState.snackbarHostState.showSnackbar(message = "请输入密码")
+        ids == "" -> Toasty.info(activity, "请输入学号", Toasty.LENGTH_SHORT).show()
+        userName == "" -> Toasty.info(activity, "请输入学号", Toasty.LENGTH_SHORT).show()
+        userPassword == "" -> Toasty.info(activity, "请输入学号", Toasty.LENGTH_SHORT).show()
         else -> {
-            scaffoldState.snackbarHostState.showSnackbar(message = "正在提交，请等待")
             viewModel.putValue(userName, userPassword, ids)
         }
     }
+}
+
+fun refreshId(activity: LoginToScoreActivity,viewModel: LoginToScoreViewModel, openDialog: MutableState<Boolean>){
+    viewModel.idLiveData.observe(activity, {
+        if (it.isSuccess){
+            viewModel.id = it.getOrNull()?.id?:""
+        }
+    })
+    Log.d("actvityRefresh", "执行一次")
+    viewModel.getId()
+    viewModel.scoreDetailState.observe(activity, {
+        Log.d("Log", "内容更新")
+        if (it.isSuccess){
+            val result = it.getOrNull()
+            if (result != null){
+                if (result.result=="登陆成功") {
+                    val gradeList = result.grade_list
+                    val intent = Intent(activity,ShowDetailScoreActivity::class.java).apply {
+                        putExtra("detail_list", Convert.detailGradeToJson(gradeList))
+                    }
+                    activity.startActivity(intent)
+                } else {
+                    Toasty.error(activity, result.result).show()
+                }
+            } else {
+                Toasty.error(activity, "访问失败，请联系开发者").show()
+            }
+        } else {
+            Toasty.error(activity, "访问失败，请联系开发者").show()
+        }
+        openDialog.value = false
+    })
 }
 
 @Preview(showBackground = true)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
@@ -22,6 +23,7 @@ import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.Dispatcher
 import java.lang.Exception
 import java.lang.RuntimeException
@@ -45,11 +47,15 @@ object  Repository {
     fun getId2() = liveData {
         try {
             val result = NormalScheduleNetwork.getId()
+            Log.d("Repository", "getID")
             emit(result)
         } catch (e: Exception){
             emit(null)
         }
+    }
 
+    fun getId3() = fireFlow(Dispatchers.IO){
+        Result.success(NormalScheduleNetwork.getId())
     }
 
     fun getCaptcha(sessionId: String) =  liveData(Dispatchers.IO) {
@@ -167,6 +173,12 @@ object  Repository {
         }
     }
 
+    fun getScoreDetail2(user: String, password: String, id:String) = fireFlow(Dispatchers.IO) {
+        val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
+        Log.d("Repository",scoreDetailResponse.result.toString())
+        Result.success(scoreDetailResponse)
+    }
+
     suspend fun insertCourse2(courseList: List<AllCourse>) {
         for (singleCourse in courseList) {
             try {
@@ -281,6 +293,16 @@ object  Repository {
                 emit(null)
             }
         }
+
+    private fun <T> fireFlow(context: CoroutineContext, block: suspend () -> Result<T>) =
+        flow {
+            val result = try {
+                block()
+            } catch (e: Exception){
+                Result.failure<T>(e)
+            }
+            emit(result)
+        }.flowOn(context)
 
     fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
     fun getSavedAccount() = AccountDao.getSavedAccount()
