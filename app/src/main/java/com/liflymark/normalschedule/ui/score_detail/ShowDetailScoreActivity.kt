@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,6 +33,7 @@ class ShowDetailScoreActivity : ComponentActivity() {
         val allGradeListString = intent.getStringExtra("detail_list")?:""
         val allGradeList = Convert.jsonToGradesList(allGradeListString)
         setContent {
+            UiControl()
             NormalScheduleTheme {
                 AllGrades(allGradeList)
             }
@@ -44,7 +47,9 @@ class ShowDetailScoreActivity : ComponentActivity() {
 @Composable
 fun AllGrades(allGradeList: List<Grades>){
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "结果仅供参考，一切请以教务系统数据为准！！！")
@@ -64,7 +69,8 @@ fun SingleGrade(grades: Grades) {
     var expandIcon by remember { mutableStateOf(Icons.Filled.ExpandLess) }
     Card(onClick = {
         expand = !expand
-        expandIcon = if (expand){ Icons.Filled.ExpandMore } else { Icons.Filled.ExpandLess} },
+        expandIcon = if (expand){ Icons.Filled.ExpandMore } else { Icons.Filled.ExpandLess}},
+        modifier = Modifier.padding(10.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth(0.9f)) {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -73,7 +79,9 @@ fun SingleGrade(grades: Grades) {
                     fontSize = 20.sp,
                     modifier = Modifier.fillMaxWidth(0.8F)
                 )
-                Icon(imageVector = expandIcon, contentDescription = null, modifier = Modifier.height(30.dp).fillMaxWidth())
+                Icon(imageVector = expandIcon, contentDescription = null, modifier = Modifier
+                    .height(30.dp)
+                    .fillMaxWidth())
             }
             AnimatedVisibility(visible = expand) {
 

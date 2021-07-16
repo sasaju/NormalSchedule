@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.ui.about.AboutActivity
+import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
@@ -55,9 +56,12 @@ fun DrawerNavHost(drawerState: DrawerState){
 
         NavButton(activity = ImportScoreActivity(), drawerState = drawerState,
             icon = Icons.Filled.Stairs, text = "成绩查询")
-        NavButton(activity = LoginToScoreActivity(), drawerState = drawerState, icon = Icons.Filled.Stairs, text = "本学期成绩明细")
+        NavButton(activity = LoginToScoreActivity(), drawerState = drawerState,
+            icon = Icons.Filled.Stairs, text = "本学期成绩明细")
         NavButton(activity = AboutActivity(), drawerState = drawerState,
             icon = Icons.Filled.Info, text = "关于软件")
+        NavButton(activity = ClassCourseActivity(), drawerState = drawerState,
+            icon = Icons.Filled.Image, text = "班级课程查询")
     }
 }
 

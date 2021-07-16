@@ -25,10 +25,10 @@ interface CourseService {
     @GET("timetable/vist/")
     fun getVisit(): Call<CourseResponse>
 
-    @GET("class/departmentList/")
+    @GET("class/departmentList")
     fun getDepartmentList():Call<DepartmentList>
 
-    @GET("class/{department}/{major}")
+    @GET("class/{department}/{major}.json")
     fun getCourseByClass(@Path("department")department:String,
                          @Path("major")major: String): Call<CourseResponse>
 

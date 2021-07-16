@@ -22,6 +22,9 @@ interface CourseOriginalDao {
     @Query("select * from CourseBean")
     suspend fun loadAllCourse(): List<CourseBean>
 
+    @Query("select * from CourseBean")
+    fun loadAllCourseAs(): List<CourseBean>
+
     @Query("delete from CourseBean where courseName = :courseName")
     suspend fun deleteCourseByName(courseName: String)
 

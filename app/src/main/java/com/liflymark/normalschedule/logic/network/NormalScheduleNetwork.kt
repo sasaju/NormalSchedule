@@ -1,5 +1,6 @@
 package com.liflymark.normalschedule.logic.network
 
+import com.liflymark.normalschedule.logic.model.DepartmentList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +26,9 @@ object NormalScheduleNetwork {
 
     suspend fun getDepartmentList() =
         CourseService.getDepartmentList().await()
+
+    suspend fun getCourseByMajor(department: String, major:String) =
+        CourseService.getCourseByClass(department, major).await()
 
     suspend fun getScore(user:String, password:String, id:String) =
         ScoreService.getScore(user, password, id).await()

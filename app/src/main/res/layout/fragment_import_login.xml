@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="50dp"
-                android:text="默认统一认证密码为：身份证号末6位@hbu"
+                android:text="默认统一认证密码为：身份证号末6位"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/input_pwd" />
 
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:backgroundTint="@color/green"
-                android:text="登陆并导入"
+                android:text="登陆并导入(首选)"
                 app:layout_constraintTop_toBottomOf="@+id/agree_or_not"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="32dp" />

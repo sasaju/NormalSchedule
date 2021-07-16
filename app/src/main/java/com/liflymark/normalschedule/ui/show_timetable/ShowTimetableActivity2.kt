@@ -13,6 +13,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -64,6 +65,7 @@ import kotlinx.coroutines.launch
 class ShowTimetableActivity2 : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
     val needElementPosition = mutableListOf<Array<Float>>()
+    @DelicateCoroutinesApi
     @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     @ExperimentalPagerApi
@@ -108,7 +110,6 @@ class ShowTimetableActivity2 : ComponentActivity() {
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
-@DelicateCoroutinesApi
 @ExperimentalPagerApi
 @Composable
 fun Drawer(viewModel: ShowTimetableViewModel){
@@ -142,7 +143,7 @@ fun Drawer(viewModel: ShowTimetableViewModel){
                         snapAnimationSpec = spring(stiffness = 500f)
                     )
                 ) { page ->
-                    SingleLineClass(oneWeekClass = courseList, page = page, viewModel = viewModel)
+                    SingleLineClass(oneWeekClass = courseList, page = page)
                 }
 
                 LaunchedEffect(pagerState) {
@@ -168,36 +169,6 @@ fun BackGroundImage(viewModel:ShowTimetableViewModel){
         contentScale = ContentScale.FillBounds
     )
 
-//    viewModel.loadAllCourse()
-//    if (path.value?.userBackground == "0"){
-//        Image(
-//            painter = rememberGlidePainter(request = R.drawable.main_background_4), contentDescription = null,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds
-//        )
-//        Log.d("BackgroundImage", path.toString())
-//    } else{
-//        Log.d("BackgroundImage", path.toString())
-//        Image(
-//            painter = rememberGlidePainter(request = getPath(path.value)), contentDescription = null,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds
-//        )
-//    }
-
-//    if(path.value == null) {
-//        Image(
-//            painter = rememberGlidePainter(request = R.drawable.main_background_4), contentDescription = null,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds
-//        )
-//    } else {
-//            Image(
-//                painter = rememberGlidePainter(request = Uri.parse(path.value as String?)), contentDescription = null,
-//                modifier = Modifier.fillMaxSize(),
-//                contentScale = ContentScale.FillBounds
-//            )
-//    }
 }
 
 
@@ -273,9 +244,9 @@ fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek
 
 
 
-@DelicateCoroutinesApi
+
 @Composable
-fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>, page:Int, viewModel: ShowTimetableViewModel){
+fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>, page:Int){
     Column() {
         //星期行
         Row() {
@@ -330,27 +301,26 @@ fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>, page:I
                         if (spacerHeight < 0){
                             Log.d("TestActivity", "当前有冲突课程")
                         }
+
                         Spacer(modifier = Modifier
                             .fillMaxWidth()
                             .height(spacerHeight.dp))
-                        SingleClass2(singleClass = oneClass, viewModel = viewModel)
+                        SingleClass2(singleClass = oneClass)
                         nowJieShu -= IntArray(oneClass.end){it+1}.toMutableList()
                     }
                 }
             }
         }
     }
-
 }
 
 
 
-@DelicateCoroutinesApi
 @Composable
-fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewModel){
-    val context = LocalContext.current
-    val activity = (LocalContext.current as? Activity)
-    val interactionSource = remember { MutableInteractionSource() }
+fun SingleClass2(singleClass: OneByOneCourseBean){
+//    val context = LocalContext.current
+//    val activity = (LocalContext.current as? Activity)
+//    val interactionSource = remember { MutableInteractionSource() }
     val height = 70*(singleClass.end- singleClass.start+1)
     Card(
         modifier = Modifier
@@ -388,50 +358,50 @@ fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewMo
 
 
 
-@DelicateCoroutinesApi
-fun showDialog(context: Activity, singleClass: OneByOneCourseBean) {
-    val realCourseMessage = singleClass.courseName.split("\n")
-    GlobalScope.launch{
-        val courseBeanList = Repository.loadCourseByNameAndStart(
-            realCourseMessage[0],
-            singleClass.start,
-            singleClass.whichColumn
-        )
-        context.runOnUiThread {
-            val dialog = Dialog.getClassDetailDialog(
-                context,
-                courseBeanList!![0]
-            )
-            dialog.show()
-        }
-    }
-
-}
-
-fun showDeleteDialog(context: ShowTimetableActivity2, singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewModel){
-    val realCourseName = singleClass.courseName.split("\n")[0]
-    viewModel.deleteCourseBeanByNameLiveData.observe(context, Observer {
-        if (it){
-            viewModel.loadAllCourse()
-        } else {
-            Toasty.error(context, "删除操作异常").show()
-        }
-    })
-    val dialog = MaterialDialog(context)
-        .title(text = "你在进行一步敏感操作")
-        .message(text = "你将删除《${realCourseName}》的所有课程\n无法恢复，务必谨慎删除！！！\n如失误删除请重新导入")
-        .positiveButton(text = "仍然删除") { _ ->
-            viewModel.deleteCourse(realCourseName)
-//            viewModel.updateCourse()
-            Toasty.success(context, "删除成功").show()
-        }
-        .negativeButton(text = "取消") { _ ->
-            Toasty.info(context, "删除操作取消", Toasty.LENGTH_SHORT).show()
-        }
-        .cancelOnTouchOutside(false)
-    dialog.show()
-    return
-}
+//@DelicateCoroutinesApi
+//fun showDialog(context: Activity, singleClass: OneByOneCourseBean) {
+//    val realCourseMessage = singleClass.courseName.split("\n")
+//    GlobalScope.launch{
+//        val courseBeanList = Repository.loadCourseByNameAndStart(
+//            realCourseMessage[0],
+//            singleClass.start,
+//            singleClass.whichColumn
+//        )
+//        context.runOnUiThread {
+//            val dialog = Dialog.getClassDetailDialog(
+//                context,
+//                courseBeanList!![0]
+//            )
+//            dialog.show()
+//        }
+//    }
+//
+//}
+//
+//fun showDeleteDialog(context: ShowTimetableActivity2, singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewModel){
+//    val realCourseName = singleClass.courseName.split("\n")[0]
+//    viewModel.deleteCourseBeanByNameLiveData.observe(context, Observer {
+//        if (it){
+//            viewModel.loadAllCourse()
+//        } else {
+//            Toasty.error(context, "删除操作异常").show()
+//        }
+//    })
+//    val dialog = MaterialDialog(context)
+//        .title(text = "你在进行一步敏感操作")
+//        .message(text = "你将删除《${realCourseName}》的所有课程\n无法恢复，务必谨慎删除！！！\n如失误删除请重新导入")
+//        .positiveButton(text = "仍然删除") { _ ->
+//            viewModel.deleteCourse(realCourseName)
+////            viewModel.updateCourse()
+//            Toasty.success(context, "删除成功").show()
+//        }
+//        .negativeButton(text = "取消") { _ ->
+//            Toasty.info(context, "删除操作取消", Toasty.LENGTH_SHORT).show()
+//        }
+//        .cancelOnTouchOutside(false)
+//    dialog.show()
+//    return
+//}
 
 @DelicateCoroutinesApi
 fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: ShowTimetableViewModel){
@@ -458,11 +428,10 @@ fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: 
     }
 }
 
-@ExperimentalPagerApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     TestTheme {
-
+        Text(text = "Test")
     }
 }

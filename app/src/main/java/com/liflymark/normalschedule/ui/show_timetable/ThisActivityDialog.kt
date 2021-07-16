@@ -1,6 +1,7 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -22,6 +23,7 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.whichIs1
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.flow.collect
 
 
 /*
@@ -29,19 +31,30 @@ import es.dmoral.toasty.Toasty
 * */
 @Composable
 fun ClassDetailDialog(openDialog:MutableState<Boolean>,singleClass: OneByOneCourseBean){
-    val emptyCourseBean = CourseBean("",0,0,"",0,",","","","")
+    val emptyCourseBean = CourseBean("",0,0,"011110",0,"异常查询","","","")
     val realCourseMessage = singleClass.courseName.split("\n")
     val courseBeanListState = remember { mutableStateOf(emptyCourseBean) }
     val openDeleteDialog = remember { mutableStateOf(false) }
 
     DeleteCourseDialog(deleteDialogOpen = openDeleteDialog, singleClass = singleClass)
 
-    LaunchedEffect(courseBeanListState){
-        courseBeanListState.value = Repository.loadCourseByNameAndStart(
+    LaunchedEffect(true){
+        Repository.loadCourseByNameAndStart(
             realCourseMessage[0],
             singleClass.start,
             singleClass.whichColumn
-        )?.getOrElse(0){ emptyCourseBean } ?: emptyCourseBean
+        ).collect {
+            if (it.isSuccess) {
+                val result = it.getOrNull()
+                if (result != null) {
+                    courseBeanListState.value = result.getOrElse(0) { emptyCourseBean }
+                }
+            } else {
+                it.getOrElse { a ->
+                    Log.d("dialog", a.toString())
+                }
+            }
+        }
     }
     if (openDialog.value){
         AlertDialog(

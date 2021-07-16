@@ -92,7 +92,7 @@ class DefaultBackground : AppCompatActivity() {
                             .fitCenter()
                             .into(userImage)
                     userImageText.text = "点击此处更换"
-                    Toasty.success(this@DefaultBackground, "读取成功，请重启app以应用修改",Toasty.LENGTH_SHORT).show()
+                    Toasty.success(this@DefaultBackground, "读取成功，返回看看吧",Toasty.LENGTH_SHORT).show()
                     Log.d("DefaultBackground", uri.toString())
                 }
 

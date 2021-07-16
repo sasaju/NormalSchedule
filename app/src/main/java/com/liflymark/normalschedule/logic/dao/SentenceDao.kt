@@ -23,7 +23,7 @@ object SentenceDao {
             val oneSentence = normalSharePreferences().getString("$i", "")
             val oneSentenceAuthor = normalSharePreferences().getString("${i}a", "")
             if (oneSentence != null && oneSentenceAuthor != null) {
-                sentences.add(Sentence(oneSentence, oneSentenceAuthor))
+                sentences.add(Sentence(oneSentenceAuthor, oneSentence))
             } else {
                 sentences.add(Sentence("",""))
             }

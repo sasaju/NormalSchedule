@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 internal object GetDataUtil {
-    private val firstWeekMondayDate = Date(121, 2, 1)
+    private val firstWeekMondayDate = Date(121, 7, 23)
     //获取当前完整的日期和时间
     @SuppressLint("SimpleDateFormat")
     fun getNowDateTime(): String? {

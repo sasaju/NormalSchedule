@@ -3,7 +3,6 @@ package com.liflymark.normalschedule.ui.import_course
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.jaredrummler.materialspinner.MaterialSpinner
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
@@ -80,58 +80,6 @@ class ImportLoginFragment: Fragment() {
             }
         })
 
-//        viewModel.courseNewLiveData.observe(viewLifecycleOwner, Observer { result ->
-//            val course = result
-//            if (course == null) {
-//                activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
-//            } else {
-//                val allCourseList = course.allCourse
-//                when (course.status) {
-//                    "yes" -> {
-//                        saveAccount()
-//                        activity?.let { Toasty.success(it, "登陆成功，解析成功", Toasty.LENGTH_SHORT).show() }
-//                        if(activity is MainActivity) {
-//                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-//                                putExtra("isSaved", false)
-//                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
-//                                putExtra("user", userName)
-//                                putExtra("password", userPassword)
-//                            }
-//                            startActivity(intent)
-//                            activity?.finish()
-//                        }
-//                        if (activity is ImportCourseAgain) {
-//                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-//                                putExtra("isSaved", false)
-//                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
-//                                putExtra("user", userName)
-//                                putExtra("password", userPassword)
-//                            }
-//                            startActivity(intent)
-//                            activity?.finish()
-//                        }
-//                        // viewModel.saveAccount(userName, userPassword)
-//                    }
-//                    "no" -> {
-//                        activity?.let { Toasty.error(it, "登陆成功，解析异常，请务必检查课程表是否正确", Toasty.LENGTH_LONG).show() }
-//                        if(activity is MainActivity) {
-//                            val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-//                                putExtra("isSaved", true)
-//                            }
-//                            startActivity(intent)
-//                            activity?.finish()
-//                        }
-//                        // viewModel.saveAccount(userName, userPassword)
-//                    }
-//                    else -> {
-//                        activity?.let { Toasty.error(it, result!!.status, Toasty.LENGTH_SHORT).show() }
-//                        viewModel.getImage(id)
-//                    }
-//                }
-//
-//
-//            }
-//        })
 
         viewModel.courseLiveData.observe(viewLifecycleOwner, Observer { result ->
 
@@ -194,40 +142,43 @@ class ImportLoginFragment: Fragment() {
             }
         })
 
-//        viewModel.courseVisitLiveData.observe(viewLifecycleOwner, Observer { result ->
-//            val course = result.getOrNull()
-//
-//            if (course == null) {
-//                val allCourseList = listOf(AllCourse(
-//                    "五四路",
-//                    1,
-//                    1,
-//                    "11111111111111111111111",
-//                    1,
-//                    "点击右上角导入课程",
-//                    "",
-//                    ""
-//                ))
-//                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-//                    putExtra("isSaved", false)
-//                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
-//                    putExtra("user", userName)
-//                    putExtra("password", userPassword)
-//                }
-//                startActivity(intent)
-//                activity?.finish()
-//            } else {
-//                val allCourseList = course.allCourse
-//                val intent = Intent(context, ShowTimetableActivity::class.java).apply {
-//                    putExtra("isSaved", false)
-//                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
-//                    putExtra("user", userName)
-//                    putExtra("password", userPassword)
-//                }
-//                startActivity(intent)
-//                activity?.finish()
-//            }
-//        })
+        viewModel.courseVisitLiveData.observe(viewLifecycleOwner, { result ->
+            val course = result.getOrNull()
+
+            if (course == null) {
+                val allCourseList = listOf(
+                    AllCourse(
+                    "五四路",
+                    1,
+                    1,
+                    "11111111111111111111111",
+                    1,
+                    "点击右上角导入课程",
+                    "",
+                    ""
+                )
+                )
+                val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
+                    putExtra("isSaved", true)
+                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                    putExtra("user", userName)
+                    putExtra("password", userPassword)
+                }
+                startActivity(intent)
+                activity?.finish()
+            } else {
+                val allCourseList = course.allCourse
+                val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
+                    putExtra("isSaved", false)
+                    putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                    putExtra("user", userName)
+                    putExtra("password", userPassword)
+                }
+                startActivity(intent)
+                activity?.finish()
+            }
+        })
+
         viewModel.imageLiveData.observe(viewLifecycleOwner, {
             ivCode.visibility = View.VISIBLE
             progress_bar.visibility = View.INVISIBLE
@@ -271,8 +222,8 @@ class ImportLoginFragment: Fragment() {
 
         btnSignByVisitor.setOnClickListener {
             viewModel.putValue()
+            viewModel.saveAccount("visit", "visit")
         }
-
     }
 
 
