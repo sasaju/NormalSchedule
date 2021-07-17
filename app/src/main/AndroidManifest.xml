@@ -18,9 +18,19 @@
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
-            android:name=".ui.show_timetable.New"
+            android:name=".ui.class_course.ClassCourseActivity"
             android:exported="true"
-            android:label="@string/title_activity_new"
+            android:label="@string/title_activity_class_course"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.score_detail.ShowDetailScoreActivity"
+            android:exported="true"
+            android:label="@string/title_activity_show_detail_score"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.score_detail.LoginToScoreActivity"
+            android:exported="true"
+            android:label="@string/title_activity_login_to_scroe"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.show_timetable.ShowTimetableActivity2"
@@ -54,10 +64,9 @@
             android:name=".ui.import_show_score.ImportScoreActivity"
             android:label="成绩查询"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-        <activity
-            android:name=".ui.show_timetable.ShowTimetableActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" /> <!-- <activity -->
+        <!-- android:name=".ui.show_timetable.ShowTimetableActivity" -->
+        <!-- android:theme="@style/Theme.NormalSchedule.NoActionBar" /> -->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -69,15 +78,27 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".logic.utils.appwidget.AppwidgetTodayProvider">
+<!--        <receiver android:name=".logic.utils.appwidget.AppwidgetTodayProvider">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
+<!--            </intent-filter>-->
+
+<!--            <meta-data-->
+<!--                android:name="android.appwidget.provider"-->
+<!--                android:resource="@layout/appwidget_course_day" />-->
+<!--        </receiver>-->
+        <receiver android:name=".ui.app_widget_day.DayAppWidgetProvider"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@layout/appwidget_course_day" />
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_day_info" />
         </receiver>
+
+        <service android:name="com.liflymark.normalschedule.ui.app_widget_day.DayRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
     </application>
 
 </manifest>

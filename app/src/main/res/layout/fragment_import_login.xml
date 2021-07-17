@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="50dp"
-                android:text="默认统一认证密码为：身份证号末6位@hbu"
+                android:text="默认统一认证密码为：身份证号末6位"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/input_pwd" />
 
@@ -161,45 +161,51 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:backgroundTint="@color/green"
-                android:text="登陆并导入"
+                android:text="登陆并导入(首选)"
                 app:layout_constraintTop_toBottomOf="@+id/agree_or_not"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="32dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSignByClass"
-                style="@style/DialogButtonStyle"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="——————————OR——————————"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSign" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/green"
-                android:text="按班级导入(登陆出现异常时使用)"
-                app:layout_constraintTop_toBottomOf="@id/btnSign"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSign">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSignByVisitor"
-                style="@style/DialogButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="@color/green"
-                android:text="以游客身份登入"
-                app:layout_constraintTop_toBottomOf="@id/btnSignByClass"
-                tools:ignore="MissingConstraints" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSignByClass"
+                    style="@style/DialogButtonStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/green"
+                    android:text="按班级导入"
+                    app:layout_constraintTop_toBottomOf="@id/btnSign"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="-3dp" />
 
-
-            <!--        <com.google.android.material.button.MaterialButton-->
-            <!--            android:id="@+id/testButton"-->
-            <!--            style="@style/DialogButtonStyle"-->
-            <!--            android:backgroundTint="@color/green"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginTop="10dp"-->
-            <!--            android:text="读取"-->
-            <!--            tools:ignore="MissingConstraints"-->
-            <!--            app:layout_constraintTop_toBottomOf="@id/btnSign"/>-->
-
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSignByVisitor"
+                    style="@style/DialogButtonStyle"
+                    android:layout_height="49dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/green"
+                    android:text="以游客身份登入"
+                    app:layout_constraintStart_toEndOf="@+id/btnSignByClass"
+                    app:layout_constraintTop_toBottomOf="@+id/btnSign"
+                    tools:ignore="MissingConstraints" />
+            </LinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_code"
                 android:layout_width="120dp"

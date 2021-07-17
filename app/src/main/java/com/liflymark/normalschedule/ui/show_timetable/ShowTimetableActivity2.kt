@@ -1,18 +1,20 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -22,11 +24,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -36,32 +40,23 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.WindowCompat
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.glide.rememberGlidePainter
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsHeight
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.accompanist.pager.*
 import com.gyf.immersionbar.ImmersionBar
-import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
-import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
-import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.test.ui.theme.TestTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
@@ -72,6 +67,10 @@ import kotlinx.coroutines.launch
 
 class ShowTimetableActivity2 : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
+    val needElementPosition = mutableListOf<Array<Float>>()
+    @DelicateCoroutinesApi
+    @ExperimentalAnimationApi
+    @ExperimentalMaterialApi
     @ExperimentalPagerApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,12 +96,9 @@ class ShowTimetableActivity2 : ComponentActivity() {
                         )
                         Drawer(viewModel)
                     }
-
                 }
-
             }
         }
-
     }
 
     override fun onResume() {
@@ -112,26 +108,18 @@ class ShowTimetableActivity2 : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
 fun Drawer(viewModel: ShowTimetableViewModel){
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
-//    SideEffect {
-//        // Update all of the system bar colors to be transparent, and use
-//        // dark icons if we're in light theme
-//        systemUiController.setSystemBarsColor(
-//            color = Color.Transparent,
-//            darkIcons = useDarkIcons
-//        )
-//
-//        // setStatusBarsColor() and setNavigationBarsColor() also exist
-//    }
-//    val courseList: State<List<List<OneByOneCourseBean>>?> =
-//        viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
+    val startSchoolOrNot = viewModel.startSchool()
+    val startHolidayOrNot = viewModel.startHoliday()
     val courseList: State<List<List<OneByOneCourseBean>>?> =
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
+
     viewModel.loadAllCourse()
     ModalDrawer(
         drawerState = drawerState,
@@ -141,18 +129,24 @@ fun Drawer(viewModel: ShowTimetableViewModel){
         content = {
 
             Column(modifier = Modifier.background(Color.Transparent)) {
-                var userNowWeek by remember { mutableStateOf(viewModel.getNowWeek()) }
+                var userNowWeek by remember { mutableStateOf( if(!startSchoolOrNot || startHolidayOrNot){0}else{viewModel.getNowWeek()}) }
                 val pagerState = rememberPagerState(
                     pageCount = 19,
                     initialOffscreenLimit = 2,
-                    initialPage = userNowWeek
+                    initialPage = userNowWeek,
+                    infiniteLoop = true
                 )
                 ScheduleToolBar(scope, drawerState, userNowWeek, pagerState)
 
-                HorizontalPager(state = pagerState) { page ->
-                    SingleLineClass(oneWeekClass = courseList, page = page, viewModel = viewModel)
+                HorizontalPager(
+                    state = pagerState,
+                    flingBehavior = PagerDefaults.defaultPagerFlingConfig(
+                        state = pagerState,
+                        snapAnimationSpec = spring(stiffness = 500f)
+                    )
+                ) { page ->
+                    SingleLineClass(oneWeekClass = courseList, page = page)
                 }
-
 
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collectLatest { page ->
@@ -173,44 +167,23 @@ fun BackGroundImage(viewModel:ShowTimetableViewModel){
         contentScale = ContentScale.FillBounds
     )
 
-//    viewModel.loadAllCourse()
-//    if (path.value?.userBackground == "0"){
-//        Image(
-//            painter = rememberGlidePainter(request = R.drawable.main_background_4), contentDescription = null,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds
-//        )
-//        Log.d("BackgroundImage", path.toString())
-//    } else{
-//        Log.d("BackgroundImage", path.toString())
-//        Image(
-//            painter = rememberGlidePainter(request = getPath(path.value)), contentDescription = null,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds
-//        )
-//    }
-
-//    if(path.value == null) {
-//        Image(
-//            painter = rememberGlidePainter(request = R.drawable.main_background_4), contentDescription = null,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds
-//        )
-//    } else {
-//            Image(
-//                painter = rememberGlidePainter(request = Uri.parse(path.value as String?)), contentDescription = null,
-//                modifier = Modifier.fillMaxSize(),
-//                contentScale = ContentScale.FillBounds
-//            )
-//    }
 }
 
 
 @ExperimentalPagerApi
 @Composable
-fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek: Int, pagerState: PagerState){
+fun ScheduleToolBar(scope: CoroutineScope,
+                    drawerState: DrawerState,
+                    userNowWeek: Int,
+                    pagerState: PagerState,
+                    stViewModel: ShowTimetableViewModel = viewModel()
+){
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
+    val nowWeek = stViewModel.getNowWeek()
+    val nowWeekOrNot = (pagerState.currentPage == nowWeek)
+    val startSchoolOrNot = stViewModel.startSchool()
+    val startHolidayOrNot = stViewModel.startHoliday()
     TopAppBar(
         backgroundColor = Color.Transparent,
         elevation = 0.dp,
@@ -219,17 +192,40 @@ fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek
                 Modifier
                     .clickable {
                         scope.launch {
-                            pagerState.animateScrollToPage(GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate()) - 1)
+                            pagerState.animateScrollToPage(
+                                if (startSchoolOrNot && !startHolidayOrNot) {
+                                    nowWeek
+                                } else {
+                                    0
+                                }
+                            )
                         }
                     }
-                    .fillMaxHeight(0.9F)) {
-                val nowWeekOrNot = GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate())==userNowWeek+1
-                if (!nowWeekOrNot){
+                    .fillMaxHeight(0.9F)
+                    .onGloballyPositioned { coordinates ->
+                        coordinates.positionInWindow()
+                        Log.d(
+                            "ShowActivity2",
+                            coordinates
+                                .positionInWindow()
+                                .toString()
+                        )
+                    }
+            ) {
+                // 开学了，当前页面不是当前周加一个5dp的空行
+                // 开学了，而且页面是当前周 显示“当前周”
+                // 放假了，显示放假
+                if (startSchoolOrNot && !nowWeekOrNot){
                     Spacer(modifier = Modifier.height(5.dp))
                 }
                 Text(text = "第${userNowWeek+1}周")
-                if (nowWeekOrNot){
+                if (nowWeekOrNot && startSchoolOrNot){
                     Text(text = "当前周", fontSize = 15.sp)
+                } else if(!startSchoolOrNot) {
+                    Text(text = "距离开课${-stViewModel.startSchoolDay()}天", fontSize = 15.sp, color = Color.Gray)
+                }
+                if (stViewModel.startHoliday()){
+                    Text(text = "放假了，联系开发者更新", fontSize = 15.sp, color = Color.Gray)
                 }
             }
         },
@@ -268,25 +264,51 @@ fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek
 
 
 
-@DelicateCoroutinesApi
+
 @Composable
-fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>, page:Int, viewModel: ShowTimetableViewModel){
+fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>,
+                    page:Int,
+                    stViewModel: ShowTimetableViewModel = viewModel()){
     Column() {
         //星期行
         Row() {
             Column(
                 Modifier
                     .weight(0.6F)
-                    .height(40.dp)) {
+                    .height(40.dp)
+            ) {
                 Spacer(modifier = Modifier.height(5.dp))
-                Text(text = "${getDayOfDate(0, page)}\n月",modifier = Modifier.fillMaxWidth(), fontSize = 10.sp, textAlign = TextAlign.Center)
+                Text(text = "${getDayOfDate(0, page)}\n月",
+                    modifier = Modifier.fillMaxWidth(),
+                    fontSize = 10.sp, textAlign = TextAlign.Center)
             }
                 
             repeat(7){
-                Text(text = "${getDayOfWeek(it+1)}\n\n${getDayOfDate(it+1, page)}",
-                    Modifier
+                val textText = "${getDayOfWeek(it+1)}\n\n${getDayOfDate(it+1, page)}"
+                Surface(
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
                         .weight(1F, true)
-                        .height(40.dp),fontSize = 11.sp, lineHeight = 10.sp, textAlign = TextAlign.Center)
+                        .height(40.dp),
+                    color = Color.Transparent
+                ){
+                    if (!isSelected(it+1, page)){
+                        Text(text = textText,
+                            modifier = Modifier.background(Color.Transparent),
+                            fontSize = 11.sp,
+                            lineHeight = 10.sp,
+                            textAlign = TextAlign.Center)
+                    } else {
+                        Text(text = textText,
+                            modifier =  Modifier
+                                .background(Brush.verticalGradient(listOf(Color.Blue, Color.Transparent))),
+                            fontSize = 11.sp,
+                            lineHeight = 10.sp,
+                            textAlign = TextAlign.Center,
+                            color = Color.White
+                        )
+                    }
+                }
             }
         }
 
@@ -325,27 +347,26 @@ fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>, page:I
                         if (spacerHeight < 0){
                             Log.d("TestActivity", "当前有冲突课程")
                         }
+
                         Spacer(modifier = Modifier
                             .fillMaxWidth()
                             .height(spacerHeight.dp))
-                        SingleClass2(singleClass = oneClass, viewModel = viewModel)
+                        SingleClass2(singleClass = oneClass)
                         nowJieShu -= IntArray(oneClass.end){it+1}.toMutableList()
                     }
                 }
             }
         }
     }
-
 }
 
 
 
-@DelicateCoroutinesApi
 @Composable
-fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewModel){
-    val context = LocalContext.current
-    val activity = (LocalContext.current as? Activity)
-    val interactionSource = remember { MutableInteractionSource() }
+fun SingleClass2(singleClass: OneByOneCourseBean){
+//    val context = LocalContext.current
+//    val activity = (LocalContext.current as? Activity)
+//    val interactionSource = remember { MutableInteractionSource() }
     val height = 70*(singleClass.end- singleClass.start+1)
     Card(
         modifier = Modifier
@@ -357,6 +378,8 @@ fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewMo
     ) {
         val nameList = singleClass.courseName.split("\n")
 
+        val showDetailDialog = remember { mutableStateOf(false) }
+        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
 
         Text(
             buildAnnotatedString {
@@ -371,19 +394,8 @@ fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewMo
             },
             modifier = Modifier
                 .background(singleClass.color)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onLongPress = {
-                            if (activity != null) {
-                                showDeleteDialog(activity as ShowTimetableActivity2, singleClass, viewModel)
-                            }
-                        },
-                        onTap = {
-                            if (activity != null) {
-                                showDialog(activity, singleClass)
-                            }
-                        }
-                    )
+                .clickable {
+                    showDetailDialog.value = true
                 },
             textAlign = TextAlign.Center
         )
@@ -392,55 +404,6 @@ fun SingleClass2(singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewMo
 
 
 @DelicateCoroutinesApi
-fun showDialog(context: Activity, singleClass: OneByOneCourseBean) {
-//    MaterialDialog(context).show {
-//        title(text = "张子龙铁憨憨")
-//        message(text = "张子龙大笨蛋")
-//        positiveButton(text = "是的")
-//    }
-    val realCourseMessage = singleClass.courseName.split("\n")
-    GlobalScope.launch{
-        val courseBeanList = Repository.loadCourseByNameAndStart(
-            realCourseMessage[0],
-            singleClass.start,
-            singleClass.whichColumn
-        )
-        context.runOnUiThread {
-            val dialog = Dialog.getClassDetailDialog(
-                context,
-                courseBeanList!![0]
-            )
-            dialog.show()
-        }
-    }
-
-}
-
-fun showDeleteDialog(context: ShowTimetableActivity2, singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewModel){
-    val realCourseName = singleClass.courseName.split("\n")[0]
-    viewModel.deleteCourseBeanByNameLiveData.observe(context, Observer {
-        if (it){
-            viewModel.loadAllCourse()
-        } else {
-            Toasty.error(context, "删除操作异常").show()
-        }
-    })
-    val dialog = MaterialDialog(context)
-        .title(text = "你在进行一步敏感操作")
-        .message(text = "你将删除《${realCourseName}》的所有课程\n无法恢复，务必谨慎删除！！！\n如失误删除请重新导入")
-        .positiveButton(text = "仍然删除") { _ ->
-            viewModel.deleteCourse(realCourseName)
-//            viewModel.updateCourse()
-            Toasty.success(context, "删除成功").show()
-        }
-        .negativeButton(text = "取消") { _ ->
-            Toasty.info(context, "删除操作取消", Toasty.LENGTH_SHORT).show()
-        }
-        .cancelOnTouchOutside(false)
-    dialog.show()
-    return
-}
-
 fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: ShowTimetableViewModel){
     val dialog = MaterialDialog(activity2)
         .title(text = "保存课表至本地")
@@ -454,8 +417,6 @@ fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: 
             }
             val allCourseListJson = intent.getStringExtra("courseList")?:""
             val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
-            val user = intent.getStringExtra("user")?:""
-            val password = intent.getStringExtra("password")?:""
             viewModel.deleteAllCourse()
             viewModel.insertOriginalCourse(allCourseList)
             activity2.runOnUiThread {
@@ -465,11 +426,10 @@ fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: 
     }
 }
 
-@ExperimentalPagerApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     TestTheme {
-
+        Text(text = "Test")
     }
 }

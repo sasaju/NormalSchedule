@@ -10,7 +10,6 @@ import android.widget.Toolbar
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.liflymark.icytimetable.dp
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.ui.import_course.CourseViewModel

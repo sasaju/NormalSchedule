@@ -12,18 +12,15 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.model.OneSentencesResponse
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
+import kotlinx.coroutines.flow.collectLatest
 
 class ShowTimetableViewModel: ViewModel() {
-    private var courseListLiveData = MutableLiveData(0)
-    private val myHandler = SavedStateHandle()
-    val TEXTVIEW_WIDTH = "TEXTVIEW_WIDTH"
     private var courseDatabaseLiveData = MutableLiveData(0)
     private var backgroundId = MutableLiveData(0)
-    private var updateCourseLiveData = MutableLiveData(0)
     private var needDeleteCourseNameLiveData = MutableLiveData<String>()
-    private val saveClassToSQLLiveData = MutableLiveData<Boolean>()
-    private var deleteCourseBean = MutableLiveData<Int>()
+    private var _sentenceLiveDate = MutableLiveData<Boolean>(false)
 
 
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
@@ -34,40 +31,22 @@ class ShowTimetableViewModel: ViewModel() {
     val backgroundUriStringLiveData = Transformations.switchMap(backgroundId){
         Repository.loadBackground()
     }
-    val backgroundUriStringLiveData2 = Repository.loadBackground2()
 
     val deleteCourseBeanByNameLiveData = Transformations.switchMap(needDeleteCourseNameLiveData){
         needDeleteCourseNameLiveData.value?.let { it1 -> Repository.deleteCourseByName(it1) }
     }
-
-    val deleteCourseLiveData = Transformations.map(deleteCourseBean){
-        Repository.deleteAllCourseBean()
-        Log.d("CourseViewModel", "执行完毕")
+    val sentenceLiveData = Transformations.switchMap(_sentenceLiveDate){
+        Repository.getSentences(it).asLiveData()
     }
 
-    val updateCourseLiveDataVal = Transformations.switchMap(updateCourseLiveData) {
-        Repository.loadAllCourse()
-    }
-
-    val saveClassOrNot = Transformations.map(saveClassToSQLLiveData){
-        true
-    }
 
     fun loadAllCourse() {
         courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
         Log.d("ShowTimetable", "loadAllCourse执行")
     }
 
-    fun updateCourse(){
-        updateCourseLiveData.value?.plus(1)
-    }
-
     fun deleteCourse(courseItem:String){
         needDeleteCourseNameLiveData.value = courseItem
-    }
-
-    fun saveTextWidth(width: Float) {
-        myHandler.set(TEXTVIEW_WIDTH, width)
     }
 
     fun setBackground(){
@@ -75,23 +54,6 @@ class ShowTimetableViewModel: ViewModel() {
         backgroundId.value = backgroundId.value?.plus(1)
     }
 
-    fun deleteAllCourseBean(){
-        deleteCourseBean.value = deleteCourseBean.value?.plus(1)
-    }
-
-    fun savedClass(){
-        saveClassToSQLLiveData.value = true
-    }
-
-    suspend fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int) =
-            Repository.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
-
-    fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
-    fun getSavedAccount() = AccountDao.getSavedAccount()
-    fun isAccountSaved() = AccountDao.isAccountSaved()
-
-    fun saveUserVersion() = Repository.saveUserVersion()
-    fun getNewUserOrNot() = Repository.getNewUserOrNot()
 
     suspend fun insertOriginalCourse(allCourseList: List<AllCourse>) {
         Log.d("CourseViewModel", "获取到课程")
@@ -102,45 +64,25 @@ class ShowTimetableViewModel: ViewModel() {
         Repository.deleteAllCourseBean2()
     }
 
-    fun getClassDetailDialog(_context: Context, courseBean: CourseBean): MaterialDialog {
-        val dialog = MaterialDialog(_context)
-                .customView(R.layout.item_course_detail)
-        val customView = dialog.getCustomView()
-        val courseTime = customView.findViewById<AppCompatTextView>(R.id.et_time)
-        val weekNum = customView.findViewById<AppCompatTextView>(R.id.et_weeks)
-        val courseTeacher = customView.findViewById<AppCompatTextView>(R.id.et_teacher)
-        val courseRoom = customView.findViewById<AppCompatTextView>(R.id.et_room)
-
-        val oneList = courseBean.classWeek.whichIs1()
-        val courseStartToEnd = {
-            "    第${courseBean.classSessions} - ${courseBean.classSessions+courseBean.continuingSession}节"
-        }
-
-
-        courseTime.text = getWeekNumFormat(oneList)
-        weekNum.text = when(courseBean.classDay){
-            1 -> "周一$courseStartToEnd"
-            2 -> "周二$courseStartToEnd"
-            3 -> "周三$courseStartToEnd"
-            4 -> "周四$courseStartToEnd"
-            5 -> "周五$courseStartToEnd"
-            6 -> "周六$courseStartToEnd"
-            7 -> "周日$courseStartToEnd"
-            else -> "错误"
-        }
-        courseTeacher.text = courseBean.teacher
-        courseRoom.text = courseBean.teachingBuildName
-
-        val closeButton = customView.findViewById<AppCompatTextView>(R.id.ib_delete)
-//        closeButton.setOnClickListener {
-//            dialog.dismiss()
-//        }
-
-        return dialog
+    fun fetchSentence(force:Boolean = false) {
+        _sentenceLiveDate.value = force
     }
 
+
     fun getNowWeek(): Int{
-        return  GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate()) - 1
+        return  GetDataUtil.whichWeekNow()
+    }
+
+    fun startSchool(): Boolean{
+        return GetDataUtil.startSchool()
+    }
+
+    fun startSchoolDay(): Int{
+        return GetDataUtil.startSchoolDay()
+    }
+
+    fun startHoliday(): Boolean{
+        return GetDataUtil.whichWeekNow() > 19
     }
 
     private fun String.whichIs1(): List<Int>{

@@ -1,7 +1,5 @@
 package com.liflymark.normalschedule.logic.network
 
-import android.graphics.Bitmap
-import android.media.Image
 import com.liflymark.normalschedule.logic.model.CourseResponse
 import com.liflymark.normalschedule.logic.model.DepartmentList
 import com.liflymark.normalschedule.logic.model.IdResponse
@@ -27,10 +25,10 @@ interface CourseService {
     @GET("timetable/vist/")
     fun getVisit(): Call<CourseResponse>
 
-    @GET("class/departmentList/")
+    @GET("class/departmentList")
     fun getDepartmentList():Call<DepartmentList>
 
-    @GET("class/{department}/{major}")
+    @GET("class/{department}/{major}.json")
     fun getCourseByClass(@Path("department")department:String,
                          @Path("major")major: String): Call<CourseResponse>
 

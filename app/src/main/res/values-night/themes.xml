@@ -19,9 +19,9 @@
         <item name="android:windowActionBar">false</item>
     </style>
 
-    <style name="Theme.NormalSchedule.ShowTimeTableSplash"
-        parent="Theme.NormalSchedule.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
+    <style name="Theme.NormalSchedule.ShowTimeTableSplash" parent="Theme.NormalSchedule.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
     <style name="Theme.NormalSchedule.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
