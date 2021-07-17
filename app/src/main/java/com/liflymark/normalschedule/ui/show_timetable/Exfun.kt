@@ -1,39 +1,10 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
-import android.util.Log
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.DecayAnimationSpec
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.rememberSplineBasedDecay
-import androidx.compose.foundation.gestures.FlingBehavior
-import androidx.compose.foundation.gestures.ScrollScope
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.*
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
-import java.text.SimpleDateFormat
 import java.util.*
 
-//@ExperimentalPagerApi
-//@Composable
-//fun myPagerSetting(
-//    state: PagerState
-//): Float {
-//
-//}
-
-object a : FlingBehavior{
-    override suspend fun ScrollScope.performFling(initialVelocity: Float): Float {
-        Log.d("Exfun.kt", initialVelocity.toString())
-        return 10f
-    }
-}
 
 fun getNeededClassList(originData: List<OneByOneCourseBean>): List<List<OneByOneCourseBean>>{
     val res = mutableListOf<MutableList<OneByOneCourseBean>>()
@@ -84,19 +55,14 @@ fun getEndTime(rowNumber: Int): String {
     }
 }
 private val firstWeekMondayDate = GetDataUtil.getFirstWeekMondayDate()
-@SuppressLint("SimpleDateFormat")
-fun isSelected(nowColumn: Int, whichWeek: Int, position: Int): Boolean {
+
+fun isSelected(nowColumn: Int, position: Int): Boolean {
 
     val nowDay = GetDataUtil.getNowWeekNum()
-    val nowWeek = GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate())
-    val firstWeekMonthDayDate = GetDataUtil.getFirstWeekMondayDate()
-    val sdf = SimpleDateFormat()
-    sdf.format(firstWeekMondayDate)
-    if (nowColumn==nowDay && position+1 == nowWeek &&
-        GetDataUtil.dateMinusDate(GetDataUtil.getNowTime(),sdf) >= 0){
+    val nowWeek = GetDataUtil.whichWeekNow()
+    if (nowColumn==nowDay && position == nowWeek && GetDataUtil.startSchool()){
         return true
     }
-
     return false
 }
 
@@ -104,44 +70,16 @@ fun isSelected(nowColumn: Int, whichWeek: Int, position: Int): Boolean {
 
 fun getDayOfDate(nowColumn: Int, position: Int): String {
     val calendar = GregorianCalendar()
-    calendar.time = firstWeekMondayDate
+    calendar.time = firstWeekMondayDate.time
 //        calendar.add(Calendar.DATE, 30)
     return when(nowColumn){
         0->{
             calendar.add(Calendar.DATE, nowColumn + position*7)
-            (calendar.time.month+1).toString()
-        }
-        1->{
-            calendar.add(Calendar.DATE, nowColumn-1 + position*7)
-            calendar.time.date.toString()
-        }
-        2->{
-            calendar.add(Calendar.DATE, nowColumn-1+position*7)
-            calendar.time.date.toString()
-        }
-        3->{
-            calendar.add(Calendar.DATE, nowColumn-1+position*7)
-            calendar.time.date.toString()
-        }
-        4->{
-            calendar.add(Calendar.DATE, nowColumn-1+position*7)
-            calendar.time.date.toString()
-        }
-        5->{
-            calendar.add(Calendar.DATE, nowColumn-1+position*7)
-            calendar.time.date.toString()
-        }
-        6->{
-            calendar.add(Calendar.DATE, nowColumn-1+position*7)
-            calendar.time.date.toString()
-        }
-        7->{
-            calendar.add(Calendar.DATE, nowColumn-1+position*7)
-            calendar.time.date.toString()
+            (calendar.get(Calendar.MONTH)+1).toString()
         }
         else->{
             calendar.add(Calendar.DATE, nowColumn-1+position*7)
-            calendar.time.date.toString()
+            calendar.get(Calendar.DAY_OF_MONTH).toString()
         }
     }
 }

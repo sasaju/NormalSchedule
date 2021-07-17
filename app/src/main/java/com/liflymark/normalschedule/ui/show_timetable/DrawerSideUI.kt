@@ -38,6 +38,7 @@ import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
 import com.liflymark.normalschedule.ui.show_timetable.ui.theme.NormalScheduleTheme
 import com.liflymark.test.ui.theme.TestTheme
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -46,8 +47,10 @@ fun DrawerNavHost(drawerState: DrawerState){
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
 
         OneSentence()
+
         NavButton(DefaultBackground(), drawerState,
             Icons.Filled.Image, "更换背景")
+
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(5.dp)
@@ -58,23 +61,43 @@ fun DrawerNavHost(drawerState: DrawerState){
             icon = Icons.Filled.Stairs, text = "成绩查询")
         NavButton(activity = LoginToScoreActivity(), drawerState = drawerState,
             icon = Icons.Filled.Stairs, text = "本学期成绩明细")
-        NavButton(activity = AboutActivity(), drawerState = drawerState,
-            icon = Icons.Filled.Info, text = "关于软件")
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(5.dp)
+            .padding(2.dp)
+            .background(Color.Gray))
         NavButton(activity = ClassCourseActivity(), drawerState = drawerState,
             icon = Icons.Filled.Image, text = "班级课程查询")
+        NavButton(activity = AboutActivity(), drawerState = drawerState,
+            icon = Icons.Filled.Info, text = "关于软件")
+
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
 fun OneSentence(viewModel:ShowTimetableViewModel = viewModel()){
-    val sentencesList= viewModel.fetchSentence().observeAsState()
+    val sentencesList= viewModel.sentenceLiveData.observeAsState()
+    val context = LocalContext.current
     val status = sentencesList.value?.status
     val result = sentencesList.value?.result
     var expand by remember { mutableStateOf(false) }
+    var clickTimes by remember {
+        mutableStateOf(0)
+    }
     Box(
         Modifier
-            .clickable { expand = !expand }
+            .clickable {
+                expand = !expand
+                clickTimes += 1
+                if (clickTimes > 3) {
+                    viewModel.fetchSentence(force = true)
+                    Toasty
+                        .success(context, "已从网络端重新加载")
+                        .show()
+                    clickTimes = 0
+                }
+            }
             .wrapContentHeight(), contentAlignment = Alignment.Center) {
         Spacer(modifier = Modifier
             .fillMaxWidth()

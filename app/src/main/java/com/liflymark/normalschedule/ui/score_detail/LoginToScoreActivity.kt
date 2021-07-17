@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -28,6 +30,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.score_detail.ui.theme.NormalScheduleTheme
+import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -39,7 +42,14 @@ class LoginToScoreActivity : ComponentActivity() {
         setContent {
             UiControl()
             NormalScheduleTheme {
-                Input(viewModel)
+                Scaffold(
+                    topBar = {
+                        NormalTopBar(label = "成绩明细")
+                    },
+                    content = {
+                        Input(viewModel)
+                    }
+                )
             }
         }
     }
@@ -51,7 +61,7 @@ fun UiControl(){
     val useDarkIcons = MaterialTheme.colors.isLight
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
+            color = Color(0xFF2196F3),
             darkIcons = useDarkIcons
         )
     }
@@ -81,12 +91,22 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
             }
         }
     }
-    Image(
-        painter = painterResource(id = R.drawable.main_background_4),
-        contentDescription = null,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.FillBounds
-    )
+//    Image(
+//        painter = painterResource(id = R.drawable.main_background_4),
+//        contentDescription = null,
+//        modifier = Modifier.fillMaxSize(),
+//        contentScale = ContentScale.FillBounds
+//    )
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        val canvasWidth = size.width
+        val canvasHeight = size.height
+        val lightBlue = Color(0xff2196f3)
+        drawCircle(
+            color = lightBlue,
+            center = Offset(x = canvasWidth / 2, y = canvasHeight / 2),
+            radius = size.minDimension / 4
+        )
+    }
     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
         Card(modifier = Modifier
             .height(300.dp)
@@ -99,7 +119,7 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
                 .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {
-
+                Spacer(modifier = Modifier.height(40.dp))
                 OutlinedTextField(
                     value = user,
                     onValueChange = { user = it },

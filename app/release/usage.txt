@@ -5379,7 +5379,6 @@ androidx.compose.material.icons.filled.ArchitectureKt
 androidx.compose.material.icons.filled.ArchiveKt
 androidx.compose.material.icons.filled.ArrowBackIosKt
 androidx.compose.material.icons.filled.ArrowBackIosNewKt
-androidx.compose.material.icons.filled.ArrowBackKt
 androidx.compose.material.icons.filled.ArrowCircleDownKt
 androidx.compose.material.icons.filled.ArrowCircleUpKt
 androidx.compose.material.icons.filled.ArrowDownwardKt
@@ -39637,6 +39636,7 @@ com.liflymark.normalschedule.R$id:
     public static final int line1
     public static final int line3
     public static final int linear
+    public static final int linearLayout
     public static final int listMode
     public static final int list_item
     public static final int literal
@@ -39959,18 +39959,28 @@ com.liflymark.normalschedule.databinding.ItemCourseBindingImpl
 com.liflymark.normalschedule.databinding.ItemSpaceBinding
 com.liflymark.normalschedule.databinding.ItemSpaceBindingImpl
 com.liflymark.normalschedule.logic.LiveLiterals$RepositoryKt:
+    private static boolean Boolean$param-force$fun-getSentences$class-Repository
+    private static androidx.compose.runtime.State State$Boolean$param-force$fun-getSentences$class-Repository
     private static androidx.compose.runtime.State State$String$arg-0$call-$init$$arg-0$call-failure$else$if$fun-$anonymous$$arg-1$call-fire$fun-getId$class-Repository
+    private static androidx.compose.runtime.State State$String$arg-0$call-d$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
+    private static androidx.compose.runtime.State State$String$arg-0$call-parse$arg-0$call-emit$catch$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
     private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$$this$call-not$cond$if$fun-$anonymous$$arg-1$call-fire$fun-getId$class-Repository
     private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$$this$call-not$cond$if$fun-$anonymous$$arg-1$call-fireFlow$fun-loadCourseByMajor$class-Repository
+    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$$this$call-not$cond$if$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
+    public final boolean Boolean$param-force$fun-getSentences$class-Repository()
     public final java.lang.String String$arg-0$call-$init$$arg-0$call-failure$else$if$fun-$anonymous$$arg-1$call-fire$fun-getId$class-Repository()
+    public final java.lang.String String$arg-0$call-d$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository()
+    public final java.lang.String String$arg-0$call-parse$arg-0$call-emit$catch$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository()
     public final java.lang.String String$arg-1$call-EQEQ$$this$call-not$cond$if$fun-$anonymous$$arg-1$call-fire$fun-getId$class-Repository()
     public final java.lang.String String$arg-1$call-EQEQ$$this$call-not$cond$if$fun-$anonymous$$arg-1$call-fireFlow$fun-loadCourseByMajor$class-Repository()
-com.liflymark.normalschedule.logic.LiveLiterals$TestKt
+    public final java.lang.String String$arg-1$call-EQEQ$$this$call-not$cond$if$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository()
 com.liflymark.normalschedule.logic.Repository$fire2$1
 com.liflymark.normalschedule.logic.Repository$getCourse$1
 com.liflymark.normalschedule.logic.Repository$getCourse$2
 com.liflymark.normalschedule.logic.Repository$getId$1
 com.liflymark.normalschedule.logic.Repository$getScoreDetail$1
+com.liflymark.normalschedule.logic.Repository$loadAllCourse$1
+com.liflymark.normalschedule.logic.Repository$loadBackground2$1
 com.liflymark.normalschedule.logic.Repository$loadCourseByMajor$1
 com.liflymark.normalschedule.logic.Repository$loadCourseByName$1
 com.liflymark.normalschedule.logic.Repository:
@@ -39981,7 +39991,10 @@ com.liflymark.normalschedule.logic.Repository:
     public final androidx.lifecycle.LiveData getId()
     public final boolean getNewUserOrNot()
     public final androidx.lifecycle.LiveData getScoreDetail(java.lang.String,java.lang.String,java.lang.String)
+    public static synthetic kotlinx.coroutines.flow.Flow getSentences$default(com.liflymark.normalschedule.logic.Repository,boolean,int,java.lang.Object)
     public final java.lang.Object insertBackground(com.liflymark.normalschedule.logic.bean.UserBackgroundBean,kotlin.coroutines.Continuation)
+    public final androidx.lifecycle.LiveData loadAllCourse()
+    public final kotlinx.coroutines.flow.Flow loadBackground2()
     public final kotlinx.coroutines.flow.Flow loadCourseByMajor(java.lang.String,java.lang.String)
     public final androidx.lifecycle.LiveData loadCourseByName(java.lang.String)
     public final void saveUserVersion()
@@ -40043,8 +40056,8 @@ com.liflymark.normalschedule.logic.utils.Dialog:
     private static final void getClassDetailDialog$lambda-0(com.afollestad.materialdialogs.MaterialDialog,android.view.View)
 com.liflymark.normalschedule.logic.utils.GetDataUtil:
     public final java.lang.String getNowDateTime()
-    public final java.text.SimpleDateFormat getNowTime()
-    public final int getNowWeekNum()
+    public final java.text.SimpleDateFormat getNowSimpleDateFormat()
+    public final java.util.GregorianCalendar getNowTime()
 com.liflymark.normalschedule.logic.utils.LiveLiterals$ConvertKt:
     private static androidx.compose.runtime.State State$Int$arg-0$call-minus$arg-1$call-$init$$val-a$branch$when$body$loop$body$loop$fun-courseBeanToOneByOne$class-Convert
     private static androidx.compose.runtime.State State$Int$arg-0$call-minus$arg-2$call-$init$$val-a$branch$when$body$loop$body$loop$fun-courseBeanToOneByOne$class-Convert
@@ -40099,40 +40112,8 @@ com.liflymark.normalschedule.logic.utils.LiveLiterals$DialogKt:
     public final java.lang.String String$4$str$val-courseStartToEnd$fun-getClassDetailDialog$class-Dialog()
     public final java.lang.String String$else$when$arg-0$call-setText-2$fun-getClassDetailDialog$class-Dialog()
 com.liflymark.normalschedule.logic.utils.LiveLiterals$GetDataUtilKt:
-    private static androidx.compose.runtime.State State$Int$branch$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$Int$branch-1$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$Int$branch-2$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$Int$branch-3$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$Int$branch-4$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$Int$branch-5$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$Int$branch-6$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$Int$else$when$fun-getNowWeekNum$class-GetDataUtil
     private static androidx.compose.runtime.State State$String$arg-0$call-$init$$val-sdf$fun-getNowDateTime$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-0$call-$init$$val-sdf$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-1$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-2$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-3$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-4$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-5$when$fun-getNowWeekNum$class-GetDataUtil
-    private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-6$when$fun-getNowWeekNum$class-GetDataUtil
-    public final int Int$branch$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final int Int$branch-1$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final int Int$branch-2$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final int Int$branch-3$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final int Int$branch-4$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final int Int$branch-5$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final int Int$branch-6$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final int Int$else$when$fun-getNowWeekNum$class-GetDataUtil()
     public final java.lang.String String$arg-0$call-$init$$val-sdf$fun-getNowDateTime$class-GetDataUtil()
-    public final java.lang.String String$arg-0$call-$init$$val-sdf$fun-getNowWeekNum$class-GetDataUtil()
-    public final java.lang.String String$arg-1$call-EQEQ$cond$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final java.lang.String String$arg-1$call-EQEQ$cond-1$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final java.lang.String String$arg-1$call-EQEQ$cond-2$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final java.lang.String String$arg-1$call-EQEQ$cond-3$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final java.lang.String String$arg-1$call-EQEQ$cond-4$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final java.lang.String String$arg-1$call-EQEQ$cond-5$when$fun-getNowWeekNum$class-GetDataUtil()
-    public final java.lang.String String$arg-1$call-EQEQ$cond-6$when$fun-getNowWeekNum$class-GetDataUtil()
 com.liflymark.normalschedule.logic.utils.appwidget.AppwidgetTodayProvider
 com.liflymark.normalschedule.logic.utils.appwidget.LiveLiterals$AppwidgetTodayProviderKt
 com.liflymark.normalschedule.logic.utils.betterrecyclerview.BetterRecyclerView:
@@ -40143,6 +40124,7 @@ com.liflymark.normalschedule.logic.utils.betterrecyclerview.EndlessRecyclerOnScr
 com.liflymark.normalschedule.logic.utils.betterrecyclerview.ExtKt
 com.liflymark.normalschedule.logic.utils.betterrecyclerview.LiveLiterals$EndlessRecyclerOnScrollListenerKt
 com.liflymark.normalschedule.logic.utils.betterrecyclerview.LiveLiterals$ExtKt
+com.liflymark.normalschedule.ui.LiveLiterals$TestKt
 com.liflymark.normalschedule.ui.TestKt
 com.liflymark.normalschedule.ui.about.AboutActivity:
     public void _$_clearFindViewByIdCache()
@@ -40212,7 +40194,7 @@ com.liflymark.normalschedule.ui.import_show_score.ShowScoreViewModel
 com.liflymark.normalschedule.ui.lib_order.LibOrderActivity:
     public void _$_clearFindViewByIdCache()
 com.liflymark.normalschedule.ui.score_detail.ComposableSingletons$LoginToScoreActivityKt:
-    public final kotlin.jvm.functions.Function2 getLambda-8$app_debug()
+    public final kotlin.jvm.functions.Function2 getLambda-9$app_debug()
 com.liflymark.normalschedule.ui.score_detail.ComposableSingletons$ShowDetailScoreActivityKt$lambda-1$1
 com.liflymark.normalschedule.ui.score_detail.ComposableSingletons$ShowDetailScoreActivityKt
 com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity:
@@ -40237,44 +40219,23 @@ com.liflymark.normalschedule.ui.show_timetable.ComposableSingletons$ShowTimetabl
 com.liflymark.normalschedule.ui.show_timetable.DrawerSideUIKt$Test$1
 com.liflymark.normalschedule.ui.show_timetable.DrawerSideUIKt:
     public static final void Test(androidx.compose.runtime.Composer,int)
-com.liflymark.normalschedule.ui.show_timetable.ExfunKt:
-    public static final boolean isSelected(int,int,int)
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$DrawerSideUIKt:
     private static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-1$call-TestTheme$fun-Test
     private static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-1$call-TestTheme$fun-Test
     public final int Int$$$this$call-$get-dp$$arg-0$call-height$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-1$call-TestTheme$fun-Test()
     public final java.lang.String String$arg-0$call-Text$fun-$anonymous$$arg-1$call-TestTheme$fun-Test()
-com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ExfunKt:
-    private static boolean Boolean$fun-isSelected
-    private static int Int$arg-1$call-greaterOrEqual$branch$cond$if$fun-isSelected
-    private static int Int$class-a
-    private static androidx.compose.runtime.State State$Boolean$branch$if$fun-isSelected
-    private static androidx.compose.runtime.State State$Boolean$fun-isSelected
-    private static androidx.compose.runtime.State State$Float$fun-performFling$class-a
-    private static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-EQEQ$branch$cond$cond$if$fun-isSelected
-    private static androidx.compose.runtime.State State$Int$arg-1$call-greaterOrEqual$branch$cond$if$fun-isSelected
-    private static androidx.compose.runtime.State State$Int$class-a
-    private static androidx.compose.runtime.State State$String$arg-0$call-d$fun-performFling$class-a
-    public final boolean Boolean$branch$if$fun-isSelected()
-    public final boolean Boolean$fun-isSelected()
-    public final float Float$fun-performFling$class-a()
-    public final int Int$arg-0$call-plus$arg-0$call-EQEQ$branch$cond$cond$if$fun-isSelected()
-    public final int Int$arg-1$call-greaterOrEqual$branch$cond$if$fun-isSelected()
-    public final int Int$class-a()
-    public final java.lang.String String$arg-0$call-d$fun-performFling$class-a()
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableViewModelKt:
+    private static boolean Boolean$param-force$fun-fetchSentence$class-ShowTimetableViewModel
     private static int Int$arg-1$call-EQEQ$cond$if$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static int Int$arg-1$call-EQEQ$cond$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static int Int$branch$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static int Int$val-type$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Boolean$arg-0$call-setValue$fun-savedClass$class-ShowTimetableViewModel
+    private static androidx.compose.runtime.State State$Boolean$param-force$fun-fetchSentence$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-0$call-minus$arg-0$call-get$arg-0$call-minus$arg-0$call-EQEQ$branch$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-0$call-minus$arg-0$call-get$arg-0$call-minus$arg-0$call-EQEQ$branch$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-add$branch$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-get$$this$call-minus$arg-0$call-EQEQ$cond$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-get$$this$call-minus$arg-0$call-EQEQ$cond$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-0$call-plus$else$when$arg-0$call-setValue$fun-deleteAllCourseBean$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-0$call-plus$else$when$fun-updateCourse$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-0$call-rem$arg-0$call-EQEQ$cond$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$branch$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$branch$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
@@ -40282,49 +40243,29 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableViewMod
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$if$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-1$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-2$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-3$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-4$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-5$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-6$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$branch$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$branch-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$else$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$Int$val-type$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$0$str$arg-0$call-plus$set-courseTimeFormat$branch$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$branch$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$branch-1$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$branch-2$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$branch-3$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$branch-4$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$branch-5$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$branch-6$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$0$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$1$str$arg-0$call-plus$set-courseTimeFormat$body$loop$branch-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$1$str$branch$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$1$str$else$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$2$str$arg-0$call-plus$set-courseTimeFormat$branch$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$2$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$4$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$arg-0$call-d$else$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$arg-0$call-plus$set-courseTimeFormat$branch-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$arg-1$call-d$else$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
-    private static androidx.compose.runtime.State State$String$else$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     private static androidx.compose.runtime.State State$String$val-courseTimeFormat$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public final boolean Boolean$arg-0$call-setValue$fun-savedClass$class-ShowTimetableViewModel()
+    public final boolean Boolean$param-force$fun-fetchSentence$class-ShowTimetableViewModel()
     public final int Int$arg-0$call-minus$arg-0$call-get$arg-0$call-minus$arg-0$call-EQEQ$branch$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$arg-0$call-minus$arg-0$call-get$arg-0$call-minus$arg-0$call-EQEQ$branch$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$arg-0$call-plus$arg-0$call-add$branch$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel()
     public final int Int$arg-0$call-plus$arg-0$call-get$$this$call-minus$arg-0$call-EQEQ$cond$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$arg-0$call-plus$arg-0$call-get$$this$call-minus$arg-0$call-EQEQ$cond$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
-    public final int Int$arg-0$call-plus$else$when$arg-0$call-setValue$fun-deleteAllCourseBean$class-ShowTimetableViewModel()
-    public final int Int$arg-0$call-plus$else$when$fun-updateCourse$class-ShowTimetableViewModel()
     public final int Int$arg-0$call-rem$arg-0$call-EQEQ$cond$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$arg-1$call-EQEQ$branch$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$arg-1$call-EQEQ$branch$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
@@ -40332,40 +40273,22 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableViewMod
     public final int Int$arg-1$call-EQEQ$cond$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$arg-1$call-EQEQ$cond$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$arg-1$call-EQEQ$cond$if$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
-    public final int Int$arg-1$call-EQEQ$cond$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
     public final int Int$arg-1$call-EQEQ$cond$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
-    public final int Int$arg-1$call-EQEQ$cond-1$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
     public final int Int$arg-1$call-EQEQ$cond-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
-    public final int Int$arg-1$call-EQEQ$cond-2$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
     public final int Int$arg-1$call-EQEQ$cond-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
-    public final int Int$arg-1$call-EQEQ$cond-3$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final int Int$arg-1$call-EQEQ$cond-4$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final int Int$arg-1$call-EQEQ$cond-5$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final int Int$arg-1$call-EQEQ$cond-6$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
     public final int Int$branch$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$branch-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$else$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final int Int$val-type$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final java.lang.String String$0$str$arg-0$call-plus$set-courseTimeFormat$branch$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$branch$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$branch-1$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$branch-2$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$branch-3$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$branch-4$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$branch-5$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$branch-6$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$0$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel()
     public final java.lang.String String$1$str$arg-0$call-plus$set-courseTimeFormat$body$loop$branch-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final java.lang.String String$1$str$branch$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final java.lang.String String$1$str$else$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final java.lang.String String$2$str$arg-0$call-plus$set-courseTimeFormat$branch$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
-    public final java.lang.String String$2$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel()
-    public final java.lang.String String$4$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel()
     public final java.lang.String String$arg-0$call-d$else$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel()
     public final java.lang.String String$arg-0$call-plus$set-courseTimeFormat$branch-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel()
     public final java.lang.String String$arg-1$call-EQEQ$cond$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel()
     public final java.lang.String String$arg-1$call-d$else$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel()
-    public final java.lang.String String$else$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel()
     public final java.lang.String String$val-courseTimeFormat$fun-getWeekNumFormat$class-ShowTimetableViewModel()
 com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2:
     public void _$_clearFindViewByIdCache()
@@ -40373,36 +40296,18 @@ com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2:
 com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2Kt$DefaultPreview$1
 com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2Kt:
     public static final void DefaultPreview(androidx.compose.runtime.Composer,int)
-com.liflymark.normalschedule.ui.show_timetable.ShowTimetableViewModel$getClassDetailDialog$courseStartToEnd$1
 com.liflymark.normalschedule.ui.show_timetable.ShowTimetableViewModel:
-    public final void deleteAllCourseBean()
-    public final kotlinx.coroutines.flow.Flow getBackgroundUriStringLiveData2()
-    public final com.afollestad.materialdialogs.MaterialDialog getClassDetailDialog(android.content.Context,com.liflymark.normalschedule.logic.bean.CourseBean)
-    public final androidx.lifecycle.LiveData getDeleteCourseLiveData()
-    public final boolean getNewUserOrNot()
-    public final androidx.lifecycle.LiveData getSaveClassOrNot()
-    public final java.util.Map getSavedAccount()
-    public final java.lang.String getTEXTVIEW_WIDTH()
-    public final androidx.lifecycle.LiveData getUpdateCourseLiveDataVal()
+    public static synthetic void fetchSentence$default(com.liflymark.normalschedule.ui.show_timetable.ShowTimetableViewModel,boolean,int,java.lang.Object)
     private final java.lang.String getWeekNumFormat(java.util.List)
-    public final boolean isAccountSaved()
-    public final java.lang.Object loadCourseByNameAndStart(java.lang.String,int,int,kotlin.coroutines.Continuation)
-    public final void saveAccount(java.lang.String,java.lang.String)
-    public final void saveTextWidth(float)
-    public final void saveUserVersion()
-    public final void savedClass()
-    public final void updateCourse()
     private final java.util.List whichIs1(java.lang.String)
-com.liflymark.normalschedule.ui.show_timetable.a
 com.liflymark.normalschedule.ui.show_timetable.ui.theme.ColorKt
 com.liflymark.normalschedule.ui.show_timetable.ui.theme.ShapeKt
 com.liflymark.normalschedule.ui.show_timetable.ui.theme.ThemeKt$NormalScheduleTheme$1
 com.liflymark.normalschedule.ui.show_timetable.ui.theme.ThemeKt
 com.liflymark.normalschedule.ui.show_timetable.ui.theme.TypeKt
-com.liflymark.normalschedule.ui.sign_in_compose.LiveLiterals$SignInUIKt
-com.liflymark.normalschedule.ui.sign_in_compose.SignInUIKt$InputText$1
-com.liflymark.normalschedule.ui.sign_in_compose.SignInUIKt$MyPreViesw$1
-com.liflymark.normalschedule.ui.sign_in_compose.SignInUIKt
+com.liflymark.normalschedule.ui.sign_in_compose.SignInUIKt$MyPreView$1
+com.liflymark.normalschedule.ui.sign_in_compose.SignInUIKt:
+    public static final void MyPreView(androidx.compose.runtime.Composer,int)
 com.manidesto.scrollingdemo.ui.commons.FakeAdapter$ViewHolder
 com.manidesto.scrollingdemo.ui.commons.FakeAdapter
 com.manidesto.scrollingdemo.ui.commons.LiveLiterals$FakeAdapterKt
@@ -57743,6 +57648,8 @@ androidx.compose.material.TextFieldImplKt$TextFieldImpl$1$WhenMappings
 androidx.compose.material.TextFieldTransitionScope$WhenMappings
 androidx.compose.material.icons.filled.AddKt:
     public static void <clinit>()
+androidx.compose.material.icons.filled.ArrowBackKt:
+    public static void <clinit>()
 androidx.compose.material.icons.filled.ExpandLessKt:
     public static void <clinit>()
 androidx.compose.material.icons.filled.ExpandMoreKt:
@@ -61662,24 +61569,24 @@ com.liflymark.normalschedule.logic.LiveLiterals$RepositoryKt:
     public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-$anonymous$$arg-1$call-fireFlow$fun-loadCourseByNameAndStart$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-$anonymous$$arg-2$call-liveData$fun-deleteAllCourseBean$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-updateBackground$class-Repository
-    public static androidx.compose.runtime.State State$String$arg-0$call-d$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-d$try$fun-$anonymous$$arg-2$call-liveData$fun-getId2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-d$try$fun-$anonymous$$arg-2$call-liveData$fun-loadBackground$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-d$try$fun-loadAllCourse3$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-e$catch$body$loop$fun-insertCourse2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-e$catch$fun-deleteAllCourseBean2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-emit$fun-$anonymous$$arg-2$call-liveData$fun-deleteAllCourseBean$class-Repository
-    public static androidx.compose.runtime.State State$String$arg-0$call-parse$arg-0$call-emit$catch$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-$init$$arg-0$call-emit$branch$if$try$fun-$anonymous$$arg-0$call-flow$fun-getSentences$class-Repository
-    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$$this$call-not$cond$if$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$$this$call-not$cond$if$try$fun-$anonymous$$arg-2$call-liveData$fun-loadBackground$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$if$fun-$anonymous$$arg-0$call-flow$$$this$call-catch$fun-loadCourseByMajor2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-d$fun-$anonymous$$arg-2$call-liveData$fun-deleteAllCourseBean$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-d$try$fun-$anonymous$$arg-2$call-liveData$fun-getId2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-d$try$fun-loadAllCourse3$class-Repository
     public static java.lang.String String$arg-0$call-$init$$arg-0$call-failure$else$if$fun-$anonymous$$arg-1$call-fire$fun-getId$class-Repository
+    public static java.lang.String String$arg-0$call-d$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
+    public static java.lang.String String$arg-0$call-parse$arg-0$call-emit$catch$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
     public static java.lang.String String$arg-1$call-EQEQ$$this$call-not$cond$if$fun-$anonymous$$arg-1$call-fire$fun-getId$class-Repository
     public static java.lang.String String$arg-1$call-EQEQ$$this$call-not$cond$if$fun-$anonymous$$arg-1$call-fireFlow$fun-loadCourseByMajor$class-Repository
+    public static java.lang.String String$arg-1$call-EQEQ$$this$call-not$cond$if$try$fun-$anonymous$$arg-0$call-flow$fun-loadBackground2$class-Repository
 com.liflymark.normalschedule.logic.Repository:
     public static final int $stable
 com.liflymark.normalschedule.logic.bean.LiveLiterals$CourseBeanKt:
@@ -61816,8 +61723,11 @@ com.liflymark.normalschedule.logic.dao.CourseOriginalDao_Impl:
     public final androidx.room.EntityDeletionOrUpdateAdapter __deletionAdapterOfCourseBean
     public final androidx.room.EntityDeletionOrUpdateAdapter __updateAdapterOfCourseBean
 com.liflymark.normalschedule.logic.dao.LiveLiterals$AccountDaoKt:
+    public static boolean Boolean$arg-1$call-putBoolean$fun-$anonymous$$arg-1$call-with-2$fun-clearSharePreferences$class-AccountDao
     public static int Int$arg-1$call-less$fun-getNewUserOrNot$class-AccountDao
     public static int Int$arg-1$call-putInt$fun-$anonymous$$arg-1$call-edit$fun-newUserShowed$class-AccountDao
+    public static androidx.compose.runtime.State State$Boolean$arg-1$call-putBoolean$fun-$anonymous$$arg-1$call-with-1$fun-saveAccount$class-AccountDao
+    public static androidx.compose.runtime.State State$Boolean$arg-1$call-putBoolean$fun-$anonymous$$arg-1$call-with-2$fun-clearSharePreferences$class-AccountDao
     public static androidx.compose.runtime.State State$Int$class-AccountDao
     public static androidx.compose.runtime.State State$String$$$this$call-to$0$vararg$arg-0$call-mapOf$fun-getSavedAccount$class-AccountDao
     public static androidx.compose.runtime.State State$String$$$this$call-to$1$vararg$arg-0$call-mapOf$fun-getSavedAccount$class-AccountDao
@@ -61825,6 +61735,8 @@ com.liflymark.normalschedule.logic.dao.LiveLiterals$AccountDaoKt:
     public static androidx.compose.runtime.State State$String$arg-0$call-getSharedPreferences$fun-normalSharePreferences$class-AccountDao
     public static androidx.compose.runtime.State State$String$arg-0$call-getString$val-password$fun-getSavedAccount$class-AccountDao
     public static androidx.compose.runtime.State State$String$arg-0$call-getString$val-user$fun-getSavedAccount$class-AccountDao
+    public static androidx.compose.runtime.State State$String$arg-0$call-putBoolean$fun-$anonymous$$arg-1$call-with-1$fun-saveAccount$class-AccountDao
+    public static androidx.compose.runtime.State State$String$arg-0$call-putBoolean$fun-$anonymous$$arg-1$call-with-2$fun-clearSharePreferences$class-AccountDao
     public static androidx.compose.runtime.State State$String$arg-0$call-putString$fun-$anonymous$$arg-1$call-with$fun-saveAccount$class-AccountDao
     public static androidx.compose.runtime.State State$String$arg-0$call-putString$fun-$anonymous$$arg-1$call-with-1$fun-saveAccount$class-AccountDao
     public static androidx.compose.runtime.State State$String$arg-1$call-getString$val-password$fun-getSavedAccount$class-AccountDao
@@ -62307,35 +62219,28 @@ com.liflymark.normalschedule.logic.utils.LiveLiterals$DialogKt:
     public static java.lang.String String$4$str$val-courseStartToEnd$fun-getClassDetailDialog$class-Dialog
     public static java.lang.String String$else$when$arg-0$call-setText-2$fun-getClassDetailDialog$class-Dialog
 com.liflymark.normalschedule.logic.utils.LiveLiterals$GetDataUtilKt:
-    public static int Int$arg-1$call-less$cond$if-1$fun-dateMinusDate$class-GetDataUtil
-    public static int Int$branch$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$branch-1$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$branch-2$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$branch-3$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$branch-4$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$branch-5$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$branch-6$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$else$when$fun-getNowWeekNum$class-GetDataUtil
-    public static int Int$set-result$branch$if-1$fun-dateMinusDate$class-GetDataUtil
+    public static int Int$arg-1$call-greaterOrEqual$fun-startSchool$class-GetDataUtil
+    public static int Int$arg-1$call-less$cond$if$fun-whichWeekNow$class-GetDataUtil
+    public static int Int$branch$if$fun-whichWeekNow$class-GetDataUtil
     public static int Int$val-result$fun-dateMinusDate$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$arg-0$call-div$$this$call-plus$fun-whichWeekNow$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$arg-0$call-get$$this$call-minus$set-result$branch$if$fun-dateMinusDate$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-0$call-EQEQ$cond$if$fun-dateMinusDate$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-0$call-minus$set-result$branch$if$fun-dateMinusDate$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-1$call-EQEQ$cond$if$fun-dateMinusDate$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$fun-whichWeekNow$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$arg-1$call-less$cond$if-1$fun-dateMinusDate$class-GetDataUtil
-    public static androidx.compose.runtime.State State$Int$set-result$branch$if-1$fun-dateMinusDate$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-0$call-div$fun-whichWeekNow$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-greaterOrEqual$fun-startSchool$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-less$cond$if$fun-whichWeekNow$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch$if$fun-whichWeekNow$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch$if$val-firstAllYearDay$else$if$set-result$fun-dateMinusDate$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch$if$val-secondAllYearDay$else$if$set-result$fun-dateMinusDate$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch$when$fun-getNowWeekNum$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch-1$when$fun-getNowWeekNum$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch-2$when$fun-getNowWeekNum$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch-3$when$fun-getNowWeekNum$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch-4$when$fun-getNowWeekNum$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch-5$when$fun-getNowWeekNum$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$branch-6$when$fun-getNowWeekNum$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$else$if$val-firstAllYearDay$else$if$set-result$fun-dateMinusDate$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$else$if$val-secondAllYearDay$else$if$set-result$fun-dateMinusDate$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$else$when$fun-getNowWeekNum$class-GetDataUtil
     public static androidx.compose.runtime.State State$Int$val-result$fun-dateMinusDate$class-GetDataUtil
     public static java.lang.String String$arg-0$call-$init$$val-sdf$fun-getNowDateTime$class-GetDataUtil
-    public static java.lang.String String$arg-0$call-$init$$val-sdf$fun-getNowWeekNum$class-GetDataUtil
-    public static java.lang.String String$arg-1$call-EQEQ$cond$when$fun-getNowWeekNum$class-GetDataUtil
-    public static java.lang.String String$arg-1$call-EQEQ$cond-1$when$fun-getNowWeekNum$class-GetDataUtil
-    public static java.lang.String String$arg-1$call-EQEQ$cond-2$when$fun-getNowWeekNum$class-GetDataUtil
-    public static java.lang.String String$arg-1$call-EQEQ$cond-3$when$fun-getNowWeekNum$class-GetDataUtil
-    public static java.lang.String String$arg-1$call-EQEQ$cond-4$when$fun-getNowWeekNum$class-GetDataUtil
-    public static java.lang.String String$arg-1$call-EQEQ$cond-5$when$fun-getNowWeekNum$class-GetDataUtil
-    public static java.lang.String String$arg-1$call-EQEQ$cond-6$when$fun-getNowWeekNum$class-GetDataUtil
 com.liflymark.normalschedule.logic.utils.betterrecyclerview.BetterRecyclerView:
     public static final int $stable
 com.liflymark.normalschedule.logic.utils.betterrecyclerview.LiveLiterals$BetterRecyclerViewKt:
@@ -62584,7 +62489,6 @@ com.liflymark.normalschedule.ui.class_course.LiveLiterals$ClassCourseActivityKt:
     public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-0$call-minus$$this$call-times$val-spacerHeight$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass2
     public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-0$call-plus$$this$call-plus$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass3
     public static androidx.compose.runtime.State State$Int$arg-0$call-getDayOfDate$0$str$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass2
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$fun-getNowWeek
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$1$str$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass2
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$2$str$arg-1$call-d$fun-SingleClass3
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-getDayOfDate$2$str$val-tmp0_text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass2
@@ -62835,12 +62739,19 @@ com.liflymark.normalschedule.ui.score_detail.LiveLiterals$LoginToScoreActivityKt
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-Input
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-2$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-DefaultPreview3
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-2$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-Input
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-3$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-Input
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$val-tmp0_modifier$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-DefaultPreview3
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$val-tmp0_modifier$fun-$anonymous$$arg-3$call-Column$fun-Input
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$val-tmp1_elevation$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-DefaultPreview3
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$val-tmp1_elevation$fun-$anonymous$$arg-3$call-Column$fun-Input
+    public static androidx.compose.runtime.State State$Int$arg-0$call-div$arg-0$call-Offset$val-tmp1_center$fun-$anonymous$$arg-1$call-Canvas$fun-Input
+    public static androidx.compose.runtime.State State$Int$arg-0$call-div$arg-1$call-Offset$val-tmp1_center$fun-$anonymous$$arg-1$call-Canvas$fun-Input
+    public static androidx.compose.runtime.State State$Int$arg-0$call-div$val-tmp2_radius$fun-$anonymous$$arg-1$call-Canvas$fun-Input
     public static androidx.compose.runtime.State State$Int$class-LoginToScoreActivity
+    public static androidx.compose.runtime.State State$Long$arg-0$call-Color$arg-0$call-setSystemBarsColor$fun-$anonymous$$arg-0$call-SideEffect$fun-UiControl
+    public static androidx.compose.runtime.State State$Long$arg-0$call-Color$val-tmp0_color$fun-$anonymous$$arg-1$call-Canvas$fun-Input
     public static androidx.compose.runtime.State State$String$arg-0$call-$set-id$$else$if-1$fun-$anonymous$$arg-2$call-launch$fun-$anonymous$$arg-1$call-LaunchedEffect$fun-Input
+    public static androidx.compose.runtime.State State$String$arg-0$call-NormalTopBar$fun-$anonymous$$arg-2$call-Scaffold$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-$anonymous$$arg-1$call-setContent$fun-onCreate$class-LoginToScoreActivity
     public static androidx.compose.runtime.State State$String$arg-0$call-OutlinedTextField$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-DefaultPreview3
     public static androidx.compose.runtime.State State$String$arg-0$call-OutlinedTextField-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-DefaultPreview3
     public static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-DefaultPreview3
@@ -62924,7 +62835,6 @@ com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivityKt$Input$1:
 com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivityKt:
     public static void <clinit>()
 com.liflymark.normalschedule.ui.score_detail.LoginToScoreViewModel:
-    public static final int $stable
     public java.lang.String password
     public java.lang.String user
 com.liflymark.normalschedule.ui.score_detail.ShowDetailScoreActivity:
@@ -62957,16 +62867,21 @@ com.liflymark.normalschedule.ui.show_timetable.DrawerSideUIKt:
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$DrawerSideUIKt:
     public static boolean Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expand$delegate$fun-OneSentence
     public static int Int$$$this$call-$get-dp$$arg-0$call-height$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-1$call-TestTheme$fun-Test
+    public static int Int$arg-0$call-$set-clickTimes$$branch$if$fun-$anonymous$$arg-3$call-clickable$$$this$call-wrapContentHeight$arg-0$call-Box$fun-OneSentence
     public static int Int$arg-0$call-get$else$when$val-tmp1_safe_receiver$1$str$val-tmp2_text$fun-$anonymous$$arg-4$call-AnimatedVisibility$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static int Int$arg-0$call-get$else$when$val-tmp4_safe_receiver$0$str$val-tmp5_text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
+    public static int Int$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-clickTimes$delegate$fun-OneSentence
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-fetchSentence$branch$if$fun-$anonymous$$arg-3$call-clickable$$$this$call-wrapContentHeight$arg-0$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expand$delegate$fun-OneSentence
     public static androidx.compose.runtime.State State$Double$$$this$call-$get-sp$$val-tmp6_fontSize$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Float$arg-0$call-fillMaxWidth$arg-0$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$$$this$call-padding$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$$$this$call-padding$$$this$call-background$arg-0$call-Spacer-1$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-2$call-Icon$fun-$anonymous$$arg-3$call-Row$fun-NavButton
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-2$call-Icon$fun-$anonymous$$arg-3$call-Row$fun-NavButton-1
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$$$this$call-background$arg-0$call-Spacer-1$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$$$this$call-clickable$arg-0$call-Row$fun-NavButton
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$$$this$call-clickable$arg-0$call-Row$fun-NavButton-1
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$val-tmp1_modifier$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
@@ -62980,8 +62895,12 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$DrawerSideUIKt:
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp0_fontSize$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp3_fontSize$fun-$anonymous$$arg-4$call-AnimatedVisibility$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp8_fontSize$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
+    public static androidx.compose.runtime.State State$Int$arg-0$call-$set-clickTimes$$branch$if$fun-$anonymous$$arg-3$call-clickable$$$this$call-wrapContentHeight$arg-0$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Int$arg-0$call-get$else$when$val-tmp1_safe_receiver$1$str$val-tmp2_text$fun-$anonymous$$arg-4$call-AnimatedVisibility$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Int$arg-0$call-get$else$when$val-tmp4_safe_receiver$0$str$val-tmp5_text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
+    public static androidx.compose.runtime.State State$Int$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-clickTimes$delegate$fun-OneSentence
+    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-$set-clickTimes$$fun-$anonymous$$arg-3$call-clickable$$$this$call-wrapContentHeight$arg-0$call-Box$fun-OneSentence
+    public static androidx.compose.runtime.State State$Int$arg-1$call-greater$cond$if$fun-$anonymous$$arg-3$call-clickable$$$this$call-wrapContentHeight$arg-0$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Int$arg-13$call-Text-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Long$arg-0$call-Color$0$vararg$arg-0$call-listOf$arg-0$call-verticalGradient$arg-0$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$Long$arg-0$call-Color$1$vararg$arg-0$call-listOf$arg-0$call-verticalGradient$arg-0$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
@@ -62990,6 +62909,7 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$DrawerSideUIKt:
     public static androidx.compose.runtime.State State$String$0$str$val-tmp2_text$fun-$anonymous$$arg-4$call-AnimatedVisibility$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$String$arg-0$call-Text-2$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Box$fun-OneSentence
+    public static androidx.compose.runtime.State State$String$arg-1$call-success$$this$call-show$branch$if$fun-$anonymous$$arg-3$call-clickable$$$this$call-wrapContentHeight$arg-0$call-Box$fun-OneSentence
     public static androidx.compose.runtime.State State$String$arg-3$call-NavButton$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static androidx.compose.runtime.State State$String$arg-3$call-NavButton-1$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static androidx.compose.runtime.State State$String$arg-3$call-NavButton-2$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
@@ -62997,61 +62917,40 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$DrawerSideUIKt:
     public static androidx.compose.runtime.State State$String$arg-3$call-NavButton-4$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static java.lang.String String$arg-0$call-Text$fun-$anonymous$$arg-1$call-TestTheme$fun-Test
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ExfunKt:
-    public static boolean Boolean$branch$if$fun-isSelected
-    public static float Float$fun-performFling$class-a
-    public static int Int$arg-0$call-plus$arg-0$call-EQEQ$branch$cond$cond$if$fun-isSelected
+    public static boolean Boolean$fun-isSelected
     public static int Int$arg-1$call-EQEQ$cond$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$branch-1$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$branch-2$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$branch-3$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$branch-4$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$branch-5$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$branch-6$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$branch-7$when$fun-getDayOfDate
+    public static androidx.compose.runtime.State State$Boolean$branch$if$fun-isSelected
+    public static androidx.compose.runtime.State State$Boolean$fun-isSelected
     public static androidx.compose.runtime.State State$Int$arg-0$call-minus$$this$call-plus$arg-1$call-add$else$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-0$call-minus$arg-0$call-get$$this$call-add$branch$if$body$loop$fun-getNeededClassList
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$$this$call-toString$branch$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-0$call-repeat$fun-getNeededClassList
     public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch-1$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch-2$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch-3$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch-4$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch-5$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch-6$when$fun-getDayOfDate
-    public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$branch-7$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-0$call-times$arg-0$call-plus$arg-1$call-add$else$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$when$fun-getStartTime
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-1$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-1$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-1$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-1$when$fun-getStartTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-10$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-10$when$fun-getStartTime
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-2$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-2$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-2$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-2$when$fun-getStartTime
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-3$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-3$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-3$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-3$when$fun-getStartTime
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-4$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-4$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-4$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-4$when$fun-getStartTime
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-5$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-5$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-5$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-5$when$fun-getStartTime
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-6$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-6$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-6$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-6$when$fun-getStartTime
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-7$when$fun-getDayOfDate
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-7$when$fun-getEndTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-7$when$fun-getStartTime
     public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-8$when$fun-getEndTime
@@ -63091,7 +62990,6 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ExfunKt:
     public static androidx.compose.runtime.State State$String$else$when$fun-getDayOfWeek
     public static androidx.compose.runtime.State State$String$else$when$fun-getEndTime
     public static androidx.compose.runtime.State State$String$else$when$fun-getStartTime
-    public static java.lang.String String$arg-0$call-d$fun-performFling$class-a
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableActivity2Kt:
     public static boolean Boolean$arg-0$call-fitsSystemWindows$$this$call-statusBarDarkFont$$this$call-init$fun-onCreate$class-ShowTimetableActivity2
     public static boolean Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-showDetailDialog$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
@@ -63101,7 +62999,8 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableActivit
     public static int Int$arg-0$call-get$arg-0$call-minus$$this$call-times$val-spacerHeight$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static int Int$arg-0$call-getDayOfDate$0$str$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static int Int$arg-1$call-less$cond$if$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
-    public static int Int$else$if$arg-0$call-$set-userNowWeek$$fun-$anonymous$$arg-0$call-collectLatest$fun-$anonymous$$arg-1$call-LaunchedEffect$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-9$call-ModalDrawer$fun-Drawer
+    public static int Int$branch$if$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-userNowWeek$delegate$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-9$call-ModalDrawer$fun-Drawer
+    public static int Int$else$if$arg-0$call-animateScrollToPage$fun-$anonymous$$arg-2$call-launch$fun-$anonymous$$arg-3$call-clickable$$$this$call-fillMaxHeight$$$this$call-onGloballyPositioned$arg-0$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-3$call-clickable$arg-1$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
     public static androidx.compose.runtime.State State$Boolean$arg-0$call-fitsSystemWindows$$this$call-statusBarDarkFont$$this$call-init$fun-onCreate$class-ShowTimetableActivity2
     public static androidx.compose.runtime.State State$Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-showDetailDialog$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
@@ -63118,6 +63017,7 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableActivit
     public static androidx.compose.runtime.State State$Float$arg-0$call-weight$arg-0$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Float$arg-0$call-weight$arg-0$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Float$arg-1$call-spring$arg-2$call-defaultPagerFlingConfig$arg-5$call-HorizontalPager$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-9$call-ModalDrawer$fun-Drawer
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-RoundedCornerShape$val-tmp0_shape$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Column$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer$branch$if$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
@@ -63131,10 +63031,14 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableActivit
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$arg-2$call-$init$$arg-0$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$arg-3$call-Text$branch$if-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$arg-3$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp1_fontSize$branch$if$fun-$anonymous$$arg-6$call-Surface$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp1_fontSize$branch-1$if-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp2_fontSize$arg-0$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
-    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp2_fontSize$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
-    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp3_lineHeight$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp2_lineHeight$branch$if$fun-$anonymous$$arg-6$call-Surface$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp3_fontSize$branch$if-2$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp5_fontSize$arg-0$call-withStyle-1$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp5_fontSize$else$if$fun-$anonymous$$arg-6$call-Surface$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp6_lineHeight$else$if$fun-$anonymous$$arg-6$call-Surface$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$$this$call-times$val-height$fun-SingleClass2
     public static androidx.compose.runtime.State State$Int$arg-0$call-$init$$$$this$call-toMutableList$val-nowJieShu$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-0$call-get$$this$call-plus$$this$call-plus$$this$call-plus$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
@@ -63142,15 +63046,14 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableActivit
     public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-0$call-minus$$this$call-times$val-spacerHeight$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-0$call-plus$$this$call-plus$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
     public static androidx.compose.runtime.State State$Int$arg-0$call-getDayOfDate$0$str$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$arg-0$call-animateScrollToPage$fun-$anonymous$$arg-2$call-launch$fun-$anonymous$$arg-3$call-clickable$$$this$call-fillMaxHeight$$$this$call-onGloballyPositioned$arg-0$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$1$str$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$1$str$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
-    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-getDayOfDate$2$str$val-tmp0_text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
-    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-getDayOfWeek$0$str$val-tmp0_text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-getDayOfDate$2$str$val-textText$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-getDayOfWeek$0$str$val-textText$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-getEndTime$arg-0$call-append-1$fun-$anonymous$$arg-1$call-withStyle-1$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-getStartTime$0$str$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle-1$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-isSelected$$this$call-not$cond$if$fun-$anonymous$$arg-6$call-Surface$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-0$call-times$val-height$fun-SingleClass2
-    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$arg-1$call-EQEQ$val-nowWeekOrNot$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$fun-$anonymous$$arg-1$call-$init$$$$this$call-toMutableList$arg-0$call-minusAssign$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$fun-$anonymous$$arg-1$call-$init$$$$this$call-toMutableList$val-nowJieShu$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-0$call-rememberPagerState$val-pagerState$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-9$call-ModalDrawer$fun-Drawer
@@ -63159,23 +63062,25 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableActivit
     public static androidx.compose.runtime.State State$Int$arg-0$call-times$val-spacerHeight$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-1$call-less$cond$if$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$Int$arg-3$call-rememberPagerState$val-pagerState$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-9$call-ModalDrawer$fun-Drawer
+    public static androidx.compose.runtime.State State$Int$branch$if$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-userNowWeek$delegate$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-9$call-ModalDrawer$fun-Drawer
     public static androidx.compose.runtime.State State$Int$class-ShowTimetableActivity2
-    public static androidx.compose.runtime.State State$Int$else$if$arg-0$call-$set-userNowWeek$$fun-$anonymous$$arg-0$call-collectLatest$fun-$anonymous$$arg-1$call-LaunchedEffect$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-9$call-ModalDrawer$fun-Drawer
+    public static androidx.compose.runtime.State State$Int$else$if$arg-0$call-animateScrollToPage$fun-$anonymous$$arg-2$call-launch$fun-$anonymous$$arg-3$call-clickable$$$this$call-fillMaxHeight$$$this$call-onGloballyPositioned$arg-0$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$String$0$str$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$String$0$str$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$String$0$str$val-tmp0_text$branch-1$if-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$String$0$vararg$arg-0$call-split$val-nameList$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
     public static androidx.compose.runtime.State State$String$1$str$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$String$1$str$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle-1$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
-    public static androidx.compose.runtime.State State$String$1$str$val-tmp0_text$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
+    public static androidx.compose.runtime.State State$String$1$str$val-textText$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$String$2$str$arg-0$call-Text$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
+    public static androidx.compose.runtime.State State$String$2$str$val-tmp0_text$branch-1$if-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$String$arg-0$call-Text$branch$if-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
+    public static androidx.compose.runtime.State State$String$arg-0$call-Text$branch$if-2$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-1$call-TestTheme$fun-DefaultPreview
     public static androidx.compose.runtime.State State$String$arg-0$call-d$branch$if$body$loop$fun-$anonymous$$arg-3$call-Column$body$loop$fun-$anonymous$$arg-3$call-Row-1$fun-$anonymous$$arg-3$call-Column$fun-SingleLineClass
     public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-$anonymous$$arg-0$call-onGloballyPositioned$arg-0$call-Column$fun-$anonymous$$arg-0$call-TopAppBar$fun-ScheduleToolBar
     public static androidx.compose.runtime.State State$String$arg-0$call-getBooleanExtra$$this$call-not$cond$if$fun-$anonymous$$arg-2$call-launch$fun-saveAllCourse
     public static androidx.compose.runtime.State State$String$arg-0$call-getStringExtra$val-tmp0_elvis_lhs$val-allCourseListJson$branch$if$fun-$anonymous$$arg-2$call-launch$fun-saveAllCourse
-    public static androidx.compose.runtime.State State$String$arg-0$call-getStringExtra$val-tmp1_elvis_lhs$val-user$branch$if$fun-$anonymous$$arg-2$call-launch$fun-saveAllCourse
-    public static androidx.compose.runtime.State State$String$arg-0$call-getStringExtra$val-tmp2_elvis_lhs$val-password$branch$if$fun-$anonymous$$arg-2$call-launch$fun-saveAllCourse
     public static androidx.compose.runtime.State State$String$arg-0$call-parse$arg-0$call-observeAsState$val-path$fun-BackGroundImage
     public static androidx.compose.runtime.State State$String$arg-0$call-plus$$this$call-plus$$this$call-plus$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
     public static androidx.compose.runtime.State State$String$arg-0$call-plus$arg-0$call-append$fun-$anonymous$$arg-1$call-withStyle$fun-$anonymous$$arg-0$call-buildAnnotatedString$arg-0$call-Text$fun-$anonymous$$arg-6$call-Card$fun-SingleClass2
@@ -63187,37 +63092,25 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableActivit
     public static androidx.compose.runtime.State State$String$arg-1$call-positiveButton$val-dialog$fun-saveAllCourse
     public static androidx.compose.runtime.State State$String$arg-1$call-title$$this$call-message$$this$call-positiveButton$val-dialog$fun-saveAllCourse
     public static androidx.compose.runtime.State State$String$branch$when$val-allCourseListJson$branch$if$fun-$anonymous$$arg-2$call-launch$fun-saveAllCourse
-    public static androidx.compose.runtime.State State$String$branch$when$val-password$branch$if$fun-$anonymous$$arg-2$call-launch$fun-saveAllCourse
-    public static androidx.compose.runtime.State State$String$branch$when$val-user$branch$if$fun-$anonymous$$arg-2$call-launch$fun-saveAllCourse
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableViewModelKt:
-    public static boolean Boolean$arg-0$call-setValue$fun-savedClass$class-ShowTimetableViewModel
     public static int Int$arg-0$call-minus$arg-0$call-get$arg-0$call-minus$arg-0$call-EQEQ$branch$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-0$call-minus$arg-0$call-get$arg-0$call-minus$arg-0$call-EQEQ$branch$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-0$call-plus$arg-0$call-add$branch$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
     public static int Int$arg-0$call-plus$arg-0$call-get$$this$call-minus$arg-0$call-EQEQ$cond$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-0$call-plus$arg-0$call-get$$this$call-minus$arg-0$call-EQEQ$cond$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public static int Int$arg-0$call-plus$else$when$arg-0$call-setValue$fun-deleteAllCourseBean$class-ShowTimetableViewModel
-    public static int Int$arg-0$call-plus$else$when$fun-updateCourse$class-ShowTimetableViewModel
     public static int Int$arg-0$call-rem$arg-0$call-EQEQ$cond$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-1$call-EQEQ$branch$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-1$call-EQEQ$branch$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-1$call-EQEQ$cond$cond$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-1$call-EQEQ$cond$cond-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$arg-1$call-EQEQ$cond$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public static int Int$arg-1$call-EQEQ$cond$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static int Int$arg-1$call-EQEQ$cond-1$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     public static int Int$arg-1$call-EQEQ$cond-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public static int Int$arg-1$call-EQEQ$cond-2$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     public static int Int$arg-1$call-EQEQ$cond-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public static int Int$arg-1$call-EQEQ$cond-3$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static int Int$arg-1$call-EQEQ$cond-4$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static int Int$arg-1$call-EQEQ$cond-5$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static int Int$arg-1$call-EQEQ$cond-6$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     public static int Int$branch-1$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static int Int$else$if$set-type$body$loop$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public static androidx.compose.runtime.State State$Int$arg-0$call-minus$fun-getNowWeek$class-ShowTimetableViewModel
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$else$when$arg-0$call-setValue$fun-loadAllCourse$class-ShowTimetableViewModel
     public static androidx.compose.runtime.State State$Int$arg-0$call-plus$else$when$arg-0$call-setValue$fun-setBackground$class-ShowTimetableViewModel
+    public static androidx.compose.runtime.State State$Int$arg-1$call-greater$fun-startHoliday$class-ShowTimetableViewModel
     public static androidx.compose.runtime.State State$Int$class-ShowTimetableViewModel
     public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-insertOriginalCourse$class-ShowTimetableViewModel
     public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-loadAllCourse$class-ShowTimetableViewModel
@@ -63226,25 +63119,14 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ShowTimetableViewMod
     public static androidx.compose.runtime.State State$String$arg-1$call-d$fun-loadAllCourse$class-ShowTimetableViewModel
     public static androidx.compose.runtime.State State$String$arg-1$call-d$fun-setBackground$class-ShowTimetableViewModel
     public static java.lang.String String$0$str$arg-0$call-plus$set-courseTimeFormat$branch$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$branch$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$branch-1$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$branch-2$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$branch-3$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$branch-4$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$branch-5$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$branch-6$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$0$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel
     public static java.lang.String String$1$str$arg-0$call-plus$set-courseTimeFormat$body$loop$branch-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static java.lang.String String$1$str$branch$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static java.lang.String String$1$str$else$if$arg-0$call-plus$set-courseTimeFormat$branch-1$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static java.lang.String String$2$str$arg-0$call-plus$set-courseTimeFormat$branch$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
-    public static java.lang.String String$2$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel
-    public static java.lang.String String$4$str$fun-$anonymous$$val-courseStartToEnd$fun-getClassDetailDialog$class-ShowTimetableViewModel
     public static java.lang.String String$arg-0$call-d$else$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
     public static java.lang.String String$arg-0$call-plus$set-courseTimeFormat$branch-2$when$fun-getWeekNumFormat$class-ShowTimetableViewModel
     public static java.lang.String String$arg-1$call-EQEQ$cond$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
     public static java.lang.String String$arg-1$call-d$else$when$body$loop$fun-whichIs1$class-ShowTimetableViewModel
-    public static java.lang.String String$else$when$arg-0$call-setText-1$fun-getClassDetailDialog$class-ShowTimetableViewModel
     public static java.lang.String String$val-courseTimeFormat$fun-getWeekNumFormat$class-ShowTimetableViewModel
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ThisActivityDialogKt:
     public static boolean Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-0$call-AlertDialog$branch$if$fun-ClassDetailDialog
@@ -63339,12 +63221,8 @@ com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2Kt$Drawer$2
     public static void <clinit>()
 com.liflymark.normalschedule.ui.show_timetable.ShowTimetableViewModel:
     public static final int $stable
-    public final java.lang.String TEXTVIEW_WIDTH
-    public androidx.lifecycle.MutableLiveData courseListLiveData
-    public final androidx.lifecycle.LiveData deleteCourseLiveData
-    public final androidx.lifecycle.SavedStateHandle myHandler
-    public final androidx.lifecycle.LiveData saveClassOrNot
-    public final androidx.lifecycle.LiveData updateCourseLiveDataVal
+com.liflymark.normalschedule.ui.sign_in_compose.LiveLiterals$SignInUIKt:
+    public static androidx.compose.runtime.State State$Long$arg-0$call-Color$arg-4$call-TopAppBar$fun-NormalTopBar
 de.hdodenhof.circleimageview.R$styleable:
     public static final int CircleImageView_civ_border_color
     public static final int CircleImageView_civ_border_overlay

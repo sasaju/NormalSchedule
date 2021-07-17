@@ -298,9 +298,9 @@ object  Repository {
 
     suspend fun deleteBackground(background: UserBackgroundBean) = backgroundDao.deleteAllBackground(background)
 
-    fun getSentences() = flow {
+    fun getSentences(force:Boolean = false) = flow {
         try {
-            if (SentenceDao.isSentenceSaved()){
+            if (SentenceDao.isSentenceSaved() && !force){
                 val resultList = SentenceDao.getSentences()
                 emit(OneSentencesResponse(resultList, "local"))
             } else {

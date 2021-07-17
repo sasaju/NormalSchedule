@@ -293,7 +293,7 @@ fun SingleClass3(singleClass: OneByOneCourseBean){
 
 
 fun getNowWeek(): Int {
-    return GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate()) - 1
+    return GetDataUtil.whichWeekNow()
 }
 
 @Preview(showBackground = true)

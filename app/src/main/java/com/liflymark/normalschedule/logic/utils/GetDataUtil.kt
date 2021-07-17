@@ -1,12 +1,12 @@
 package com.liflymark.normalschedule.logic.utils
 
 import android.annotation.SuppressLint
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
 internal object GetDataUtil {
-    private val firstWeekMondayDate = Date(121, 7, 23)
+    // 修改开学日期仅需修改此处 如2021.8.23 则 GregorianCalendar(2021, 7, 23)，January-0
+    private val firstWeekMondayDate =  GregorianCalendar(2021, 7, 23)
     //获取当前完整的日期和时间
     @SuppressLint("SimpleDateFormat")
     fun getNowDateTime(): String? {
@@ -21,59 +21,66 @@ internal object GetDataUtil {
         return sdf
     }
 
-    @SuppressLint("SimpleDateFormat")
     fun getNowWeekNum(): Int {
-        val sdf = SimpleDateFormat("E")
+        val now = GregorianCalendar()
         // Log.d("GEtDataUtil", sdf.format(Date()))
-        return when(sdf.format(Date())){
-            "周一"  -> 1
-            "周二" -> 2
-            "周三" -> 3
-            "周四" -> 4
-            "周五" -> 5
-            "周六" -> 6
-            "周日" -> 7
+        return when(now.get(Calendar.DAY_OF_WEEK)){
+            Calendar.MONDAY -> 1
+            Calendar.TUESDAY -> 2
+            Calendar.WEDNESDAY -> 3
+            Calendar.THURSDAY -> 4
+            Calendar.FRIDAY -> 5
+            Calendar.SATURDAY -> 6
+            Calendar.SUNDAY -> 7
             else -> 7
         }
     }
 
-    fun dateMinusDate(first: SimpleDateFormat, second: SimpleDateFormat): Int{
+    fun dateMinusDate(first: GregorianCalendar, second: GregorianCalendar): Int{
+        /**
+         * 如果年数一致则DAY_OF_YEAR直接相减
+         * 否则就进行判断
+         */
         var result = 0
-        if (first.calendar[1] == second.calendar[1]){
-            result = first.calendar[6] - second.calendar[6]
-//            print(first.calendar[6])
-//            print("\n")
-//            print(second.calendar[6].toString())
-        }
-        if (result < 0) {
-            result = 0
+        val firstDayOfYear = first.get(Calendar.DAY_OF_YEAR)
+        val secondDayOfYear =  second.get(Calendar.DAY_OF_YEAR)
+        result = if (first.get(Calendar.YEAR)==second.get(Calendar.YEAR)){
+            firstDayOfYear - secondDayOfYear
+        } else {
+            val firstAllYearDay = if (first.isLeapYear(first.get(Calendar.YEAR))){ 366 } else { 365 }
+            val secondAllYearDay = if (first.isLeapYear(first.get(Calendar.YEAR))){ 366 } else { 365 }
+            if (first.after(second)){
+                secondAllYearDay - secondDayOfYear + firstDayOfYear
+            } else{
+                -(firstAllYearDay-firstDayOfYear + secondDayOfYear)
+            }
         }
         return result
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun whichWeekNow(startDate: Date): Int {
-        val sdf = SimpleDateFormat()
-        sdf.format(startDate)
-        val now = getNowSimpleDateFormat()
-        val result = dateMinusDate(now, sdf)
-        return result / 7 + 1
+    fun whichWeekNow(): Int {
+        val now = GregorianCalendar()
+        val result = dateMinusDate(now, firstWeekMondayDate)
+        if (result < 0){
+            return 0
+        }
+        return result / 7
     }
 
-    //@SuppressLint("SimpleDateFormat")
-//    fun isNowWeek(nowData: SimpleDateFormat){
-//        if (nowData. == getNowSimpleDateFormat()) {
-//
-//        }
-//
-//    }
+    fun startSchool(): Boolean{
+        val now = GregorianCalendar()
+        val result = dateMinusDate(now, firstWeekMondayDate)
+        return result >= 0
+    }
+
+    fun startSchoolDay(): Int {
+        val now = GregorianCalendar()
+        return dateMinusDate(now, firstWeekMondayDate)
+    }
 
     //获取当前时间
-    @SuppressLint("SimpleDateFormat")
-    fun getNowTime(): SimpleDateFormat {
-        val sdf = SimpleDateFormat()
-        sdf.format(Date())
-        return sdf
+    fun getNowTime(): GregorianCalendar {
+        return GregorianCalendar()
     }
 
     fun getFirstWeekMondayDate() = firstWeekMondayDate

@@ -14,6 +14,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -23,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -40,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.glide.rememberGlidePainter
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -93,12 +96,9 @@ class ShowTimetableActivity2 : ComponentActivity() {
                         )
                         Drawer(viewModel)
                     }
-
                 }
-
             }
         }
-
     }
 
     override fun onResume() {
@@ -115,9 +115,11 @@ class ShowTimetableActivity2 : ComponentActivity() {
 fun Drawer(viewModel: ShowTimetableViewModel){
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
+    val startSchoolOrNot = viewModel.startSchool()
+    val startHolidayOrNot = viewModel.startHoliday()
     val courseList: State<List<List<OneByOneCourseBean>>?> =
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
+
     viewModel.loadAllCourse()
     ModalDrawer(
         drawerState = drawerState,
@@ -127,7 +129,7 @@ fun Drawer(viewModel: ShowTimetableViewModel){
         content = {
 
             Column(modifier = Modifier.background(Color.Transparent)) {
-                var userNowWeek by remember { mutableStateOf(viewModel.getNowWeek()) }
+                var userNowWeek by remember { mutableStateOf( if(!startSchoolOrNot || startHolidayOrNot){0}else{viewModel.getNowWeek()}) }
                 val pagerState = rememberPagerState(
                     pageCount = 19,
                     initialOffscreenLimit = 2,
@@ -148,11 +150,7 @@ fun Drawer(viewModel: ShowTimetableViewModel){
 
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-                        userNowWeek = if (pagerState.pageCount > userNowWeek){
-                            page
-                        } else {
-                            0
-                        }
+                        userNowWeek = page
                     }
                 }
             }
@@ -174,9 +172,18 @@ fun BackGroundImage(viewModel:ShowTimetableViewModel){
 
 @ExperimentalPagerApi
 @Composable
-fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek: Int, pagerState: PagerState){
+fun ScheduleToolBar(scope: CoroutineScope,
+                    drawerState: DrawerState,
+                    userNowWeek: Int,
+                    pagerState: PagerState,
+                    stViewModel: ShowTimetableViewModel = viewModel()
+){
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
+    val nowWeek = stViewModel.getNowWeek()
+    val nowWeekOrNot = (pagerState.currentPage == nowWeek)
+    val startSchoolOrNot = stViewModel.startSchool()
+    val startHolidayOrNot = stViewModel.startHoliday()
     TopAppBar(
         backgroundColor = Color.Transparent,
         elevation = 0.dp,
@@ -185,7 +192,13 @@ fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek
                 Modifier
                     .clickable {
                         scope.launch {
-                            pagerState.animateScrollToPage(GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate()) - 1)
+                            pagerState.animateScrollToPage(
+                                if (startSchoolOrNot && !startHolidayOrNot) {
+                                    nowWeek
+                                } else {
+                                    0
+                                }
+                            )
                         }
                     }
                     .fillMaxHeight(0.9F)
@@ -199,13 +212,20 @@ fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek
                         )
                     }
             ) {
-                val nowWeekOrNot = GetDataUtil.whichWeekNow(GetDataUtil.getFirstWeekMondayDate())==userNowWeek+1
-                if (!nowWeekOrNot){
+                // 开学了，当前页面不是当前周加一个5dp的空行
+                // 开学了，而且页面是当前周 显示“当前周”
+                // 放假了，显示放假
+                if (startSchoolOrNot && !nowWeekOrNot){
                     Spacer(modifier = Modifier.height(5.dp))
                 }
                 Text(text = "第${userNowWeek+1}周")
-                if (nowWeekOrNot){
+                if (nowWeekOrNot && startSchoolOrNot){
                     Text(text = "当前周", fontSize = 15.sp)
+                } else if(!startSchoolOrNot) {
+                    Text(text = "距离开课${-stViewModel.startSchoolDay()}天", fontSize = 15.sp, color = Color.Gray)
+                }
+                if (stViewModel.startHoliday()){
+                    Text(text = "放假了，联系开发者更新", fontSize = 15.sp, color = Color.Gray)
                 }
             }
         },
@@ -246,23 +266,49 @@ fun ScheduleToolBar(scope: CoroutineScope, drawerState: DrawerState, userNowWeek
 
 
 @Composable
-fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>, page:Int){
+fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>,
+                    page:Int,
+                    stViewModel: ShowTimetableViewModel = viewModel()){
     Column() {
         //星期行
         Row() {
             Column(
                 Modifier
                     .weight(0.6F)
-                    .height(40.dp)) {
+                    .height(40.dp)
+            ) {
                 Spacer(modifier = Modifier.height(5.dp))
-                Text(text = "${getDayOfDate(0, page)}\n月",modifier = Modifier.fillMaxWidth(), fontSize = 10.sp, textAlign = TextAlign.Center)
+                Text(text = "${getDayOfDate(0, page)}\n月",
+                    modifier = Modifier.fillMaxWidth(),
+                    fontSize = 10.sp, textAlign = TextAlign.Center)
             }
                 
             repeat(7){
-                Text(text = "${getDayOfWeek(it+1)}\n\n${getDayOfDate(it+1, page)}",
-                    Modifier
+                val textText = "${getDayOfWeek(it+1)}\n\n${getDayOfDate(it+1, page)}"
+                Surface(
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
                         .weight(1F, true)
-                        .height(40.dp),fontSize = 11.sp, lineHeight = 10.sp, textAlign = TextAlign.Center)
+                        .height(40.dp),
+                    color = Color.Transparent
+                ){
+                    if (!isSelected(it+1, page)){
+                        Text(text = textText,
+                            modifier = Modifier.background(Color.Transparent),
+                            fontSize = 11.sp,
+                            lineHeight = 10.sp,
+                            textAlign = TextAlign.Center)
+                    } else {
+                        Text(text = textText,
+                            modifier =  Modifier
+                                .background(Brush.verticalGradient(listOf(Color.Blue, Color.Transparent))),
+                            fontSize = 11.sp,
+                            lineHeight = 10.sp,
+                            textAlign = TextAlign.Center,
+                            color = Color.White
+                        )
+                    }
+                }
             }
         }
 
@@ -357,52 +403,6 @@ fun SingleClass2(singleClass: OneByOneCourseBean){
 }
 
 
-
-//@DelicateCoroutinesApi
-//fun showDialog(context: Activity, singleClass: OneByOneCourseBean) {
-//    val realCourseMessage = singleClass.courseName.split("\n")
-//    GlobalScope.launch{
-//        val courseBeanList = Repository.loadCourseByNameAndStart(
-//            realCourseMessage[0],
-//            singleClass.start,
-//            singleClass.whichColumn
-//        )
-//        context.runOnUiThread {
-//            val dialog = Dialog.getClassDetailDialog(
-//                context,
-//                courseBeanList!![0]
-//            )
-//            dialog.show()
-//        }
-//    }
-//
-//}
-//
-//fun showDeleteDialog(context: ShowTimetableActivity2, singleClass: OneByOneCourseBean, viewModel: ShowTimetableViewModel){
-//    val realCourseName = singleClass.courseName.split("\n")[0]
-//    viewModel.deleteCourseBeanByNameLiveData.observe(context, Observer {
-//        if (it){
-//            viewModel.loadAllCourse()
-//        } else {
-//            Toasty.error(context, "删除操作异常").show()
-//        }
-//    })
-//    val dialog = MaterialDialog(context)
-//        .title(text = "你在进行一步敏感操作")
-//        .message(text = "你将删除《${realCourseName}》的所有课程\n无法恢复，务必谨慎删除！！！\n如失误删除请重新导入")
-//        .positiveButton(text = "仍然删除") { _ ->
-//            viewModel.deleteCourse(realCourseName)
-////            viewModel.updateCourse()
-//            Toasty.success(context, "删除成功").show()
-//        }
-//        .negativeButton(text = "取消") { _ ->
-//            Toasty.info(context, "删除操作取消", Toasty.LENGTH_SHORT).show()
-//        }
-//        .cancelOnTouchOutside(false)
-//    dialog.show()
-//    return
-//}
-
 @DelicateCoroutinesApi
 fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: ShowTimetableViewModel){
     val dialog = MaterialDialog(activity2)
@@ -417,8 +417,6 @@ fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: 
             }
             val allCourseListJson = intent.getStringExtra("courseList")?:""
             val allCourseList = Convert.jsonToAllCourse(allCourseListJson)
-            val user = intent.getStringExtra("user")?:""
-            val password = intent.getStringExtra("password")?:""
             viewModel.deleteAllCourse()
             viewModel.insertOriginalCourse(allCourseList)
             activity2.runOnUiThread {

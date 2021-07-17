@@ -13,27 +13,32 @@ object AccountDao {
         .build()
 
     fun saveAccount(user: String, password: String){
-        with (sharedPreferences().edit()) {
+        with (pwSharedPreferences().edit()) {
             putString("passwordEncrypt", password)
             apply()
         }
         with(normalSharePreferences().edit()) {
             putString("userYes", user)
+            putBoolean("loginOrNot", true)
             commit()
         }
     }
 
     fun getSavedAccount(): Map<String?, String?> {
         val user = normalSharePreferences().getString("userYes", "")
-        val password =  sharedPreferences().getString("passwordEncrypt", "")
+        val password =  pwSharedPreferences().getString("passwordEncrypt", "")
         return mapOf("user" to user, "password" to password)
     }
 
+
+    //重新导课可以后改为
+    //fun isAccountSaved() = normalSharePreferences().getBoolean("loginOrNot", false)
     fun isAccountSaved() = normalSharePreferences().contains("userYes")
 
     fun newUserShowed(){
         normalSharePreferences().edit(){
             putInt("version", 1)
+            commit()
         }
     }
 
@@ -43,7 +48,7 @@ object AccountDao {
     }
 
     fun clearSharePreferences(){
-        with(sharedPreferences().edit()){
+        with(pwSharedPreferences().edit()){
             clear()
             apply()
         }
@@ -51,10 +56,14 @@ object AccountDao {
             clear()
             apply()
         }
+        with(normalSharePreferences().edit()) {
+            putBoolean("loginOrNot", false)
+            commit()
+        }
     }
 
 //    private fun sharedPreferences() = NormalScheduleApplication.context.getSharedPreferences("normal_schedule", Context.MODE_PRIVATE)
-    private fun sharedPreferences() = EncryptedSharedPreferences.create(
+    private fun pwSharedPreferences() = EncryptedSharedPreferences.create(
         NormalScheduleApplication.context,
         sharedPrefsFile,
         mainKey,

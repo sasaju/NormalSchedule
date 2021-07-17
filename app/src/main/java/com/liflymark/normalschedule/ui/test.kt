@@ -13,8 +13,8 @@ fun main(){
 //    val month = b.get(Calendar.MONTH)
 //    print(b.toString())
     val firstWeekMonthDayDate = GetDataUtil.getFirstWeekMondayDate()
-    val sdf = SimpleDateFormat()
-    sdf.format(firstWeekMonthDayDate)
+    firstWeekMonthDayDate.add(Calendar.DATE, 1)
+    print(firstWeekMonthDayDate.time.toString())
 //    dateMinusDate(sdf, GetDataUtil.getNowTime())
 //    print(GetDataUtil.whichWeekNow(firstWeekMonthDayDate))
 //    print(GetDataUtil.dateMinusDate(sdf, GetDataUtil.getNowTime()))
@@ -22,5 +22,5 @@ fun main(){
 //    println(sdf.calendar.toString())
 //    println(GetDataUtil.getNowTime().calendar.toString())
 //    println(GetDataUtil.whichWeekNow(firstWeekMonthDayDate).toString())
-    print(GetDataUtil.dateMinusDate(GetDataUtil.getNowTime(),sdf))
+//    print(GetDataUtil.dateMinusDate(GetDataUtil.getNowTime(),sdf))
 }

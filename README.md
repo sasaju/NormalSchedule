@@ -1,16 +1,88 @@
-# NormalSchedule
-本项目是针对河北大学的教务系统编写的课程表APP，支持无校园网环境下一键导入个人课程，欢迎大佬PR
-数据来源为河北大学本科生教务系统，如有违规侵权行为请邮件、QQ联系本人，本人将第一时间停止违规侵权行为
-项目借鉴了很多目前市面上的课程表，尤其是WakeUp课程表，本人借用了较多布局文件、借鉴了部分功能的写法，在此特别感谢。
-课程表的布局方案借用了此项目：https://github.com/Icyrockton/IcyTimeTable  ，但本人做了部分的修改、打磨了部分界面
+# 河大课表(Android)
 
+## 简介
 
-项目缘起
-本项目是我大一上学期就有的一个想法，那时我还是个只会一点Python就沾沾自喜的小菜鸟，后来自学Python、Android开发
-之后开始着手这个小项目，经过两个月的开发出第一个内测版，那时候的app功能有限bug众多，又经过一个多月的打磨
-终于开发出第一个公测版
+针对河北大学的教务系统编写的课程表APP，支持无校园网环境下一键导入个人课程。欢迎大佬PR
 
-关于我
-本人大二在读，药物制剂专业，很多东西都是我现学现卖，代码结构也有些混乱，最开始想写成MVVM架构，最后也写得乱七八糟。
-课程较多更新随缘，药学生不配拥有长时间的休息
-没了  -_-
+## 数据来源及其责任相关
+
+数据来源：*河北大学本科生教务系统。*
+如有违规侵权行为，请邮件(1289142675@qq.com)联系本人，本人将第一时间停止违规侵权行为。
+
+## 集成开源及参考项目
+
+- AndroidX 项目
+- Jetpack Compose
+- [Kotlin](https://github.com/JetBrains/kotlin)
+- [Material Design](https://github.com/material-components/material-components-android)
+- [Retrofit2](https://github.com/square/retrofit)
+- [Toasty](https://github.com/GrenderG/Toasty)
+- [Glide](https://github.com/bumptech/glide)
+- [Gson](https://github.com/google/gson)
+- [WakeupSchedule_Kotlin](https://github.com/YZune/WakeupSchedule_Kotlin)（参考了部分写法，修改了部分界面）
+
+## 上架相关
+
+| 应用商店 | 上架情况 | 下载量 | 更新时间 |
+| ------------- | ------------- |------|--|
+| Google Play  | 未上架  | 0 |2021.7.17|
+| 酷安应用商店  | 未上架  | 0 |2021.7.17|
+| 小米应用商店  | 未上架  | 0 |2021.7.17|
+| 华为应用商店  | 未上架  | 0 |2021.7.17|
+| 魅族应用商店  | 未上架  | 0 |2021.7.17|
+| 荣耀应用商店  | 未上架  | 0 |2021.7.17|
+| 一加应用商店  | 未上架  | 0 |2021.7.17|
+| 三星应用商店  | 未上架  | 0 |2021.7.17|
+| OPPO应用商店  | 未上架  | 0 |2021.7.17|
+| VIVO应用商店  | 未上架  | 0 |2021.7.17|
+
+## 项目计划
+
+- [x] 个人课表导入（统一认证、URP登陆均可）
+- [x] 成绩查询
+- [x] 成绩明细查询
+- [x] 手动增加、删除课程的基本课表管理功能
+- [x] 班级课表查询
+- [x] 班级课表导入
+- [x] 背景更换
+- [ ] 周视图、日试图小部件
+- [ ] 完整的课表管理功能
+- [ ] 空教室查询
+- [ ] 绩点、平时成绩、培养方案查询
+- [ ] 作业本功能
+- [ ] 完全迁移至[Jetpack Compose](https://developer.android.com/jetpack/compose)
+- [ ] 一卡通流水查询~(由于一卡通管理处robot.txt显示禁止抓取，暂不实现该功能)~
+
+## 项目缘起
+
+本项目是我大一上学期就有的一个想法，后来自学Python、Android开发之后开始着手这个小项目，经过两个月的开发出第一个内测版，不断完善直至今天。
+
+## 关于我及更新相关
+
+- 本科大三在读
+- 药物制剂专业
+- 药学里面会写代码的，写代码里面会搞药的。~~总之就是不务正业~~
+- 课程较多更新随缘，药学生忙成🐶。
+
+## 借鉴相关
+
+可以借鉴，但希望在APP中注明。
+**该APP的初始背景图片和LOGO禁止使用。**~虽然不是非常好看，但是就是不能用┗|｀O′|┛~
+
+## License
+
+```License
+Copyright 2021 sasaju https://github.com/sasaju/NormalSchedule
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
