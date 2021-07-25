@@ -10,10 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -26,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
@@ -40,7 +36,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.afollestad.materialdialogs.MaterialDialog
@@ -54,7 +49,6 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
-import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.test.ui.theme.TestTheme
@@ -67,7 +61,6 @@ import kotlinx.coroutines.launch
 
 class ShowTimetableActivity2 : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
-    val needElementPosition = mutableListOf<Array<Float>>()
     @DelicateCoroutinesApi
     @ExperimentalAnimationApi
     @ExperimentalMaterialApi
@@ -84,17 +77,16 @@ class ShowTimetableActivity2 : ComponentActivity() {
         setContent {
             TestTheme {
                 BackGroundImage(viewModel = viewModel)
-
-                // A surface container using the 'background' color from the theme
                 ProvideWindowInsets() {
                     Column() {
-                        Spacer(
-                            Modifier
-                                .background(Color.Transparent)
-                                .statusBarsHeight() // Match the height of the status bar
-                                .fillMaxWidth()
-                        )
-                        Drawer(viewModel)
+                        Drawer(viewModel){
+                            Spacer(
+                                Modifier
+                                    .background(Color.Transparent)
+                                    .statusBarsHeight() // Match the height of the status bar
+                                    .fillMaxWidth()
+                            )
+                        }
                     }
                 }
             }
@@ -112,7 +104,7 @@ class ShowTimetableActivity2 : ComponentActivity() {
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
-fun Drawer(viewModel: ShowTimetableViewModel){
+fun Drawer(viewModel: ShowTimetableViewModel, statusSpacer: @Composable () -> Unit){
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val startSchoolOrNot = viewModel.startSchool()
@@ -136,6 +128,7 @@ fun Drawer(viewModel: ShowTimetableViewModel){
                     initialPage = userNowWeek,
                     infiniteLoop = true
                 )
+                statusSpacer()
                 ScheduleToolBar(scope, drawerState, userNowWeek, pagerState)
 
                 HorizontalPager(
@@ -251,7 +244,7 @@ fun ScheduleToolBar(scope: CoroutineScope,
                 dialog?.positiveButton {
                     val intent = Intent(context, ImportCourseAgain::class.java)
                     activity.startActivity(intent)
-                    Repository.clearSharePreference()
+                    Repository.importAgain()
                     activity.finish()
                 }
 
@@ -269,6 +262,7 @@ fun ScheduleToolBar(scope: CoroutineScope,
 fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>,
                     page:Int,
                     stViewModel: ShowTimetableViewModel = viewModel()){
+    val context = LocalContext.current
     Column() {
         //星期行
         Row() {
@@ -340,19 +334,46 @@ fun SingleLineClass(oneWeekClass: State<List<List<OneByOneCourseBean>>?>,
             // 课程
             val realOneWeekList = getNeededClassList(oneWeekClass.value!!.getOrElse(page){ getData()})
             for (oneDayClass in realOneWeekList){
+                var count = 0
                 val nowJieShu = IntArray(12){it+1}.toMutableList()
                 Column(Modifier.weight(1F,true)) {
                     for (oneClass in oneDayClass){
                         val spacerHeight = (oneClass.start - nowJieShu[0]) * 70
+
                         if (spacerHeight < 0){
+                            val nowClassAllName = oneClass.courseName.split("\n")
+                            val nowClassName = nowClassAllName.getOrElse(0){""}
+                            val nowClassBuild = nowClassAllName.getOrElse(1){""}
+                            val lastClassAllName = oneDayClass[count-1].courseName.split("\n")
+                            val lastClassName = lastClassAllName.getOrElse(0){""}
+                            val lastClassBuild = lastClassAllName.getOrElse(1){""}
                             Log.d("TestActivity", "当前有冲突课程")
+                            if (nowClassName+nowClassBuild == lastClassName+lastClassBuild){
+                                stViewModel.mergeClass(
+                                    nowClassName,
+                                    oneClass.whichColumn,
+                                    oneClass.start,
+                                    oneClass.end +1 - oneClass.start,
+                                    nowClassBuild
+                                )
+                                Toasty.info(context, "检测到《${nowClassAllName[0]}》存在多位老师，已合并。重启生效").show()
+                                continue
+                            } else if (nowClassName == lastClassName){
+                                if (stViewModel.showToast < 5){Toasty.info(context, "检测到${nowClassAllName[0]}课程冲突，无法正常显示，请尝试登陆导入").show()}
+                                stViewModel.showToast += 1
+                            }
+                            if (stViewModel.showToast < 5){Toasty.info(context, "检测到${nowClassAllName[0]}课程冲突，务必仔细检查").show()}
+                            stViewModel.showToast += 1
                         }
 
                         Spacer(modifier = Modifier
                             .fillMaxWidth()
                             .height(spacerHeight.dp))
-                        SingleClass2(singleClass = oneClass)
+                        key(oneClass.courseName+oneClass.start+oneClass.end+stViewModel.showToast) {
+                            SingleClass2(singleClass = oneClass)
+                        }
                         nowJieShu -= IntArray(oneClass.end){it+1}.toMutableList()
+                        count += 1
                     }
                 }
             }
@@ -420,7 +441,9 @@ fun saveAllCourse(intent: Intent, activity2: ShowTimetableActivity2, viewModel: 
             viewModel.deleteAllCourse()
             viewModel.insertOriginalCourse(allCourseList)
             activity2.runOnUiThread {
-                dialog.message(text = "已保存至本地")
+                viewModel.loadAllCourse()
+                dialog.message(text = "已保存至本地\n如果是按班级课程导入的同学请注意：" +
+                        "部分情况将导致课程冲突，请务必检查！！！如无法操作，请尝试登陆导入")
             }
         }
     }

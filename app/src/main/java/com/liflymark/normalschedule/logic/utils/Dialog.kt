@@ -2,25 +2,46 @@ package com.liflymark.normalschedule.logic.utils
 
 import android.content.Context
 import android.util.Log
+import android.widget.Space
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.integerArrayResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener
-import com.bigkoo.pickerview.view.OptionsPickerView
-import com.jaredrummler.materialspinner.MaterialSpinner
+import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
-import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
-import com.liflymark.normalschedule.logic.model.DepartmentList
 import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
-import org.angmarch.views.NiceSpinner
+import com.liflymark.normalschedule.ui.show_timetable.ui.theme.NormalScheduleTheme
+import kotlinx.coroutines.launch
+import java.util.function.BinaryOperator
 
 
 object Dialog {
-
     fun getContractDialog(_context: Context): MaterialDialog {
         val dialog = MaterialDialog(_context)
                 .title(text = "APP用户协议")
@@ -137,21 +158,31 @@ object Dialog {
                 "1" -> oneList.add(i + 1)
             }
         }
+        if(oneList.size==0){
+            oneList.add(0)
+        }
         return oneList
     }
 
     fun getWeekNumFormat(oneList: List<Int>): String {
         var courseTimeFormat = "第"
-        var type = 0
+        val type: Int
         if (oneList.last()-oneList.first() == oneList.size-1){
             type = 0
         } else {
-            for (i in oneList){
-                if (i % 2 == 1){
-                    type = 1
-                } else if (type == 1){
-                    type = 2
-                }
+//            for (i in oneList){
+//                if (i % 2 == 1){
+//                    type = 1
+//                } else if (type == 1){
+//                    type = 2
+//                }
+//            }
+            val singleSize = oneList.filter { it%2 == 0 }.size
+            val doubleSize = oneList.filter { (it+1)%2 == 0 }.size
+            type = if (singleSize==oneList.size || doubleSize==oneList.size){
+                1
+            } else {
+                2
             }
         }
 
@@ -175,5 +206,332 @@ object Dialog {
         }
         return courseTimeFormat
     }
+}
+@Composable
+fun SelectWeekDialog(showDialog: MutableState<Boolean>,maxWeekNum:Int = 19, initialR:String, block:(String)->Unit){
+    val result = remember {
+        mutableStateOf(initialR)
+    }
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            title = {
+                Text(text = "选择周数")
+            },
+            text = {
+                SelectContent(maxWeekNum = maxWeekNum,initialR = initialR){
+                    result.value = it
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = {
+                    showDialog.value = false
+                    block(result.value)
+                }) {
+                    Text(text = "确定")
+                }
+            }
+        )
+    }
+}
 
+@Composable
+fun SelectContent(
+    maxWeekNum: Int = 19,  //原则上不得大于24
+    initialR: String = "0000000000000000000000000",
+    resultR:(res:String)->Unit
+){
+    val initialList = initialR.split("").toMutableList()
+    val selectList = remember { mutableStateListOf<String>() }
+    initialList.removeFirst()
+    initialList.removeLast()
+    selectList.addAll(initialList)
+    Log.d("Dialog","清空一次$initialList")
+    Column {
+        FlowRow(modifier = Modifier.fillMaxWidth()) {
+            for (i in 1..maxWeekNum){
+                if (selectList[i-1] == "0"){
+                    key(i){
+                        IntBox(count = i, false){
+                            if (it[i] == true){
+                                selectList[i-1] = "1"
+                            }else{
+                                selectList[i-1] = "0"
+                            }
+                            resultR(selectList.joinToString(""))
+                        }
+                    }
+                } else {
+                    key(i) {
+                        IntBox(count = i, true) {
+                            if (it[i] == true) {
+                                selectList[i - 1] = "1"
+                            } else {
+                                selectList[i - 1] = "0"
+                            }
+                            resultR(selectList.joinToString(""))
+                        }
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Row{
+            TextButton(onClick = {
+                for (t in 0 until selectList.size){
+                    if (t % 2 == 0){
+                        selectList[t] = "1"
+                    } else {
+                        selectList[t] = "0"
+                    }
+                }
+            }) {
+                Text(text = "单周")
+            }
+            TextButton(onClick = {
+                for (t in 0 until selectList.size){
+                    if (t % 2 == 0){
+                        selectList[t] = "0"
+                    } else {
+                        selectList[t] = "1"
+                    }
+                }
+            }) {
+                Text(text = "双周")
+            }
+            TextButton(onClick = {
+                for (t in 0 until selectList.size){
+                    selectList[t] = "1"
+                }
+            }) {
+                Text(text = "全选")
+            }
+            TextButton(onClick = {
+                for (t in 0 until selectList.size){
+                    selectList[t] = "0"
+                }
+            }) {
+                Text(text = "全不选")
+            }
+        }
+    }
+    LaunchedEffect(selectList){
+        Log.d("DialogListChange",selectList.joinToString(""))
+
+    }
+}
+
+@Composable
+fun IntBox(count:Int, selectedOr: Boolean=false, selectChanged:(select:Map<Int, Boolean>)->Unit = {}){
+    var selected by remember {
+        mutableStateOf(selectedOr)
+    }
+    val backgroundColor = if(selected){Color(0xff2196f3)}else{Color.Transparent}
+    Surface(
+        color = backgroundColor,
+        shape = RoundedCornerShape(100),
+        modifier = Modifier.padding(2.dp)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(40.dp)
+                .clickable {
+                    selected = !selected
+                }
+        ) {
+            Text(text = "$count", color = contentColorFor(backgroundColor = backgroundColor))
+        }
+    }
+    LaunchedEffect(selected){
+        selectChanged(mapOf(count to selected))
+    }
+}
+
+@ExperimentalPagerApi
+@ExperimentalMaterialApi
+@Composable
+fun SelectSessionDialog(
+    showDialog: MutableState<Boolean>,
+    initialWeek:Int=0,
+    initialStart:Int=0,
+    initialEnd:Int=0,
+    result:(week:Int, start:Int, end:Int)->Unit
+){
+    var week1:Int = initialWeek
+    var start1 = initialStart
+    var end1 = initialEnd
+    if (showDialog.value) {
+        Dialog(
+            onDismissRequest = { showDialog.value = false },
+            DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+        ) {
+            Column(
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .width(300.dp)
+                    .verticalScroll(rememberScrollState())
+                    .background(Color.White)
+                ,
+            ){
+                Text(text = "  \n   选择周数 \n", fontSize = 19.sp)
+                SelectSessionContent(initialWeek, initialStart, initialEnd){week,start,end ->
+                    week1 = week
+                    start1 = start
+                    end1 = end
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(modifier = Modifier.fillMaxWidth(0.98f),horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = {
+                        result(week1, start1, end1)
+                    }) { Text(text = "确定")}
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@ExperimentalPagerApi
+@Composable
+fun SelectSessionContent(initialWeek:Int, initialStart:Int, initialEnd:Int,
+                         result:(week:Int, start:Int, end:Int)->Unit,
+){
+    val scope = rememberCoroutineScope()
+    val weekList = listOf("周一","周二","周三","周四","周五","周六","周日",)
+    val startSection = mutableListOf<String>()
+    val endSection = mutableListOf<String>()
+    for (i in 1..11){
+        startSection.add("第 $i 节")
+        endSection.add("第 $i 节")
+    }
+
+    val weekListPager = rememberPagerState(
+        pageCount = weekList.size,
+        initialPage = initialWeek,
+        initialOffscreenLimit = weekList.size,
+        infiniteLoop = false
+    )
+    val startPager = rememberPagerState(
+        pageCount = startSection.size,
+        initialPage = initialStart,
+        initialOffscreenLimit = startSection.size,
+        infiniteLoop = false
+    )
+    val endPager = rememberPagerState(
+        pageCount = endSection.size,
+        initialPage = initialEnd,
+        initialOffscreenLimit = endSection.size,
+        infiniteLoop = false
+    )
+    Box(
+        modifier = Modifier
+            .height(200.dp)
+            .width(300.dp),
+        contentAlignment = Alignment.Center,
+        propagateMinConstraints = true
+    ){
+        Row(modifier = Modifier
+            .height(200.dp)
+            .width(300.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            StringPicker(
+                strList = weekList,
+                pagerState = weekListPager,
+                pageChange = {
+                    Log.d("Dialog", it.toString())
+                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
+                },
+                modifier = Modifier.fillMaxHeight()
+            )
+            Spacer(modifier = Modifier.width(15.dp))
+            StringPicker(
+                strList = startSection,
+                pagerState = startPager,
+                pageChange = {
+                    Log.d("Dialog", it.toString())
+                    scope.launch {
+                        if (endPager.currentPage < it){
+                            endPager.animateScrollToPage(it)
+                        }
+                    }
+                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
+                },
+                modifier = Modifier.fillMaxHeight()
+            )
+            Spacer(modifier = Modifier.width(15.dp))
+            StringPicker(
+                strList = endSection,
+                pagerState = endPager,
+                pageChange = {
+                    Log.d("Dialog", it.toString())
+                    scope.launch {
+                        if (startPager.currentPage > it){
+                            startPager.animateScrollToPage(it)
+                        }
+                    }
+                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
+                },
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
+        Box(modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Spacer(modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .height(2.dp)
+                    .background(Color.Gray))
+                Spacer(modifier = Modifier
+                    .height(40.dp)
+                    .width(0.dp))
+                Spacer(modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .height(2.dp)
+                    .background(Color.Gray))
+            }
+        }
+    }
+}
+
+@Composable
+fun EditDialog(showDialog: MutableState<Boolean>, initialString:String, resultR: (res: String) -> Unit){
+    var editString by remember {
+        mutableStateOf(initialString)
+    }
+    if (showDialog.value){
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            title = {},
+            text = {
+                   TextField(value = editString , onValueChange ={
+                       editString = it
+                   } )
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    resultR(editString)
+                }) {
+                    Text(text = "确定")
+                }
+            },
+            confirmButton = {}
+        )
+    }
+}
+
+
+@ExperimentalMaterialApi
+@ExperimentalPagerApi
+@Preview(showBackground = true)
+@Composable
+fun DialogPreView(){
+    SelectSessionContent(0,0,0){
+            _,_,_ ->
+    }
 }

@@ -83,7 +83,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:2.3.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
     implementation "com.xwray:groupie:2.8.0"
     implementation "com.xwray:groupie-viewbinding:2.8.0"
     implementation "de.hdodenhof:circleimageview:3.0.1"
@@ -103,25 +103,25 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'androidx.compose.ui:ui:1.0.0-rc01'
+    implementation 'androidx.compose.ui:ui:1.0.0-rc02'
     // Tooling support (Previews, etc.)
-    implementation 'androidx.compose.ui:ui-tooling:1.0.0-rc01'
-    implementation 'androidx.compose.ui:ui-tooling-preview:1.0.0-rc01'
-    testImplementation "androidx.compose.ui:ui-test:1.0.0-rc01"
+    implementation 'androidx.compose.ui:ui-tooling:1.0.0-rc02'
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.0.0-rc02'
+    testImplementation "androidx.compose.ui:ui-test:1.0.0-rc02"
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation 'androidx.compose.foundation:foundation:1.0.0-rc01'
+    implementation 'androidx.compose.foundation:foundation:1.0.0-rc02'
     // Material Design
-    implementation 'androidx.compose.material:material:1.0.0-rc01'
+    implementation 'androidx.compose.material:material:1.0.0-rc02'
     // Material design icons
-    implementation 'androidx.compose.material:material-icons-core:1.0.0-rc01'
-    implementation 'androidx.compose.material:material-icons-extended:1.0.0-rc01'
+    implementation 'androidx.compose.material:material-icons-core:1.0.0-rc02'
+    implementation 'androidx.compose.material:material-icons-extended:1.0.0-rc02'
     // Integration with activities
-    implementation 'androidx.activity:activity-compose:1.3.0-rc01'
+    implementation 'androidx.activity:activity-compose:1.3.0-rc02'
     // Integration with ViewModels
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07'
     // Integration with observables
-    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-rc01'
-    implementation 'androidx.compose.runtime:runtime-rxjava2:1.0.0-rc01'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-rc02'
+    implementation 'androidx.compose.runtime:runtime-rxjava2:1.0.0-rc02'
     implementation 'com.google.accompanist:accompanist-pager:0.13.0'
     implementation "androidx.navigation:navigation-compose:2.4.0-alpha04"
 
@@ -131,7 +131,8 @@ dependencies {
     // If using insets-ui
     implementation "com.google.accompanist:accompanist-insets-ui:0.13.0"
     implementation "com.google.accompanist:accompanist-glide:0.13.0"
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0-rc01'
+    implementation "com.google.accompanist:accompanist-flowlayout:0.13.0"
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0-rc02'
 //    implementation project(":IcyTimeTable")
 
 }

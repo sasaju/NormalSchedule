@@ -3,7 +3,6 @@ package com.liflymark.normalschedule.logic
 import android.content.ContentResolver
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
@@ -15,6 +14,7 @@ import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
 import com.liflymark.normalschedule.logic.dao.SentenceDao
 import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.model.CourseResponse
 import com.liflymark.normalschedule.logic.model.DepartmentList
 import com.liflymark.normalschedule.logic.model.OneSentencesResponse
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
@@ -46,7 +46,6 @@ object  Repository {
     fun getId2() = liveData {
         try {
             val result = NormalScheduleNetwork.getId()
-            Log.d("Repository", "getID")
             emit(result)
         } catch (e: Exception){
             emit(null)
@@ -114,31 +113,54 @@ object  Repository {
 
     }
 
-    fun loadAllCourse() = fire(Dispatchers.IO){
-        Result.success(courseDao.loadAllCourse())
+    //    fun loadAllCourse() = fire(Dispatchers.IO){
+//        Result.success(courseDao.loadAllCourse())
+//    }
+    suspend fun loadCourseUnTeacher(
+        className: String,
+        classDay: Int,
+        classSessions: Int,
+        continuingSession: Int, buildingName: String
+    ): List<CourseBean> {
+        return courseDao.loadCourseUnTeacher(
+            className,
+            classDay,
+            classSessions,
+            continuingSession,
+            buildingName
+        )
+    }
+
+    suspend fun loadCourseUnTeacher(
+        className: String,
+        classDay: Int,
+        classSessions: Int,
+        continuingSession: Int
+    ): List<CourseBean> {
+        return courseDao.loadCourseUnTeacher(
+            className,
+            classDay,
+            classSessions,
+            continuingSession
+        )
     }
 
     fun loadAllCourse2() = liveData(Dispatchers.IO) {
         emit(Convert.courseBeanToOneByOne2(courseDao.loadAllCourse()))
     }
 
-    fun getDepartmentList() = flow{
+    fun getDepartmentList() = flow {
         val result = NormalScheduleNetwork.getDepartmentList()
         emit(result)
     }.catch {
         emit(DepartmentList("异常", listOf()))
-    }
+    }.flowOn(Dispatchers.IO)
 
-    fun loadCourseByMajor(department: String, major:String) = fireFlow(Dispatchers.IO){
+    fun loadCourseByMajorToAll(department: String, major:String) = flow{
         val result = NormalScheduleNetwork.getCourseByMajor(department, major)
-        val allCourseList = mutableListOf<CourseBean>()
-        if (result.status != "读取正常"){
-            for (i in result.allCourse){
-                val a = Convert.courseResponseToBean(i)
-                allCourseList.add(a)
-            }
-        }
-        Result.success(Convert.courseBeanToOneByOne2(allCourseList))
+        emit(result)
+    }.catch {
+        emit(CourseResponse(listOf(), "异常"))
     }
 
     fun loadCourseByMajor2(department: String, major:String) = flow {
@@ -162,7 +184,6 @@ object  Repository {
         } catch (e:Exception){
             emit(false)
         }
-
     }
 
     fun loadCourseByName(courseName: String) = fire(Dispatchers.IO){
@@ -170,15 +191,34 @@ object  Repository {
         Result.success(courseList)
     }
 
+    fun loadCourseByName2(courseName: String) = flow<List<CourseBean>> {
+        val courseBeanList = courseDao.loadCourseByName(courseName)
+        emit(courseBeanList.toList())
+    }.catch {
+        emit(listOf(
+            CourseBean(
+                campusName="五四路校区",
+                classDay=3,
+                classSessions=9, classWeek="111111111111110000000000", continuingSession=3,
+                courseName=courseName,
+                teacher="发生错误 ",
+                teachingBuildName="发生错误 ",
+                color="#f0c239")
+            )
+        )
+    }.flowOn(Dispatchers.IO)
+
     fun deleteAllCourseBean() = liveData(Dispatchers.IO){
         courseDao.deleteAllCourseBean()
-        Log.d("CourseViewModel", "执行完毕")
         emit("0")
+    }
+
+    suspend fun deleteCourseByList(courseBeanList: List<CourseBean>){
+        courseDao.deleteCourse(courseBeanList)
     }
 
     fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int) = fireFlow(Dispatchers.IO){
         val result = courseDao.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
-        Log.d("Repoisory",result.toString())
         Result.success(result)
     }
 
@@ -203,16 +243,13 @@ object  Repository {
 
     fun getScoreDetail2(user: String, password: String, id:String) = fireFlow(Dispatchers.IO) {
         val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
-        Log.d("Repository",scoreDetailResponse.result.toString())
         Result.success(scoreDetailResponse)
     }
 
     fun loadAllCourse3(): List<List<OneByOneCourseBean>>? {
         return try {
-            Log.d("Repoitory", "loadAllCourse3执行")
             Convert.courseBeanToOneByOne2(courseDao.loadAllCourseAs())
         } catch (e:Exception){
-            Log.d("Repoitory", e.toString())
             null
         }
     }
@@ -222,11 +259,24 @@ object  Repository {
             try {
                 courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
             } catch (e:Exception){
-//                Result.failure<Exception>(e)
-                Log.e("Repository", e.toString())
-            }
 
-            // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
+            }
+        }
+    }
+
+    suspend fun insertCourse(courseBean:CourseBean) {
+        try {
+            courseDao.insertCourse(courseBean)
+        } catch (e:Exception){
+
+        }
+    }
+
+    suspend fun insertCourse(courseBean:List<CourseBean>) {
+        try {
+            courseDao.insertCourse(courseBean)
+        } catch (e:Exception){
+
         }
     }
 
@@ -235,7 +285,15 @@ object  Repository {
             courseDao.deleteAllCourseBean()
         } catch (e:Exception){
 //            Result.failure<Exception>(e)
-            Log.e("Repository", e.toString())
+        }
+    }
+
+    suspend fun deleteCourseByNameAndStart(): Int {
+        return try {
+            courseDao.deleteAllCourseBean()
+            0
+        } catch (e:Exception){
+            1
         }
     }
 
@@ -244,7 +302,6 @@ object  Repository {
     suspend fun insertBackground(background: UserBackgroundBean) = backgroundDao.insertBackground(background)
 
     suspend fun updateBackground(background: UserBackgroundBean) {
-        Log.d("Repository", background.userBackground)
         return try {
             backgroundDao.insertBackground(background)
         } catch (e:Exception){
@@ -263,7 +320,6 @@ object  Repository {
             .build()
         try {
             val a = backgroundDao.loadLastBackground()
-            Log.d("Repository", a.toString())
             if (a.userBackground != "0"){
                 emit(Uri.parse(a.userBackground))
             } else {
@@ -285,7 +341,6 @@ object  Repository {
             .build()
         try {
             val a = backgroundDao.loadLastBackground()
-            Log.d("Repository", a.toString())
             if (a.userBackground != "0"){
                 emit(Uri.parse(a.userBackground))
             } else {
@@ -345,7 +400,8 @@ object  Repository {
     fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
     fun getSavedAccount() = AccountDao.getSavedAccount()
     fun isAccountSaved() = AccountDao.isAccountSaved()
-    fun clearSharePreference() = AccountDao.clearSharePreferences()
+    fun importAgain() = AccountDao.importedAgain()
+    fun saveLogin() = AccountDao.saveLogin()
 
     fun saveUserVersion() = AccountDao.newUserShowed()
     fun getNewUserOrNot() = AccountDao.getNewUserOrNot()

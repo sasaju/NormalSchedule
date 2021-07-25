@@ -9,7 +9,7 @@ import retrofit2.http.*
 
 interface CourseService {
 
-    @GET("timetable/getid")
+    @GET("timetable/getid/")
     fun getId():Call<IdResponse>
 
     @GET("timetable/captcha/{sessionId}")

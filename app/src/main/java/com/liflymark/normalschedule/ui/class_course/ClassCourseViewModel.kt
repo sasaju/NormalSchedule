@@ -11,10 +11,15 @@ import kotlinx.coroutines.launch
 
 class ClassCourseViewModel:ViewModel() {
     private val putMajor = MutableLiveData<List<String>>()
+    private val loadBean = MutableLiveData<List<String>>()
 
 
     val classCourseListLiveData = Transformations.switchMap(putMajor){
         Repository.loadCourseByMajor2(it[0], it[1]).asLiveData()
+    }
+
+    val classBeanLiveData = Transformations.switchMap(loadBean){
+        Repository.loadCourseByMajorToAll(it[0], it[1]).asLiveData()
     }
 
     val departmentListFlow = Repository.getDepartmentList()
@@ -29,14 +34,19 @@ class ClassCourseViewModel:ViewModel() {
 //    }
 
     fun putDepartmentAndMajor(department:String, major: String){
-        putMajor.value = listOf(department, major)
+        putMajor.value = listOf(department, major.replace(".json",""))
     }
 
-    fun test(){
-        viewModelScope.launch {
-            Repository.loadCourseByMajor("","").collectLatest {
+    fun putDepartmentAndMajorBean(department:String, major: String){
+        loadBean.value = listOf(department, major.replace(".json",""))
+    }
 
-            }
+    fun saveAccount(){
+        Repository.saveAccount("", "")
+    }
+    fun getAccount(){
+        viewModelScope.launch {
+
         }
     }
 }

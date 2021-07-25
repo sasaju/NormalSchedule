@@ -12,9 +12,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Stairs
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -31,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.insets.statusBarsHeight
 import com.liflymark.normalschedule.ui.about.AboutActivity
 import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
@@ -45,7 +44,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun DrawerNavHost(drawerState: DrawerState){
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-
         OneSentence()
 
         NavButton(DefaultBackground(), drawerState,
@@ -60,14 +58,16 @@ fun DrawerNavHost(drawerState: DrawerState){
         NavButton(activity = ImportScoreActivity(), drawerState = drawerState,
             icon = Icons.Filled.Stairs, text = "成绩查询")
         NavButton(activity = LoginToScoreActivity(), drawerState = drawerState,
-            icon = Icons.Filled.Stairs, text = "本学期成绩明细")
+            icon = Icons.Filled.TrendingUp, text = "本学期成绩明细")
+
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(5.dp)
             .padding(2.dp)
             .background(Color.Gray))
+
         NavButton(activity = ClassCourseActivity(), drawerState = drawerState,
-            icon = Icons.Filled.Image, text = "班级课程查询")
+            icon = Icons.Filled.Margin, text = "班级课程查询")
         NavButton(activity = AboutActivity(), drawerState = drawerState,
             icon = Icons.Filled.Info, text = "关于软件")
 
@@ -101,7 +101,7 @@ fun OneSentence(viewModel:ShowTimetableViewModel = viewModel()){
             .wrapContentHeight(), contentAlignment = Alignment.Center) {
         Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
+            .statusBarsHeight(200.dp)
             .background(
                 brush = Brush.verticalGradient(
                     listOf(Color(0xff2196f3), Color(0xFFFFFFFF))
@@ -192,7 +192,6 @@ fun NavButton(
             fontSize = 18.sp,)
 
     }
-
 }
 
 @Preview(showBackground = true)

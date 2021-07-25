@@ -8,12 +8,12 @@ import java.util.concurrent.TimeUnit
 
 object ServiceCreator {
 
-    private const val BASE_URL = "http://81.70.81.94/"
+    private const val BASE_URL = "https://liflymark.top/"
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-            .connectTimeout(3, TimeUnit.SECONDS)
-            .readTimeout(3, TimeUnit.SECONDS)
-            .writeTimeout(3, TimeUnit.SECONDS)
-            .callTimeout(3, TimeUnit.MINUTES)
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .writeTimeout(5, TimeUnit.SECONDS)
+            .callTimeout(1, TimeUnit.MINUTES)
             .build()
 
     private val retrofit = Retrofit.Builder()

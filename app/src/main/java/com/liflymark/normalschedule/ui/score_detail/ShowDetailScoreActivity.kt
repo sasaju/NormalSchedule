@@ -1,6 +1,7 @@
 package com.liflymark.normalschedule.ui.score_detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.liflymark.normalschedule.logic.model.Grades
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.score_detail.ui.theme.NormalScheduleTheme
+import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 
 class ShowDetailScoreActivity : ComponentActivity() {
     @ExperimentalAnimationApi
@@ -52,7 +54,13 @@ fun AllGrades(allGradeList: List<Grades>){
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        NormalTopBar(label = "成绩明细")
         Text(text = "结果仅供参考，一切请以教务系统数据为准！！！")
+        Log.d("ShowDetialSCore", allGradeList.toString())
+        if (allGradeList.isEmpty()){
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(text = "当前教务系统“本学期成绩”为空")
+        }
         for (i in allGradeList){
             SingleGrade(grades = i)
             Spacer(modifier = Modifier.height(20.dp))

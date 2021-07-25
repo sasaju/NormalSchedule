@@ -12,14 +12,15 @@
 ## 集成开源及参考项目
 
 - AndroidX 项目
-- Jetpack Compose
+- [Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [Kotlin](https://github.com/JetBrains/kotlin)
 - [Material Design](https://github.com/material-components/material-components-android)
+- [WakeupSchedule_Kotlin](https://github.com/YZune/WakeupSchedule_Kotlin)（参考了部分写法，修改了部分界面）
 - [Retrofit2](https://github.com/square/retrofit)
 - [Toasty](https://github.com/GrenderG/Toasty)
 - [Glide](https://github.com/bumptech/glide)
 - [Gson](https://github.com/google/gson)
-- [WakeupSchedule_Kotlin](https://github.com/YZune/WakeupSchedule_Kotlin)（参考了部分写法，修改了部分界面）
+- [ComposeNumberPicker](https://gist.github.com/vganin/a9a84653a9f48a2d669910fbd48e32d5)
 
 ## 上架相关
 
@@ -67,7 +68,8 @@
 ## 借鉴相关
 
 可以借鉴，但希望在APP中注明。
-**该APP的初始背景图片和LOGO禁止使用。**~虽然不是非常好看，但是就是不能用┗|｀O′|┛~
+**该APP的初始背景图片和LOGO禁止使用。**
+~虽然不是非常好看，但是就是不能用┗|｀O′|┛~
 
 ## License
 

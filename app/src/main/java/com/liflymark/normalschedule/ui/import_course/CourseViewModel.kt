@@ -1,13 +1,11 @@
 package com.liflymark.normalschedule.ui.import_course
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
+import kotlinx.coroutines.launch
 
 class CourseViewModel: ViewModel() {
     private var id = ""
@@ -29,29 +27,16 @@ class CourseViewModel: ViewModel() {
     val courseLiveData = Transformations.switchMap(formMapLiveData) { _ ->
         Repository.getCourse2(user, password, yzm, id)
     }
-    val courseNewLiveData = Transformations.switchMap(formMapNewLiveData){
-        Repository.getCourse2(user, password)
-    }
     val courseVisitLiveData = Transformations.switchMap(formVisitLiveData){
         Repository.getVisitCourse()
     }
     val imageLiveData = Transformations.switchMap(getImageTimesLiveData) {
         Repository.getCaptcha(id)
     }
-    val insertCourseLiveData = Transformations.switchMap(courseListLiveData) { it ->
-        Repository.insertCourse(it)
-    }
+    private var _accountLiveData = MutableLiveData<List<String>>()
+    val accountLiveData = Transformations.map(_accountLiveData){ it }
 
-    val deleteCourseLiveData = Transformations.map(deleteCourseBean){
-        Repository.deleteAllCourseBean()
-        Log.d("CourseViewModel", "执行完毕")
-    }
-//    val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
-//        Repository.loadAllCourse()
-//    }
-//    val allCourseList = Transformations.switchMap(courseDatabaseLiveData) {
-//        Repository.loadAllCourse()
-//    }
+
 
     fun getId() {
         getIdOrNotLiveData.value = 1
@@ -102,18 +87,12 @@ class CourseViewModel: ViewModel() {
 
 
     fun saveAccount(user: String, password: String) = Repository.saveAccount(user, password)
-    fun getSavedAccount() = Repository.getSavedAccount()
     fun isAccountSaved() = Repository.isAccountSaved()
 
-//    fun insertOriginalCourse(allCourseList: List<AllCourse>) {
-//        Log.d("CourseViewModel", "获取到课程")
-//        courseListLiveData.value = allCourseList
-//    }
-//
-//
-//    fun loadAllCourse() {
-//        courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
-//    }
-
-    // fun saveAccount(account: Account) = Repository.saveAccount(account)
+    fun getAccount(){
+        viewModelScope.launch {
+            val userAndPw = Repository.getSavedAccount()
+            _accountLiveData.value = listOf(userAndPw["user"]!!, userAndPw["password"]!!)
+        }
+    }
 }

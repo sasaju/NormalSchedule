@@ -1,7 +1,5 @@
 package com.liflymark.normalschedule.logic.utils
 
-import android.util.Log
-import androidx.compose.runtime.State
 import androidx.compose.ui.graphics.Color
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -17,29 +15,7 @@ internal object Convert {
     lateinit var oneCourse: OneByOneCourseBean
 
     fun courseResponseToBean(courseResponse: AllCourse): CourseBean {
-        val colorList = arrayListOf<String>()
-        colorList.apply {
-            add("#12c2e9")
-            add("#376B78")
-            add("#f64f59")
-            add("#CBA689")
-            add("#ffffbb33")
-            add("#8202F2")
-            add("#F77CC2")
-            add("#4b5cc4")
-            add("#426666")
-            add("#40de5a")
-            add("#f0c239")
-            add("#725e82")
-            add("#c32136")
-            add("#b35c44")
-        }
-        val num = string2Unicode(courseResponse.courseName).toInt()
-        val color = try {
-            colorList[num % colorList.count()]
-        } catch (e: Exception) {
-            colorList[0]
-        }
+        val color = stringToColor(courseResponse.courseName)
         return CourseBean(
             courseResponse.campusName,
             courseResponse.classDay,
@@ -145,7 +121,7 @@ internal object Convert {
         return a
     }
 
-    fun string2Unicode(string: String): String {
+    private fun string2Unicode(string: String): String {
         val unicode = StringBuffer()
         for (i in 0 until string.length) {
             // 取出每一个字符
@@ -168,6 +144,32 @@ internal object Convert {
             colorStr = "f$colorStr"
         }
         return colorStr.toLong(16)
+    }
+
+    fun stringToColor(name: String): String {
+        val colorList = arrayListOf<String>()
+        colorList.apply {
+            add("#12c2e9")
+            add("#376B78")
+            add("#f64f59")
+            add("#CBA689")
+            add("#ffffbb33")
+            add("#8202F2")
+            add("#F77CC2")
+            add("#4b5cc4")
+            add("#426666")
+            add("#40de5a")
+            add("#f0c239")
+            add("#725e82")
+            add("#c32136")
+            add("#b35c44")
+        }
+        val num = string2Unicode(name).toInt()
+        return try {
+            colorList[num % colorList.count()]
+        } catch (e: Exception) {
+            colorList[0]
+        }
     }
 }
 //    fun getAllOneCourse(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {
