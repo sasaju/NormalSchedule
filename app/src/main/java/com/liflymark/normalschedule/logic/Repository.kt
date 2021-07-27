@@ -13,10 +13,7 @@ import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
 import com.liflymark.normalschedule.logic.dao.SentenceDao
-import com.liflymark.normalschedule.logic.model.AllCourse
-import com.liflymark.normalschedule.logic.model.CourseResponse
-import com.liflymark.normalschedule.logic.model.DepartmentList
-import com.liflymark.normalschedule.logic.model.OneSentencesResponse
+import com.liflymark.normalschedule.logic.model.*
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
@@ -48,7 +45,7 @@ object  Repository {
             val result = NormalScheduleNetwork.getId()
             emit(result)
         } catch (e: Exception){
-            emit(null)
+            emit(IdResponse(""))
         }
     }
 
@@ -367,6 +364,26 @@ object  Repository {
             emit(null)
         }
     }
+
+    fun loginToSpace(user: String, password: String, id: String) = flow {
+        try {
+            val result = NormalScheduleNetwork.loginToSpace(user, password, id)
+            emit(result)
+        } catch (e:Exception){
+            emit(SpaceLoginResponse("登陆异常"))
+        }
+    }.flowOn(Dispatchers.IO)
+        .catch {
+        emit(SpaceLoginResponse("登陆异常"))
+        }
+
+    fun getSpaceRooms(id: String, roomName:String, searchDate: String) = flow {
+        val result = NormalScheduleNetwork.getSpaceRooms(id, roomName, searchDate)
+        emit(result)
+    }.catch {
+        val errorRoom = Room("查询失败","0","00000000000","无")
+        emit(SpaceResponse(roomList = listOf(errorRoom), roomName=roomName))
+    }.flowOn(Dispatchers.IO)
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {

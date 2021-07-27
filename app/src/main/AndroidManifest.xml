@@ -18,6 +18,16 @@
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
+            android:name=".ui.login_space_room.ShowSpaceActivity"
+            android:exported="true"
+            android:label="@string/title_activity_show_space"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.login_space_room.LoginSpaceActivity"
+            android:exported="true"
+            android:label="@string/title_activity_login_space"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
             android:name=".ui.edit_course.EditCourseActivity"
             android:exported="true"
             android:label="@string/title_activity_edit_course"

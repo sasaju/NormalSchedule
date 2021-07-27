@@ -7,11 +7,11 @@ import android.widget.RemoteViewsService.RemoteViewsFactory
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
+import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
 class DayRemoteViewsFactory(private val mContext: Context, intent: Intent?) :RemoteViewsFactory {
     companion object {
         var mList: MutableList<OneByOneCourseBean> = mutableListOf()
-
     }
 
     override fun onCreate() {
@@ -27,9 +27,14 @@ class DayRemoteViewsFactory(private val mContext: Context, intent: Intent?) :Rem
 //            override val coroutineContext: CoroutineContext = Dispatchers.IO // no job added i.e + SupervisorJob()
 //        }
         val a = Repository.loadAllCourse3()
-        a?.get(0)?.let { mList.addAll(it.filter { it1 ->
-            it1.whichColumn == 1
+        val nowWeekNum = GetDataUtil.whichWeekNow()
+        val nowDayNum = GetDataUtil.getNowWeekNum()
+        a?.get(nowWeekNum)?.let { mList.addAll(it.filter { it1 ->
+            it1.whichColumn == nowDayNum
         }) }
+        if (!GetDataUtil.startSchool() || GetDataUtil.getNowWeekNum()>19){
+            mList.clear()
+        }
     }
 
     override fun onDestroy() {
@@ -42,12 +47,16 @@ class DayRemoteViewsFactory(private val mContext: Context, intent: Intent?) :Rem
 
     override fun getViewAt(position: Int): RemoteViews? {
         if (position < 0 || position >= mList.size) return null
+        mList.sortBy {
+            it.start
+        }
         val content = mList[position]
         val rv = RemoteViews(
             mContext.packageName,
             R.layout.app_widget_day_item
         )
-        rv.setTextViewText(R.id.course_name_day, content.courseName)
+        val needName = content.courseName + "\n第${content.start} - ${content.end}节"
+        rv.setTextViewText(R.id.course_name_day, needName)
         val intent = Intent()
         intent.putExtra("content", content.courseName)
         rv.setOnClickFillInIntent(R.id.course_name_day, intent)

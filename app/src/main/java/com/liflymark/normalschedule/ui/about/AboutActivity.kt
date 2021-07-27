@@ -31,7 +31,7 @@ class AboutActivity : AppCompatActivity() {
         authorElement.setOnClickListener{
             MaterialDialog(this)
                 .title(text = "关于开发组")
-                .message(text = "开发者：\n  河北大学 | 大二药物制剂在读@符号 \n  (QQ:1289142675) \nLOGO、背景图绘制：\n   河北大学 | 大二药学在读@Mr.")
+                .message(text = "开发者：\n  河北大学 | 大三药物制剂在读@符号 \n  (QQ:1289142675) \nLOGO、背景图绘制：\n   河北大学 | 大三药学在读@Mr.")
                 .positiveButton(text = "知道了")
                 .show()
         }
@@ -42,11 +42,12 @@ class AboutActivity : AppCompatActivity() {
             val key = "IQn1Mh09oCQwvfVXljBPgCkkg8SPfjZP"
             intent = Intent()
             intent.data = Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$key");
-            // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
+            // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             try {
                 startActivity(intent)
             } catch (e: Exception){
-                Toasty.error(this, "未安装QQ")
+                Toasty.error(this, "未安装QQ").show()
             }
         }
 

@@ -15,6 +15,37 @@ internal object GetDataUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
+    fun getNowMonth(whichColumn:Int, whichWeek:Int): String {
+        val sdf = SimpleDateFormat("MM月dd日")
+        val column = when(whichColumn){
+            1 -> "周一"
+            2 -> "周二"
+            3 -> "周三"
+            4 -> "周四"
+            5 -> "周五"
+            6 -> "周六"
+            7 -> "周日"
+            else -> "错误"
+        }
+        return sdf.format(Date())+" | "+column
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getThreeDay():List<String>{
+        val threeDay = mutableListOf<String>()
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val calendar = GregorianCalendar()
+        calendar.add(Calendar.DATE, -1)
+        threeDay.add(sdf.format(calendar.time))
+        repeat(2){
+            calendar.add(Calendar.DATE, 1)
+            threeDay.add(sdf.format(calendar.time))
+        }
+        threeDay.add("2021-08-29")
+        return threeDay.toList()
+    }
+
+    @SuppressLint("SimpleDateFormat")
     fun getNowSimpleDateFormat(): SimpleDateFormat {
         val sdf = SimpleDateFormat()
         sdf.format(Date())

@@ -9,6 +9,7 @@ import android.content.Intent
 import android.widget.RemoteViews
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
 class DayAppWidgetProvider: AppWidgetProvider() {
     var clickAction = "com.liflymark.DayAppWidgetProvider.onclick"
@@ -34,15 +35,18 @@ class DayAppWidgetProvider: AppWidgetProvider() {
             ).apply {
                 setOnClickPendingIntent(R.id.start_text, pendingIntent)
             }
-
+            val nowWeekNum = GetDataUtil.whichWeekNow()
+            val nowDayNum = GetDataUtil.getNowWeekNum()
             val intent = Intent(context, DayRemoteViewsService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
 
+            views.setTextViewText(
+                R.id.start_text,
+                GetDataUtil.getNowMonth(whichColumn = nowDayNum, whichWeek = nowWeekNum)
+            )
             views.setRemoteAdapter(R.id.course_day_list, intent)
 
             views.setEmptyView(R.id.course_day_list, R.layout.app_widget_none_data)
-
-
 
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager?.updateAppWidget(appWidgetId, views)

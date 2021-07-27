@@ -13,6 +13,7 @@ object NormalScheduleNetwork {
     private val CourseService = ServiceCreator.create(CourseService::class.java)
     private val ScoreService = ServiceCreator.create(ScoreService::class.java)
     private val SentenceService = ServiceCreator.create(SentenceService::class.java)
+    private val SpacesService = ServiceCreator.create(SpaceService::class.java)
 
     suspend fun getId() = CourseService.getId().await()
 
@@ -40,6 +41,12 @@ object NormalScheduleNetwork {
 
     suspend fun getScoreDetail(user:String, password:String, id:String) =
         ScoreService.getScoreDetail(user, password, id).await()
+
+    suspend fun loginToSpace(user: String, password: String, id: String) =
+        SpacesService.loginToSpace(user, password, id).await()
+
+    suspend fun getSpaceRooms(id: String, roomName:String, searchDate: String) =
+        SpacesService.getSpaceRooms(id, roomName, searchDate).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

@@ -23,7 +23,7 @@ class LoginToScoreViewModel:ViewModel() {
 //    }
 
     fun getId() {
-        getIdOrNotLiveData.value = 1
+        getIdOrNotLiveData.value = getIdOrNotLiveData.value?.plus(1)
         Log.d("LoginViewModel", "getID")
     }
 
@@ -36,9 +36,6 @@ class LoginToScoreViewModel:ViewModel() {
         formMapLiveData.value = mapOf("user" to user, "password" to password, "id" to id)
     }
 
-    fun putValue2(user: String, password: String,id: String){
-        Repository
-    }
 
     fun saveAccount(user: String, password: String) = Repository.saveAccount(user, password)
     fun getSavedAccount() = Repository.getSavedAccount()

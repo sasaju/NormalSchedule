@@ -5832,7 +5832,6 @@ androidx.compose.material.icons.filled.EventAvailableKt
 androidx.compose.material.icons.filled.EventBusyKt
 androidx.compose.material.icons.filled.EventKt
 androidx.compose.material.icons.filled.EventNoteKt
-androidx.compose.material.icons.filled.EventSeatKt
 androidx.compose.material.icons.filled.ExitToAppKt
 androidx.compose.material.icons.filled.ExpandKt
 androidx.compose.material.icons.filled.ExplicitKt
@@ -14496,7 +14495,6 @@ androidx.compose.runtime.SnapshotStateKt$produceState$5
 androidx.compose.runtime.SnapshotStateKt:
     public static final androidx.compose.runtime.State collectAsState(kotlinx.coroutines.flow.StateFlow,kotlin.coroutines.CoroutineContext,androidx.compose.runtime.Composer,int,int)
     public static final java.lang.Object getValue(androidx.compose.runtime.State,java.lang.Object,kotlin.reflect.KProperty)
-    public static final varargs androidx.compose.runtime.snapshots.SnapshotStateList mutableStateListOf(java.lang.Object[])
     public static final varargs androidx.compose.runtime.snapshots.SnapshotStateMap mutableStateMapOf(kotlin.Pair[])
     private static final java.lang.Object notifyObservers(androidx.compose.runtime.DerivedState,kotlin.jvm.functions.Function0)
     public static final androidx.compose.runtime.State produceState(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,kotlin.jvm.functions.Function2,androidx.compose.runtime.Composer,int)
@@ -40284,6 +40282,33 @@ com.liflymark.normalschedule.ui.import_show_score.ShowScoreActivity:
 com.liflymark.normalschedule.ui.import_show_score.ShowScoreViewModel
 com.liflymark.normalschedule.ui.lib_order.LibOrderActivity:
     public void _$_clearFindViewByIdCache()
+com.liflymark.normalschedule.ui.login_space_room.ComposableSingletons$LoginSpaceActivityKt:
+    public final kotlin.jvm.functions.Function2 getLambda-5$app_debug()
+com.liflymark.normalschedule.ui.login_space_room.ComposableSingletons$ShowSpaceActivityKt$lambda-1$1
+com.liflymark.normalschedule.ui.login_space_room.ComposableSingletons$ShowSpaceActivityKt
+com.liflymark.normalschedule.ui.login_space_room.LiveLiterals$ShowSpaceActivityKt:
+    private static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-size$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace
+    private static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-size$arg-0$call-Spacer-1$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace
+    private static androidx.compose.runtime.State State$Int$arg-0$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace
+    public final int Int$$$this$call-$get-dp$$arg-0$call-size$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace()
+    public final int Int$$$this$call-$get-dp$$arg-0$call-size$arg-0$call-Spacer-1$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace()
+    public final int Int$arg-0$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace()
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity:
+    public void _$_clearFindViewByIdCache()
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt$DefaultPreview6$1
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt$checkInputAndShow$1
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt:
+    public static final void DefaultPreview6(androidx.compose.runtime.Composer,int)
+    public static synthetic void checkInputAndShow$default(com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity,java.lang.String,java.lang.String,com.liflymark.normalschedule.ui.login_space_room.LoginSpaceViewModel,java.lang.String,kotlin.jvm.functions.Function0,int,java.lang.Object)
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceViewModel:
+    public final void saveAccount(java.lang.String,java.lang.String)
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivity:
+    public void _$_clearFindViewByIdCache()
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivityKt$DefaultPreview7$1
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivityKt$SingleRowSpace$2
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivityKt:
+    public static final void DefaultPreview7(androidx.compose.runtime.Composer,int)
+    public static final void SingleRowSpace(androidx.compose.runtime.Composer,int)
 com.liflymark.normalschedule.ui.score_detail.ComposableSingletons$LoginToScoreActivityKt:
     public final kotlin.jvm.functions.Function2 getLambda-5$app_debug()
 com.liflymark.normalschedule.ui.score_detail.ComposableSingletons$ShowDetailScoreActivityKt$lambda-1$1
@@ -40294,7 +40319,6 @@ com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivityKt$DefaultPrevi
 com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivityKt:
     public static final void DefaultPreview3(androidx.compose.runtime.Composer,int)
 com.liflymark.normalschedule.ui.score_detail.LoginToScoreViewModel:
-    public final void putValue2(java.lang.String,java.lang.String,java.lang.String)
     public final void saveAccount(java.lang.String,java.lang.String)
 com.liflymark.normalschedule.ui.score_detail.ScoreDetailDialogKt$DialogPreview$1
 com.liflymark.normalschedule.ui.score_detail.ScoreDetailDialogKt:
@@ -44660,7 +44684,6 @@ kotlin.collections.ArraysKt___ArraysKt:
     public static final java.util.Collection toCollection(float[],java.util.Collection)
     public static final java.util.Collection toCollection(int[],java.util.Collection)
     public static final java.util.Collection toCollection(long[],java.util.Collection)
-    public static final java.util.Collection toCollection(java.lang.Object[],java.util.Collection)
     public static final java.util.Collection toCollection(short[],java.util.Collection)
     public static final java.util.Collection toCollection(boolean[],java.util.Collection)
     public static final double[] toDoubleArray(java.lang.Double[])
@@ -44681,7 +44704,6 @@ kotlin.collections.ArraysKt___ArraysKt:
     public static final java.util.List toList(float[])
     public static final java.util.List toList(int[])
     public static final java.util.List toList(long[])
-    public static final java.util.List toList(java.lang.Object[])
     public static final java.util.List toList(short[])
     public static final java.util.List toList(boolean[])
     public static final long[] toLongArray(java.lang.Long[])
@@ -45304,7 +45326,6 @@ kotlin.collections.SetsKt__SetsKt:
     private static final java.util.HashSet hashSetOf()
     public static final varargs java.util.HashSet hashSetOf(java.lang.Object[])
     private static final java.util.LinkedHashSet linkedSetOf()
-    public static final varargs java.util.LinkedHashSet linkedSetOf(java.lang.Object[])
     private static final java.util.Set mutableSetOf()
     public static final varargs java.util.Set mutableSetOf(java.lang.Object[])
     private static final java.util.Set orEmpty(java.util.Set)
@@ -57715,6 +57736,8 @@ androidx.compose.material.icons.filled.ArrowBackKt:
     public static void <clinit>()
 androidx.compose.material.icons.filled.DeleteKt:
     public static void <clinit>()
+androidx.compose.material.icons.filled.EventSeatKt:
+    public static void <clinit>()
 androidx.compose.material.icons.filled.ExpandLessKt:
     public static void <clinit>()
 androidx.compose.material.icons.filled.ExpandMoreKt:
@@ -61503,13 +61526,20 @@ com.liflymark.normalschedule.logic.LiveLiterals$RepositoryKt:
     public static androidx.compose.runtime.State State$Int$arg-2$call-$init$$arg-0$call-listOf$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-loadCourseByName2$class-Repository
     public static androidx.compose.runtime.State State$Int$arg-4$call-$init$$arg-0$call-listOf$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-loadCourseByName2$class-Repository
     public static androidx.compose.runtime.State State$Int$class-Repository
+    public static androidx.compose.runtime.State State$String$arg-0$call-$init$$arg-0$call-emit$catch$fun-$anonymous$$arg-0$call-flow$$$this$call-flowOn$$$this$call-catch$fun-loginToSpace$class-Repository
+    public static androidx.compose.runtime.State State$String$arg-0$call-$init$$arg-0$call-emit$catch$fun-$anonymous$$arg-2$call-liveData$fun-getId2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-$init$$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-getDepartmentList$class-Repository
+    public static androidx.compose.runtime.State State$String$arg-0$call-$init$$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$fun-loginToSpace$class-Repository
     public static androidx.compose.runtime.State State$String$arg-0$call-$init$$arg-0$call-listOf$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-loadCourseByName2$class-Repository
+    public static androidx.compose.runtime.State State$String$arg-0$call-$init$$val-errorRoom$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-getSpaceRooms$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-$init$$arg-0$call-emit$branch$if$try$fun-$anonymous$$arg-0$call-flow$fun-getSentences$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-$init$$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$fun-loadCourseByMajorToAll$class-Repository
+    public static androidx.compose.runtime.State State$String$arg-1$call-$init$$val-errorRoom$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-getSpaceRooms$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$$this$call-not$cond$if$try$fun-$anonymous$$arg-2$call-liveData$fun-loadBackground$class-Repository
     public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$if$fun-$anonymous$$arg-0$call-flow$$$this$call-catch$fun-loadCourseByMajor2$class-Repository
+    public static androidx.compose.runtime.State State$String$arg-2$call-$init$$val-errorRoom$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-getSpaceRooms$class-Repository
     public static androidx.compose.runtime.State State$String$arg-3$call-$init$$arg-0$call-listOf$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-loadCourseByName2$class-Repository
+    public static androidx.compose.runtime.State State$String$arg-3$call-$init$$val-errorRoom$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-getSpaceRooms$class-Repository
     public static androidx.compose.runtime.State State$String$arg-6$call-$init$$arg-0$call-listOf$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-loadCourseByName2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-7$call-$init$$arg-0$call-listOf$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-loadCourseByName2$class-Repository
     public static androidx.compose.runtime.State State$String$arg-8$call-$init$$arg-0$call-listOf$arg-0$call-emit$fun-$anonymous$$arg-0$call-catch$$$this$call-flowOn$fun-loadCourseByName2$class-Repository
@@ -61982,6 +62012,60 @@ com.liflymark.normalschedule.logic.model.LiveLiterals$ScoreResponseKt:
     public static androidx.compose.runtime.State State$String$6$str$fun-toString$class-ThisProjectGrade
     public static androidx.compose.runtime.State State$String$7$str$fun-toString$class-ThisProjectGrade
     public static androidx.compose.runtime.State State$String$9$str$fun-toString$class-ThisProjectGrade
+com.liflymark.normalschedule.logic.model.LiveLiterals$SpaceLoginResponseKt:
+    public static boolean Boolean$branch$when-1$fun-equals$class-SpaceLoginResponse
+    public static boolean Boolean$branch$when-2$fun-equals$class-SpaceLoginResponse
+    public static int Int$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$Boolean$branch$when$fun-equals$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$Boolean$branch$when-1$fun-equals$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$Boolean$branch$when-2$fun-equals$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$Boolean$fun-equals$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$Int$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$String$0$str$fun-toString$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$String$1$str$fun-toString$class-SpaceLoginResponse
+    public static androidx.compose.runtime.State State$String$3$str$fun-toString$class-SpaceLoginResponse
+com.liflymark.normalschedule.logic.model.LiveLiterals$SpaceResponseKt:
+    public static boolean Boolean$branch$when-1$fun-equals$class-Room
+    public static boolean Boolean$branch$when-1$fun-equals$class-SpaceResponse
+    public static boolean Boolean$branch$when-2$fun-equals$class-Room
+    public static boolean Boolean$branch$when-2$fun-equals$class-SpaceResponse
+    public static boolean Boolean$branch$when-3$fun-equals$class-Room
+    public static boolean Boolean$branch$when-3$fun-equals$class-SpaceResponse
+    public static boolean Boolean$branch$when-4$fun-equals$class-Room
+    public static boolean Boolean$branch$when-5$fun-equals$class-Room
+    public static int Int$class-Room
+    public static androidx.compose.runtime.State State$Boolean$branch$when$fun-equals$class-Room
+    public static androidx.compose.runtime.State State$Boolean$branch$when$fun-equals$class-SpaceResponse
+    public static androidx.compose.runtime.State State$Boolean$branch$when-1$fun-equals$class-Room
+    public static androidx.compose.runtime.State State$Boolean$branch$when-1$fun-equals$class-SpaceResponse
+    public static androidx.compose.runtime.State State$Boolean$branch$when-2$fun-equals$class-Room
+    public static androidx.compose.runtime.State State$Boolean$branch$when-2$fun-equals$class-SpaceResponse
+    public static androidx.compose.runtime.State State$Boolean$branch$when-3$fun-equals$class-Room
+    public static androidx.compose.runtime.State State$Boolean$branch$when-3$fun-equals$class-SpaceResponse
+    public static androidx.compose.runtime.State State$Boolean$branch$when-4$fun-equals$class-Room
+    public static androidx.compose.runtime.State State$Boolean$branch$when-5$fun-equals$class-Room
+    public static androidx.compose.runtime.State State$Boolean$fun-equals$class-Room
+    public static androidx.compose.runtime.State State$Boolean$fun-equals$class-SpaceResponse
+    public static androidx.compose.runtime.State State$Int$arg-0$call-times$$this$call-plus$set-result$fun-hashCode$class-Room
+    public static androidx.compose.runtime.State State$Int$arg-0$call-times$$this$call-plus$set-result$fun-hashCode$class-SpaceResponse
+    public static androidx.compose.runtime.State State$Int$arg-0$call-times$$this$call-plus$set-result-1$fun-hashCode$class-Room
+    public static androidx.compose.runtime.State State$Int$arg-0$call-times$$this$call-plus$set-result-2$fun-hashCode$class-Room
+    public static androidx.compose.runtime.State State$Int$class-Room
+    public static androidx.compose.runtime.State State$Int$class-SpaceResponse
+    public static androidx.compose.runtime.State State$String$0$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$0$str$fun-toString$class-SpaceResponse
+    public static androidx.compose.runtime.State State$String$1$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$1$str$fun-toString$class-SpaceResponse
+    public static androidx.compose.runtime.State State$String$10$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$12$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$3$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$3$str$fun-toString$class-SpaceResponse
+    public static androidx.compose.runtime.State State$String$4$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$4$str$fun-toString$class-SpaceResponse
+    public static androidx.compose.runtime.State State$String$6$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$6$str$fun-toString$class-SpaceResponse
+    public static androidx.compose.runtime.State State$String$7$str$fun-toString$class-Room
+    public static androidx.compose.runtime.State State$String$9$str$fun-toString$class-Room
 com.liflymark.normalschedule.logic.model.LiveLiterals$TimeTableBeanKt:
     public static boolean Boolean$branch$when-1$fun-equals$class-TimeTableBean
     public static boolean Boolean$branch$when-2$fun-equals$class-TimeTableBean
@@ -62016,6 +62100,8 @@ com.liflymark.normalschedule.logic.network.LiveLiterals$NormalScheduleNetworkKt:
     public static androidx.compose.runtime.State State$String$arg-0$call-$init$$arg-0$call-resumeWithException$else$if$fun-onResponse$class-$no-name-provided$$arg-0$call-enqueue$fun-$anonymous$$arg-0$call-suspendCoroutine$fun-await$class-NormalScheduleNetwork
 com.liflymark.normalschedule.logic.network.LiveLiterals$ServiceCreatorKt:
     public static androidx.compose.runtime.State State$Int$class-ServiceCreator
+com.liflymark.normalschedule.logic.network.LiveLiterals$SpaceServiceKt:
+    public static androidx.compose.runtime.State State$String$param-captcha$fun-loginToSpace$class-SpaceService
 com.liflymark.normalschedule.logic.network.NormalScheduleNetwork:
     public static final int $stable
 com.liflymark.normalschedule.logic.network.ServiceCreator:
@@ -62281,6 +62367,16 @@ com.liflymark.normalschedule.logic.utils.LiveLiterals$GetDataUtilKt:
     public static int Int$branch$if$fun-whichWeekNow$class-GetDataUtil
     public static int Int$val-result$fun-dateMinusDate$class-GetDataUtil
     public static androidx.compose.runtime.State State$Int$arg-0$call-div$fun-whichWeekNow$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-0$call-repeat$fun-getThreeDay$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-1$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-2$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-3$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-4$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-5$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$cond-6$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-add$fun-$anonymous$$arg-1$call-repeat$fun-getThreeDay$class-GetDataUtil
+    public static androidx.compose.runtime.State State$Int$arg-1$call-add$fun-getThreeDay$class-GetDataUtil
     public static androidx.compose.runtime.State State$Int$arg-1$call-greaterOrEqual$fun-startSchool$class-GetDataUtil
     public static androidx.compose.runtime.State State$Int$arg-1$call-less$cond$if$fun-whichWeekNow$class-GetDataUtil
     public static androidx.compose.runtime.State State$Int$branch$if$fun-whichWeekNow$class-GetDataUtil
@@ -62297,6 +62393,18 @@ com.liflymark.normalschedule.logic.utils.LiveLiterals$GetDataUtilKt:
     public static androidx.compose.runtime.State State$Int$else$if$val-secondAllYearDay$else$if$set-result$fun-dateMinusDate$class-GetDataUtil
     public static androidx.compose.runtime.State State$Int$else$when$fun-getNowWeekNum$class-GetDataUtil
     public static androidx.compose.runtime.State State$Int$val-result$fun-dateMinusDate$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$arg-0$call-$init$$val-sdf$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$arg-0$call-$init$$val-sdf$fun-getThreeDay$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$arg-0$call-add-2$fun-getThreeDay$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$arg-0$call-plus$$this$call-plus$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$branch$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$branch-1$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$branch-2$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$branch-3$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$branch-4$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$branch-5$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$branch-6$when$val-column$fun-getNowMonth$class-GetDataUtil
+    public static androidx.compose.runtime.State State$String$else$when$val-column$fun-getNowMonth$class-GetDataUtil
     public static java.lang.String String$arg-0$call-$init$$val-sdf$fun-getNowDateTime$class-GetDataUtil
 com.liflymark.normalschedule.logic.utils.LiveLiterals$NumberPickerKt:
     public static boolean Boolean$param-reverseLayout$fun-StringPicker
@@ -62327,8 +62435,6 @@ com.liflymark.normalschedule.logic.utils.betterrecyclerview.LiveLiterals$BetterR
     public static androidx.compose.runtime.State State$Int$arg-1$call-less$cond$if$branch-2$when$fun-onInterceptTouchEvent$class-BetterRecyclerView
     public static androidx.compose.runtime.State State$Int$arg-2$call-$init$-1$class-BetterRecyclerView
     public static androidx.compose.runtime.State State$Int$class-BetterRecyclerView
-com.liflymark.normalschedule.ui.about.AboutActivity:
-    public static final int $stable
 com.liflymark.normalschedule.ui.about.GitListActivity:
     public static final int $stable
 com.liflymark.normalschedule.ui.about.GitListAdapter$ViewHolder:
@@ -62348,7 +62454,7 @@ com.liflymark.normalschedule.ui.about.LiveLiterals$AboutActivityKt:
     public static androidx.compose.runtime.State State$String$arg-0$call-setTitle-1$fun-onCreate$class-AboutActivity
     public static androidx.compose.runtime.State State$String$arg-0$call-setTitle-2$fun-onCreate$class-AboutActivity
     public static androidx.compose.runtime.State State$String$arg-0$call-setTitle-3$fun-onCreate$class-AboutActivity
-    public static androidx.compose.runtime.State State$String$arg-1$call-error$catch$fun-$anonymous$$arg-0$call-setOnClickListener-1$fun-onCreate$class-AboutActivity
+    public static androidx.compose.runtime.State State$String$arg-1$call-error$$this$call-show$catch$fun-$anonymous$$arg-0$call-setOnClickListener-1$fun-onCreate$class-AboutActivity
     public static androidx.compose.runtime.State State$String$arg-1$call-message$$this$call-positiveButton$$this$call-show$fun-$anonymous$$arg-0$call-setOnClickListener$fun-onCreate$class-AboutActivity
     public static androidx.compose.runtime.State State$String$arg-1$call-positiveButton$$this$call-show$fun-$anonymous$$arg-0$call-setOnClickListener$fun-onCreate$class-AboutActivity
     public static androidx.compose.runtime.State State$String$arg-1$call-title$$this$call-message$$this$call-positiveButton$$this$call-show$fun-$anonymous$$arg-0$call-setOnClickListener$fun-onCreate$class-AboutActivity
@@ -62471,18 +62577,17 @@ com.liflymark.normalschedule.ui.app_widget_day.LiveLiterals$DayAppWidgetProvider
     public static androidx.compose.runtime.State State$Int$class-DayAppWidgetProvider
     public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$if$fun-onReceive$class-DayAppWidgetProvider
 com.liflymark.normalschedule.ui.app_widget_day.LiveLiterals$DayRemoteViewsFactoryKt:
-    public static int Int$arg-0$call-get$else$when$val-tmp1_safe_receiver$fun-onDataSetChanged$class-DayRemoteViewsFactory
     public static androidx.compose.runtime.State State$Boolean$fun-hasStableIds$class-DayRemoteViewsFactory
-    public static androidx.compose.runtime.State State$Int$arg-0$call-get$else$when$val-tmp1_safe_receiver$fun-onDataSetChanged$class-DayRemoteViewsFactory
-    public static androidx.compose.runtime.State State$Int$arg-1$call-EQEQ$fun-$anonymous$$arg-0$call-filter$arg-0$call-addAll$fun-$anonymous$$arg-0$call-let$else$when$fun-onDataSetChanged$class-DayRemoteViewsFactory
+    public static androidx.compose.runtime.State State$Int$arg-1$call-greater$else$cond$if$fun-onDataSetChanged$class-DayRemoteViewsFactory
     public static androidx.compose.runtime.State State$Int$class-DayRemoteViewsFactory
     public static androidx.compose.runtime.State State$Int$fun-getViewTypeCount$class-DayRemoteViewsFactory
+    public static androidx.compose.runtime.State State$String$0$str$arg-0$call-plus$val-needName$fun-getViewAt$class-DayRemoteViewsFactory
+    public static androidx.compose.runtime.State State$String$2$str$arg-0$call-plus$val-needName$fun-getViewAt$class-DayRemoteViewsFactory
+    public static androidx.compose.runtime.State State$String$4$str$arg-0$call-plus$val-needName$fun-getViewAt$class-DayRemoteViewsFactory
     public static androidx.compose.runtime.State State$String$arg-0$call-putExtra$fun-getViewAt$class-DayRemoteViewsFactory
 com.liflymark.normalschedule.ui.app_widget_day.LiveLiterals$DayRemoteViewsServiceKt:
     public static int Int$class-DayRemoteViewsService
     public static androidx.compose.runtime.State State$Int$class-DayRemoteViewsService
-com.liflymark.normalschedule.ui.class_course.ClassCourseActivity:
-    public static final int $stable
 com.liflymark.normalschedule.ui.class_course.ClassCourseActivityKt$SelectMajor$1:
     public int label
 com.liflymark.normalschedule.ui.class_course.ClassCourseActivityKt$SelectMajor$2$1:
@@ -62819,8 +62924,6 @@ com.liflymark.normalschedule.ui.import_course.LiveLiterals$ImportLoginFragmentKt
     public static androidx.compose.runtime.State State$String$arg-5$call-$init$$arg-0$call-listOf$val-allCourseList$branch$if$fun-$anonymous$$arg-1$call-observe-2$fun-onActivityCreated$class-ImportLoginFragment
     public static androidx.compose.runtime.State State$String$arg-6$call-$init$$arg-0$call-listOf$val-allCourseList$branch$if$fun-$anonymous$$arg-1$call-observe-2$fun-onActivityCreated$class-ImportLoginFragment
     public static androidx.compose.runtime.State State$String$arg-7$call-$init$$arg-0$call-listOf$val-allCourseList$branch$if$fun-$anonymous$$arg-1$call-observe-2$fun-onActivityCreated$class-ImportLoginFragment
-com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity:
-    public static final int $stable
 com.liflymark.normalschedule.ui.import_show_score.ImportScoreViewModel:
     public static final int $stable
 com.liflymark.normalschedule.ui.import_show_score.LiveLiterals$ImportScoreActivityKt:
@@ -62893,6 +62996,167 @@ com.liflymark.normalschedule.ui.lib_order.LibOrderActivity:
 com.liflymark.normalschedule.ui.lib_order.LiveLiterals$LibOrderActivityKt:
     public static int Int$class-LibOrderActivity
     public static androidx.compose.runtime.State State$Int$class-LibOrderActivity
+com.liflymark.normalschedule.ui.login_space_room.LiveLiterals$LoginSpaceActivityKt:
+    public static boolean Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-5$call-checkInputAndShow$fun-$anonymous$$arg-0$call-Button$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static boolean Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-openWaitDialog$fun-InputSpace
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-0$call-Button$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-5$call-checkInputAndShow$fun-$anonymous$$arg-0$call-Button$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-Checkbox$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-LaunchedEffect$fun-InputSpace
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-openWaitDialog$fun-InputSpace
+    public static androidx.compose.runtime.State State$Float$arg-0$call-alpha$$$this$call-padding$val-tmp0_modifier$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Float$arg-0$call-fillMaxWidth$$$this$call-alpha$$$this$call-padding$val-tmp0_modifier$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Float$arg-0$call-fillMaxWidth$arg-0$call-Row$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Float$arg-0$call-fillMaxWidth$val-tmp2_modifier$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Float$arg-0$call-fillMaxWidth$val-tmp6_modifier$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-RoundedCornerShape$val-tmp2_shape$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$$$this$call-fillMaxWidth$$$this$call-alpha$$$this$call-padding$val-tmp0_modifier$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-2$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-3$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-padding$val-tmp0_modifier$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$val-tmp1_elevation$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$Int$class-LoginSpaceActivity
+    public static androidx.compose.runtime.State State$String$arg-0$call-NormalTopBar$fun-$anonymous$$arg-2$call-Scaffold$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-$anonymous$$arg-1$call-setContent$fun-onCreate$class-LoginSpaceActivity
+    public static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-3$call-Row$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-6$call-OutlinedTextField$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-6$call-OutlinedTextField-1$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-Text$fun-$anonymous$$arg-9$call-Button$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-6$call-Card$fun-$anonymous$$arg-3$call-Column$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-get$$$this$call-toString$arg-0$call-$set-password$$branch$if$fun-$anonymous$$arg-2$call-launch$fun-$anonymous$$arg-1$call-LaunchedEffect-1$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-get$$$this$call-toString$arg-0$call-$set-user$$branch$if$fun-$anonymous$$arg-2$call-launch$fun-$anonymous$$arg-1$call-LaunchedEffect-1$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-password$delegate$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-user$delegate$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-0$call-putExtra$fun-$anonymous$$arg-0$call-apply$val-intent$branch$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$arg-0$call-$set-value$$fun-$anonymous$$arg-1$call-LaunchedEffect-1$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$when$fun-checkInputAndShow
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-1$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-1$when$fun-checkInputAndShow
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-2$when$fun-checkInputAndShow
+    public static androidx.compose.runtime.State State$String$arg-1$call-info$$this$call-show$branch$when$fun-checkInputAndShow
+    public static androidx.compose.runtime.State State$String$arg-1$call-info$$this$call-show$branch-1$when$fun-checkInputAndShow
+    public static androidx.compose.runtime.State State$String$arg-1$call-info$$this$call-show$branch-2$when$fun-checkInputAndShow
+    public static androidx.compose.runtime.State State$String$arg-1$call-success$$this$call-show$branch$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-InputSpace
+    public static androidx.compose.runtime.State State$String$arg-1$call-success$$this$call-show$branch-1$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-InputSpace
+com.liflymark.normalschedule.ui.login_space_room.LiveLiterals$LoginSpaceViewModelKt:
+    public static androidx.compose.runtime.State State$Int$arg-0$call-setValue$fun-getId$class-LoginSpaceViewModel
+    public static androidx.compose.runtime.State State$Int$class-LoginSpaceViewModel
+    public static androidx.compose.runtime.State State$String$$$this$call-to$0$vararg$arg-0$call-mapOf$arg-0$call-setValue$fun-putValue$class-LoginSpaceViewModel
+    public static androidx.compose.runtime.State State$String$$$this$call-to$1$vararg$arg-0$call-mapOf$arg-0$call-setValue$fun-putValue$class-LoginSpaceViewModel
+    public static androidx.compose.runtime.State State$String$$$this$call-to$2$vararg$arg-0$call-mapOf$arg-0$call-setValue$fun-putValue$class-LoginSpaceViewModel
+com.liflymark.normalschedule.ui.login_space_room.LiveLiterals$ShowSpaceActivityKt:
+    public static boolean Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-1$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-1$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-1$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-$set-value$-1$fun-$anonymous$$arg-1$call-Item$body$loop$fun-$anonymous$$arg-5$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-$set-value$-1$fun-$anonymous$$arg-1$call-Item$body$loop$fun-$anonymous$$arg-5$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-$set-value$-1$fun-$anonymous$$arg-1$call-Item$body$loop$fun-$anonymous$$arg-5$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expandClassRoom$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expandDate$fun-SelectRoom
+    public static boolean Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expandSchool$fun-SelectRoom
+    public static int Int$$$this$call-$get-dp$$arg-0$call-size$$$this$call-background$arg-0$call-Spacer$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace
+    public static int Int$$$this$call-$get-dp$$arg-0$call-size$arg-0$call-Spacer-1$fun-$anonymous$$arg-1$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace
+    public static int Int$arg-0$call-get$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-dateName$fun-SelectRoom
+    public static int Int$arg-0$call-repeat$fun-$anonymous$$arg-3$call-Row$fun-SingleRowSpace
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-0$call-TextButton$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-0$call-TextButton$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-0$call-TextButton$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-1$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-1$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$$fun-$anonymous$$arg-1$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$-1$fun-$anonymous$$arg-1$call-Item$body$loop$fun-$anonymous$$arg-5$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$-1$fun-$anonymous$$arg-1$call-Item$body$loop$fun-$anonymous$$arg-5$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-$set-value$-1$fun-$anonymous$$arg-1$call-Item$body$loop$fun-$anonymous$$arg-5$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expandClassRoom$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expandDate$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Boolean$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-expandSchool$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Char$arg-1$call-EQEQ$cond$if$body$loop$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Float$arg-0$call-fillMaxWidth$val-tmp2_modifier$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Float$arg-0$call-weight$$$this$call-height$val-tmp1_modifier$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Float$arg-0$call-weight$val-tmp5_modifier$branch$if$body$loop$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Float$arg-0$call-weight$val-tmp7_modifier$else$if$body$loop$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer$fun-$anonymous$$arg-3$call-Column$fun-SayHowToUse
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$arg-0$call-Spacer-1$fun-$anonymous$$arg-3$call-Column$fun-SayHowToUse
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-height$val-tmp1_modifier$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-heightIn$arg-2$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-heightIn$arg-2$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-0$call-heightIn$arg-2$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-1$call-heightIn$arg-2$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-1$call-heightIn$arg-2$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-dp$$arg-1$call-heightIn$arg-2$call-DropdownMenu$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$arg-1$call-$init$$val-tmp2_textStyle$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$arg-3$call-Text$fun-$anonymous$$arg-9$call-TextButton$fun-$anonymous$$arg-3$call-Box$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$arg-3$call-Text$fun-$anonymous$$arg-9$call-TextButton$fun-$anonymous$$arg-3$call-Box-1$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$arg-3$call-Text$fun-$anonymous$$arg-9$call-TextButton$fun-$anonymous$$arg-3$call-Box-2$fun-$anonymous$$arg-3$call-Row$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$$$this$call-$get-sp$$val-tmp1_fontSize$val-tmp4_textStyle$fun-$anonymous$$arg-3$call-Column$fun-SayHowToUse
+    public static androidx.compose.runtime.State State$Int$arg-0$call-get$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-dateName$fun-SelectRoom
+    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$0$str$val-tmp4_text$branch$if$body$loop$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$0$str$val-tmp6_text$else$if$body$loop$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$Int$class-ShowSpaceActivity
+    public static androidx.compose.runtime.State State$Long$arg-0$call-Color$val-tmp2_color$val-tmp4_textStyle$fun-$anonymous$$arg-3$call-Column$fun-SayHowToUse
+    public static androidx.compose.runtime.State State$Long$arg-0$call-Color$val-tmp8_color$else$if$body$loop$fun-$anonymous$$arg-3$call-Row$body$loop$fun-$anonymous$$arg-3$call-Column$fun-ShowSpaceResult
+    public static androidx.compose.runtime.State State$String$0$vararg$arg-0$call-linkedSetOf$arg-0$call-addAll$branch-1$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$0$vararg$arg-0$call-listOf$arg-0$call-addAll$branch$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$0$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$0$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$0$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-schoolList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$1$vararg$arg-0$call-linkedSetOf$arg-0$call-addAll$branch-1$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$1$vararg$arg-0$call-listOf$arg-0$call-addAll$branch$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$1$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$1$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$1$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-schoolList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$2$vararg$arg-0$call-linkedSetOf$arg-0$call-addAll$branch-1$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$2$vararg$arg-0$call-listOf$arg-0$call-addAll$branch$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$2$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$2$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$3$vararg$arg-0$call-linkedSetOf$arg-0$call-addAll$branch-1$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$3$vararg$arg-0$call-listOf$arg-0$call-addAll$branch$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$3$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$3$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$4$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$4$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$5$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$5$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$6$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$6$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$7$vararg$arg-0$call-listOf$val-roomListOf$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$7$vararg$arg-0$call-mutableStateListOf$fun-$anonymous$$arg-0$call-remember$val-roomList$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$arg-0$call-NormalTopBar$fun-$anonymous$$arg-3$call-Column$fun-$anonymous$$arg-1$call-NormalScheduleTheme$fun-$anonymous$$arg-1$call-setContent$fun-onCreate$class-ShowSpaceActivity
+    public static androidx.compose.runtime.State State$String$arg-0$call-getStringExtra$val-ids$fun-onCreate$class-ShowSpaceActivity
+    public static androidx.compose.runtime.State State$String$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-roomName$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$arg-0$call-mutableStateOf$fun-$anonymous$$arg-0$call-remember$val-schoolName$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$arg-1$call-CenterText$fun-$anonymous$$arg-3$call-Column$fun-SayHowToUse
+    public static androidx.compose.runtime.State State$String$arg-1$call-CenterText-1$fun-$anonymous$$arg-3$call-Column$fun-SayHowToUse
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$arg-1$call-EQEQ$cond-1$when$fun-$anonymous$$arg-1$call-LaunchedEffect-2$fun-SelectRoom
+    public static androidx.compose.runtime.State State$String$arg-1$call-error$$this$call-show$branch$if$fun-SelectRoom
+com.liflymark.normalschedule.ui.login_space_room.LiveLiterals$ShowSpaceViewModelKt:
+    public static androidx.compose.runtime.State State$Int$class-ShowSpaceViewModel
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt$InputSpace$1:
+    public int label
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt$InputSpace$2$1:
+    public int label
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt$InputSpace$2:
+    public int label
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt$InputSpace$3:
+    public int label
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivityKt:
+    public static void <clinit>()
+com.liflymark.normalschedule.ui.login_space_room.LoginSpaceViewModel:
+    public static final int $stable
+    public java.lang.String password
+    public java.lang.String user
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivity:
+    public static final int $stable
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivityKt$SelectRoom$1:
+    public int label
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivityKt$SelectRoom$2:
+    public int label
+com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivityKt$SelectRoom$3$1:
+    public int label
 com.liflymark.normalschedule.ui.score_detail.LiveLiterals$DrawCanvasKt:
     public static float Float$val-x1$fun-starPath
     public static float Float$val-x2$fun-starPath
@@ -62988,7 +63252,7 @@ com.liflymark.normalschedule.ui.score_detail.LiveLiterals$LoginToScoreActivityKt
     public static androidx.compose.runtime.State State$String$arg-1$call-success$$this$call-show$branch$if$fun-$anonymous$$arg-1$call-observe$fun-refreshId
     public static androidx.compose.runtime.State State$String$branch$when$arg-0$call-$set-id$$branch$if$fun-$anonymous$$arg-1$call-observe$fun-refreshId
 com.liflymark.normalschedule.ui.score_detail.LiveLiterals$LoginToScoreViewModelKt:
-    public static androidx.compose.runtime.State State$Int$arg-0$call-setValue$fun-getId$class-LoginToScoreViewModel
+    public static androidx.compose.runtime.State State$Int$arg-0$call-plus$else$when$arg-0$call-setValue$fun-getId$class-LoginToScoreViewModel
     public static androidx.compose.runtime.State State$Int$class-LoginToScoreViewModel
     public static androidx.compose.runtime.State State$String$$$this$call-to$0$vararg$arg-0$call-mapOf$arg-0$call-setValue$fun-putValue$class-LoginToScoreViewModel
     public static androidx.compose.runtime.State State$String$$$this$call-to$1$vararg$arg-0$call-mapOf$arg-0$call-setValue$fun-putValue$class-LoginToScoreViewModel
@@ -63046,8 +63310,6 @@ com.liflymark.normalschedule.ui.score_detail.LiveLiterals$ShowDetailScoreActivit
     public static androidx.compose.runtime.State State$String$arg-0$call-d$fun-$anonymous$$arg-3$call-Column$fun-AllGrades
     public static androidx.compose.runtime.State State$String$arg-0$call-getStringExtra$val-tmp0_elvis_lhs$val-allGradeListString$fun-onCreate$class-ShowDetailScoreActivity
     public static androidx.compose.runtime.State State$String$branch$when$val-allGradeListString$fun-onCreate$class-ShowDetailScoreActivity
-com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity:
-    public static final int $stable
 com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivityKt$Input$1$1:
     public int label
 com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivityKt$Input$1:
@@ -63062,8 +63324,6 @@ com.liflymark.normalschedule.ui.score_detail.ShowDetailScoreActivity:
     public static final int $stable
 com.liflymark.normalschedule.ui.score_detail.ShowDetailScoreActivityKt:
     public static void <clinit>()
-com.liflymark.normalschedule.ui.set_background.DefaultBackground:
-    public static final int $stable
 com.liflymark.normalschedule.ui.set_background.DefaultBackgroundViewModel:
     public static final int $stable
 com.liflymark.normalschedule.ui.set_background.LiveLiterals$DefaultBackgroundKt:
@@ -63136,6 +63396,7 @@ com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$DrawerSideUIKt:
     public static androidx.compose.runtime.State State$String$arg-3$call-NavButton-2$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static androidx.compose.runtime.State State$String$arg-3$call-NavButton-3$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static androidx.compose.runtime.State State$String$arg-3$call-NavButton-4$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
+    public static androidx.compose.runtime.State State$String$arg-3$call-NavButton-5$fun-$anonymous$$arg-3$call-Column$fun-DrawerNavHost
     public static java.lang.String String$arg-0$call-Text$fun-$anonymous$$arg-1$call-TestTheme$fun-Test
 com.liflymark.normalschedule.ui.show_timetable.LiveLiterals$ExfunKt:
     public static boolean Boolean$fun-isSelected
