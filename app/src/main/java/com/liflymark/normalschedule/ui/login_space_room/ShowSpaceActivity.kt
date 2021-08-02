@@ -25,6 +25,7 @@ import com.liflymark.normalschedule.ui.class_course.Item
 import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.test.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 
 class ShowSpaceActivity : ComponentActivity() {
@@ -33,7 +34,7 @@ class ShowSpaceActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val ids = intent.getStringExtra("ids")
         setContent {
-            NormalScheduleTheme {
+            NorScTheme {
                 UiControl()
                 Column {
                     NormalTopBar(label = "查询空教室")

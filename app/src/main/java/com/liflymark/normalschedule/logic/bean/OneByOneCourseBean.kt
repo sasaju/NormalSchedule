@@ -14,5 +14,6 @@ data class OneByOneCourseBean(
 
 fun getData(): List<OneByOneCourseBean>{
     return listOf(
-        OneByOneCourseBean("点击右上角导入导入\n...\n...", 1, 2, 1, Color.Blue))
+        OneByOneCourseBean("点击右上角导入导入\n...\n...", 1, 2, 1, Color.Transparent)
+    )
 }

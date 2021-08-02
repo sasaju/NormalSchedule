@@ -33,6 +33,7 @@ import com.liflymark.normalschedule.ui.edit_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.ProgressDialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.test.ui.theme.NorScTheme
 import kotlinx.coroutines.launch
 
 class EditCourseActivity : ComponentActivity() {
@@ -42,7 +43,7 @@ class EditCourseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val courseName = intent.getStringExtra("courseName") ?: ""
         setContent {
-            NormalScheduleTheme {
+            NorScTheme {
                 UiControl()
                 Column {
                     NormalTopBar(label = "添加课程")

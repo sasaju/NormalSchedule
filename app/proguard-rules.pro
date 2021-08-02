@@ -20,3 +20,14 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -printusage release/usage.txt
+
+#PictureSelector 2.0
+-keep class com.luck.picture.lib.** { *; }
+
+#Ucrop
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
+
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*

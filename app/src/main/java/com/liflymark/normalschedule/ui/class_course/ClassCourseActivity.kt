@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -42,6 +43,7 @@ import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.show_timetable.*
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.test.ui.theme.NorScTheme
 import kotlinx.coroutines.flow.collectLatest
 
 class ClassCourseActivity : ComponentActivity() {
@@ -51,7 +53,7 @@ class ClassCourseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val allowImport = intent.getBooleanExtra("allowImport", false)
         setContent {
-            NormalScheduleTheme {
+            NorScTheme {
                 UiControl()
                 Column {
                     NormalTopBar(label = "班级课程")
@@ -98,14 +100,14 @@ fun SelectMajor(allowImport:Boolean = false,courseViewModel: ClassCourseViewMode
         }
     }
     WaitingDepartList(departState = departmentList)
-    Row(horizontalArrangement = Arrangement.Center) {
+    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
         val expanded = remember { mutableStateOf(false) }
         val expandedMajorList = remember {
             mutableStateOf(false)
         }
-        Box{
+        Box(contentAlignment = Alignment.TopCenter){
             TextButton(onClick = { expanded.value = true }) {
-                Text(text = department)
+                Text(text = department, fontSize = 15.sp)
             }
             //学院列表
             DropdownMenu(
@@ -122,9 +124,9 @@ fun SelectMajor(allowImport:Boolean = false,courseViewModel: ClassCourseViewMode
             }
         }
 
-        Box{
+        Box(contentAlignment = Alignment.Center){
             TextButton(onClick = { expandedMajorList.value = true }) {
-                Text(text = major)
+                Text(text = major, fontSize = 15.sp)
             }
 
             /*专业列表*/
@@ -147,7 +149,7 @@ fun SelectMajor(allowImport:Boolean = false,courseViewModel: ClassCourseViewMode
                 courseViewModel.saveAccount()
                 courseViewModel.putDepartmentAndMajorBean(department, major)
             }) {
-                Text(text = "导入当前课表")
+                Text(text = "导入当前课表" ,fontSize = 15.sp)
             }
         }
     }

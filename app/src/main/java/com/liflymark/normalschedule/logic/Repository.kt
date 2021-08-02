@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.logic
 import android.content.ContentResolver
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
@@ -53,6 +54,15 @@ object  Repository {
         Result.success(NormalScheduleNetwork.getId())
     }
 
+    fun getId4() = liveData {
+        try {
+            val result = NormalScheduleNetwork.getId()
+            emit(result)
+        } catch (e: Exception){
+            emit(IdResponse("love"))
+        }
+    }
+
     fun getCaptcha(sessionId: String) =  liveData(Dispatchers.IO) {
         try {
             val img = NormalScheduleNetwork.getCaptcha(sessionId).bytes()
@@ -93,7 +103,19 @@ object  Repository {
     }
 
     fun getVisitCourse() = fire(Dispatchers.IO){
-        val courseResponse = NormalScheduleNetwork.getVisitCourse()
+//        val courseResponse = NormalScheduleNetwork.getVisitCourse()
+        val courseResponse = CourseResponse(listOf(
+            AllCourse(
+                "五四路",
+                4,
+                1,
+                "11111111111111111111111",
+                1,
+                "点击右上角导入课程",
+                "",
+                ""
+            )
+        ), status = "ok")
         Result.success(courseResponse)
     }
 
@@ -317,6 +339,7 @@ object  Repository {
             .build()
         try {
             val a = backgroundDao.loadLastBackground()
+            Log.d("Repository", a.userBackground.toString())
             if (a.userBackground != "0"){
                 emit(Uri.parse(a.userBackground))
             } else {
@@ -327,7 +350,7 @@ object  Repository {
         }
     }
 
-    fun loadBackground2() = flow {
+    fun loadBackground2():Uri {
         val resources = NormalScheduleApplication.context.resources
         val resourceId = R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
         val uriBeepSound = Uri.Builder()
@@ -336,15 +359,15 @@ object  Repository {
             .appendPath(resources.getResourceTypeName(resourceId))
             .appendPath(resources.getResourceEntryName(resourceId))
             .build()
-        try {
-            val a = backgroundDao.loadLastBackground()
+        return try {
+            val a = backgroundDao.loadLastBackgroundMain()
             if (a.userBackground != "0"){
-                emit(Uri.parse(a.userBackground))
+                Uri.parse(a.userBackground)
             } else {
-                emit(uriBeepSound)
+                uriBeepSound
             }
         } catch (e:Exception){
-            emit(Uri.parse("0"))
+            Uri.parse("0")
         }
     }
 

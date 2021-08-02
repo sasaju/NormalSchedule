@@ -9,7 +9,6 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.DrawerState
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -21,10 +20,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,8 +32,7 @@ import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity
 import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
-import com.liflymark.normalschedule.ui.show_timetable.ui.theme.NormalScheduleTheme
-import com.liflymark.test.ui.theme.TestTheme
+import com.liflymark.test.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -62,7 +57,7 @@ fun DrawerNavHost(drawerState: DrawerState){
             icon = Icons.Filled.TrendingUp, text = "本学期成绩明细")
         NavButton(activity = LoginSpaceActivity(),
             drawerState = drawerState,
-            icon = Icons.Filled.EventSeat, text = "查询空教室")
+            icon = Icons.Filled.EventSeat, text = "空教室查询")
 
         Spacer(modifier = Modifier
             .fillMaxWidth()
@@ -72,6 +67,13 @@ fun DrawerNavHost(drawerState: DrawerState){
 
         NavButton(activity = ClassCourseActivity(), drawerState = drawerState,
             icon = Icons.Filled.Margin, text = "班级课程查询")
+
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(5.dp)
+            .padding(2.dp)
+            .background(Color.Gray))
+
         NavButton(activity = AboutActivity(), drawerState = drawerState,
             icon = Icons.Filled.Info, text = "关于软件")
 
@@ -110,7 +112,8 @@ fun OneSentence(viewModel:ShowTimetableViewModel = viewModel()){
                 brush = Brush.verticalGradient(
                     listOf(Color(0xff2196f3), Color(0xFFFFFFFF))
                 )
-            ))
+            )
+        )
         Column(
             modifier = Modifier.fillMaxWidth(0.9f),
             verticalArrangement = Arrangement.Center,
@@ -201,7 +204,7 @@ fun NavButton(
 @Preview(showBackground = true)
 @Composable
 fun Test(){
-    TestTheme {
+    NorScTheme {
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()

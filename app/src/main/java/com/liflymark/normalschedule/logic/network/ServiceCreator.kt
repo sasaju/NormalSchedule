@@ -10,9 +10,9 @@ object ServiceCreator {
 
     private const val BASE_URL = "https://liflymark.top/"
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
-            .readTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(5, TimeUnit.SECONDS)
+            .connectTimeout(8, TimeUnit.SECONDS)
+            .readTimeout(8, TimeUnit.SECONDS)
+            .writeTimeout(8, TimeUnit.SECONDS)
             .callTimeout(1, TimeUnit.MINUTES)
             .build()
 

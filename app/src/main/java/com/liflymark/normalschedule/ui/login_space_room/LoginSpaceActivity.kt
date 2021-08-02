@@ -27,6 +27,7 @@ import com.liflymark.normalschedule.logic.model.IdResponse
 import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.*
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.test.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ class LoginSpaceActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NormalScheduleTheme {
+            NorScTheme() {
                 UiControl()
                 Scaffold(
                     topBar = {
@@ -58,21 +59,31 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
         mutableStateOf(false)
     }
     val ids = lsViewModel.idLiveData.observeAsState(initial = lsViewModel.initialResultId)
-    val spaceResult = lsViewModel.loginSpaceLiveData.observeAsState(initial = lsViewModel.initialSpace)
+    val spaceResult =
+        lsViewModel.loginSpaceLiveData.observeAsState(initial = lsViewModel.initialSpace)
     val activity = (LocalContext.current as LoginSpaceActivity)
-    WaitDialog(openDialog = openWaitDialog)
-    LaunchedEffect(key1 = true, block = {lsViewModel.getId()})
-    LaunchedEffect(ids.value){
+    ProgressDialog(openDialog = openWaitDialog, label = "正在链接\n教务系统")
+    LaunchedEffect(key1 = true, block = { lsViewModel.getId() })
+    LaunchedEffect(ids.value) {
         openWaitDialog.value = ids.value.id == ""
         lsViewModel.id = ids.value.id
-        launch {
-            if (lsViewModel.isAccountSaved()){
-                user = lsViewModel.getSavedAccount()["user"].toString()
-                password = lsViewModel.getSavedAccount()["password"].toString()
+        if (ids.value.id == "love"){
+            Toasty.info(activity, "无法链接至教务系统，查询结果可能不准确").show()
+            val intent = Intent(activity, ShowSpaceActivity::class.java).apply {
+                putExtra("ids", ids.value.id)
+            }
+            activity.startActivity(intent)
+            activity.finish()
+        }else{
+            launch {
+                if (lsViewModel.isAccountSaved()) {
+                    user = lsViewModel.getSavedAccount()["user"].toString()
+                    password = lsViewModel.getSavedAccount()["password"].toString()
+                }
             }
         }
     }
-    LaunchedEffect(spaceResult.value){
+    LaunchedEffect(spaceResult.value) {
         Log.d("SpaceACti", spaceResult.value.result)
         when (spaceResult.value.result) {
             "登陆成功" -> {
@@ -87,7 +98,7 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
                 Toasty.success(activity, "正在链接，请等待").show()
             }
             else -> {
-                Toasty.error(activity,spaceResult.value.result).show()
+                Toasty.error(activity, spaceResult.value.result).show()
             }
         }
     }
@@ -102,17 +113,20 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
 //    }
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(40.dp))
-        Card(modifier = Modifier
-            .height(350.dp)
-            .fillMaxWidth(0.95f)
-            .alpha(0.8f)
-            .padding(5.dp),elevation = 5.dp, shape =  RoundedCornerShape(10.dp)
+        Card(
+            modifier = Modifier
+                .height(350.dp)
+                .fillMaxWidth(0.95f)
+                .alpha(0.8f)
+                .padding(5.dp), elevation = 5.dp, shape = RoundedCornerShape(10.dp)
         ) {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Spacer(modifier = Modifier.height(40.dp))
                 OutlinedTextField(
                     value = user,
@@ -139,8 +153,8 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(30.dp))
                 Button(onClick = {
                     checkInputAndShow(
-                        activity,user, password, lsViewModel,
-                        lsViewModel.id, error = {openWaitDialog.value =false})
+                        activity, user, password, lsViewModel,
+                        lsViewModel.id, error = { openWaitDialog.value = false })
                     openWaitDialog.value = true
                 }) {
                     Text(text = "登陆以查询空教室")
@@ -152,11 +166,11 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
 
 fun checkInputAndShow(
     activity: LoginSpaceActivity,
-    userName:String, userPassword: String,
+    userName: String, userPassword: String,
     viewModel: LoginSpaceViewModel,
     ids: String,
-    error:() -> Unit = {}
-){
+    error: () -> Unit = {}
+) {
     when {
         ids == "" -> {
             Toasty.info(activity, "访问服务器异常，请重试", Toasty.LENGTH_SHORT).show()

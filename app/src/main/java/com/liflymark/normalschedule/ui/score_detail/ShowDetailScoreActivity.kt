@@ -26,6 +26,7 @@ import com.liflymark.normalschedule.logic.model.Grades
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.score_detail.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.test.ui.theme.NorScTheme
 
 class ShowDetailScoreActivity : ComponentActivity() {
     @ExperimentalAnimationApi
@@ -36,7 +37,7 @@ class ShowDetailScoreActivity : ComponentActivity() {
         val allGradeList = Convert.jsonToGradesList(allGradeListString)
         setContent {
             UiControl()
-            NormalScheduleTheme {
+            NorScTheme {
                 AllGrades(allGradeList)
             }
         }

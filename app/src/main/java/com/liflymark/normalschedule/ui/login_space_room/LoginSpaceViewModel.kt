@@ -21,7 +21,7 @@ class LoginSpaceViewModel:ViewModel() {
     }
 
     val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
-        Repository.getId2()
+        Repository.getId4()
     }
 
     fun getId() {

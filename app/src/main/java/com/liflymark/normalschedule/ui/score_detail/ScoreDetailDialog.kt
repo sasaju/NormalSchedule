@@ -57,7 +57,10 @@ fun ProgressDialog(openDialog: MutableState<Boolean>, label:String){
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Spacer(modifier = Modifier.width(10.dp))
                     CircularProgressIndicator()
-                    Text(text = label, modifier = Modifier.width(130.dp))
+                    if (label != "") {
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(text = label, modifier = Modifier.wrapContentWidth())
+                    }
                     Spacer(modifier = Modifier.width(10.dp))
                 }
             }

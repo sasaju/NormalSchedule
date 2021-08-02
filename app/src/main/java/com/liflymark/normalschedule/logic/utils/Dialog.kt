@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.logic.utils
 import android.content.Context
 import android.util.Log
 import android.widget.Space
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -143,6 +144,25 @@ object Dialog {
                 .build<Any>()
         dialog.setNPicker(allWeek, startSection.toList(), endSection.toList())
         dialog.show()
+    }
+
+    fun getProgressDialog(_context: Context): MaterialDialog {
+        val dialog = MaterialDialog(_context).customView(R.layout.dialog_progress)
+        dialog.apply {
+            cancelable(true)
+            cancelOnTouchOutside(false)
+        }
+        return dialog
+    }
+    fun getProgressDialog(_context: Context, text:String): MaterialDialog {
+        val dialog = MaterialDialog(_context).customView(R.layout.dialog_progress)
+        val textView = dialog.getCustomView().findViewById<TextView>(R.id.progress_text)
+        textView.text = text
+        dialog.apply {
+            cancelable(true)
+            cancelOnTouchOutside(false)
+        }
+        return dialog
     }
 
     fun getSelectDepartmentAndClass(_context: Context, departmentAndMajorList: List<Structure>): MaterialDialog {

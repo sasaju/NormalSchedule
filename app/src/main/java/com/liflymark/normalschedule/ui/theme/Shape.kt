@@ -1,4 +1,4 @@
-package com.liflymark.test.ui.theme
+package com.liflymark.normalschedule.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

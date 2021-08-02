@@ -14,12 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,11 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.score_detail.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
-import com.liflymark.test.ui.theme.TestTheme
+import com.liflymark.test.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -42,7 +37,7 @@ class LoginToScoreActivity : ComponentActivity() {
 
         setContent {
             UiControl()
-            NormalScheduleTheme {
+            NorScTheme {
                 Scaffold(
                     topBar = {
                         NormalTopBar(label = "成绩明细")
@@ -220,7 +215,7 @@ fun refreshId(activity: LoginToScoreActivity,viewModel: LoginToScoreViewModel, o
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview3() {
-    TestTheme {
+    NorScTheme {
         Column(modifier = Modifier
             .background(Color.LightGray)
             .size(100.dp)

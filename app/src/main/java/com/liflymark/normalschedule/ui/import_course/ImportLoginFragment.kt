@@ -21,8 +21,6 @@ import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 class ImportLoginFragment: Fragment() {
 
@@ -38,6 +36,8 @@ class ImportLoginFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         ImmersionBar.with(this).init()
+        val waitDialog = activity?.let { it1 -> Dialog.getProgressDialog(it1) }
+
         if (viewModel.isAccountSaved()){
 //            val intent = Intent(context, ImportScoreActivity::class.java).apply {
 //                putExtra("isSaved", true)
@@ -92,6 +92,7 @@ class ImportLoginFragment: Fragment() {
 
             if (result == null) {
                 activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
+                waitDialog?.dismiss()
             } else {
                 val allCourseList = result.allCourse
                 when (result.status) {
@@ -148,7 +149,7 @@ class ImportLoginFragment: Fragment() {
                     }
                     else -> {
                         activity?.let {
-                            Toasty.error(it, result!!.status, Toasty.LENGTH_SHORT).show()
+                            Toasty.error(it, result.status, Toasty.LENGTH_SHORT).show()
                         }
                         viewModel.getImage(id)
                     }
@@ -212,12 +213,26 @@ class ImportLoginFragment: Fragment() {
             // 判断是否输入学号密码并提交数据至ViewModel层以更新数据
             userName = user.text.toString()
             userPassword = password.text.toString()
+            waitDialog?.show()
+//            dialog.Content()
+//            dialog.showDialog.value = true
             val yzm = et_code.text.toString()
             when {
-                !agree_or_not.isChecked ->  activity?.let { it1 -> Toasty.warning(it1, "您未同意用户协议", Toasty.LENGTH_SHORT).show() }
-                userName == "" -> activity?.let { it1 -> Toasty.warning(it1, "请输入学号", Toasty.LENGTH_SHORT).show() }
-                userPassword == "" -> activity?.let { it1 -> Toasty.warning(it1, "请输入密码", Toasty.LENGTH_SHORT).show() }
-                id == "" -> viewModel.putValue(userName, userPassword)
+                !agree_or_not.isChecked ->  activity?.let { it1 ->
+                    Toasty.warning(it1, "您未同意用户协议", Toasty.LENGTH_SHORT).show()
+                    waitDialog?.dismiss()
+                }
+                userName == "" -> activity?.let { it1 ->
+                    Toasty.warning(it1, "请输入学号", Toasty.LENGTH_SHORT).show()
+                    waitDialog?.dismiss()
+                }
+                userPassword == "" -> activity?.let { it1 ->
+                    Toasty.warning(it1, "请输入密码", Toasty.LENGTH_SHORT).show()
+                    waitDialog?.dismiss()
+                }
+                id == "" -> {
+                    viewModel.putValue(userName, userPassword)
+                }
                 else -> viewModel.putValue(userName, userPassword, yzm, id)
             }
         }
