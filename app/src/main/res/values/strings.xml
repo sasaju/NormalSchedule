@@ -21,4 +21,9 @@
     <string name="title_activity_edit_course">EditCourseActivity</string>
     <string name="title_activity_login_space">LoginSpaceActivity</string>
     <string name="title_activity_show_space">ShowSpaceActivity</string>
+    <string name="title_activity_tool_box">河大工具箱</string>
+    <string name="space_long">空教室查询</string>
+    <string name="space_short">空教室</string>
+    <string name="score_long">成绩查询</string>
+    <string name="score_short">成绩</string>
 </resources>

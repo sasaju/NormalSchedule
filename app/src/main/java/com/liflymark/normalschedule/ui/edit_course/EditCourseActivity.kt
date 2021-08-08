@@ -19,21 +19,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.liflymark.normalschedule.logic.bean.CourseBean
-import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.utils.*
 import com.liflymark.normalschedule.logic.utils.Dialog.whichIs1
-import com.liflymark.normalschedule.ui.edit_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.ProgressDialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
-import com.liflymark.test.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import kotlinx.coroutines.launch
 
 class EditCourseActivity : ComponentActivity() {
@@ -359,30 +356,30 @@ fun EditLine(icon: ImageVector, content: String, onValueChange: (it: String) -> 
     }
 }
 
-@ExperimentalPagerApi
-@ExperimentalMaterialApi
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview5() {
-    NormalScheduleTheme {
-        CardContent {
-            Row {
-                TextButton(onClick = {
-
-                }) {
-                    Text(text = "删除末尾时段")
-                }
-                TextButton(onClick = {
-
-                }) {
-                    Text(text = "增加时段")
-                }
-                TextButton(onClick = {
-
-                }) {
-                    Text(text = "保存更改")
-                }
-            }
-        }
-    }
-}
+//@ExperimentalPagerApi
+//@ExperimentalMaterialApi
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview5() {
+//    NormalScheduleTheme {
+//        CardContent {
+//            Row {
+//                TextButton(onClick = {
+//
+//                }) {
+//                    Text(text = "删除末尾时段")
+//                }
+//                TextButton(onClick = {
+//
+//                }) {
+//                    Text(text = "增加时段")
+//                }
+//                TextButton(onClick = {
+//
+//                }) {
+//                    Text(text = "保存更改")
+//                }
+//            }
+//        }
+//    }
+//}

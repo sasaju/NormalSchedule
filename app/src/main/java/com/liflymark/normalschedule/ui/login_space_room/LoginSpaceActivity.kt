@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,11 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.liflymark.normalschedule.logic.model.IdResponse
+import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.*
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
-import com.liflymark.test.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -40,7 +40,7 @@ class LoginSpaceActivity : ComponentActivity() {
                 UiControl()
                 Scaffold(
                     topBar = {
-                        NormalTopBar(label = "成绩明细")
+                        NormalTopBar(label = "空教室查询")
                     },
                     content = {
                         InputSpace(viewModel)
@@ -62,7 +62,24 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
     val spaceResult =
         lsViewModel.loginSpaceLiveData.observeAsState(initial = lsViewModel.initialSpace)
     val activity = (LocalContext.current as LoginSpaceActivity)
-    ProgressDialog(openDialog = openWaitDialog, label = "正在链接\n教务系统")
+    ProgressDialog(openDialog = openWaitDialog, label = "正在链接\n教务系统"){
+        Spacer(modifier = Modifier
+            .width(100.dp)
+            .height(5.dp)
+            .padding(2.dp)
+            .background(Color.Gray))
+        TextButton(onClick = {
+//            val intent = Intent(activity, ShowSpaceActivity::class.java).apply {
+//                putExtra("ids", "love")
+//            }
+            Repository.cancelAll()
+            openWaitDialog.value = false
+//            activity.startActivity(intent)
+//            activity.finish()
+        }) {
+            Text(text = "进入离线查询")
+        }
+    }
     LaunchedEffect(key1 = true, block = { lsViewModel.getId() })
     LaunchedEffect(ids.value) {
         openWaitDialog.value = ids.value.id == ""

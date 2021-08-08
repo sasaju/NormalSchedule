@@ -152,6 +152,7 @@ class ImportLoginFragment: Fragment() {
                             Toasty.error(it, result.status, Toasty.LENGTH_SHORT).show()
                         }
                         viewModel.getImage(id)
+                        waitDialog?.dismiss()
                     }
                 }
 

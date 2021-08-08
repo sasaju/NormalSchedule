@@ -25,7 +25,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
@@ -39,11 +38,10 @@ import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.model.DepartmentList
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
-import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.show_timetable.*
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
-import com.liflymark.test.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import kotlinx.coroutines.flow.collectLatest
 
 class ClassCourseActivity : ComponentActivity() {
@@ -318,10 +316,10 @@ fun getNowWeek(): Int {
     return GetDataUtil.whichWeekNow()
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview2() {
-    NormalScheduleTheme {
-
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview2() {
+//    NormalScheduleTheme {
+//
+//    }
+//}

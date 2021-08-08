@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,9 +27,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.ui.score_detail.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
-import com.liflymark.test.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -212,17 +214,17 @@ fun refreshId(activity: LoginToScoreActivity,viewModel: LoginToScoreViewModel, o
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview3() {
-    NorScTheme {
-        Column(modifier = Modifier
-            .background(Color.LightGray)
-            .size(100.dp)
-            .verticalScroll(rememberScrollState()))
-        {
-
-
-        }
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview3() {
+//    NorScTheme {
+//        Column(modifier = Modifier
+//            .background(Color.LightGray)
+//            .size(100.dp)
+//            .verticalScroll(rememberScrollState()))
+//        {
+//
+//
+//        }
+//    }
+//}

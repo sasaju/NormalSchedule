@@ -2,9 +2,12 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.spring
@@ -23,8 +26,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -49,9 +50,10 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
+import com.liflymark.normalschedule.logic.utils.TutorialOverlay
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
-import com.liflymark.test.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -73,6 +75,7 @@ class ShowTimetableActivity2 : ComponentActivity() {
         ImmersionBar.with(this)
             .fitsSystemWindows(false).statusBarDarkFont(true).init()
         saveAllCourse(intent, this, viewModel)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContent {
             NorScTheme {
                 BackGroundImage(viewModel = viewModel)
@@ -103,15 +106,44 @@ class ShowTimetableActivity2 : ComponentActivity() {
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
-fun Drawer(viewModel: ShowTimetableViewModel, statusSpacer: @Composable () -> Unit) {
+fun Drawer(
+    viewModel: ShowTimetableViewModel,
+    statusSpacer: @Composable () -> Unit
+) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val startSchoolOrNot = viewModel.startSchool()
     val startHolidayOrNot = viewModel.startHoliday()
     val courseList: State<List<List<OneByOneCourseBean>>?> =
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
+    val newUserOrNot =
+        viewModel.newUserFLow.collectAsState(initial = false)
 
-    viewModel.loadAllCourse()
+    // 拦截返回键请求
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
+    val backCallback = remember {
+        object : OnBackPressedCallback(!drawerState.isClosed) {
+            override fun handleOnBackPressed() {
+                scope.launch {
+                    drawerState.close()
+                }
+            }
+        }
+    }
+    LaunchedEffect(drawerState.isClosed){
+        backCallback.isEnabled = !drawerState.isClosed
+    }
+    DisposableEffect(backDispatcher) {
+        // Add callback to the backDispatcher
+        backDispatcher.addCallback(backCallback)
+
+        // When the effect leaves the Composition, remove the callback
+        onDispose {
+            backCallback.remove()
+        }
+    }
+
+
     ModalDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -136,8 +168,14 @@ fun Drawer(viewModel: ShowTimetableViewModel, statusSpacer: @Composable () -> Un
                     infiniteLoop = true
                 )
                 statusSpacer()
-                ScheduleToolBar(scope, drawerState, userNowWeek, pagerState)
 
+                TutorialOverlay(
+                    rememberCoroutineScope(),
+                    "点击此处快速跳转当前周",
+                    newUserOrNot.value
+                ) {
+                    ScheduleToolBar(scope, drawerState, userNowWeek, pagerState, it)
+                }
                 HorizontalPager(
                     state = pagerState,
                     flingBehavior = PagerDefaults.defaultPagerFlingConfig(
@@ -188,6 +226,7 @@ fun ScheduleToolBar(
     drawerState: DrawerState,
     userNowWeek: Int,
     pagerState: PagerState,
+    modifier: Modifier = Modifier,
     stViewModel: ShowTimetableViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -201,7 +240,7 @@ fun ScheduleToolBar(
         elevation = 0.dp,
         title = {
             Column(
-                Modifier
+                modifier
                     .clickable {
                         scope.launch {
                             pagerState.animateScrollToPage(
@@ -214,15 +253,6 @@ fun ScheduleToolBar(
                         }
                     }
                     .fillMaxHeight(0.9F)
-                    .onGloballyPositioned { coordinates ->
-                        coordinates.positionInWindow()
-                        Log.d(
-                            "ShowActivity2",
-                            coordinates
-                                .positionInWindow()
-                                .toString()
-                        )
-                    }
             ) {
                 // 开学了，当前页面不是当前周加一个5dp的空行
                 // 开学了，而且页面是当前周 显示“当前周”
@@ -246,11 +276,13 @@ fun ScheduleToolBar(
             }
         },
         navigationIcon = {
-            IconButton(onClick = {
-                scope.launch {
-                    drawerState.open()
-                }
-            }) {
+            IconButton(
+                onClick = {
+                    scope.launch {
+                        drawerState.open()
+                    }
+                },
+            ) {
                 Icon(Icons.Filled.Menu, null)
             }
         },

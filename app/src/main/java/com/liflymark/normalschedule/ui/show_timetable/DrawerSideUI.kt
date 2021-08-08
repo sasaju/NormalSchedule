@@ -26,13 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsHeight
-import com.liflymark.normalschedule.ui.about.AboutActivity
+import com.liflymark.normalschedule.ui.about.ComposeAboutActivity
 import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity
 import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
-import com.liflymark.test.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -43,7 +44,7 @@ fun DrawerNavHost(drawerState: DrawerState){
         OneSentence()
 
         NavButton(DefaultBackground(), drawerState,
-            Icons.Filled.Image, "更换背景")
+            Icons.Filled.Wallpaper, "更换背景")
 
         Spacer(modifier = Modifier
             .fillMaxWidth()
@@ -68,13 +69,19 @@ fun DrawerNavHost(drawerState: DrawerState){
         NavButton(activity = ClassCourseActivity(), drawerState = drawerState,
             icon = Icons.Filled.Margin, text = "班级课程查询")
 
+        NavButton(
+            activity = ToolBoxActivity(),
+            drawerState = drawerState,
+            icon = Icons.Filled.WorkOutline, text = "河大工具箱"
+        )
+
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(5.dp)
             .padding(2.dp)
             .background(Color.Gray))
 
-        NavButton(activity = AboutActivity(), drawerState = drawerState,
+        NavButton(activity = ComposeAboutActivity(), drawerState = drawerState,
             icon = Icons.Filled.Info, text = "关于软件")
 
     }
@@ -104,7 +111,8 @@ fun OneSentence(viewModel:ShowTimetableViewModel = viewModel()){
                     clickTimes = 0
                 }
             }
-            .wrapContentHeight(), contentAlignment = Alignment.Center) {
+            .wrapContentHeight(), contentAlignment = Alignment.Center
+    ) {
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .statusBarsHeight(200.dp)

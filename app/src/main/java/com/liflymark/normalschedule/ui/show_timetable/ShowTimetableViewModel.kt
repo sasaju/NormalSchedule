@@ -25,7 +25,7 @@ class ShowTimetableViewModel: ViewModel() {
     private var _sentenceLiveDate = MutableLiveData<Boolean>(false)
     var showToast = 0
 
-
+    val newUserFLow = Repository.getNewUserOrNot()
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
         Repository.loadAllCourse2()
     }
@@ -66,6 +66,7 @@ class ShowTimetableViewModel: ViewModel() {
     suspend fun deleteAllCourse(){
         Repository.deleteAllCourseBean2()
     }
+
 
     fun mergeClass(className: String,
                    classDay: Int,

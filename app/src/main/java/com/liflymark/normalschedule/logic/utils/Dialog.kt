@@ -2,24 +2,19 @@ package com.liflymark.normalschedule.logic.utils
 
 import android.content.Context
 import android.util.Log
-import android.widget.Space
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.integerArrayResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,9 +32,7 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.model.Structure
 import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
-import com.liflymark.normalschedule.ui.show_timetable.ui.theme.NormalScheduleTheme
 import kotlinx.coroutines.launch
-import java.util.function.BinaryOperator
 
 
 object Dialog {

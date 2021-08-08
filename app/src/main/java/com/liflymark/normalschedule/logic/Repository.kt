@@ -12,6 +12,7 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.dao.AccountDao
+import com.liflymark.normalschedule.logic.dao.AccountDataDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
 import com.liflymark.normalschedule.logic.dao.SentenceDao
 import com.liflymark.normalschedule.logic.model.*
@@ -62,6 +63,8 @@ object  Repository {
             emit(IdResponse("love"))
         }
     }
+
+    fun cancelAll() = NormalScheduleNetwork.cancelAll()
 
     fun getCaptcha(sessionId: String) =  liveData(Dispatchers.IO) {
         try {
@@ -400,6 +403,17 @@ object  Repository {
         emit(SpaceLoginResponse("登陆异常"))
         }
 
+    fun getBulletin() =
+        flow {
+        val result = NormalScheduleNetwork.getBulletin()
+        emit(result)
+        }
+        .flowOn(Dispatchers.IO)
+        .catch {
+        val error = Bulletin("admin", "作者服务器炸了，有事烧纸", "????", "作者服务器炸了")
+        emit(DevBoardResponse(listOf(error), status = "error"))
+    }
+
     fun getSpaceRooms(id: String, roomName:String, searchDate: String) = flow {
         val result = NormalScheduleNetwork.getSpaceRooms(id, roomName, searchDate)
         emit(result)
@@ -407,6 +421,20 @@ object  Repository {
         val errorRoom = Room("查询失败","0","00000000000","无")
         emit(SpaceResponse(roomList = listOf(errorRoom), roomName=roomName))
     }.flowOn(Dispatchers.IO)
+
+    fun getSchoolBusTime(searchType:String) = flow {
+        val result = NormalScheduleNetwork.getSchoolBusTime(searchType = searchType)
+        emit(result)
+    }.catch {
+        val error = SchoolBusResponse(
+            nowDay = "error",
+            timeList = TimeList(
+                fiveToSeven = listOf(),
+                sevenToFive = listOf()
+            )
+        )
+        emit(error)
+    }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {
@@ -443,7 +471,7 @@ object  Repository {
     fun importAgain() = AccountDao.importedAgain()
     fun saveLogin() = AccountDao.saveLogin()
 
-    fun saveUserVersion() = AccountDao.newUserShowed()
-    fun getNewUserOrNot() = AccountDao.getNewUserOrNot()
+    suspend fun saveUserVersion(version:Int = 1) = AccountDataDao.saveUserVersion(version)
+    fun getNewUserOrNot() = AccountDataDao.getNewUserOrNot()
 }
 

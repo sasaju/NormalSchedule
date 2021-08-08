@@ -5,27 +5,38 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
     <application
         android:name=".NormalScheduleApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_config"
-        android:resizeableActivity="false"
+        android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
+            android:name=".ui.about.ComposeAboutActivity"
+            android:exported="true"
+            android:label="about"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.tool_box.ToolBoxActivity"
+            android:exported="true"
+            android:label="@string/title_activity_tool_box"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
             android:name=".ui.login_space_room.ShowSpaceActivity"
             android:exported="true"
-            android:label="@string/title_activity_show_space"
+            android:label="@string/app_name"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.login_space_room.LoginSpaceActivity"
             android:exported="true"
-            android:label="@string/title_activity_login_space"
+            android:label="@string/app_name"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.edit_course.EditCourseActivity"
@@ -68,9 +79,6 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
-            android:name=".ui.about.AboutActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-        <activity
             android:name=".ui.import_show_score.ShowScoreActivity"
             android:label="成绩单"
             android:parentActivityName=".MainActivity"
@@ -91,14 +99,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- <receiver android:name=".logic.utils.appwidget.AppwidgetTodayProvider"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.appwidget.action.APPWIDGET_UPDATE" /> -->
-        <!-- </intent-filter> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.appwidget.provider" -->
-        <!-- android:resource="@layout/appwidget_course_day" /> -->
-        <!-- </receiver> -->
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
         <receiver
             android:name=".ui.app_widget_day.DayAppWidgetProvider"
             android:exported="false">

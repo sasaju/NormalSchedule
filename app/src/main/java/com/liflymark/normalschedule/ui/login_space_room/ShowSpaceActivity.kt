@@ -1,7 +1,6 @@
 package com.liflymark.normalschedule.ui.login_space_room
 
 import android.os.Bundle
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -16,16 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.ui.class_course.Item
-import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
-import com.liflymark.test.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 
 class ShowSpaceActivity : ComponentActivity() {
@@ -85,7 +82,7 @@ fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
 
     val expandDate = remember { mutableStateOf(false) }
     val threeDate = remember { mutableStateOf(ssViewModel.getThreeDay()) }
-    val dateName = remember { mutableStateOf(ssViewModel.getThreeDay()[0]) }
+    val dateName = remember { mutableStateOf(ssViewModel.getThreeDay()[1]) }
 
     val roomList =  remember { mutableStateListOf("六教", "七教","八教", "九教", "A1", "A2","A3", "A4") }
     val schoolList = remember { mutableStateListOf("五四路校区","七一路校区") }
@@ -246,10 +243,10 @@ fun ClassIntBox(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview7() {
-    NormalScheduleTheme {
-        SingleRowSpace()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview7() {
+//    NormalScheduleTheme {
+//        SingleRowSpace()
+//    }
+//}

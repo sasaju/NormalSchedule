@@ -9,7 +9,9 @@
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22592592592592592" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/ic_launcher_background_or.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/spinner_background_selector.xml" value="0.23148148148148148" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/text_cornor.xml" value="0.21203703703703702" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/time_select_bg.xml" value="0.23425925925925925" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_about.xml" value="0.1" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_git_list_item.xml" value="0.12335359675785208" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_import_score.xml" value="0.12335359675785208" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/activity_lib_order.xml" value="0.12335359675785208" />
@@ -20,6 +22,7 @@
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/app_widget_day_item.xml" value="0.3235294117647059" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/app_widget_none_data.xml" value="0.1933876811594203" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/appwidget_course_day.xml" value="0.20471014492753623" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/compose_webview.xml" value="0.21014492753623187" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/course_detail_fragment.xml" value="0.264" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/dialog_progress.xml" value="0.4" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/edit_course_fragment.xml" value="0.24094202898550723" />
@@ -29,6 +32,8 @@
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/item_score.xml" value="0.12335359675785208" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/login_fragment.xml" value="0.18840579710144928" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/layout/nav_header.xml" value="0.1" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/menu/menu_main.xml" value="0.17222222222222222" />
+        <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/menu/nav_menu.xml" value="0.17222222222222222" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23796296296296296" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/xml/text_cornor.xml" value="0.2259963768115942" />

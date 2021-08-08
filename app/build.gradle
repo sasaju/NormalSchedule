@@ -34,6 +34,7 @@ android {
             minifyEnabled true
             resValue "string", "app_name", "河大课表"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
         cool{
             minifyEnabled true
@@ -57,6 +58,11 @@ android {
         jvmTarget = '1.8'
         useIR = true
         freeCompilerArgs = ["-Xallow-result-return-type"]
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 //    dexOptions {
 //        preDexLibraries true
@@ -103,7 +109,6 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.2'
     implementation "androidx.security:security-identity-credential:1.0.0-alpha02"
-    implementation 'com.github.medyo:android-about-page:1.3.1'
     implementation 'com.jaredrummler:material-spinner:1.3.1'
 
     testImplementation 'junit:junit:4.13.2'
@@ -143,6 +148,7 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
     implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc06'
+    implementation "androidx.datastore:datastore-preferences:1.0.0-rc02"
 //    implementation project(":IcyTimeTable")
 
 }

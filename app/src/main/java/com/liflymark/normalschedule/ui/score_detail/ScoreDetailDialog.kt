@@ -6,10 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ProgressIndicatorDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +37,11 @@ fun WaitDialog(openDialog: MutableState<Boolean>){
 }
 
 @Composable
-fun ProgressDialog(openDialog: MutableState<Boolean>, label:String){
+fun ProgressDialog(
+    openDialog: MutableState<Boolean>,
+    label:String,
+    content:@Composable () -> Unit = {}
+){
 
     if (openDialog.value) {
         Dialog(
@@ -54,22 +55,25 @@ fun ProgressDialog(openDialog: MutableState<Boolean>, label:String){
                     .height(100.dp)
                     .background(White, shape = RoundedCornerShape(8.dp))
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Spacer(modifier = Modifier.width(10.dp))
-                    CircularProgressIndicator()
-                    if (label != "") {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Spacer(modifier = Modifier.width(10.dp))
-                        Text(text = label, modifier = Modifier.wrapContentWidth())
+                        CircularProgressIndicator()
+                        if (label != "") {
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text(text = label, modifier = Modifier.wrapContentWidth())
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
                     }
-                    Spacer(modifier = Modifier.width(10.dp))
+                    content()
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DialogPreview(){
-
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DialogPreview(){
+//
+//}

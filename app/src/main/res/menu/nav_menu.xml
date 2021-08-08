@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single"
         android:id="@+id/timetable">
-        <item
-            android:id="@+id/set_background"
-            android:icon="@drawable/ic_action_tv"
-            android:checkable="false"
-            android:title="更换背景"/>
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/other">
