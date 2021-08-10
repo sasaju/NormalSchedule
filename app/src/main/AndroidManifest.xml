@@ -19,6 +19,11 @@
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
+            android:name=".ui.work_book.WorkBookActivity"
+            android:exported="true"
+            android:label="@string/title_activity_work_book"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
             android:name=".ui.about.ComposeAboutActivity"
             android:exported="true"
             android:label="about"
@@ -99,9 +104,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.shortcuts"
+
+            <meta-data
+                android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+
         <receiver
             android:name=".ui.app_widget_day.DayAppWidgetProvider"
             android:exported="false">

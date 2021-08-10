@@ -36,7 +36,7 @@ class ImportLoginFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         ImmersionBar.with(this).init()
-        val waitDialog = activity?.let { it1 -> Dialog.getProgressDialog(it1) }
+        val waitDialog by lazy {  activity?.let { it1 -> Dialog.getProgressDialog(it1) } }
 
         if (viewModel.isAccountSaved()){
 //            val intent = Intent(context, ImportScoreActivity::class.java).apply {

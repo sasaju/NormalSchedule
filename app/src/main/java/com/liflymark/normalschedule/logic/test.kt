@@ -9,5 +9,8 @@ import java.util.*
 
 @SuppressLint("SimpleDateFormat")
 fun main(){
-    print(getNowTime())
+    val a = GregorianCalendar().timeInMillis
+    val b = GregorianCalendar()
+    b.timeInMillis = a
+    print(b.timeInMillis)
 }

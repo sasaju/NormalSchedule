@@ -34,6 +34,7 @@ import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
 import com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity
 import com.liflymark.normalschedule.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.work_book.WorkBookActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
@@ -45,6 +46,8 @@ fun DrawerNavHost(drawerState: DrawerState){
 
         NavButton(DefaultBackground(), drawerState,
             Icons.Filled.Wallpaper, "更换背景")
+        NavButton(WorkBookActivity(), drawerState,
+            Icons.Filled.MenuBook, "作业本")
 
         Spacer(modifier = Modifier
             .fillMaxWidth()
@@ -185,7 +188,7 @@ fun NavButton(
     activity: ComponentActivity,
     drawerState: DrawerState,
     icon:ImageVector,
-    text: String
+    text: String,
 ){
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -208,6 +211,7 @@ fun NavButton(
 
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

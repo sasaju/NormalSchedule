@@ -52,6 +52,20 @@ internal object GetDataUtil {
         return sdf
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun getDateStrByMillis(millis:Long): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val date = GregorianCalendar()
+        date.timeInMillis = millis
+        return sdf.format(date.time)
+    }
+
+    fun getDayMillis(afterToady:Int):Long{
+        val calendar = GregorianCalendar()
+        calendar.add(Calendar.DATE, afterToady)
+        return calendar.timeInMillis
+    }
+
     fun getNowWeekNum(): Int {
         val now = GregorianCalendar()
         // Log.d("GEtDataUtil", sdf.format(Date()))

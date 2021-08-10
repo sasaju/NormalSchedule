@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BookmarkAdd
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,6 +27,7 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.whichIs1
 import com.liflymark.normalschedule.ui.edit_course.EditCourseActivity
+import com.liflymark.normalschedule.ui.work_book.WorkBookActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 
@@ -93,6 +96,15 @@ fun ClassDetailDialog(openDialog:MutableState<Boolean>,singleClass: OneByOneCour
                         context.startActivity(intent)
                     }, modifier = Modifier.weight(1F)) {
                         Icon(imageVector = Icons.Outlined.Edit, contentDescription = "编辑课程")
+                    }
+                    IconButton(onClick = {
+                        openDialog.value = false
+                        val intent = Intent(context, WorkBookActivity::class.java).apply {
+                            putExtra("courseName", courseBeanListState.value.courseName)
+                        }
+                        context.startActivity(intent)
+                    }, modifier = Modifier.weight(1F)) {
+                        Icon(imageVector = Icons.Default.BookmarkAdd, contentDescription = "作业本")
                     }
                 }
 

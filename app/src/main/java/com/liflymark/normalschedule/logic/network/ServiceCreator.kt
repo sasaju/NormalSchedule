@@ -31,16 +31,6 @@ object ServiceCreator {
             // .addCallAdapterFactory()
             .build()
 
-    private val actLiveMap: ConcurrentHashMap<String, Boolean> = ConcurrentHashMap() // 标记Activity是否存活
-
-    fun markPageAlive(actName: String?) {
-        actLiveMap[actName!!] = true
-    }
-
-    fun markPageDestroy(actName: String?) {
-        actLiveMap[actName!!] = false
-    }
-
     fun <T>create(serviceClass: Class<T>) : T = retrofit.create(serviceClass)
     inline fun <reified T> create(): T = create(T::class.java)
 

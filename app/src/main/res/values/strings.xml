@@ -26,4 +26,5 @@
     <string name="space_short">空教室</string>
     <string name="score_long">成绩查询</string>
     <string name="score_short">成绩</string>
+    <string name="title_activity_work_book">WorkBookActivity</string>
 </resources>

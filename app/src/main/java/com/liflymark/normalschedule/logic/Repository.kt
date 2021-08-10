@@ -7,10 +7,7 @@ import android.util.Log
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.logic.bean.CourseBean
-import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
-import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
-import com.liflymark.normalschedule.logic.bean.getData
+import com.liflymark.normalschedule.logic.bean.*
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.dao.AccountDataDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
@@ -18,6 +15,7 @@ import com.liflymark.normalschedule.logic.dao.SentenceDao
 import com.liflymark.normalschedule.logic.model.*
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
+import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -32,6 +30,7 @@ object  Repository {
     private val dataBase = AppDatabase.getDatabase(NormalScheduleApplication.context)
     private val courseDao = dataBase.courseDao()
     private val backgroundDao = dataBase.backgroundDao()
+    private val homeworkDao = dataBase.homeworkDao()
 
     fun getId() = fire(Dispatchers.IO) {
         val id =NormalScheduleNetwork.getId()
@@ -135,9 +134,6 @@ object  Repository {
 
     }
 
-    //    fun loadAllCourse() = fire(Dispatchers.IO){
-//        Result.success(courseDao.loadAllCourse())
-//    }
     suspend fun loadCourseUnTeacher(
         className: String,
         classDay: Int,
@@ -172,6 +168,7 @@ object  Repository {
     }
 
     fun getDepartmentList() = flow {
+        Log.d("Repo", "getDeprat执行")
         val result = NormalScheduleNetwork.getDepartmentList()
         emit(result)
     }.catch {
@@ -254,15 +251,6 @@ object  Repository {
         }
     }
 
-    fun getScoreDetail(user: String, password: String, id:String) = liveData(Dispatchers.IO) {
-        try {
-            val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
-            emit(scoreDetailResponse)
-        } catch (e: Exception){
-            emit(null)
-        }
-    }
-
     fun getScoreDetail2(user: String, password: String, id:String) = fireFlow(Dispatchers.IO) {
         val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
         Result.success(scoreDetailResponse)
@@ -320,9 +308,6 @@ object  Repository {
     }
 
 
-
-    suspend fun insertBackground(background: UserBackgroundBean) = backgroundDao.insertBackground(background)
-
     suspend fun updateBackground(background: UserBackgroundBean) {
         return try {
             backgroundDao.insertBackground(background)
@@ -352,29 +337,6 @@ object  Repository {
             emit(uriBeepSound)
         }
     }
-
-    fun loadBackground2():Uri {
-        val resources = NormalScheduleApplication.context.resources
-        val resourceId = R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
-        val uriBeepSound = Uri.Builder()
-            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(resources.getResourcePackageName(resourceId))
-            .appendPath(resources.getResourceTypeName(resourceId))
-            .appendPath(resources.getResourceEntryName(resourceId))
-            .build()
-        return try {
-            val a = backgroundDao.loadLastBackgroundMain()
-            if (a.userBackground != "0"){
-                Uri.parse(a.userBackground)
-            } else {
-                uriBeepSound
-            }
-        } catch (e:Exception){
-            Uri.parse("0")
-        }
-    }
-
-    suspend fun deleteBackground(background: UserBackgroundBean) = backgroundDao.deleteAllBackground(background)
 
     fun getSentences(force:Boolean = false) = flow {
         try {
@@ -434,6 +396,86 @@ object  Repository {
             )
         )
         emit(error)
+    }
+
+    suspend fun addHomework(homeworkBean: HomeworkBean):Long{
+        return homeworkDao.insertHomeWork(homeworkBean)
+    }
+
+    fun loadHomeworkByName(courseName:String) =
+        flow {
+            val result = homeworkDao.loadHomeworkByName(courseName)
+            Log.d("Repo", "加载一次")
+            emit(result)
+        }
+        .flowOn(Dispatchers.IO)
+        .catch {
+            val init = HomeworkBean(id=999, "未查询到", "无", deadLine = 0, finished = false,createDate = 0)
+            emit(listOf(init))
+        }
+
+    suspend fun deleteHomework(homeworkBean: HomeworkBean): String {
+        return try {
+            homeworkDao.deleteHomework(homeworkBean)
+            "success"
+        }catch (e:Exception){
+            "error"
+        }
+    }
+
+    fun getNewBeanInit(courseName: String)  = flow {
+        val lastId = homeworkDao.getLastId()
+        Log.d("Repo", "NewBean加载一次")
+        val newId = lastId + 1
+        emit( HomeworkBean(
+            id = newId,
+            courseName = courseName,
+            workContent = "",
+            createDate = GetDataUtil.getDayMillis(0),
+            deadLine = GetDataUtil.getDayMillis(7),
+            finished = false
+        ))
+
+    }
+        .catch {
+            emit( HomeworkBean(
+                id = 0,
+                courseName = courseName,
+                workContent = "",
+                createDate = GetDataUtil.getDayMillis(0),
+                deadLine = GetDataUtil.getDayMillis(7),
+                finished = false
+            ))
+        }
+        .flowOn(Dispatchers.IO)
+
+    fun loadWorkCourseName() =
+        flow {
+            Log.d("Repo", "leadName加载一次")
+            val result = homeworkDao.loadHasWorkCourse()
+            emit(result)
+        }
+            .catch {
+                emit(listOf())
+            }
+            .flowOn(Dispatchers.IO)
+
+    suspend fun deleteHomeworkByName(courseName: String): String {
+        return try {
+            homeworkDao.deleteHomeworkByName(courseName = courseName)
+            "success"
+        }catch (e:Exception){
+            "error"
+        }
+    }
+
+    suspend fun deleteHomeworkById(id: Int):String{
+        return try {
+            homeworkDao.deleteHomeworkById(id)
+            "success"
+        }catch (e:Exception){
+            "error"
+        }
     }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
