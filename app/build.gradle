@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id "com.google.protobuf" version "0.8.17"
 }
 
 android {
@@ -14,7 +15,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
-        versionName "0.0.3"
+        versionName "0.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -70,6 +71,23 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    protobuf { //使用proto需要的插件
+        protoc {
+            artifact = "com.google.protobuf:protoc:3.10.0"
+        }
+
+        generateProtoTasks {
+            all().each { task ->
+                task.builtins {
+                    java {
+                        option 'lite'
+                    }
+                }
+            }
+        }
+    }
+
 //    dexOptions {
 //        preDexLibraries true
 //        maxProcessCount 8
@@ -82,7 +100,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
@@ -134,14 +152,14 @@ dependencies {
     implementation "androidx.compose.material:material-icons-core:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     // Integration with activities
-    implementation 'androidx.activity:activity-compose:1.3.0'
+    implementation 'androidx.activity:activity-compose:1.3.1'
     // Integration with ViewModels
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07'
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
     implementation 'com.google.accompanist:accompanist-pager:0.13.0'
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha05"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha06"
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     // UI Tests
@@ -154,7 +172,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
     implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc06'
-    implementation "androidx.datastore:datastore-preferences:1.0.0-rc02"
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore:1.0.0"
+    implementation "com.google.protobuf:protobuf-javalite:3.10.0"
 //    implementation project(":IcyTimeTable")
 
 }

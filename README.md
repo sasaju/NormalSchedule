@@ -18,9 +18,14 @@
 - [WakeupSchedule_Kotlin](https://github.com/YZune/WakeupSchedule_Kotlin)（参考了部分写法，修改了部分界面）
 - [Retrofit2](https://github.com/square/retrofit)
 - [Toasty](https://github.com/GrenderG/Toasty)
-- [Glide](https://github.com/bumptech/glide)
+- [Coil](https://github.com/coil-kt/coil)
 - [Gson](https://github.com/google/gson)
 - [ComposeNumberPicker](https://gist.github.com/vganin/a9a84653a9f48a2d669910fbd48e32d5)
+- [Accompanist](https://github.com/google/accompanist)
+- [MaterialSpinner](https://github.com/jaredrummler/MaterialSpinner)
+- [ImmersionBar](https://github.com/gyf-dev/ImmersionBar)
+- [Glide](https://github.com/bumptech/glide)
+- [MaterialDialog](https://github.com/afollestad/material-dialogs)
 
 ## 上架相关
 
@@ -36,6 +41,7 @@
 | 三星应用商店  | 未上架  | 0 |2021.7.17|
 | OPPO应用商店  | 未上架  | 0 |2021.7.17|
 | VIVO应用商店  | 未上架  | 0 |2021.7.17|
+
 tips: 酷安上与其他平台包名不同，功能无区别。
 
 ## 项目计划
@@ -47,6 +53,7 @@ tips: 酷安上与其他平台包名不同，功能无区别。
 - [x] 班级课表查询
 - [x] 班级课表导入
 - [x] 背景更换
+- [x] 课程格子渐变色和纯色切换
 - [x] 日视图小部件
 - [ ] 周视图小部件
 - [x] 完整的课表管理功能

@@ -1,6 +1,7 @@
 package com.liflymark.normalschedule.ui.tool_box
 
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebSettings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -61,6 +62,7 @@ fun DevBoard(
 //            }
 //            DevBoardContent(tbViewModel)
 //        }
+        Log.d("DevBoard", "DevBoard重组一次")
         Scaffold(
             topBar = {
                 NormalTopBar(label = "开发者公告") {

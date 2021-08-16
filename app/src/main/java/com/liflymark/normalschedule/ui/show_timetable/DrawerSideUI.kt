@@ -32,6 +32,7 @@ import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity
 import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
+import com.liflymark.normalschedule.ui.settings.SettingsActivity
 import com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.normalschedule.ui.work_book.WorkBookActivity
@@ -84,6 +85,12 @@ fun DrawerNavHost(drawerState: DrawerState){
             .padding(2.dp)
             .background(Color.Gray))
 
+        NavButton(
+            activity = SettingsActivity(),
+            drawerState = drawerState,
+            icon = Icons.Filled.Settings,
+            text = "设置"
+        )
         NavButton(activity = ComposeAboutActivity(), drawerState = drawerState,
             icon = Icons.Filled.Info, text = "关于软件")
 

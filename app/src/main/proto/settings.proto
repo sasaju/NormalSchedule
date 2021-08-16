@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.liflymark.schedule.data";
+option java_multiple_files = true;
+
+message Settings {
+  int32 color_mode = 1;
+  int32 course_per_height = 2;
+  bool dark_show_back = 3;
+}

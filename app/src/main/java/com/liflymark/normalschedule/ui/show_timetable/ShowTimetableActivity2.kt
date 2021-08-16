@@ -2,7 +2,6 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -45,13 +44,15 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.pager.*
 import com.gyf.immersionbar.ImmersionBar
+import com.liflymark.normalschedule.R
+import com.liflymark.schedule.data.Settings
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.TutorialOverlay
-import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
+import com.liflymark.normalschedule.ui.add_course.AddCourseComposeActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
@@ -63,7 +64,6 @@ import kotlinx.coroutines.launch
 
 class ShowTimetableActivity2 : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
-
     @ExperimentalCoilApi
     @DelicateCoroutinesApi
     @ExperimentalAnimationApi
@@ -73,9 +73,13 @@ class ShowTimetableActivity2 : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         ImmersionBar.with(this)
-            .fitsSystemWindows(false).statusBarDarkFont(true).init()
+            .fitsSystemWindows(false)
+            .statusBarDarkFont(true)
+            .navigationBarColor(R.color.white)
+            .navigationBarDarkIcon(true) //导航栏图标是深色，不写默认为亮色
+            .init()
         saveAllCourse(intent, this, viewModel)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContent {
             NorScTheme {
                 BackGroundImage(viewModel = viewModel)
@@ -110,6 +114,7 @@ fun Drawer(
     viewModel: ShowTimetableViewModel,
     statusSpacer: @Composable () -> Unit
 ) {
+    val settings = viewModel.settingsLiveData.observeAsState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val startSchoolOrNot = viewModel.startSchool()
@@ -142,7 +147,6 @@ fun Drawer(
             backCallback.remove()
         }
     }
-
 
     ModalDrawer(
         drawerState = drawerState,
@@ -183,7 +187,13 @@ fun Drawer(
                         snapAnimationSpec = spring(stiffness = 500f)
                     )
                 ) { page ->
-                    SingleLineClass(oneWeekClass = courseList, page = page)
+                    settings.value?.let {
+                        SingleLineClass(
+                            oneWeekClass = courseList,
+                            page = page,
+                            settings = it
+                        )
+                    }
                 }
 
                 LaunchedEffect(pagerState) {
@@ -199,21 +209,34 @@ fun Drawer(
 @Composable
 fun BackGroundImage(viewModel: ShowTimetableViewModel) {
     val path = viewModel.backgroundUriStringLiveData.observeAsState()
-    if (!isSystemInDarkTheme()) {
+    val showDarkBack = Repository.getShowDarkBack().collectAsState(initial = false)
+    Log.d("SHowTimetable", showDarkBack.value.toString())
+    if (!isSystemInDarkTheme() || showDarkBack.value) {
         Image(
-            painter = rememberImagePainter(data = path.value),
+            painter = rememberImagePainter(
+                data = path.value,
+                builder = {
+                    this.error(R.drawable.main_background_4)
+                }
+            ),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
+            contentScale = ContentScale.Crop
         )
-        Log.d("ShowTime", path.value.toString())
-        // This Image can load correctly.
 //        Image(
 //            painter = rememberGlidePainter(request = path.value),
 //            contentDescription = null,
 //            modifier = Modifier.fillMaxSize(),
 //            contentScale = ContentScale.FillBounds
 //        )
+    }else{
+        Image(
+            painter = rememberImagePainter(data = ""),
+            contentDescription = null,
+            modifier = Modifier
+                .background(Color(1, 86, 127))
+                .fillMaxWidth()
+        )
     }
 
 }
@@ -288,8 +311,8 @@ fun ScheduleToolBar(
         },
         actions = {
             IconButton(onClick = {
-                val intent = Intent(context, AddCourseActivity::class.java)
-                activity?.startActivity(intent)
+                val intent = Intent(context, AddCourseComposeActivity()::class.java)
+                context.startActivity(intent)
             }) {
                 Icon(Icons.Filled.Add, "添加课程")
             }
@@ -315,9 +338,12 @@ fun ScheduleToolBar(
 fun SingleLineClass(
     oneWeekClass: State<List<List<OneByOneCourseBean>>?>,
     page: Int,
+    settings: Settings,
     stViewModel: ShowTimetableViewModel = viewModel()
 ) {
     val context = LocalContext.current
+    val perHeight = if (settings.coursePerHeight==0){70}else{settings.coursePerHeight}
+    val mode = settings.colorMode
     Column {
         //星期行
         Row {
@@ -398,7 +424,7 @@ fun SingleLineClass(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(70.dp),
+                            .height(perHeight.dp),
                         textAlign = TextAlign.Center,
 
                         )
@@ -413,7 +439,7 @@ fun SingleLineClass(
                 val nowJieShu = IntArray(12) { it + 1 }.toMutableList()
                 Column(Modifier.weight(1F, true)) {
                     for (oneClass in oneDayClass) {
-                        val spacerHeight = (oneClass.start - nowJieShu[0]) * 70
+                        val spacerHeight = (oneClass.start - nowJieShu[0]) * perHeight
 
                         if (spacerHeight < 0) {
                             val nowClassAllName = oneClass.courseName.split("\n")
@@ -455,7 +481,11 @@ fun SingleLineClass(
                                 .height(spacerHeight.dp)
                         )
                         key(oneClass.courseName + oneClass.start + oneClass.end + stViewModel.showToast) {
-                            SingleClass2(singleClass = oneClass)
+                            SingleClass2(
+                                singleClass = oneClass,
+                                perHeight = perHeight,
+                                mode = mode
+                            )
                         }
                         nowJieShu -= IntArray(oneClass.end) { it + 1 }.toMutableList()
                         count += 1
@@ -468,11 +498,16 @@ fun SingleLineClass(
 
 
 @Composable
-fun SingleClass2(singleClass: OneByOneCourseBean) {
+fun SingleClass2(
+    singleClass: OneByOneCourseBean,
+    perHeight: Int = 70,
+    mode:Int = 0
+) {
 //    val context = LocalContext.current
 //    val activity = (LocalContext.current as? Activity)
 //    val interactionSource = remember { MutableInteractionSource() }
-    val height = 70 * (singleClass.end - singleClass.start + 1)
+    val height = perHeight * (singleClass.end - singleClass.start + 1)
+    val textColor = MaterialTheme.colors.onPrimary
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -485,13 +520,12 @@ fun SingleClass2(singleClass: OneByOneCourseBean) {
 
         val showDetailDialog = remember { mutableStateOf(false) }
         ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
-
         Text(
             buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
                         fontWeight = FontWeight.W600,
-                        color = Color.White,
+                        color = textColor,
                         fontSize = 13.sp
                     )
                 ) {
@@ -500,7 +534,7 @@ fun SingleClass2(singleClass: OneByOneCourseBean) {
                 withStyle(
                     style = SpanStyle(
                         fontWeight = FontWeight.W600,
-                        color = Color.White,
+                        color = textColor,
                         fontSize = 10.sp
                     )
                 ) {
@@ -508,7 +542,14 @@ fun SingleClass2(singleClass: OneByOneCourseBean) {
                 }
             },
             modifier = Modifier
-                .background(singleClass.color)
+                .background(
+                    Brush.verticalGradient(
+                        Convert.stringToBrush(
+                            singleClass.color.value,
+                            mode = mode
+                        )
+                    )
+                )
                 .clickable {
                     showDetailDialog.value = true
                 },
@@ -553,11 +594,60 @@ fun saveAllCourse(
 @Composable
 fun DefaultPreview() {
     NorScTheme {
-        Image(
-            painter = rememberImagePainter(data = "content://com.android.externalstorage.documents/document/primary%3ADCIM%2FCamera%2F6e9af8b3f50ab6d43b72a1541ae0e0c8.jpg"),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
+        val singleClass = OneByOneCourseBean(
+            "药物化学\n张三\n九教808",
+            start = 1,
+            end = 2,
+            whichColumn = 1,
+            color = Color.Gray
         )
+        val height = 70 * (singleClass.end - singleClass.start + 1)
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.6f)
+                .height(height.dp)
+                .padding(2.dp) // 外边距
+                .alpha(0.75F),
+            elevation = 1.dp, // 设置阴影
+        ) {
+            val nameList = singleClass.courseName.split("\n")
+
+            val showDetailDialog = remember { mutableStateOf(false) }
+
+            Text(
+                buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.W600,
+                            color = Color.White,
+                            fontSize = 13.sp
+                        )
+                    ) {
+                        append(nameList[0] + "\n" + nameList[1] + "\n\n")
+                    }
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.W600,
+                            color = Color.White,
+                            fontSize = 10.sp
+                        )
+                    ) {
+                        append(nameList[2])
+                    }
+                },
+                modifier = Modifier
+                    .background(
+                        Brush.horizontalGradient(
+                            listOf(
+                                Color(0xFFFC354C), Color(0xFF0ABFBC)
+                            )
+                        )
+                    )
+                    .clickable {
+                        showDetailDialog.value = true
+                    },
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

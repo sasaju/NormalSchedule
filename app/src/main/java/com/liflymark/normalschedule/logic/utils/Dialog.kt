@@ -20,36 +20,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.AndroidViewModel
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
+import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.model.Structure
-import com.liflymark.normalschedule.ui.add_course.AddCourseActivity
 import kotlinx.coroutines.launch
+import java.util.*
 
+class test:AndroidViewModel(NormalScheduleApplication()){
+
+}
 
 object Dialog {
     fun getContractDialog(_context: Context): MaterialDialog {
         val dialog = MaterialDialog(_context)
                 .title(text = "APP用户协议")
-                .message(text = "版本：1.0\n" + " 一）在此特别提醒用户在成为《河大课表》用户之前，请认真阅读本《APP用户协议》（以下简称“协议”）。" +
+                .message(text = "版本：1.0\n" + " 一）在此特别提醒用户在成为《河大课表》用户之前，请认真阅读本《APP用户协议及隐私政策》（以下简称“协议”）。" +
                         "确保用户充分理解本协议中各条款，请审慎阅读并选择接受或不接受本协议。" +
                         "同意并点击确认本协议条款，才能成为本APP用户，并享受各类服务。登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。" +
                         "若不同意本协议，或对本协议中的条款存在任何疑问，请立即停止使用该程序，并可以选择不使用APP服务。\n\n" +
-                        "二）隐私及信息准确性：\n" +
-                        "1.开发者会尽量保证课程、成绩等信息准确，但不会对任何信息的准确性负责，由于信息不准确造成的不良后果(如旷课)，开发者概不负责\n"+
-                        "2.开发者承诺本软件及其提供服务的服务器不会存储你的任何个人信息，即使是开发者也无法查看你的任何信息(包括您的姓名、性别、专业、课程表内容)\n" +
-                        "3.如果您由于木马入侵、连接不安全网络等原因造成的在使用本app时造成信息泄露和损失由您本人负责\n" +
-                        "\n三）信息来源及其准确性:\n" + "1.本软件所有行为未获得河北大学官方及其任何组织支持，并非官方指定的教务软件，所有功能仅为个人开发" +
+                        "二）隐私政策：\n" +
+                        "1.开发者承诺本软件及其提供服务的服务器不会存储你的任何个人信息，即使是开发者也无法查看你的任何信息(包括您的姓名、性别、专业、课程表内容)\n" +
+                        "2.如果您由于木马入侵、连接不安全网络等原因造成的在使用本app时造成信息泄露和损失由您本人负责\n" +
+                        "3.开发者可能会记录所有访问机器的IP地址和时间并存储两天以上，在您导入课程成功时，我们会记录您的学号用于统计用户数量，但不会记录其他任何您的信息"+
+                        "开发者只能得到您的学号但无法得知其他任何关于您的个人信息。"+
+                        "三）用户协议"+
+                        "\n# 信息来源及其准确性:\n" + "1.本软件所有行为未获得河北大学官方及其任何组织支持，并非官方指定的教务软件，所有功能仅为个人开发" +
                         "\n2.本软件会模拟您的登陆教务系统操作，由于您的任何行为造成无法登陆，开发者概不负责" +
                         "\n3.如河北大学官方禁止部分信息的抓取和发布，开发者将立即停止该功能，并尽最大努力消除影响。" +
+                        "\n4.开发者会尽量保证课程、成绩等信息准确，但不会对任何信息的准确性负责，由于信息不准确(如课表不全)造成的不良后果(如旷课)，开发者概不负责。\n"+
                         "\n作者：1289142675@qq.com\n" +
                                 "著作权归作者所有。")
                 .positiveButton(text = "知道了")
@@ -115,29 +123,29 @@ object Dialog {
         return dialog
     }
 
-    fun getSelectWeekAndSection(_context: Context) {
-        val allWeek = listOf("周一","周二","周三","周四","周五","周六","周日",)
-        val startSection = mutableListOf<String>()
-        val endSection = mutableListOf<String>()
-        for (i in 1..11){
-            startSection.add("第 $i 节")
-            endSection.add("第 $i 节")
-        }
-        val dialog = OptionsPickerBuilder(_context, OnOptionsSelectListener{ week, startSection_, endSection_, _ ->
-            if (_context is AddCourseActivity){
-                _context.setClassWeek(week, startSection_, endSection_)
-            }
-        })
-                .setTitleText("选择时间")
-                .setCyclic(true, false, false)
-                .isDialog(true)
-                .setSubmitColor(R.color.purple_500)
-                .setCancelColor(R.color.purple_500)
-                .setTitleBgColor(0xFF666666.toInt())
-                .build<Any>()
-        dialog.setNPicker(allWeek, startSection.toList(), endSection.toList())
-        dialog.show()
-    }
+//    fun getSelectWeekAndSection(_context: Context) {
+//        val allWeek = listOf("周一","周二","周三","周四","周五","周六","周日",)
+//        val startSection = mutableListOf<String>()
+//        val endSection = mutableListOf<String>()
+//        for (i in 1..11){
+//            startSection.add("第 $i 节")
+//            endSection.add("第 $i 节")
+//        }
+//        val dialog = OptionsPickerBuilder(_context, OnOptionsSelectListener{ week, startSection_, endSection_, _ ->
+//            if (_context is AddCourseActivity){
+//                _context.setClassWeek(week, startSection_, endSection_)
+//            }
+//        })
+//                .setTitleText("选择时间")
+//                .setCyclic(true, false, false)
+//                .isDialog(true)
+//                .setSubmitColor(R.color.purple_500)
+//                .setCancelColor(R.color.purple_500)
+//                .setTitleBgColor(0xFF666666.toInt())
+//                .build<Any>()
+//        dialog.setNPicker(allWeek, startSection.toList(), endSection.toList())
+//        dialog.show()
+//    }
 
     fun getProgressDialog(_context: Context): MaterialDialog {
         val dialog = MaterialDialog(_context).customView(R.layout.dialog_progress)
@@ -529,6 +537,7 @@ fun EditDialog(showDialog: MutableState<Boolean>, initialString:String, resultR:
             dismissButton = {
                 TextButton(onClick = {
                     resultR(editString)
+                    showDialog.value = false
                 }) {
                     Text(text = "确定")
                 }
@@ -538,13 +547,269 @@ fun EditDialog(showDialog: MutableState<Boolean>, initialString:String, resultR:
     }
 }
 
+@ExperimentalMaterialApi
+@ExperimentalPagerApi
+@Composable
+fun SelectDateDialog(
+    showDialog: MutableState<Boolean>,
+    initialYear:Int=0,
+    initialMonth:Int=0,
+    initialDay:Int=0,
+    selectMillis:(millis:Long) -> Unit
+){
+    var year1 = initialYear
+    var month1 = initialMonth
+    var day1 = initialDay
+    val yearList = listOf("2021","2022","2023")
+    if (showDialog.value) {
+        Dialog(
+            onDismissRequest = { showDialog.value = false },
+            DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+        ) {
+            Column(
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .width(300.dp)
+                    .verticalScroll(rememberScrollState())
+                    .background(Color.White)
+                ,
+            ){
+                Text(text = "  \n   选择日期 \n", fontSize = 19.sp)
+                SelectDate(
+                    year = year1,
+                    initialMonth = month1,
+                    initialDay =day1,
+                    result = {year, month, day ->
+                        year1 = year
+                        month1 = month
+                        day1 = day
+                    }
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(modifier = Modifier.fillMaxWidth(0.98f),horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = {
+                        val calendar = GregorianCalendar().apply {
+                            set(Calendar.YEAR, yearList[year1].toInt())
+                            set(Calendar.MONTH, month1)
+                            set(Calendar.DATE, day1+1)
+                        }
+                        selectMillis(calendar.timeInMillis)
+                        showDialog.value = false
+                    }) { Text(text = "确定")}
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+    }
+}
+
+
+@ExperimentalMaterialApi
+@ExperimentalPagerApi
+@Composable
+fun SelectDate(
+    year:Int,
+    initialMonth:Int,
+    initialDay:Int,
+    result: (year: Int, month: Int, day: Int) -> Unit
+){
+    val scope = rememberCoroutineScope()
+    val yearList = listOf("2021","2022","2023")
+    val monthList = (1..12).toList().map { it.toString() }
+    val monthStrList = monthList.map {
+        "${it}月"
+    }
+    val dayList =  remember {
+        mutableStateOf(GetDataUtil.getMonthAllDay(
+            year = yearList[year].toInt(),
+            month = monthList[initialMonth].toInt()
+        ))
+    }
+    Log.d("Dialog","重组一次")
+
+
+    val yearListPager = rememberPagerState(
+        pageCount = yearList.size,
+        initialPage = year,
+        initialOffscreenLimit = yearList.size,
+        infiniteLoop = false
+    )
+    val monthPager = rememberPagerState(
+        pageCount = monthStrList.size,
+        initialPage = initialMonth,
+        initialOffscreenLimit = monthList.size,
+        infiniteLoop = false
+    )
+    val dayPager = rememberPagerState(
+        pageCount = dayList.value.size,
+        initialPage = initialDay,
+        initialOffscreenLimit = dayList.value.size,
+        infiniteLoop = false
+    )
+    Box(
+        modifier = Modifier
+            .height(200.dp)
+            .width(300.dp),
+        contentAlignment = Alignment.Center,
+        propagateMinConstraints = true
+    ){
+        Row(modifier = Modifier
+            .height(200.dp)
+            .width(300.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            StringPicker(
+                strList = yearList,
+                pagerState = yearListPager,
+                pageChange = {
+                    Log.d("Dialog", it.toString())
+                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
+                },
+                modifier = Modifier.fillMaxHeight()
+            )
+            Spacer(modifier = Modifier.width(15.dp))
+            StringPicker(
+                strList = monthStrList,
+                pagerState = monthPager,
+                pageChange = {
+                    Log.d("Dialog", it.toString())
+                    val year_ =yearList[yearListPager.currentPage].toInt()
+                    val month_ = monthList[monthPager.currentPage].toInt()-1
+                    scope.launch {
+                        dayList.value = GetDataUtil.getMonthAllDay(year_,month_)
+                    }
+                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
+//                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
+                },
+                modifier = Modifier.fillMaxHeight()
+            )
+//            TextButton(onClick = {
+//                scope.launch {
+//                    monthPager.scrollToPage(monthPager.currentPage+1)
+//                }
+//            }) {
+//                Text(text = "+")
+//            }
+            Spacer(modifier = Modifier.width(15.dp))
+            StringPicker(
+                strList = dayList.value,
+                pagerState = dayPager,
+                pageChange = {
+                    Log.d("Dialog", it.toString())
+                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
+//                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
+                },
+                modifier = Modifier.fillMaxHeight()
+            )
+//            TextButton(onClick = {
+//                scope.launch {
+//                    dayPager.scrollToPage(dayPager.currentPage+1)
+//                }
+//            }) {
+//                Text(text = "+")
+//            }
+        }
+        Box(modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Spacer(modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .height(2.dp)
+                    .background(Color.Gray))
+                Spacer(modifier = Modifier
+                    .height(40.dp)
+                    .width(0.dp))
+                Spacer(modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .height(2.dp)
+                    .background(Color.Gray))
+            }
+        }
+    }
+}
+
+
+/**
+ * 单选弹窗
+ */
+@Composable
+fun SingleSelectDialog(
+    showDialog: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
+    selectNumInit:Int,
+    selectList:List<String>,
+    result:(res:String) -> Unit
+){
+    var selectNum by remember {
+        mutableStateOf(selectNumInit)
+    }
+    if (showDialog.value) {
+        AlertDialog(
+            title = { Text(text = "请选择") },
+            modifier = modifier,
+            onDismissRequest = { showDialog.value = false },
+
+            confirmButton = {
+
+                    TextButton(onClick = {
+                        result(selectList[selectNum])
+                        showDialog.value = false
+                    }) {
+                        Text(text = "确定")
+                    }
+            },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    repeat(selectList.size) {
+                        key(it) {
+                            RadioTextButton(
+                                selected = selectNum == it,
+                                text = selectList[it],
+                                onClick = { selectNum = it })
+                        }
+                    }
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun RadioTextButton(
+    selected:Boolean,
+    text:String,
+    onClick: () -> Unit
+){
+    Row(
+        modifier = Modifier
+            .clickable { onClick() }
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(
+            modifier = Modifier.padding(15.dp),
+            selected = selected,
+            onClick = { onClick() }
+        )
+        Text(text = text, style = MaterialTheme.typography.body1)
+    }
+}
+
 
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Preview(showBackground = true)
 @Composable
 fun DialogPreView(){
-    SelectSessionContent(0,0,0){
-            _,_,_ ->
+//    SelectSessionContent(0,0,0){
+//            _,_,_ ->
+//    }
+    SelectDate(0,0,0){
+        _,_,_->
     }
 }

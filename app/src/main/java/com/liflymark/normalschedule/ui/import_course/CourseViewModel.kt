@@ -37,7 +37,6 @@ class CourseViewModel: ViewModel() {
     val accountLiveData = Transformations.map(_accountLiveData){ it }
 
 
-
     fun getId() {
         getIdOrNotLiveData.value = 1
         getImageTimesLiveData.value = 0

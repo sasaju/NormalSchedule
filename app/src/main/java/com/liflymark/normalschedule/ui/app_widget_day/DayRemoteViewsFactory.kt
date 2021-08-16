@@ -1,5 +1,6 @@
 package com.liflymark.normalschedule.ui.app_widget_day
 
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
@@ -9,10 +10,18 @@ import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
-class DayRemoteViewsFactory(private val mContext: Context, intent: Intent?) :RemoteViewsFactory {
+class DayRemoteViewsFactory(private val mContext: Context, intent: Intent) :RemoteViewsFactory {
+//    private val mAppWidgetId: Int = intent.getIntExtra(
+//        AppWidgetManager.EXTRA_APPWIDGET_ID,
+//        AppWidgetManager.INVALID_APPWIDGET_ID
+//    ) - intent.getIntExtra("random", 0)
+    private val mAppWidgetId: Int = (intent.data?.schemeSpecificPart?.toInt() ?: 0) -
+        intent.getIntExtra("random", 0)
     companion object {
         var mList: MutableList<OneByOneCourseBean> = mutableListOf()
+
     }
+
 
     override fun onCreate() {
 

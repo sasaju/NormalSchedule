@@ -1,5 +1,6 @@
 package com.liflymark.normalschedule.ui.edit_course
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.liflymark.normalschedule.logic.Repository
@@ -27,6 +28,7 @@ class EditCourseViewModel:ViewModel() {
     }
 
     fun addNewClass(beanList:List<CourseBean>){
+        Log.d("Edit", beanList[0].courseName)
         newClass.addAll(beanList)
     }
 

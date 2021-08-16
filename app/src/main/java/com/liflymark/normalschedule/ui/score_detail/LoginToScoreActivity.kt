@@ -62,6 +62,10 @@ fun UiControl(){
             color = Color(0xFF2196F3),
             darkIcons = useDarkIcons
         )
+        systemUiController.setNavigationBarColor(
+            color = Color.White,
+            darkIcons = useDarkIcons
+        )
     }
 }
 

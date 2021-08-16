@@ -96,6 +96,7 @@ fun SingleCourseWorkList(
         .collectAsState(initial = null)
     val context = LocalContext.current
     val showAddDialog = remember { mutableStateOf(false) }
+    val showEditDialog = remember { mutableStateOf(false) }
     val waitingDialog = remember { mutableStateOf(false) }
     val editingBean = remember {
         mutableStateOf<HomeworkBean?>(null)
@@ -125,7 +126,22 @@ fun SingleCourseWorkList(
             }
         )
     }
-
+    editingBean.value?.let {
+        EditNewOrEditDialog(
+            show = showEditDialog,
+            homeworkBean = it,
+            newBean = { i ->
+                newWorkList.add(i)
+                Log.d("Acour", "newworklist add")
+            },
+            deleteId = {
+                scope.launch{
+                    workBookViewModel.deleteWork(it)
+                    deleted.value += 1
+                }
+            }
+        )
+    }
     WaitDialog(openDialog = waitingDialog)
 
     LaunchedEffect(newWorkList.size) {
@@ -169,7 +185,7 @@ fun SingleCourseWorkList(
                     homeworkBean = i,
                     cardClick = {
                         editingBean.value = i
-                        showAddDialog.value = true
+                        showEditDialog.value = true
                     },
                     finishedChange = {
                         newWorkList.add(i)

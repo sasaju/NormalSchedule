@@ -8,7 +8,7 @@
         android:shortcutLongLabel="@string/space_long">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.liflymark.normalschedule.debug"
+            android:targetPackage="com.liflymark.normalschedule"
             android:targetClass="com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity"
             />
         <!-- If your shortcut is associated with multiple intents, include them
@@ -25,7 +25,7 @@
         android:shortcutLongLabel="@string/score_long">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.liflymark.normalschedule.debug"
+            android:targetPackage="com.liflymark.normalschedule"
             android:targetClass="com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity"
             />
         <!-- If your shortcut is associated with multiple intents, include them
@@ -42,7 +42,7 @@
         android:shortcutLongLabel="@string/title_activity_tool_box">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.liflymark.normalschedule.debug"
+            android:targetPackage="com.liflymark.normalschedule"
             android:targetClass="com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity"
             />
         <!-- If your shortcut is associated with multiple intents, include them

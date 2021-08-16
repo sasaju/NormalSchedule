@@ -76,7 +76,7 @@ class ImportLoginFragment: Fragment() {
         }
         viewModel.getId()// 获取cookie
         viewModel.idLiveData.observe(viewLifecycleOwner, { result ->
-            if (result == null) {
+            if (result == null || result.id == "") {
                 server_status.text = "目前可能仅允许“统一认证”登陆，如失败请尝试班级导入"
                 select_sign_method.attachDataSource(listOf("统一认证"))
                 id = ""

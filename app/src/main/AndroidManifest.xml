@@ -19,6 +19,16 @@
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
+            android:name=".ui.add_course.AddCourseComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_add_course_compose"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
             android:name=".ui.work_book.WorkBookActivity"
             android:exported="true"
             android:label="@string/title_activity_work_book"
@@ -65,7 +75,8 @@
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.show_timetable.ShowTimetableActivity2"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash" />
         <activity
             android:name=".ui.lib_order.LibOrderActivity"
             android:exported="true" />
@@ -76,11 +87,6 @@
         <activity
             android:name=".ui.set_background.DefaultBackground"
             android:label="选择背景"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-        <activity
-            android:name=".ui.add_course.AddCourseActivity"
-            android:label="增加课程"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity

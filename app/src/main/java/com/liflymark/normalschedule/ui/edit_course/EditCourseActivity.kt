@@ -54,22 +54,38 @@ class EditCourseActivity : ComponentActivity() {
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
-fun AllPage(courseName: String, ecViewModel: EditCourseViewModel = viewModel()) {
+fun AllPage(
+    courseName: String,
+    ecViewModel: EditCourseViewModel = viewModel(),
+
+) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current as EditCourseActivity
     val newCourseMutableList = remember { mutableStateListOf<CourseBean>() }
     val progressShow = remember {
         mutableStateOf(false)
     }
-    ProgressDialog(openDialog = progressShow, label = "正在保存")
+    val showNameDialog = remember {
+        mutableStateOf(false)
+    }
+    var sideEffectCourse by remember {
+        mutableStateOf(courseName)
+    }
+    var addOne by remember {
+        mutableStateOf(0)
+    }
+
     if (courseName != "") {
         val courseBeanList =
             ecViewModel.loadCourseByName(courseName).collectAsState(ecViewModel.initCourseBean)
         LaunchedEffect(courseBeanList.value) {
             Log.d("EditAC", courseBeanList.value.toString())
-            ecViewModel.addDeleteClass(courseBeanList.value)
-            newCourseMutableList.clear()
-            newCourseMutableList.addAll(courseBeanList.value)
+            if (addOne < 2) {
+                ecViewModel.addDeleteClass(courseBeanList.value)
+                newCourseMutableList.clear()
+                newCourseMutableList.addAll(courseBeanList.value)
+                addOne += 1
+            }
         }
         Column(
             modifier = Modifier
@@ -77,7 +93,18 @@ fun AllPage(courseName: String, ecViewModel: EditCourseViewModel = viewModel()) 
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CourseTitle(courseName)
+            ProgressDialog(openDialog = progressShow, label = "正在保存")
+            EditDialog(showDialog = showNameDialog, initialString = sideEffectCourse){
+                sideEffectCourse = it
+                for (courseBean in newCourseMutableList){
+                    courseBean.courseName = it
+                    Log.d("edit", it)
+                    Log.d("newCourseMutableList", newCourseMutableList.toString())
+                }
+            }
+            CourseTitle(sideEffectCourse){
+                showNameDialog.value = true
+            }
             var count = 0
             for (i in newCourseMutableList) {
                 key(count.toString() + i.toString()) {
@@ -176,9 +203,15 @@ fun Test() {
 }
 
 @Composable
-fun CourseTitle(courseName: String) {
+fun CourseTitle(courseName: String, onClick:()->Unit = {}) {
     CardContent {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(5.dp)
+                .clickable { onClick() }
+
+        ) {
             Icon(
                 imageVector = Icons.Outlined.Book,
                 contentDescription = null,

@@ -1,7 +1,10 @@
 package com.liflymark.normalschedule.ui.work_book
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
@@ -52,6 +55,7 @@ fun ContentAllBook(
     FlowRow(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(top = 10.dp),
         mainAxisAlignment = FlowMainAxisAlignment.Center,
         mainAxisSpacing = 20.dp,
@@ -66,7 +70,10 @@ fun ContentAllBook(
         }
         if (courseNameList.value.isEmpty()){
             Text(
-                text = "你还没有添加作业",
+                text = "你还没有添加作业\n" +
+                        "点击课表主界面的课程格子\n" +
+                        "->点击弹窗右下角按钮\n" +
+                        "->添加作业",
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )

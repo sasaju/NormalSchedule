@@ -42,6 +42,7 @@ class ShowTimetableViewModel: ViewModel() {
         Repository.getSentences(it).asLiveData()
     }
 
+    val settingsLiveData = Repository.getScheduleSettings().asLiveData()
 
     fun loadAllCourse() {
         courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)

@@ -478,6 +478,28 @@ object  Repository {
         }
     }
 
+    fun getScheduleSettings() = AccountDataDao.scheduleSettings
+
+    suspend fun updateMode(mode:Int):Int{
+        return try {
+            AccountDataDao.updateColorMode(mode = mode)
+            0
+        } catch (e:Exception) {
+            1
+        }
+    }
+
+    fun getShowDarkBack() = AccountDataDao.getDarkShowBack()
+
+    suspend fun updateShowDarkBack(show:Boolean):Int{
+        return try {
+            AccountDataDao.updateDarkShowBack(show)
+            0
+        } catch (e:Exception){
+            1
+        }
+    }
+
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {
                 val result = try {
