@@ -1,28 +1,30 @@
 package com.liflymark.normalschedule.ui.class_course
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
@@ -34,10 +36,12 @@ import com.google.accompanist.pager.rememberPagerState
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.model.DepartmentList
+import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
-import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
+import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.show_timetable.*
-import es.dmoral.toasty.Toasty
+import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import kotlinx.coroutines.flow.collectLatest
 
 class ClassCourseActivity : ComponentActivity() {
@@ -45,10 +49,13 @@ class ClassCourseActivity : ComponentActivity() {
     @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val allowImport = intent.getBooleanExtra("allowImport", false)
         setContent {
-            NormalScheduleTheme {
+            NorScTheme {
+                UiControl()
                 Column {
-                    SelectMajor()
+                    NormalTopBar(label = "班级课程")
+                    SelectMajor(allowImport = allowImport)
                     ShowCourse(courseViewModel = viewModel)
                 }
                     
@@ -58,20 +65,31 @@ class ClassCourseActivity : ComponentActivity() {
 }
 
 @Composable
-fun SelectMajor(courseViewModel: ClassCourseViewModel = viewModel()){
-    var departmentList by remember { mutableStateOf(DepartmentList("正在加载", listOf())) }
+fun SelectMajor(allowImport:Boolean = false,courseViewModel: ClassCourseViewModel = viewModel()){
+    val departmentList = courseViewModel.departmentListFlow.collectAsState(initial =DepartmentList("正在加载", listOf()))
     var department by remember { mutableStateOf("点击选择学院") }
     var majorList by remember { mutableStateOf(listOf("点击选择专业")) }
     var major by remember {
         mutableStateOf("点击选择专业")
     }
+    val context = LocalContext.current
+    val activity = LocalContext.current as ClassCourseActivity
     LaunchedEffect(true){
-        courseViewModel.departmentListFlow.collectLatest {
-            departmentList = it
+        if (allowImport) {
+            courseViewModel.classBeanLiveData.observe(activity) {
+                val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
+                    putExtra("isSaved", false)
+                    putExtra("courseList", Convert.allCourseToJson(it.allCourse))
+                    putExtra("user", "")
+                    putExtra("password", "")
+                }
+                activity.startActivity(intent)
+                activity.finish()
+            }
         }
     }
     LaunchedEffect(department) {
-        for (i in departmentList.structure){
+        for (i in departmentList.value.structure){
             if (i.department == department) {
                 majorList = i.majorList
             } else {
@@ -79,53 +97,59 @@ fun SelectMajor(courseViewModel: ClassCourseViewModel = viewModel()){
             }
         }
     }
-
-    Row {
+    WaitingDepartList(departState = departmentList)
+    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
         val expanded = remember { mutableStateOf(false) }
         val expandedMajorList = remember {
             mutableStateOf(false)
         }
-
-        TextButton(onClick = { expanded.value = true }) {
-            Text(text = department)
-        }
-
-
-        TextButton(onClick = { expandedMajorList.value = true }) {
-            Text(text = major)
-        }
-
-
-
-        //学院列表
-        DropdownMenu(
-            expanded = expanded.value,
-            onDismissRequest = { expanded.value = false },
-            modifier = Modifier.height(280.dp)
-        ) {
-            for (i in departmentList.structure){
-                Item(itemName = i.department){
-                    department = it
-                    expanded.value =false
+        Box(contentAlignment = Alignment.TopCenter){
+            TextButton(onClick = { expanded.value = true }) {
+                Text(text = department, fontSize = 15.sp)
+            }
+            //学院列表
+            DropdownMenu(
+                expanded = expanded.value,
+                onDismissRequest = { expanded.value = false },
+                modifier = Modifier.height(280.dp)
+            ) {
+                for (i in departmentList.value.structure){
+                    Item(itemName = i.department){
+                        department = it
+                        expanded.value =false
+                    }
                 }
             }
         }
 
-        /*专业列表*/
-        DropdownMenu(
-            expanded = expandedMajorList.value,
-            onDismissRequest = { expandedMajorList.value = false },
-            modifier = Modifier.height(280.dp)
-        ) {
-            for (i in majorList){
-                Item(itemName = i){
-                    major = it
-                    expandedMajorList.value =false
-                    courseViewModel.putDepartmentAndMajor(department, major.replace(".json",""))
+        Box(contentAlignment = Alignment.Center){
+            TextButton(onClick = { expandedMajorList.value = true }) {
+                Text(text = major, fontSize = 15.sp)
+            }
+
+            /*专业列表*/
+            DropdownMenu(
+                expanded = expandedMajorList.value,
+                onDismissRequest = { expandedMajorList.value = false },
+                modifier = Modifier.height(280.dp)
+            ) {
+                for (i in majorList){
+                    Item(itemName = i){
+                        major = it
+                        expandedMajorList.value =false
+                        courseViewModel.putDepartmentAndMajor(department, major)
+                    }
                 }
             }
         }
-
+        if (allowImport) {
+            TextButton(onClick = {
+                courseViewModel.saveAccount()
+                courseViewModel.putDepartmentAndMajorBean(department, major)
+            }) {
+                Text(text = "导入当前课表" ,fontSize = 15.sp)
+            }
+        }
     }
 }
 
@@ -163,11 +187,7 @@ fun ShowCourse(courseViewModel: ClassCourseViewModel) {
 
         LaunchedEffect(pagerState) {
             snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-                userNowWeek = if (pagerState.pageCount > userNowWeek){
-                    page
-                } else {
-                    0
-                }
+                userNowWeek = page
             }
         }
     }
@@ -241,7 +261,7 @@ fun SingleLineClass2(oneWeekClass: State<List<List<OneByOneCourseBean>>>, page:I
                                 .height(spacerHeight.dp)
                         )
                         SingleClass3(singleClass = oneClass)
-                        Log.d("classcourseActiv", oneClass.toString())
+//                        Log.d("classcourseActiv", oneClass.toString())
                         nowJieShu -= IntArray(oneClass.end) { it + 1 }.toMutableList()
                     }
                 }
@@ -296,10 +316,10 @@ fun getNowWeek(): Int {
     return GetDataUtil.whichWeekNow()
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview2() {
-    NormalScheduleTheme {
-
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview2() {
+//    NormalScheduleTheme {
+//
+//    }
+//}

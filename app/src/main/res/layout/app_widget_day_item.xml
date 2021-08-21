@@ -8,6 +8,8 @@
         android:id="@+id/course_name_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/text_cornor"
+        android:padding="10dp"
         android:text="线性代数"/>
 
 <!--    <TextView-->

@@ -1,34 +1,31 @@
-package com.liflymark.test.ui.theme
+package com.liflymark.normalschedule.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.liflymark.test.ui.theme.Typography
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = PrimaryD,
+    primaryVariant = Color(0xFF6E92FF),
+    secondary = Secondary,
+    onSecondary = onSecondary,
+    onPrimary = onPrimary,
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    primary = Primary,
+    primaryVariant = Color(0xff6ec6ff),
+    secondary = Secondary,
+    onSecondary = onSecondary,
+    onPrimary = onPrimary,
 )
 
 @Composable
-fun TestTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun NorScTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

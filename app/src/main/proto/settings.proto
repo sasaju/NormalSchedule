@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_package = "com.liflymark.schedule.data";
+option java_multiple_files = true;
+
+message Settings {
+  // 默认0-纯色，1-渐变色
+  int32 color_mode = 1;
+
+  // 默认值0 翻译为70dp，设置其他值将不会处理，是多少就是多少
+  int32 course_per_height = 2;
+
+  // 在夜间模式是否显示背景
+  bool dark_show_back = 3;
+
+  // 时间列颜色 默认黑色
+  int64 time_line_color = 4;
+
+  // 星期行颜色 默认黑色
+  int64  week_row_color = 5;
+
+}

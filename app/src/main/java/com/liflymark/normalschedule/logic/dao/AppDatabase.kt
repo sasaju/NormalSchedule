@@ -1,18 +1,25 @@
 package com.liflymark.normalschedule.logic.dao
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.bean.HomeworkBean
 import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 
-@Database(version = 2, entities = [CourseBean::class, UserBackgroundBean::class])
+@Database(
+    version = 3,
+    entities = [CourseBean::class, UserBackgroundBean::class, HomeworkBean::class],
+    autoMigrations = [AutoMigration(from = 2, to = 3)]
+)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun courseDao(): CourseOriginalDao
     abstract fun backgroundDao(): BackgroundDao
+    abstract fun homeworkDao(): HomeworkDao
 
     companion object {
         private val MIGRATION_1_2 = object : Migration(1, 2){

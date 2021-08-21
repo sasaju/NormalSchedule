@@ -16,6 +16,9 @@ interface CourseOriginalDao {
     @Insert
     suspend fun insertCourse(course: CourseBean): Long
 
+    @Insert
+    suspend fun insertCourse(course: List<CourseBean>)
+
     @Update
     suspend fun updateCourse(newCourse: CourseBean)
 
@@ -25,8 +28,17 @@ interface CourseOriginalDao {
     @Query("select * from CourseBean")
     fun loadAllCourseAs(): List<CourseBean>
 
+    @Query("select * from CourseBean where courseName=:courseName and classDay=:classDay and classSessions=:classSessions and continuingSession=:continuingSession and teachingBuildName=:buildingName" )
+    suspend fun loadCourseUnTeacher(courseName: String, classDay:Int, classSessions:Int, continuingSession:Int, buildingName:String):List<CourseBean>
+
+    @Query("select * from CourseBean where courseName=:courseName and classDay=:classDay and classSessions=:classSessions and continuingSession=:continuingSession" )
+    suspend fun loadCourseUnTeacher(courseName: String, classDay:Int, classSessions:Int, continuingSession:Int):List<CourseBean>
+
     @Query("delete from CourseBean where courseName = :courseName")
     suspend fun deleteCourseByName(courseName: String)
+
+    @Query("delete from CourseBean where courseName =:courseName and classSessions = :courseStart and classDay = :whichColumn")
+    suspend fun deleteCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int)
 
     @Query("select * from CourseBean where courseName = :courseName")
     suspend fun loadCourseByName(courseName: String): List<CourseBean>
@@ -39,5 +51,8 @@ interface CourseOriginalDao {
 
     @Delete
     suspend fun deleteCourse(course: CourseBean)
+
+    @Delete
+    suspend fun deleteCourse(course: List<CourseBean>)
 
 }

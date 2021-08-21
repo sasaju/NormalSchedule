@@ -1,12 +1,11 @@
 package com.liflymark.normalschedule.ui.score_detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,13 +16,12 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.liflymark.normalschedule.logic.model.Grades
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.ui.score_detail.ui.theme.NormalScheduleTheme
+import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 
 class ShowDetailScoreActivity : ComponentActivity() {
     @ExperimentalAnimationApi
@@ -34,7 +32,7 @@ class ShowDetailScoreActivity : ComponentActivity() {
         val allGradeList = Convert.jsonToGradesList(allGradeListString)
         setContent {
             UiControl()
-            NormalScheduleTheme {
+            NorScTheme {
                 AllGrades(allGradeList)
             }
         }
@@ -52,7 +50,13 @@ fun AllGrades(allGradeList: List<Grades>){
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        NormalTopBar(label = "成绩明细")
         Text(text = "结果仅供参考，一切请以教务系统数据为准！！！")
+        Log.d("ShowDetialSCore", allGradeList.toString())
+        if (allGradeList.isEmpty()){
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(text = "当前教务系统“本学期成绩”为空")
+        }
         for (i in allGradeList){
             SingleGrade(grades = i)
             Spacer(modifier = Modifier.height(20.dp))
@@ -72,7 +76,7 @@ fun SingleGrade(grades: Grades) {
         expandIcon = if (expand){ Icons.Filled.ExpandMore } else { Icons.Filled.ExpandLess}},
         modifier = Modifier.padding(10.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth(0.9f)) {
+        Column(modifier = Modifier.fillMaxWidth(0.9f).padding(horizontal = 2.dp)) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "${grades.courseName}： ${grades.courseScore}",
@@ -103,13 +107,5 @@ fun SingleGrade(grades: Grades) {
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview4() {
-    NormalScheduleTheme {
-
     }
 }

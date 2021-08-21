@@ -15,6 +15,9 @@ interface BackgroundDao {
     @Query("select * from UserBackgroundBean order by id desc limit 0,1")
     suspend fun loadLastBackground(): UserBackgroundBean
 
+    @Query("select * from UserBackgroundBean order by id desc limit 0,1")
+    fun loadLastBackgroundMain(): UserBackgroundBean
+
     @Delete
     suspend fun deleteAllBackground(background: UserBackgroundBean)
 }

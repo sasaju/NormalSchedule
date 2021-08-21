@@ -1,10 +1,9 @@
 package com.liflymark.normalschedule.logic.network
 
-import com.liflymark.normalschedule.logic.model.DepartmentList
+import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.RuntimeException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -13,10 +12,16 @@ object NormalScheduleNetwork {
     private val CourseService = ServiceCreator.create(CourseService::class.java)
     private val ScoreService = ServiceCreator.create(ScoreService::class.java)
     private val SentenceService = ServiceCreator.create(SentenceService::class.java)
+    private val SpacesService = ServiceCreator.create(SpaceService::class.java)
+    private val DevService = ServiceCreator.create(DevBoardService::class.java)
 
-    suspend fun getId() = CourseService.getId().await()
+    suspend fun getId() =
+        CourseService.getId().await()
 
-    suspend fun getCaptcha(sessionID: String) = CourseService.getCaptcha(sessionID).await()
+    fun cancelAll() = ServiceCreator.cancelAll()
+
+    suspend fun getCaptcha(sessionID: String) =
+        CourseService.getCaptcha(sessionID).await()
 
     suspend fun getCourse(user:String,password:String, yzm:String, headers:String) =
         CourseService.getCourse(user, password, yzm, headers).await()
@@ -41,6 +46,18 @@ object NormalScheduleNetwork {
     suspend fun getScoreDetail(user:String, password:String, id:String) =
         ScoreService.getScoreDetail(user, password, id).await()
 
+    suspend fun loginToSpace(user: String, password: String, id: String) =
+        SpacesService.loginToSpace(user, password, id).await()
+
+    suspend fun getSpaceRooms(id: String, roomName:String, searchDate: String) =
+        SpacesService.getSpaceRooms(id, roomName, searchDate).await()
+
+    suspend fun getBulletin() =
+        DevService.getBulletin().await()
+
+    suspend fun getSchoolBusTime(searchType: String) =
+        DevService.getSchoolBusTime(searchType).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
@@ -53,9 +70,13 @@ object NormalScheduleNetwork {
                 }
 
                 override fun onFailure(call: Call<T>, t: Throwable) {
+                    if (call.isCanceled){
+                        call.cancel()
+                    }
                     continuation.resumeWithException(t)
                 }
             })
         }
     }
+
 }

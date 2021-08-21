@@ -5,12 +5,6 @@
     android:layout_height="180dp"
     android:background="@color/lightBlue">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iconImage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/ic_head_png"
-        android:layout_centerInParent="true"/>
     <TextView
         android:id="@+id/otherText"
         android:layout_width="wrap_content"

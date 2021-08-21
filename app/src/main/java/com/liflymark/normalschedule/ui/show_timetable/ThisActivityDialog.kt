@@ -1,11 +1,15 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BookmarkAdd
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -22,6 +26,8 @@ import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.whichIs1
+import com.liflymark.normalschedule.ui.edit_course.EditCourseActivity
+import com.liflymark.normalschedule.ui.work_book.WorkBookActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 
@@ -31,43 +37,50 @@ import kotlinx.coroutines.flow.collect
 * */
 @Composable
 fun ClassDetailDialog(openDialog:MutableState<Boolean>,singleClass: OneByOneCourseBean){
-    val emptyCourseBean = CourseBean("",0,0,"011110",0,"异常查询","","","")
+    val emptyCourseBean = CourseBean("",0,0,"011110",0,"未查询","","","")
     val realCourseMessage = singleClass.courseName.split("\n")
-    val courseBeanListState = remember { mutableStateOf(emptyCourseBean) }
+//    val courseBeanListState = remember { mutableStateOf(emptyCourseBean) }
     val openDeleteDialog = remember { mutableStateOf(false) }
-
-    DeleteCourseDialog(deleteDialogOpen = openDeleteDialog, singleClass = singleClass)
-
-    LaunchedEffect(true){
-        Repository.loadCourseByNameAndStart(
+    val context = LocalContext.current as Activity
+    val courseBeanListState = Repository
+        .loadCourseByNameAndStart2(
             realCourseMessage[0],
             singleClass.start,
             singleClass.whichColumn
-        ).collect {
-            if (it.isSuccess) {
-                val result = it.getOrNull()
-                if (result != null) {
-                    courseBeanListState.value = result.getOrElse(0) { emptyCourseBean }
-                }
-            } else {
-                it.getOrElse { a ->
-                    Log.d("dialog", a.toString())
-                }
-            }
-        }
-    }
+        ).collectAsState(initial = emptyCourseBean)
+    DeleteCourseDialog(deleteDialogOpen = openDeleteDialog, singleClass = singleClass)
+
+//    LaunchedEffect(true){
+//        Repository.loadCourseByNameAndStart(
+//            realCourseMessage[0],
+//            singleClass.start,
+//            singleClass.whichColumn
+//        ).collect {
+//            if (it.isSuccess) {
+//                val result = it.getOrNull()
+//                if (result != null) {
+//                    courseBeanListState.value = result.getOrElse(0) { emptyCourseBean }
+//                }
+//            } else {
+//                it.getOrElse { a ->
+//                    Log.d("dialog", a.toString())
+//                }
+//            }
+//        }
+//    }
     if (openDialog.value){
         AlertDialog(
-            modifier = Modifier.fillMaxWidth(0.8f),
-            onDismissRequest = { openDialog.value = false },
+            modifier = Modifier.fillMaxWidth(0.95f),
+            onDismissRequest =
+            {
+                openDialog.value = false
+            },
             title = {
                 Row() {
                     Text(text = courseBeanListState.value.courseName, Modifier.fillMaxWidth(0.8f), fontSize = 20.sp)
-                    Text(text = " X ",
-                        Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .clickable { openDialog.value = false }, textAlign = TextAlign.Center)
+                    TextButton(onClick = { openDialog.value = false }) {
+                        Text(text = " X ", textAlign = TextAlign.Center)
+                    }
                 }
             },
             text = {
@@ -82,8 +95,22 @@ fun ClassDetailDialog(openDialog:MutableState<Boolean>,singleClass: OneByOneCour
                         Icon(imageVector = Icons.Outlined.DeleteForever, contentDescription = "删除课程")
                     }
                     IconButton(onClick = {
+                        openDialog.value = false
+                        val intent = Intent(context, EditCourseActivity::class.java).apply {
+                            putExtra("courseName", courseBeanListState.value.courseName)
+                        }
+                        context.startActivity(intent)
                     }, modifier = Modifier.weight(1F)) {
                         Icon(imageVector = Icons.Outlined.Edit, contentDescription = "编辑课程")
+                    }
+                    IconButton(onClick = {
+                        openDialog.value = false
+                        val intent = Intent(context, WorkBookActivity::class.java).apply {
+                            putExtra("courseName", courseBeanListState.value.courseName)
+                        }
+                        context.startActivity(intent)
+                    }, modifier = Modifier.weight(1F)) {
+                        Icon(imageVector = Icons.Default.BookmarkAdd, contentDescription = "作业本")
                     }
                 }
 
@@ -151,7 +178,7 @@ fun DeleteCourseDialog(deleteDialogOpen:MutableState<Boolean>,singleClass: OneBy
 //    }
     if (deleteDialogOpen.value){
         AlertDialog(
-            modifier = Modifier.fillMaxWidth(0.8f)
+            modifier = Modifier.fillMaxWidth(0.95f)
             ,
             onDismissRequest = { 
                 deleteDialogOpen.value = false

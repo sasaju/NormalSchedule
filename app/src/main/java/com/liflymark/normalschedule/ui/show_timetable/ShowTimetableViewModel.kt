@@ -13,16 +13,19 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.OneSentencesResponse
+import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class ShowTimetableViewModel: ViewModel() {
     private var courseDatabaseLiveData = MutableLiveData(0)
     private var backgroundId = MutableLiveData(0)
     private var needDeleteCourseNameLiveData = MutableLiveData<String>()
     private var _sentenceLiveDate = MutableLiveData<Boolean>(false)
+    var showToast = 0
 
-
+    val newUserFLow = Repository.getNewUserOrNot()
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
         Repository.loadAllCourse2()
     }
@@ -39,6 +42,7 @@ class ShowTimetableViewModel: ViewModel() {
         Repository.getSentences(it).asLiveData()
     }
 
+    val settingsLiveData = Repository.getScheduleSettings().asLiveData()
 
     fun loadAllCourse() {
         courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
@@ -62,6 +66,88 @@ class ShowTimetableViewModel: ViewModel() {
 
     suspend fun deleteAllCourse(){
         Repository.deleteAllCourseBean2()
+    }
+
+
+    fun mergeClass(className: String,
+                   classDay: Int,
+                   classSessions: Int,
+                   continuingSession: Int,
+                   buildingName: String){
+        viewModelScope.launch {
+            var classWeekResult = Integer.parseInt("000000000000000000000000", 2)
+            var teacher = ""
+            val classList = Repository.loadCourseUnTeacher(className, classDay, classSessions, continuingSession, buildingName)
+            for (singleBean in classList){
+                val singleBeanWeek = Integer.parseInt(singleBean.classWeek,2)
+                classWeekResult = singleBeanWeek or classWeekResult
+                teacher += "${singleBean.teacher} "
+            }
+
+            var classWeekResultStr = Integer.toBinaryString(classWeekResult)
+            val length = classWeekResultStr.length
+            if (classWeekResultStr.length < 24){
+                repeat(24-length){
+                    classWeekResultStr = "0$classWeekResultStr"
+                }
+            }
+            val newBean = CourseBean(
+                campusName = "河北大学",
+                classDay = classDay,
+                classSessions = classSessions,
+                classWeek = classWeekResultStr,
+                continuingSession = continuingSession,
+                courseName = className,
+                teacher = teacher,
+                teachingBuildName = buildingName,
+                color = Convert.stringToColor(className)
+            )
+            if (Integer.parseInt("000000000000000000000000", 2)!=classWeekResult) {
+                Repository.insertCourse(newBean)
+                Repository.deleteCourseByList(classList)
+//                loadAllCourse()
+            }
+        }
+    }
+
+    fun mergeClass(className: String,
+                   classDay: Int,
+                   classSessions: Int,
+                   continuingSession: Int){
+        viewModelScope.launch {
+            var classWeekResult = Integer.parseInt("000000000000000000000000", 2)
+            var teacher = ""
+            val classList = Repository.loadCourseUnTeacher(className, classDay, classSessions, continuingSession)
+            for (singleBean in classList){
+                val singleBeanWeek = Integer.parseInt(singleBean.classWeek,2)
+                classWeekResult = singleBeanWeek or classWeekResult
+                teacher += "${singleBean.teacher} "
+            }
+
+            var classWeekResultStr = Integer.toBinaryString(classWeekResult)
+            val length = classWeekResultStr.length
+            if (classWeekResultStr.length < 24){
+                repeat(24-length){
+                    classWeekResultStr = "0$classWeekResultStr"
+                }
+            }
+            val newBean = CourseBean(
+                campusName = "河北大学",
+                classDay = classDay,
+                classSessions = classSessions,
+                classWeek = classWeekResultStr,
+                continuingSession = continuingSession,
+                courseName = className,
+                teacher = teacher,
+                teachingBuildName = "多个教室",
+                color = Convert.stringToColor(className)
+            )
+            if (Integer.parseInt("000000000000000000000000", 2)!=classWeekResult) {
+                Repository.insertCourse(newBean)
+                Repository.deleteCourseByList(classList)
+//                loadAllCourse()
+            }
+        }
     }
 
     fun fetchSentence(force:Boolean = false) {

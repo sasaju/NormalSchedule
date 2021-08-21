@@ -15,12 +15,68 @@ internal object GetDataUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
+    fun getNowMonth(whichColumn:Int, whichWeek:Int): String {
+        val sdf = SimpleDateFormat("MM月dd日")
+        val column = when(whichColumn){
+            1 -> "周一"
+            2 -> "周二"
+            3 -> "周三"
+            4 -> "周四"
+            5 -> "周五"
+            6 -> "周六"
+            7 -> "周日"
+            else -> "错误"
+        }
+        return sdf.format(Date())+" | "+column
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getThreeDay():List<String>{
+        val threeDay = mutableListOf<String>()
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val calendar = GregorianCalendar()
+        calendar.add(Calendar.DATE, -1)
+        threeDay.add(sdf.format(calendar.time))
+        repeat(2){
+            calendar.add(Calendar.DATE, 1)
+            threeDay.add(sdf.format(calendar.time))
+        }
+        threeDay.add("2021-08-29")
+        return threeDay.toList()
+    }
+
+    @SuppressLint("SimpleDateFormat")
     fun getNowSimpleDateFormat(): SimpleDateFormat {
         val sdf = SimpleDateFormat()
         sdf.format(Date())
         return sdf
     }
 
+    /**
+     * 根据毫秒转换为yyyy-MM-dd
+     */
+    @SuppressLint("SimpleDateFormat")
+    fun getDateStrByMillis(millis:Long): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val date = GregorianCalendar()
+        date.timeInMillis = millis
+        return sdf.format(date.time)
+    }
+
+    /**
+     * 计算几天之后的日期并转换为毫秒
+     */
+    fun getDayMillis(afterToady:Int):Long{
+        val calendar = GregorianCalendar()
+        calendar.add(Calendar.DATE, afterToady)
+        return calendar.timeInMillis
+    }
+
+    /**
+     * 判断当前周几
+     * 周一-》1
+     * 周二-》2 ...
+     */
     fun getNowWeekNum(): Int {
         val now = GregorianCalendar()
         // Log.d("GEtDataUtil", sdf.format(Date()))
@@ -84,6 +140,25 @@ internal object GetDataUtil {
     }
 
     fun getFirstWeekMondayDate() = firstWeekMondayDate
+
+
+    /**
+     * 2021年-year-2021
+     * 2月-month-1
+     */
+    fun getMonthAllDay(year:Int,month:Int):List<String>{
+        val calendar = GregorianCalendar()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month)
+        val maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        return (1..maxDay).toList().map { it.toString() }
+    }
+
+    fun getCalendarByMillis(millis: Long): GregorianCalendar {
+        val calendar = GregorianCalendar()
+        calendar.timeInMillis = millis
+        return calendar
+    }
 
 
 }

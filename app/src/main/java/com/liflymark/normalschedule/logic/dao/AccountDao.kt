@@ -24,16 +24,20 @@ object AccountDao {
         }
     }
 
-    fun getSavedAccount(): Map<String?, String?> {
+    fun saveLogin(){
+        with(normalSharePreferences().edit()) {
+            putBoolean("loginOrNot", true)
+            apply()
+        }
+    }
+
+    fun getSavedAccount(): Map<String, String?> {
         val user = normalSharePreferences().getString("userYes", "")
         val password =  pwSharedPreferences().getString("passwordEncrypt", "")
         return mapOf("user" to user, "password" to password)
     }
 
-
-    //重新导课可以后改为
-    //fun isAccountSaved() = normalSharePreferences().getBoolean("loginOrNot", false)
-    fun isAccountSaved() = normalSharePreferences().contains("userYes")
+    fun isAccountSaved() = normalSharePreferences().getBoolean("loginOrNot", false)
 
     fun newUserShowed(){
         normalSharePreferences().edit(){
@@ -47,15 +51,8 @@ object AccountDao {
         return userVersion < 1
     }
 
-    fun clearSharePreferences(){
-        with(pwSharedPreferences().edit()){
-            clear()
-            apply()
-        }
-        with(normalSharePreferences().edit()){
-            clear()
-            apply()
-        }
+    fun importedAgain(){
+
         with(normalSharePreferences().edit()) {
             putBoolean("loginOrNot", false)
             commit()

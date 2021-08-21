@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="space_room"
+        android:enabled="true"
+        android:icon="@drawable/baseline_event_seat_black_24"
+        android:shortcutShortLabel="@string/space_short"
+        android:shortcutLongLabel="@string/space_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.liflymark.normalschedule"
+            android:targetClass="com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity"
+            />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+<!--        <capability-binding android:key="actions.intent.CREATE_MESSAGE" />-->
+    </shortcut>
+    <shortcut
+        android:shortcutId="score_log"
+        android:enabled="true"
+        android:icon="@drawable/baseline_stairs_black_24"
+        android:shortcutShortLabel="@string/score_short"
+        android:shortcutLongLabel="@string/score_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.liflymark.normalschedule"
+            android:targetClass="com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity"
+            />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+        <!--        <capability-binding android:key="actions.intent.CREATE_MESSAGE" />-->
+    </shortcut>
+    <shortcut
+        android:shortcutId="tool_box"
+        android:enabled="true"
+        android:icon="@drawable/baseline_work_outline_black_24"
+        android:shortcutShortLabel="@string/title_activity_tool_box"
+        android:shortcutLongLabel="@string/title_activity_tool_box">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.liflymark.normalschedule"
+            android:targetClass="com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity"
+            />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+        <!--        <capability-binding android:key="actions.intent.CREATE_MESSAGE" />-->
+    </shortcut>
+</shortcuts>

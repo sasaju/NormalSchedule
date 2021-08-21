@@ -1,7 +1,9 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
+import androidx.compose.runtime.compositionLocalOf
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
+import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import java.util.*
 
@@ -95,6 +97,12 @@ fun getDayOfWeek(nowColumn: Int): String {// 当前列是星期几  星期一,�
         7 -> "日"
         else -> "一"
     }
+}
+val LocalDialog = compositionLocalOf {
+    getInitial()
+}
+val LocalShowSingle  = compositionLocalOf {
+    false
 }
 
 //fun main(){
