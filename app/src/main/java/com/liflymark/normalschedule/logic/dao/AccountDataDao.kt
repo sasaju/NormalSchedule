@@ -34,7 +34,7 @@ object AccountDataDao {
         fileName = "settings.pb",
         serializer = SettingsSerializer
     )
-    val scheduleSettings = context.settingsStore.data.map { it }
+    val scheduleSettings = context.settingsStore.data
 
     fun getDarkShowBack() = context.settingsStore.data.map {
         it.darkShowBack
@@ -57,6 +57,12 @@ object AccountDataDao {
             it.toBuilder()
                 .setDarkShowBack(show)
                 .build()
+        }
+    }
+
+    suspend fun updateSettings(setSettings:(settings:Settings)->Settings){
+        context.settingsStore.updateData {
+            setSettings(it)
         }
     }
 

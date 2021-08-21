@@ -19,8 +19,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.utils.EditDialog
-import com.liflymark.normalschedule.ui.edit_course.*
-import com.liflymark.normalschedule.ui.edit_course.AllPage
+import com.liflymark.normalschedule.ui.edit_course.CardContent
+import com.liflymark.normalschedule.ui.edit_course.CourseContent
+import com.liflymark.normalschedule.ui.edit_course.CourseTitle
 import com.liflymark.normalschedule.ui.score_detail.ProgressDialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
@@ -54,8 +55,7 @@ class AddCourseComposeActivity : ComponentActivity() {
 fun AddPage(
     courseName: String,
     ecViewModel: AddCourseActivityViewModel = viewModel(),
-
-    ) {
+) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current as AddCourseComposeActivity
     val newCourseMutableList = remember { mutableStateListOf<CourseBean>() }
@@ -157,6 +157,7 @@ fun AddPage(
                     }
                     TextButton(onClick = {
                         newCourseMutableList.add(ecViewModel.initCourseBean[0])
+                        newCourseMutableList.last().courseName = sideEffectCourse
                     }, modifier = textBtMod) {
                         Text(text = "增加时段")
                     }

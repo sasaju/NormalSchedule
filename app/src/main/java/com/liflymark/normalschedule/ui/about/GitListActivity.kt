@@ -31,20 +31,16 @@ class GitListActivity : AppCompatActivity() {
     private fun initList(){
         gitProjectList.add(GitProject("NiceSpinner:下拉组件", "https://github.com/arcadefire/nice-spinner"))
         gitProjectList.add(GitProject("ImmersionBar:沉浸式状态栏实现", "https://github.com/gyf-dev/ImmersionBar"))
-        gitProjectList.add(GitProject("material-dialogs:一款美观的Dialog","https://github.com/afollestad/material-dialogs"))
-        gitProjectList.add(GitProject("groupie", "https://github.com/lisawray/groupie"))
         gitProjectList.add(GitProject("Toasty", "https://github.com/GrenderG/Toasty"))
-        gitProjectList.add(GitProject("IcyTimeTable:布局课表页面", "https://github.com/Icyrockton/IcyTimeTable"))
         gitProjectList.add(GitProject("Wakeup课程表", "https://github.com/YZune/WakeupSchedule_Kotlin"))
-        gitProjectList.add(GitProject("Glide","https://github.com/bumptech/glide"))
         gitProjectList.add(GitProject("docker-easyconnect:服务器使用easyconnect", "https://github.com/Hagb/docker-easyconnect"))
-        gitProjectList.add(GitProject("androidx.core:core-ktx", "https://github.com/google"))
-        gitProjectList.add(GitProject("androidx.appcompat:appcompat", "https://github.com/google"))
-        gitProjectList.add(GitProject("com.google.android.material:material", "https://github.com/google"))
-        gitProjectList.add(GitProject("androidx.constraintlayout:constraintlayout", "https://github.com/google"))
-        gitProjectList.add(GitProject("androidx.recyclerview:recyclerview", "https://github.com/google"))
-        gitProjectList.add(GitProject("androidx.lifecycle:lifecycle-extensions", "https://github.com/google"))
-        gitProjectList.add(GitProject("androidx.room:room-ktx", "https://github.com/google"))
+        gitProjectList.add(GitProject("Androidx", "https://github.com/google"))
+        gitProjectList.add(GitProject("Material Dialogs","https://github.com/afollestad/material-dialogs"))
+        gitProjectList.add(GitProject("Retrofit2","https://github.com/square/retrofit"))
+        gitProjectList.add(GitProject("Coil", "https://github.com/coil-kt/coil"))
+        gitProjectList.add(GitProject("Gson", "https://github.com/google/gson"))
+        gitProjectList.add(GitProject("Accompanist", "https://github.com/google/accompanist"))
+        gitProjectList.add(GitProject("PictureSelector","https://github.com/LuckSiege/PictureSelector"))
     }
 
     fun openBrowser(url: String){

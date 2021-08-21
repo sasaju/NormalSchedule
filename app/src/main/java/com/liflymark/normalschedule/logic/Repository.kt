@@ -75,21 +75,56 @@ object  Repository {
         }
     }
 
-    fun getCourse(user:String, password:String, yzm:String, headers:String) = fire(Dispatchers.IO) {
-        val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
-        Result.success(courseResponse)
-    }
-
-    fun getCourse(user: String, password: String) = fire(Dispatchers.IO){
-        val courseResponse = NormalScheduleNetwork.getCourse(user, password)
-        Result.success(courseResponse)
-    }
+//    fun getCourse(user:String, password:String, yzm:String, headers:String) = fire(Dispatchers.IO) {
+//        val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
+//        Result.success(courseResponse)
+//    }
+//
+//    fun getCourse(user: String, password: String) = fire(Dispatchers.IO){
+//        val courseResponse = NormalScheduleNetwork.getCourse(user, password)
+//        Result.success(courseResponse)
+//    }
 
     fun getCourse2(user:String, password:String, yzm:String, headers:String) = liveData(Dispatchers.IO){
         try {
-            val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
-            emit(courseResponse)
+            when {
+                user=="123456" -> {
+                    val courseResponse = CourseResponse(listOf(
+                        AllCourse(
+                            "五四路",
+                            4,
+                            2,
+                            "11111111111111111111111",
+                            1,
+                            "点击右上角重新导入课程",
+                            "",
+                            ""
+                        ),
+                        AllCourse(
+                            "五四路",
+                            3,
+                            3,
+                            "11111111111111111111111",
+                            2,
+                            "这是一个示例课程",
+                            "张老师",
+                            "九教999"
+                        ),
+                    ), status = "yes")
+                    emit(courseResponse)
+                }
+                headers!="" -> {
+                    val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
+                    Log.d("Repon","getCourse发生错误")
+                    emit(courseResponse)
+                }
+                else -> {
+                    val courseResponse = NormalScheduleNetwork.getCourse(user, password)
+                    emit(courseResponse)
+                }
+            }
         } catch (e: Exception){
+            Log.d("Repon",e.toString())
             emit(null)
         }
 
@@ -97,8 +132,34 @@ object  Repository {
 
     fun getCourse2(user: String, password: String) = liveData(Dispatchers.IO){
         try {
-            val courseResponse = NormalScheduleNetwork.getCourse(user, password)
-            emit(courseResponse)
+            if (user=="123456"){
+                val courseResponse = CourseResponse(listOf(
+                    AllCourse(
+                        "五四路",
+                        4,
+                        2,
+                        "11111111111111111111111",
+                        1,
+                        "点击右上角重新导入课程",
+                        "",
+                        ""
+                    ),
+                    AllCourse(
+                        "五四路",
+                        3,
+                        3,
+                        "11111111111111111111111",
+                        2,
+                        "这是一个示例课程",
+                        "张老师",
+                        "九教999"
+                    ),
+                ), status = "ok")
+                emit(courseResponse)
+            } else {
+                val courseResponse = NormalScheduleNetwork.getCourse(user, password)
+                emit(courseResponse)
+            }
         } catch (e: Exception){
             emit(null)
         }
@@ -113,7 +174,7 @@ object  Repository {
                 1,
                 "11111111111111111111111",
                 1,
-                "点击右上角导入课程",
+                "点击右上角重新导入课程",
                 "",
                 ""
             )
@@ -241,19 +302,56 @@ object  Repository {
         Result.success(result)
     }
 
+    fun loadCourseByNameAndStart2(courseName: String, courseStart: Int, whichColumn: Int) = flow {
+        val result = courseDao.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
+        emit(result[0])
+    }
+        .catch {
+            emit(CourseBean("",0,0,"011110",0,"异常查询","","",""))
+        }
+        .flowOn(Dispatchers.IO)
 
     fun getScore(user: String, password: String, id:String) = liveData(Dispatchers.IO) {
         try {
-            val scoreResponse = NormalScheduleNetwork.getScore(user, password, id)
-            emit(scoreResponse)
+            if (user!="123456") {
+                val scoreResponse = NormalScheduleNetwork.getScore(user, password, id)
+                emit(scoreResponse)
+            } else{
+                val scoreResponse = ScoreResponse(
+                    listOf(
+                        Grade(
+                            "培养方案",
+                            listOf(
+                                listOf(
+                                    ThisProjectGrade("实例", "示例课程",90.0,"2021"),
+                                    ThisProjectGrade("实例", "示例课程2",95.0,"2021")
+                                )
+                            )
+                        ),
+                    ),
+                    "登陆成功"
+                )
+                emit(scoreResponse)
+            }
         } catch (e: Exception){
             emit(null)
         }
     }
 
     fun getScoreDetail2(user: String, password: String, id:String) = fireFlow(Dispatchers.IO) {
-        val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
-        Result.success(scoreDetailResponse)
+        if (user!="123456") {
+            val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
+            Result.success(scoreDetailResponse)
+        } else{
+            val a = ScoreDetail(
+                listOf(
+                    Grades("90","示例课程","培养方案", "90.0","5.0","90","99","20","5","88"),
+                    Grades("92","示例课程2","培养方案", "90.0","4.0","92.2","95","10","10","95")
+                ),
+                result = "登陆成功"
+            )
+            Result.success(a)
+        }
     }
 
     fun loadAllCourse3(): List<List<OneByOneCourseBean>>? {

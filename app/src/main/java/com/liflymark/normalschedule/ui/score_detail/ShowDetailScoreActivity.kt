@@ -76,7 +76,7 @@ fun SingleGrade(grades: Grades) {
         expandIcon = if (expand){ Icons.Filled.ExpandMore } else { Icons.Filled.ExpandLess}},
         modifier = Modifier.padding(10.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth(0.9f)) {
+        Column(modifier = Modifier.fillMaxWidth(0.9f).padding(horizontal = 2.dp)) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "${grades.courseName}： ${grades.courseScore}",

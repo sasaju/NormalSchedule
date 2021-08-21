@@ -2,6 +2,8 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -37,8 +39,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
@@ -47,12 +54,16 @@ import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
 import com.liflymark.schedule.data.Settings
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
+import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
+import com.liflymark.normalschedule.logic.utils.GifLoader
 import com.liflymark.normalschedule.logic.utils.TutorialOverlay
 import com.liflymark.normalschedule.ui.add_course.AddCourseComposeActivity
+import com.liflymark.normalschedule.ui.class_course.SingleClass3
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
@@ -123,7 +134,6 @@ fun Drawer(
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
     val newUserOrNot =
         viewModel.newUserFLow.collectAsState(initial = false)
-
     // 拦截返回键请求
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
     val backCallback = remember {
@@ -147,6 +157,12 @@ fun Drawer(
             backCallback.remove()
         }
     }
+    
+    var singleClass by remember {
+           mutableStateOf(getData()[0])
+    }
+    val showDetailDialog = remember { mutableStateOf(false) }
+    ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
 
     ModalDrawer(
         drawerState = drawerState,
@@ -177,8 +193,10 @@ fun Drawer(
                     rememberCoroutineScope(),
                     "点击此处快速跳转当前周",
                     newUserOrNot.value
-                ) {
-                    ScheduleToolBar(scope, drawerState, userNowWeek, pagerState, it)
+                ) { overMod ->
+                    settings.value?.let {
+                        ScheduleToolBar(scope, drawerState, userNowWeek, pagerState, overMod, it)
+                    }
                 }
                 HorizontalPager(
                     state = pagerState,
@@ -192,7 +210,10 @@ fun Drawer(
                             oneWeekClass = courseList,
                             page = page,
                             settings = it
-                        )
+                        ){ oneBean ->
+                            singleClass = oneBean
+                            showDetailDialog.value = true
+                        }
                     }
                 }
 
@@ -211,24 +232,33 @@ fun BackGroundImage(viewModel: ShowTimetableViewModel) {
     val path = viewModel.backgroundUriStringLiveData.observeAsState()
     val showDarkBack = Repository.getShowDarkBack().collectAsState(initial = false)
     Log.d("SHowTimetable", showDarkBack.value.toString())
+    val context = LocalContext.current
     if (!isSystemInDarkTheme() || showDarkBack.value) {
-        Image(
-            painter = rememberImagePainter(
-                data = path.value,
-                builder = {
-                    this.error(R.drawable.main_background_4)
-                }
-            ),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
 //        Image(
-//            painter = rememberGlidePainter(request = path.value),
+//            painter = rememberImagePainter(
+//                data = path.value,
+//                builder = {
+//                    this.error(R.drawable.main_background_4)
+//                }
+//            ),
 //            contentDescription = null,
 //            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds
+//            contentScale = ContentScale.Crop
 //        )
+
+        CompositionLocalProvider(LocalImageLoader provides GifLoader(context)) {
+            Image(
+                painter = rememberImagePainter(
+                    data = path.value,
+                    builder = {
+                        this.error(R.drawable.main_background_4)
+                    }
+                ),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
     }else{
         Image(
             painter = rememberImagePainter(data = ""),
@@ -238,7 +268,6 @@ fun BackGroundImage(viewModel: ShowTimetableViewModel) {
                 .fillMaxWidth()
         )
     }
-
 }
 
 
@@ -250,6 +279,7 @@ fun ScheduleToolBar(
     userNowWeek: Int,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
+    settings: Settings,
     stViewModel: ShowTimetableViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -258,6 +288,12 @@ fun ScheduleToolBar(
     val nowWeekOrNot = (pagerState.currentPage == nowWeek)
     val startSchoolOrNot = stViewModel.startSchool()
     val startHolidayOrNot = stViewModel.startHoliday()
+    val iconColor =
+        if (settings.darkShowBack){
+            LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+        }else{
+            MaterialTheme.colors.onBackground
+        }
     TopAppBar(
         backgroundColor = Color.Transparent,
         elevation = 0.dp,
@@ -306,7 +342,7 @@ fun ScheduleToolBar(
                     }
                 },
             ) {
-                Icon(Icons.Filled.Menu, null)
+                Icon(Icons.Filled.Menu, null, tint = iconColor)
             }
         },
         actions = {
@@ -314,7 +350,7 @@ fun ScheduleToolBar(
                 val intent = Intent(context, AddCourseComposeActivity()::class.java)
                 context.startActivity(intent)
             }) {
-                Icon(Icons.Filled.Add, "添加课程")
+                Icon(Icons.Filled.Add, "添加课程", tint = iconColor)
             }
             IconButton(onClick = {
                 val dialog = activity?.let { Dialog.getImportAgain(it) }
@@ -327,7 +363,7 @@ fun ScheduleToolBar(
                 }
 
             }) {
-                Icon(Icons.Filled.GetApp, "导入课程")
+                Icon(Icons.Filled.GetApp, "导入课程", tint = iconColor)
             }
         },
     )
@@ -339,11 +375,14 @@ fun SingleLineClass(
     oneWeekClass: State<List<List<OneByOneCourseBean>>?>,
     page: Int,
     settings: Settings,
-    stViewModel: ShowTimetableViewModel = viewModel()
+    stViewModel: ShowTimetableViewModel = viewModel(),
+    courseClick:(oneByOne:OneByOneCourseBean) -> Unit
 ) {
     val context = LocalContext.current
     val perHeight = if (settings.coursePerHeight==0){70}else{settings.coursePerHeight}
     val mode = settings.colorMode
+    val iconColor = if (!settings.darkShowBack){ MaterialTheme.colors.onBackground } else{ Color.Black
+    }
     Column {
         //星期行
         Row {
@@ -399,7 +438,7 @@ fun SingleLineClass(
             }
         }
 
-        val iconColor = if (isSystemInDarkTheme()) {Color.White} else {Color.Black}
+
         Row(modifier = Modifier.verticalScroll(rememberScrollState())) {
             Column(Modifier.weight(0.6F, true)) {
                 // 时间列
@@ -448,7 +487,6 @@ fun SingleLineClass(
                             val lastClassAllName = oneDayClass[count - 1].courseName.split("\n")
                             val lastClassName = lastClassAllName.getOrElse(0) { "" }
                             val lastClassBuild = lastClassAllName.getOrElse(1) { "" }
-                            Log.d("TestActivity", "当前有冲突课程")
                             if (nowClassName + nowClassBuild == lastClassName + lastClassBuild) {
                                 stViewModel.mergeClass(
                                     nowClassName,
@@ -485,7 +523,9 @@ fun SingleLineClass(
                                 singleClass = oneClass,
                                 perHeight = perHeight,
                                 mode = mode
-                            )
+                            ){
+                                courseClick(it)
+                            }
                         }
                         nowJieShu -= IntArray(oneClass.end) { it + 1 }.toMutableList()
                         count += 1
@@ -501,13 +541,13 @@ fun SingleLineClass(
 fun SingleClass2(
     singleClass: OneByOneCourseBean,
     perHeight: Int = 70,
-    mode:Int = 0
+    mode:Int = 0,
+    courseClick:(oneByOne:OneByOneCourseBean) -> Unit
 ) {
 //    val context = LocalContext.current
 //    val activity = (LocalContext.current as? Activity)
 //    val interactionSource = remember { MutableInteractionSource() }
     val height = perHeight * (singleClass.end - singleClass.start + 1)
-    val textColor = MaterialTheme.colors.onPrimary
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -518,14 +558,14 @@ fun SingleClass2(
     ) {
         val nameList = singleClass.courseName.split("\n")
 
-        val showDetailDialog = remember { mutableStateOf(false) }
-        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
+//        val showDetailDialog = remember { mutableStateOf(false) }
+//        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
         Text(
             buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
                         fontWeight = FontWeight.W600,
-                        color = textColor,
+                        color = Color.White,
                         fontSize = 13.sp
                     )
                 ) {
@@ -534,7 +574,7 @@ fun SingleClass2(
                 withStyle(
                     style = SpanStyle(
                         fontWeight = FontWeight.W600,
-                        color = textColor,
+                        color = Color.White,
                         fontSize = 10.sp
                     )
                 ) {
@@ -551,7 +591,8 @@ fun SingleClass2(
                     )
                 )
                 .clickable {
-                    showDetailDialog.value = true
+//                    showDetailDialog.value = true
+                    courseClick(singleClass)
                 },
             textAlign = TextAlign.Center
         )
@@ -582,7 +623,7 @@ fun saveAllCourse(
             activity2.runOnUiThread {
                 viewModel.loadAllCourse()
                 dialog.message(
-                    text = "已保存至本地\n如果是按班级课程导入的同学请注意：" +
+                    text = "已保存至本地,请务必检查课表是否完整和全面\n如果是按班级课程导入的同学请注意：" +
                             "部分情况将导致课程冲突，请务必检查！！！如无法操作，请尝试登陆导入"
                 )
             }

@@ -7,21 +7,26 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.liflymark.schedule.data.Settings
+import com.afollestad.materialdialogs.MaterialDialog
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.utils.SingleSelectDialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
+import com.liflymark.schedule.data.Settings
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
 class SettingsActivity : ComponentActivity() {
@@ -50,6 +55,7 @@ fun SettingsAll() {
 
 @Composable
 fun SettingsContent(){
+    val context = LocalContext.current
     var nowColor by remember {
         mutableStateOf("主题")
     }
@@ -85,6 +91,7 @@ fun SettingsContent(){
             }
         )
     }
+
     LaunchedEffect(dialogResult){
         when(dialogResult){
             "渐变色主题" ->{
@@ -130,7 +137,7 @@ fun SettingsContent(){
             title = "课程格子高度",
             description = "高度：${perHeight}dp"
         ) {
-
+            Toasty.info(context, "暂未开发").show()
         }
         SettingsItem(
             title = "夜间模式显示背景图",
@@ -139,6 +146,12 @@ fun SettingsContent(){
             selectInit = if (showDarkBack)(0)else{1}
             selectList = listOf("显示", "不显示")
             showNorSetDialog.value = true
+        }
+        SettingsItem(
+            title = "时间列字体颜色",
+            description = "暂时只支持黑白色设置"
+        ) {
+
         }
     }
 }
@@ -213,31 +226,6 @@ fun SettingsItem(
     }
 }
 
-
-@Composable
-fun SwitchSettingItem(
-    title:String,
-    description:String,
-    checked:Boolean,
-    onCLick:() -> Unit
-){
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(70.dp)
-            .clickable {
-                onCLick()
-            },
-    ) {
-        Column(
-            modifier = Modifier.weight(0.9f)
-        ) {
-            Text(text = title, style = MaterialTheme.typography.h5)
-            Text(text = description, style = MaterialTheme.typography.body1)
-        }
-        Switch(checked = checked, onCheckedChange = {onCLick()})
-    }
-}
 
 @Preview(showBackground = true)
 @Composable

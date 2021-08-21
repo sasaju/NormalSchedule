@@ -9,6 +9,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.DrawerState
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -128,7 +129,7 @@ fun OneSentence(viewModel:ShowTimetableViewModel = viewModel()){
             .statusBarsHeight(200.dp)
             .background(
                 brush = Brush.verticalGradient(
-                    listOf(Color(0xff2196f3), Color(0xFFFFFFFF))
+                    listOf(Color(0xff2196f3), MaterialTheme.colors.background)
                 )
             )
         )

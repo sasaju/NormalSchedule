@@ -95,6 +95,10 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
             launch {
                 if (lsViewModel.isAccountSaved()) {
                     user = lsViewModel.getSavedAccount()["user"].toString()
+                    if (user=="123456"){
+                        Repository.cancelAll()
+                        openWaitDialog.value = false
+                    }
                     password = lsViewModel.getSavedAccount()["password"].toString()
                 }
             }

@@ -75,7 +75,7 @@
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.show_timetable.ShowTimetableActivity2"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash" />
         <activity
             android:name=".ui.lib_order.LibOrderActivity"

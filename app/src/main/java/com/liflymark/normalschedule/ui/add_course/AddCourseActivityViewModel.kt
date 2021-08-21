@@ -1,16 +1,14 @@
 package com.liflymark.normalschedule.ui.add_course
 
-import android.support.v4.app.INotificationSideChannel
-import android.text.Editable
 import android.util.Log
 import android.widget.EditText
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.utils.Convert
 
 class AddCourseActivityViewModel: ViewModel() {
     private var startEndClassTimeLiveData = MutableLiveData<List<Int>>()
@@ -115,12 +113,14 @@ class AddCourseActivityViewModel: ViewModel() {
     }
 
     fun addNewClass(beanList:List<CourseBean>){
-        Log.d("Edit", beanList[0].courseName)
         newClass.addAll(beanList)
     }
 
     suspend fun updateClass(){
         Repository.deleteCourseByList(deleteClass)
+        for (singleClass in newClass){
+            singleClass.color = Convert.stringToColor(singleClass.courseName)
+        }
         Repository.insertCourse(newClass)
     }
 }

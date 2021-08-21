@@ -27,6 +27,9 @@ class CourseViewModel: ViewModel() {
     val courseLiveData = Transformations.switchMap(formMapLiveData) { _ ->
         Repository.getCourse2(user, password, yzm, id)
     }
+    val courseNewLiveData = Transformations.switchMap(formMapNewLiveData) { _ ->
+        Repository.getCourse2(user, password)
+    }
     val courseVisitLiveData = Transformations.switchMap(formVisitLiveData){
         Repository.getVisitCourse()
     }

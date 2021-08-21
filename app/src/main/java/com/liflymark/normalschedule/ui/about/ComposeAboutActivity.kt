@@ -20,13 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import coil.compose.rememberImagePainter
 import com.afollestad.materialdialogs.MaterialDialog
-import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
@@ -51,6 +48,16 @@ class ComposeAboutActivity : ComponentActivity() {
         }
     }
 
+    fun openBrowser(url: String){
+        try {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        } catch (e: Exception) {
+            println("当前手机未安装浏览器")
+        }
+    }
 }
 
 @Composable
@@ -79,6 +86,7 @@ fun AboutPage(){
 @Composable
 fun Introduce(){
     val context = LocalContext.current
+    val activity = LocalContext.current as ComposeAboutActivity
     val pm = context.packageManager
     val versionName = pm.getPackageInfo(context.packageName, 0).versionName
     Column {
@@ -91,7 +99,7 @@ fun Introduce(){
         ) {
             val key = "IQn1Mh09oCQwvfVXljBPgCkkg8SPfjZP"
             val intent = Intent()
-            intent.data = Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$key");
+            intent.data = Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$key")
             // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
             // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             try {
@@ -106,6 +114,12 @@ fun Introduce(){
         ) {
             val intent = Intent(context, GitListActivity::class.java)
             context.startActivity(intent)
+        }
+        SingleIconButton(
+            icon = Icons.Default.Star,
+            text = "用户协议及隐私政策"
+        ) {
+            activity.openBrowser("https://liflymark.top/privacy/")
         }
         SingleIconButton(
             icon = Icons.Default.Category,

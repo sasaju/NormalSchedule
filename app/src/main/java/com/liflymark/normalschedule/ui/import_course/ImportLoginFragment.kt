@@ -160,6 +160,75 @@ class ImportLoginFragment: Fragment() {
             }
         })
 
+        viewModel.courseNewLiveData.observe(viewLifecycleOwner, Observer { result ->
+
+            if (result == null) {
+                activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
+                waitDialog?.dismiss()
+            } else {
+                val allCourseList = result.allCourse
+                when (result.status) {
+                    "yes" -> {
+                        saveAccount()
+                        activity?.let {
+                            Toasty.success(it, "登陆成功，解析成功", Toasty.LENGTH_SHORT).show()
+                        }
+//                        viewModel.insertOriginalCourse(allCourseList)
+//                        for (singleCourse in allCourseList) {
+//                            Log.d("ImportLoginFragment", singleCourse.toString())
+//                        }
+                        if (activity is MainActivity) {
+                            val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        if (activity is ImportCourseAgain) {
+                            val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        // viewModel.saveAccount(userName, userPassword)
+                    }
+                    "no" -> {
+                        activity?.let {
+                            Toasty.error(
+                                it,
+                                "登陆成功，解析异常，请务必检查课程表是否正确",
+                                Toasty.LENGTH_LONG
+                            ).show()
+                        }
+                        if (activity is MainActivity) {
+                            val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
+                                putExtra("isSaved", false)
+                                putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                                putExtra("user", userName)
+                                putExtra("password", userPassword)
+                            }
+                            startActivity(intent)
+                            activity?.finish()
+                        }
+                        // viewModel.saveAccount(userName, userPassword)
+                    }
+                    else -> {
+                        activity?.let {
+                            Toasty.error(it, result.status, Toasty.LENGTH_SHORT).show()
+                        }
+                        waitDialog?.dismiss()
+                    }
+                }
+            }
+        })
+
         viewModel.courseVisitLiveData.observe(viewLifecycleOwner, { result ->
             val course = result.getOrNull()
 
@@ -246,13 +315,24 @@ class ImportLoginFragment: Fragment() {
             val intent = Intent(context,ClassCourseActivity::class.java).apply {
                 putExtra("allowImport", true)
             }
-            startActivity(intent)
-            activity?.finish()
+
+            if(agree_or_not.isChecked) {
+                activity?.let { it1 ->
+                    startActivity(intent)
+                    it1.finish()
+                }
+            } else {
+                activity?.let { it1 -> Toasty.info(it1,"您没有同意用户协议").show() }
+            }
         }
 
         btnSignByVisitor.setOnClickListener {
-            viewModel.putValue()
-            viewModel.saveAccount("visit", "visit")
+            if(agree_or_not.isChecked) {
+                viewModel.putValue()
+                viewModel.saveAccount("visit", "visit")
+            } else {
+                activity?.let { it1 -> Toasty.info(it1,"您没有同意用户协议").show() }
+            }
         }
     }
 

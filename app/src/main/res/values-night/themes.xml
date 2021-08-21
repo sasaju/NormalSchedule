@@ -21,6 +21,7 @@
 
     <style name="Theme.NormalSchedule.ShowTimeTableSplash" parent="Theme.NormalSchedule.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:forceDarkAllowed">false</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 

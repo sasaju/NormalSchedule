@@ -71,7 +71,6 @@ object NormalScheduleNetwork {
 
                 override fun onFailure(call: Call<T>, t: Throwable) {
                     if (call.isCanceled){
-                        Log.d("NormalNetWork", "请求取消")
                         call.cancel()
                     }
                     continuation.resumeWithException(t)
