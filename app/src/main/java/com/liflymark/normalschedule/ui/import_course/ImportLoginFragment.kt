@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
@@ -37,7 +38,6 @@ class ImportLoginFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         ImmersionBar.with(this).init()
         val waitDialog by lazy {  activity?.let { it1 -> Dialog.getProgressDialog(it1) } }
-
         if (viewModel.isAccountSaved()){
 //            val intent = Intent(context, ImportScoreActivity::class.java).apply {
 //                putExtra("isSaved", true)
@@ -163,8 +163,14 @@ class ImportLoginFragment: Fragment() {
         viewModel.courseNewLiveData.observe(viewLifecycleOwner, Observer { result ->
 
             if (result == null) {
-                activity?.let { Toasty.error(it, "登陆异常，重启app试试", Toasty.LENGTH_SHORT).show() }
+                activity?.let { Toasty.error(it, "登陆异常，将返回主界面", Toasty.LENGTH_SHORT).show() }
                 waitDialog?.dismiss()
+                Repository.saveLogin()
+                val intent = Intent(context, ShowTimetableActivity2::class.java).apply{
+                    putExtra("isSaved", true)
+                }
+                startActivity(intent)
+                activity?.finish()
             } else {
                 val allCourseList = result.allCourse
                 when (result.status) {
@@ -307,8 +313,32 @@ class ImportLoginFragment: Fragment() {
             }
         }
 
+        val contractDialog =
+            Dialog.getContractDialog(
+                requireContext(),
+                yes = {
+                    Toasty.info(requireContext(), "请点击登陆按钮上方的复选框以再次确认").show()
+                },
+                no = {
+                    activity?.finish()
+                }
+            )
+        val userContractDialog =
+            Dialog.getUerContract(
+                requireContext(),
+                yes = {
+                    Toasty.info(requireContext(), "请点击登陆按钮上方的复选框以再次确认").show()
+                },
+                no = {
+                    activity?.finish()
+                }
+            )
+        contractDialog.show()
         contact.setOnClickListener {
-            context?.let { it1 -> Dialog.getContractDialog(it1) }?.show()
+            contractDialog.show()
+        }
+        user_contact.setOnClickListener {
+            userContractDialog.show()
         }
 
         btnSignByClass.setOnClickListener {

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
 fun ToolBoxNavGraph(
     modifier: Modifier = Modifier,
@@ -41,6 +43,9 @@ fun ToolBoxNavGraph(
         composable("schoolCalendar"){
             HbuCalendar(navController = navController)
         }
+        composable("question"){
+            QuestionAllPage(navController = navController)
+        }
         composable("wait"){
             WaitTime(navController = navController)
         }
@@ -62,11 +67,8 @@ fun FunctionList(navController: NavController){
                 SingleButton(Icons.Filled.StickyNote2, "公告栏"){
                     navController.navigate("devBoard")
                 }
-                SingleButton(Icons.Filled.StickyNote2, "使用技巧"){
-                    scope.launch {
-//                        Repository.saveUserVersion(0)
-                        navController.navigate("wait")
-                    }
+                SingleButton(Icons.Filled.HelpCenter, "常见问题"){
+                    navController.navigate("question")
                 }
             }
 
@@ -80,22 +82,22 @@ fun FunctionList(navController: NavController){
                 SingleButton(Icons.Filled.DirectionsBus, "校车时刻表") {
                     navController.navigate("busTime")
                 }
-                SingleButton(Icons.Filled.LunchDining, "作息时刻表") {
-                    navController.navigate("wait")
-                }
+//                SingleButton(Icons.Filled.LunchDining, "作息时刻表") {
+//                    navController.navigate("wait")
+//                }
             }
 
-            SinglePart(
-                titleIcon = Icons.Default.Fastfood,
-                titleName = "吃喝玩乐"
-            ) {
-                SingleButton(Icons.Filled.ShoppingBag, "购物指南") {
-                    navController.navigate("wait")
-                }
-                SingleButton(Icons.Filled.FoodBank, "美食指南") {
-                    navController.navigate("wait")
-                }
-            }
+//            SinglePart(
+//                titleIcon = Icons.Default.Fastfood,
+//                titleName = "吃喝玩乐"
+//            ) {
+//                SingleButton(Icons.Filled.ShoppingBag, "购物指南") {
+//                    navController.navigate("wait")
+//                }
+//                SingleButton(Icons.Filled.FoodBank, "美食指南") {
+//                    navController.navigate("wait")
+//                }
+//            }
         }
     }
 }

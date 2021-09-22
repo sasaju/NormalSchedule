@@ -1,6 +1,7 @@
 package com.liflymark.normalschedule.ui.login_space_room
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -10,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,7 +60,7 @@ fun SayHowToUse(){
         CenterText(text = "有颜色代表未占用(空教室)，无颜色代表已占用",modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(3.dp))
         CenterText(
-            text = "目前仅支持新区和本部的部分教室",
+            text = "目前仅支持新区、本部、医学部的部分教室",
             modifier = Modifier.fillMaxWidth(),
             textStyle = TextStyle(fontSize = 12.sp, color = Color(0xFF28B1FA))
         )
@@ -68,24 +70,24 @@ fun SayHowToUse(){
 @Composable
 fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
     val activity = LocalContext.current as ShowSpaceActivity
-    val roomListOf = listOf("六教", "七教","八教", "九教", "A1", "A2","A3", "A4")
+    val roomListOf = listOf("六教", "七教","八教", "九教", "A1", "A2","A3", "A4","综合楼", "新楼")
     if (ids == null){
         Toasty.error(activity, "缺少参数").show()
         activity.finish()
     }
 
     val expandClassRoom = remember { mutableStateOf(false) }
-    val roomName = remember { mutableStateOf("六教") }
+    val roomName = rememberSaveable { mutableStateOf("六教") }
 
     val expandSchool = remember { mutableStateOf(false) }
-    val schoolName = remember { mutableStateOf("五四路校区") }
+    val schoolName = rememberSaveable { mutableStateOf("五四路校区") }
 
     val expandDate = remember { mutableStateOf(false) }
     val threeDate = remember { mutableStateOf(ssViewModel.getThreeDay()) }
-    val dateName = remember { mutableStateOf(ssViewModel.getThreeDay()[1]) }
+    val dateName = rememberSaveable { mutableStateOf(ssViewModel.getThreeDay()[1]) }
 
     val roomList =  remember { mutableStateListOf("六教", "七教","八教", "九教", "A1", "A2","A3", "A4") }
-    val schoolList = remember { mutableStateListOf("五四路校区","七一路校区") }
+    val schoolList = remember { mutableStateListOf("五四路校区","七一路校区","裕华路校区") }
 
     LaunchedEffect(roomName.value){
         if (roomName.value in roomListOf){
@@ -105,9 +107,11 @@ fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
         roomList.clear()
         when(schoolName.value){
             "五四路校区" -> roomList.addAll(listOf("六教", "七教","八教", "九教"))
-            "七一路校区" -> roomList.addAll(linkedSetOf("A1", "A2","A3", "A4"))
+            "七一路校区" -> roomList.addAll(listOf("A1", "A2","A3", "A4"))
+            "裕华路校区" -> roomList.addAll(listOf("综合楼", "新楼"))
         }
     }
+    Log.d("SHowSPace","重组一次")
     Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
 
         // 选择校区
@@ -185,7 +189,8 @@ fun ShowSpaceResult(ssViewModel: ShowSpaceViewModel = viewModel()){
                     modifier = Modifier
                         .weight(0.7f)
                         .height(30.dp),
-                    textStyle = TextStyle(fontSize = 18.sp)
+                    textStyle = TextStyle(fontSize = 18.sp),
+                    maxLines = 1
                 )
 //                Text(text = space.placeNum, modifier = Modifier.weight(0.5f))
 //                Text(text = space.type, modifier = Modifier.weight(0.5f),maxLines = 1)
@@ -221,10 +226,11 @@ fun SingleRowSpace(){
 fun CenterText(
     modifier: Modifier = Modifier,
     text:String,
-    textStyle: TextStyle = TextStyle()
+    textStyle: TextStyle = TextStyle(),
+    maxLines: Int = Int.MAX_VALUE,
 ){
     Box(contentAlignment = Alignment.Center, modifier = modifier){
-        Text(text = text, style = textStyle)
+        Text(text = text, style = textStyle, maxLines = maxLines)
     }
 }
 

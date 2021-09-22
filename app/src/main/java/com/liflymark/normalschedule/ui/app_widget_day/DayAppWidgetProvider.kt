@@ -1,5 +1,6 @@
 package com.liflymark.normalschedule.ui.app_widget_day
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -18,6 +19,7 @@ import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
 class DayAppWidgetProvider: AppWidgetProvider() {
     var clickAction = "com.liflymark.DayAppWidgetProvider.onclick"
+    @SuppressLint("ResourceType")
     override fun onUpdate(
         context: Context?,
         appWidgetManager: AppWidgetManager?,

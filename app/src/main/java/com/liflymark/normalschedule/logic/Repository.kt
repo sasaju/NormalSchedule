@@ -17,12 +17,11 @@ import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
+import com.liflymark.schedule.data.Settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.lang.Exception
-import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
 object  Repository {
@@ -154,7 +153,7 @@ object  Repository {
                         "张老师",
                         "九教999"
                     ),
-                ), status = "ok")
+                ), status = "yes")
                 emit(courseResponse)
             } else {
                 val courseResponse = NormalScheduleNetwork.getCourse(user, password)
@@ -180,19 +179,6 @@ object  Repository {
             )
         ), status = "ok")
         Result.success(courseResponse)
-    }
-
-    fun insertCourse(courseList: List<AllCourse>) = liveData(Dispatchers.IO) {
-        try {
-            for (singleCourse in courseList) {
-                courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
-                // Log.d("Repository", Convert().courseResponseToBean(singleCourse).toString())
-            }
-            emit(true)
-        } catch (e: Exception){
-            emit(false)
-        }
-
     }
 
     suspend fun loadCourseUnTeacher(
@@ -266,12 +252,7 @@ object  Repository {
         }
     }
 
-    fun loadCourseByName(courseName: String) = fire(Dispatchers.IO){
-        val courseList = courseDao.loadCourseByName(courseName)
-        Result.success(courseList)
-    }
-
-    fun loadCourseByName2(courseName: String) = flow<List<CourseBean>> {
+    fun loadCourseByName2(courseName: String) = flow {
         val courseBeanList = courseDao.loadCourseByName(courseName)
         emit(courseBeanList.toList())
     }.catch {
@@ -288,19 +269,10 @@ object  Repository {
         )
     }.flowOn(Dispatchers.IO)
 
-    fun deleteAllCourseBean() = liveData(Dispatchers.IO){
-        courseDao.deleteAllCourseBean()
-        emit("0")
-    }
-
     suspend fun deleteCourseByList(courseBeanList: List<CourseBean>){
         courseDao.deleteCourse(courseBeanList)
     }
 
-    fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int) = fireFlow(Dispatchers.IO){
-        val result = courseDao.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
-        Result.success(result)
-    }
 
     fun loadCourseByNameAndStart2(courseName: String, courseStart: Int, whichColumn: Int) = flow {
         val result = courseDao.loadCourseByNameAndStart(courseName, courseStart, whichColumn)
@@ -396,15 +368,6 @@ object  Repository {
         }
     }
 
-    suspend fun deleteCourseByNameAndStart(): Int {
-        return try {
-            courseDao.deleteAllCourseBean()
-            0
-        } catch (e:Exception){
-            1
-        }
-    }
-
 
     suspend fun updateBackground(background: UserBackgroundBean) {
         return try {
@@ -425,7 +388,6 @@ object  Repository {
             .build()
         try {
             val a = backgroundDao.loadLastBackground()
-            Log.d("Repository", a.userBackground.toString())
             if (a.userBackground != "0"){
                 emit(Uri.parse(a.userBackground))
             } else {
@@ -512,15 +474,6 @@ object  Repository {
             emit(listOf(init))
         }
 
-    suspend fun deleteHomework(homeworkBean: HomeworkBean): String {
-        return try {
-            homeworkDao.deleteHomework(homeworkBean)
-            "success"
-        }catch (e:Exception){
-            "error"
-        }
-    }
-
     fun getNewBeanInit(courseName: String)  = flow {
         val lastId = homeworkDao.getLastId()
         Log.d("Repo", "NewBean加载一次")
@@ -552,6 +505,26 @@ object  Repository {
             Log.d("Repo", "leadName加载一次")
             val result = homeworkDao.loadHasWorkCourse()
             emit(result)
+        }
+            .catch {
+                emit(listOf())
+            }
+            .flowOn(Dispatchers.IO)
+
+    fun loadUnFinishCourseName() =
+        flow {
+            Log.d("Repo", "leadName加载一次")
+            val result = homeworkDao.loadHasWorkCourse()
+            val result_ = mutableListOf<String>()
+            for (singleName in result){
+                val homeworkList = homeworkDao.loadHomeworkByName(singleName)
+                homeworkList.forEach {
+                    if (!it.finished){
+                        result_.add(it.courseName)
+                    }
+                }
+            }
+            emit(result_.toList())
         }
             .catch {
                 emit(listOf())
@@ -597,6 +570,46 @@ object  Repository {
             1
         }
     }
+
+    suspend fun updateSettings(setSettings:(settings:Settings)->Settings){
+        AccountDataDao.updateSettings {
+            setSettings(it)
+        }
+    }
+
+    // 200正常，300服务端返回异常，301未连接，302未登陆
+    fun getUserType() = flow {
+        val user = getSavedAccount()["user"]
+        if (user != null){
+            val res = NormalScheduleNetwork.getUserType(user)
+            emit(res)
+        }else{
+            emit(UserTypeResponse(statusCode = 302, content = "您未登陆"))
+        }
+    }.catch {
+        emit(UserTypeResponse(statusCode = 301, content = "未知，无法链接服务器"))
+    }.flowOn(Dispatchers.IO)
+
+    fun getNewCourse(userNumber: String) = flow {
+        val res = NormalScheduleNetwork.getNewCourse(userNumber)
+        emit(res)
+    }.flowOn(Dispatchers.IO)
+
+    fun gotNewCourse(userNumber: String, pk:Int) = flow {
+        val res = NormalScheduleNetwork.gotNewCourse(userNumber, pk)
+        emit(res)
+    }
+        .catch {
+            emit(GotResponse(301))
+        }
+        .flowOn(Dispatchers.IO)
+
+    fun uploadNewCourse(userNumber: String, userCode:String, beanListStr:String) = flow {
+        val res  = NormalScheduleNetwork.uploadNewCourse(
+            userNumber, userCode, beanListStr
+        )
+        emit(res)
+    }.flowOn(Dispatchers.IO)
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {

@@ -15,6 +15,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,10 +28,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.afollestad.materialdialogs.MaterialDialog
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.fragment_import_login.*
 
 class ComposeAboutActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +95,28 @@ fun Introduce(){
     val activity = LocalContext.current as ComposeAboutActivity
     val pm = context.packageManager
     val versionName = pm.getPackageInfo(context.packageName, 0).versionName
+    val dialog = remember {
+        Dialog.getContractDialog(
+            context,
+            yes = {
+                Toasty.success(context, "您已同意隐私政策及用户协议").show()
+            },
+            no = {
+                Toasty.info(context,"如果您拒绝该隐私政策或用户协议请立即关闭应用程序").show()
+            }
+        )
+    }
+    val userDialog = remember {
+        Dialog.getUerContract(
+            context,
+            yes = {
+                Toasty.info(context, "请点击登陆按钮上方的复选框以再次确认").show()
+            },
+            no = {
+                Toasty.info(context,"如果您拒绝该隐私政策或用户协议请立即关闭应用程序").show()
+            }
+        )
+    }
     Column {
         SingleIconButton(
             icon =Icons.Default.BubbleChart,
@@ -120,6 +148,18 @@ fun Introduce(){
             text = "用户协议及隐私政策"
         ) {
             activity.openBrowser("https://liflymark.top/privacy/")
+        }
+        SingleIconButton(
+            icon = Icons.Default.Star,
+            text = "隐私政策(内置)"
+        ) {
+            dialog.show()
+        }
+        SingleIconButton(
+            icon = Icons.Default.Star,
+            text = "用户协议(内置)"
+        ) {
+            userDialog.show()
         }
         SingleIconButton(
             icon = Icons.Default.Category,
