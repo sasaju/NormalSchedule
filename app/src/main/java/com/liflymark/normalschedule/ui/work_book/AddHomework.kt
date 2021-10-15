@@ -21,9 +21,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.liflymark.normalschedule.logic.bean.HomeworkBean
+import com.liflymark.normalschedule.logic.utils.*
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
-import com.liflymark.normalschedule.logic.utils.SelectDateDialog
-import com.liflymark.normalschedule.logic.utils.StringPicker
 import java.util.*
 
 
@@ -147,13 +146,12 @@ fun AddNewOrEditDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp),
+                        .height(150.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(text = "截止日期：")
                     SelectDeadLine(
-                        modifier = Modifier.height(100.dp)
                     ) {
                         homeworkBean.deadLine = it
                     }
@@ -196,20 +194,15 @@ fun SelectDeadLine(
     addMillis: (millis: Long) -> Unit
 ) {
     val stringList = listOf("明天","一周后", "两周后")
-    val pagerState = rememberPagerState(
-        pageCount = stringList.size,
-        initialPage = 1,
-        initialOffscreenLimit = stringList.size
-    )
-    StringPicker(
+    StringPicker2(
         modifier = modifier,
+        value = 1,
         strList = stringList,
-        pagerState = pagerState,
-        pageChange = {
-            val addDay = when (it) {
-                0 -> 7
-                1 -> 1
-                2 -> 14
+        onValueChange = {
+            val addDay = when (stringList[it]) {
+                "明天" -> 7
+                "一周后" -> 1
+                "两周后" -> 14
                 else -> 0
             }
             addMillis(GetDataUtil.getDayMillis(addDay))
@@ -304,7 +297,6 @@ fun DialogContentPreview() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
     ) {
         EditTextFiled(
             valueInit = "aa",
@@ -321,7 +313,7 @@ fun DialogContentPreview() {
         ) {
             Text(text = "截止日期：")
             SelectDeadLine(
-                modifier = Modifier.height(100.dp)
+                modifier = Modifier.height(80.dp)
             ) {
                 homeworkBean.deadLine = it
             }

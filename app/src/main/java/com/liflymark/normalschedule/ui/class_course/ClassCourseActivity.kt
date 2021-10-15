@@ -169,18 +169,15 @@ fun ShowCourse(courseViewModel: ClassCourseViewModel) {
     Column(modifier = Modifier.background(Color.Transparent)) {
         var userNowWeek by remember { mutableStateOf(getNowWeek()) }
         val pagerState = rememberPagerState(
-            pageCount = 19,
-            initialOffscreenLimit = 2,
+//            pageCount = 19,
+//            initialOffscreenLimit = 2,
             initialPage = 0,
-            infiniteLoop = true
+//            infiniteLoop = true
         )
 
         HorizontalPager(
             state = pagerState,
-            flingBehavior = PagerDefaults.defaultPagerFlingConfig(
-                state = pagerState,
-                snapAnimationSpec = spring(stiffness = 500f)
-            )
+            count = 19
         ) { page ->
             SingleLineClass2(oneWeekClass = courseList, page = page)
         }

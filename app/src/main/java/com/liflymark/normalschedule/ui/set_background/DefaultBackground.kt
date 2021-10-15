@@ -2,7 +2,9 @@ package com.liflymark.normalschedule.ui.set_background
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_show_score.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.File
 
 
 class DefaultBackground : AppCompatActivity() {
@@ -81,10 +84,16 @@ class DefaultBackground : AppCompatActivity() {
                     Log.d("BackGround", PictureSelector.obtainMultipleResult(data).toString())
                     val uri = PictureSelector.obtainMultipleResult(data)[0].path
                     launch {
-                        viewModel.userBackgroundUri = uri.toString()
+                        val realUri = if(SDK_INT<29){ Uri.fromFile(File(uri)).toString() }else{ uri }
+                        viewModel.userBackgroundUri = realUri
                         viewModel.updateBackground()
                         val imageLoader = GifLoader(this@DefaultBackground)
-                        userImage.load(uri, imageLoader)
+                        Log.d("BackGround",uri.toString())
+                        if (SDK_INT<29) {
+                            userImage.load(File(uri), imageLoader)
+                        }else{
+                            userImage.load(uri)
+                        }
                         userImageText.text = "点击此处更换"
                         Toasty.success(this@DefaultBackground, "读取成功，返回看看吧", Toasty.LENGTH_SHORT)
                             .show()

@@ -26,6 +26,7 @@ class ShowTimetableViewModel: ViewModel() {
     var showToast = 0
 
     val newUserFLow = Repository.getNewUserOrNot()
+    val userVersion = Repository.getUserVersion()
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
         Repository.loadAllCourse2()
     }

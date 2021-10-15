@@ -21,6 +21,14 @@ object AccountDataDao {
             }
     }
 
+    fun getUserVersion()= run {
+        val context = NormalScheduleApplication.context
+        context.dataStore.data
+            .map { preferences ->
+                preferences[intPreferencesKey("userVersion")]
+            }
+    }
+
     suspend fun saveUserVersion(version:Int = 1){
         val context = NormalScheduleApplication.context
         context.dataStore.edit {

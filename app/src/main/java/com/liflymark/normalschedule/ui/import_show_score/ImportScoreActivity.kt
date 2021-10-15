@@ -47,7 +47,7 @@ class ImportScoreActivity : AppCompatActivity() {
         viewModel.idLiveData.observe(this) {
             val idResponse = it?.id
             if (idResponse == null || idResponse == ""){
-                Toasty.error(this, "服务异常，无法登陆，请联系开发者", Toasty.LENGTH_SHORT).show()
+                Toasty.error(this, "服务异常，去工具箱-公告栏看看吧", Toasty.LENGTH_SHORT).show()
                 progressDialog.dismiss()
             } else {
                 this.id = idResponse

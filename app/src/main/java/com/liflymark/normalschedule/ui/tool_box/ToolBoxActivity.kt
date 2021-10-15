@@ -32,6 +32,7 @@ import com.liflymark.normalschedule.ui.theme.NorScTheme
 
 class ToolBoxActivity : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ToolBoxViewModel::class.java) }
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

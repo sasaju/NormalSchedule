@@ -1,9 +1,20 @@
 package com.liflymark.normalschedule.logic.utils
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.liflymark.normalschedule.NormalScheduleApplication
+import com.liflymark.normalschedule.R
 
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
@@ -11,6 +22,7 @@ import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Grade
 import com.liflymark.normalschedule.logic.model.Grades
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.schedule.data.Settings
 import java.lang.Exception
 
@@ -189,7 +201,7 @@ internal object Convert {
                 0xff12c2e9.toColorULong() -> colorList.addAll(listOf(Color(0xFFFC354C), Color(0xFF0ABFBC)))
                 0xff376B78.toColorULong() -> colorList.addAll(listOf(Color(0xFFC04848), Color(0xFF480048)))
                 0xfff64f59.toColorULong() -> colorList.addAll(listOf(Color(0xff5f2c82), Color(0xff49a09d)))
-                0xffCBA689.toColorULong() -> colorList.addAll(listOf(Color(0xFFDC2424), Color(0xFF4A569D)))
+                0xffCBA689.toColorULong() -> colorList.addAll(listOf(Color(0xFFDC2424), Color(0xDF5B69BE)))
                 0xffffbb33.toColorULong() -> colorList.addAll(listOf(Color(0xff24C6DC), Color(0xff514A9D)))
                 0xff8202F2.toColorULong() -> colorList.addAll(listOf(Color(0xffE55D87), Color(0xff5FC3E4)))
                 0xffF77CC2.toColorULong() -> colorList.addAll(listOf(Color(0xff5C258D), Color(0xff4389A2)))
@@ -197,14 +209,62 @@ internal object Convert {
                 0xff426666.toColorULong() -> colorList.addAll(listOf(Color(0xff085078), Color(0xff85D8CE)))
                 0xff40de5a.toColorULong() -> colorList.addAll(listOf(Color(0xff4776E6), Color(0xff8E54E9)))
                 0xfff0c239.toColorULong() -> colorList.addAll(listOf(Color(0xff1D2B64), Color(0xffF8CDDA)))
-                0xff725e82.toColorULong() -> colorList.addAll(listOf(Color(0xff1A2980), Color(0xff26D0CE)))
-                0xffc32136.toColorULong() -> colorList.addAll(listOf(Color(0xffAA076B), Color(0xff61045F)))
-                0xffb35c44.toColorULong() -> colorList.addAll(listOf(Color(0xff403B4A), Color(0xffE7E9BB)))
+                0xff725e82.toColorULong() -> colorList.addAll(listOf(Color(0xA91A2980), Color(0xff26D0CE)))
+                0xffc32136.toColorULong() -> colorList.addAll(listOf(Color(0xffAA076B), Color(0xE692088F)))
+                0xffb35c44.toColorULong() -> colorList.addAll(listOf(Color(0xffF8CDDA), Color(0xffE7E9BB)))
                 Color.Transparent.value -> colorList.addAll(listOf(Color.Transparent, Color.Transparent))
                 else -> colorList.addAll(listOf(Color(0xffE55D87), Color(0xff5FC3E4)))
             }
         }
         return colorList.toList()
+    }
+
+    fun StringToListBean(listString:String):List<CourseBean>{
+        val listType = object : TypeToken<List<CourseBean>>() {}.type
+        return Gson().fromJson(listString, listType)
+    }
+
+    fun getViewBitmap(viewGroup: ViewGroup, low: Boolean = false, marginBottom: Int = 0): Bitmap {
+        var h = 0
+        val bitmap: Bitmap
+        // 获取scrollView实际高度,这里很重要
+        for (i in 0 until viewGroup.childCount) {
+            h += viewGroup.getChildAt(i).height + marginBottom
+        }
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(viewGroup.width, h,
+            if (low) Bitmap.Config.ARGB_4444 else Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        viewGroup.draw(canvas)
+        return bitmap
+    }
+
+    fun viewToBitMap(view: View): Bitmap{
+//        view.measure(
+//            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+//            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+//        )
+        val width: Int = 100
+        val height: Int = 200
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight())
+        val bp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bp)
+        view.draw(canvas)
+        canvas.save()
+        return bp
+    }
+
+    @SuppressLint("InflateParams")
+    fun viewTest(): View? {
+        val inflater:LayoutInflater  = LayoutInflater.from(NormalScheduleApplication.context)
+        val view = inflater.inflate(R.layout.appwidget_for_compose, null)
+        val comp = view.findViewById<ComposeView>(R.id.compose_xml)
+        comp.setContent {
+            NorScTheme {
+                Text(text = "Test")
+            }
+        }
+        return view
     }
 
     private fun Long.toColorULong() = (this.toULong() and 0xffffffffUL) shl 32

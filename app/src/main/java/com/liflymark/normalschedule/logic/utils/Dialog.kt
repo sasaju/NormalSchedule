@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import com.afollestad.materialdialogs.MaterialDialog
@@ -41,10 +42,14 @@ class test:AndroidViewModel(NormalScheduleApplication()){
 }
 
 object Dialog {
-    fun getContractDialog(_context: Context): MaterialDialog {
+    fun getContractDialog(
+        _context: Context,
+        yes:() -> Unit = {},
+        no:() -> Unit = {},
+    ): MaterialDialog {
         val dialog = MaterialDialog(_context)
-                .title(text = "APP用户协议及隐私政策")
-                .message(text = "本应用尊重并保护所有使用服务用户的个人隐私权。为了给您提供更准确、更有个性化的服务，本应用会按照本隐私权政策的规定使用和披露您的个人信息。但本应用将以高度的勤勉、审慎义务对待这些信息。除本隐私权政策另有规定外，在未征得您事先许可的情况下，本应用不会将这些信息对外披露或向第三方提供。本应用会不时更新本隐私权政策。 您在同意本应用服务使用协议之时，即视为您已经同意本隐私权政策全部内容。本隐私权政策属于本应用服务使用协议不可分割的一部分。 " +
+                .title(text = "APP隐私政策")
+                .message(text = "发布时间：2021年8月21日\n更新时间：2021年9月18日\n本应用尊重并保护所有使用服务用户的个人隐私权。为了给您提供更准确、更有个性化的服务，本应用会按照本隐私权政策的规定使用和披露您的个人信息。但本应用将以高度的勤勉、审慎义务对待这些信息。除本隐私权政策另有规定外，在未征得您事先许可的情况下，本应用不会将这些信息对外披露或向第三方提供。本应用会不时更新本隐私权政策。 您在同意本应用服务使用协议之时，即视为您已经同意本隐私权政策全部内容。本隐私权政策属于本应用服务使用协议不可分割的一部分。 " +
                         "确保用户充分理解本协议中各条款，请审慎阅读并选择接受或不接受本协议。" +
                         "同意并点击确认本协议条款，才能成为本APP用户，并享受各类服务。登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。" +
                         "若不同意本协议，或对本协议中的条款存在任何疑问，请立即停止使用该程序，并可以选择不使用APP服务。\n\n" +
@@ -57,19 +62,34 @@ object Dialog {
                         "2. 信息存储和交换 \n" +
                         "本应用会在本地，加密存储您的密码，且其他应用无法通过常规手段访问。网络端不会记录您的密码。虽然有上述安全措施，仍然建议用户不要安装未知安全性的APP。\n" +
                         "\n" +
-                        "在您使用登陆导入课表或其他需要登陆情况时，会将账号密码提交至服务器，服务器不会记录你的除学号以外的任何信息（如密码、课程表内容、姓名、专业），记录学号仅用于统计本应用用户数，开发者无从得知学号对应的密码、姓名等其他任何信息。虽然网络通信已加密，但仍然建议用户不要使用未知安全性的网络。\n" +
                         "\n" +
-                        "\n" +
-                        "3.本隐私政策的更改 \n" +
+                        "3.账号注销\n"+
+                        "(a)若需注销账号请将学号和一卡通学号面（除学号外均可打码）邮件至1289142675@qq.com,开发者将在48小时之内处理，注销后的账号无法在此APP登陆。\n"+
+                        "4.本隐私政策的更改 \n" +
                         "(a)如果决定更改隐私政策，我们会在本政策中、网站中以及我们认为适当的位置发布这些更改，以便您了解我们如何收集、使用您的个人信息，哪些人可以访问这些信息，以及在什么情况下我们会透露这些信息。 \n" +
                         "(b)本人保留随时修改本政策的权利，因此请经常查看。\n\n" +
-                        "4.用户协议 \n" +
-                        "(a)本应用在导入课表时会模拟您登陆教务系统的操作，如果您错误次数过多造成无法登陆开发者概不负责。 \n" +
-                        "(b)开发者会尽量保证您的课表、成绩等信息正确但不做出任何绝对正确的承诺，请在使用前仔细检查，如有必要请自行登陆相关网站进行核实。因为信息不准确造成的不良后果（如挂科、旷课）开发者概不负责。\n" +
-                        "(c)开发者保留随时修改本用户协议的权利，因此请经常查看。"+
-                        "\n作者：1289142675@qq.com\n" +
-                                "著作权归作者所有。")
-                .positiveButton(text = "知道了")
+                        "\nAPP运营者信息：李飞； 办公地址：河北省沧州市献县商业局小区；用户隐私信息保护负责人电话：15511777580\n" +
+                        "开发者名称：考试不挂科（献县）科技发展技术服务中心\n" +
+                                "著作权归APP运营者所有。")
+                .positiveButton(text = "已阅读并同意"){ yes() }
+                .negativeButton(text = "拒绝并停止使用"){ no() }
+        return dialog
+    }
+
+    fun getUerContract(
+        _context: Context,
+        yes:() -> Unit = {},
+        no:() -> Unit = {},
+    ): MaterialDialog{
+        val dialog = MaterialDialog(_context)
+            .title(text = "用户协议")
+            .message(text =
+                    "(a)本应用在导入课表时会模拟您登陆教务系统的操作，如果您错误次数过多造成无法登陆开发者概不负责。 \n" +
+                    "(b)开发者会尽量保证您的课表、成绩等信息正确但不做出任何绝对正确的承诺，请在使用前仔细检查，如有必要请自行登陆相关网站进行核实。因为信息不准确造成的不良后果（如挂科、旷课）开发者概不负责。\n" +
+                    "(c)开发者保留随时修改本用户协议的权利，因此请经常查看。"
+            )
+            .positiveButton(text = "已阅读并同意"){ yes() }
+            .negativeButton(text = "拒绝并停止使用"){ no() }
         return dialog
     }
 
@@ -439,22 +459,22 @@ fun SelectSessionContent(initialWeek:Int, initialStart:Int, initialEnd:Int,
     }
 
     val weekListPager = rememberPagerState(
-        pageCount = weekList.size,
+//        pageCount = weekList.size,
         initialPage = initialWeek,
-        initialOffscreenLimit = weekList.size,
-        infiniteLoop = false
+//        initialOffscreenLimit = weekList.size,
+//        infiniteLoop = false
     )
     val startPager = rememberPagerState(
-        pageCount = startSection.size,
+//        pageCount = startSection.size,
         initialPage = initialStart,
-        initialOffscreenLimit = startSection.size,
-        infiniteLoop = false
+//        initialOffscreenLimit = startSection.size,
+//        infiniteLoop = false
     )
     val endPager = rememberPagerState(
-        pageCount = endSection.size,
+//        pageCount = endSection.size,
         initialPage = initialEnd,
-        initialOffscreenLimit = endSection.size,
-        infiniteLoop = false
+//        initialOffscreenLimit = endSection.size,
+//        infiniteLoop = false
     )
     Box(
         modifier = Modifier
@@ -476,7 +496,9 @@ fun SelectSessionContent(initialWeek:Int, initialStart:Int, initialEnd:Int,
                     Log.d("Dialog", it.toString())
                     result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
                 },
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .wrapContentWidth()
             )
             Spacer(modifier = Modifier.width(15.dp))
             StringPicker(
@@ -636,25 +658,9 @@ fun SelectDate(
     }
     Log.d("Dialog","重组一次")
 
-
-    val yearListPager = rememberPagerState(
-        pageCount = yearList.size,
-        initialPage = year,
-        initialOffscreenLimit = yearList.size,
-        infiniteLoop = false
-    )
-    val monthPager = rememberPagerState(
-        pageCount = monthStrList.size,
-        initialPage = initialMonth,
-        initialOffscreenLimit = monthList.size,
-        infiniteLoop = false
-    )
-    val dayPager = rememberPagerState(
-        pageCount = dayList.value.size,
-        initialPage = initialDay,
-        initialOffscreenLimit = dayList.value.size,
-        infiniteLoop = false
-    )
+    var yearIndex by rememberSaveable { mutableStateOf(year) }
+    var monthIndex by rememberSaveable { mutableStateOf(initialMonth) }
+    var dayIndex by rememberSaveable { mutableStateOf(initialDay) }
     Box(
         modifier = Modifier
             .height(200.dp)
@@ -668,74 +674,60 @@ fun SelectDate(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            StringPicker(
+            StringPicker2(
                 strList = yearList,
-                pagerState = yearListPager,
-                pageChange = {
+                value = year,
+                onValueChange = {
                     Log.d("Dialog", it.toString())
-                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
+                    yearIndex = it
+                    result(yearIndex, monthIndex, dayIndex)
                 },
-                modifier = Modifier.fillMaxHeight()
+//                modifier = Modifier.fillMaxHeight()
             )
             Spacer(modifier = Modifier.width(15.dp))
-            StringPicker(
+            StringPicker2(
                 strList = monthStrList,
-                pagerState = monthPager,
-                pageChange = {
+                value = initialMonth,
+                onValueChange = {
                     Log.d("Dialog", it.toString())
-                    val year_ =yearList[yearListPager.currentPage].toInt()
-                    val month_ = monthList[monthPager.currentPage].toInt()-1
+                    monthIndex = it
+                    val year_ =yearList[yearIndex].toInt()
+                    val month_ = monthList[monthIndex].toInt()-1
                     scope.launch {
                         dayList.value = GetDataUtil.getMonthAllDay(year_,month_)
                     }
-                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
+                    result(yearIndex, monthIndex, dayIndex)
 //                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
                 },
-                modifier = Modifier.fillMaxHeight()
             )
-//            TextButton(onClick = {
-//                scope.launch {
-//                    monthPager.scrollToPage(monthPager.currentPage+1)
-//                }
-//            }) {
-//                Text(text = "+")
-//            }
             Spacer(modifier = Modifier.width(15.dp))
-            StringPicker(
+            StringPicker2(
                 strList = dayList.value,
-                pagerState = dayPager,
-                pageChange = {
+                value = initialDay,
+                onValueChange = {
                     Log.d("Dialog", it.toString())
-                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
-//                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
+                    dayIndex = it
+                    result(yearIndex, monthIndex, dayIndex)
                 },
-                modifier = Modifier.fillMaxHeight()
             )
-//            TextButton(onClick = {
-//                scope.launch {
-//                    dayPager.scrollToPage(dayPager.currentPage+1)
-//                }
-//            }) {
-//                Text(text = "+")
+        }
+//        Box(modifier = Modifier.fillMaxSize(),
+//            contentAlignment = Alignment.Center
+//        ){
+//            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+//                Spacer(modifier = Modifier
+//                    .fillMaxWidth(0.9f)
+//                    .height(2.dp)
+//                    .background(Color.Gray))
+//                Spacer(modifier = Modifier
+//                    .height(40.dp)
+//                    .width(0.dp))
+//                Spacer(modifier = Modifier
+//                    .fillMaxWidth(0.9f)
+//                    .height(2.dp)
+//                    .background(Color.Gray))
 //            }
-        }
-        Box(modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ){
-            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Spacer(modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .height(2.dp)
-                    .background(Color.Gray))
-                Spacer(modifier = Modifier
-                    .height(40.dp)
-                    .width(0.dp))
-                Spacer(modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .height(2.dp)
-                    .background(Color.Gray))
-            }
-        }
+//        }
     }
 }
 
@@ -808,6 +800,7 @@ fun RadioTextButton(
         Text(text = text, style = MaterialTheme.typography.body1)
     }
 }
+
 
 
 @ExperimentalMaterialApi

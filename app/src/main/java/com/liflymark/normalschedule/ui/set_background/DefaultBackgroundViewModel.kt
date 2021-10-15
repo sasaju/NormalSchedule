@@ -12,4 +12,5 @@ class DefaultBackgroundViewModel:ViewModel() {
         Log.d("DefaultView", "update")
         Repository.updateBackground(UserBackgroundBean(userBackgroundUri))
     }
+
 }

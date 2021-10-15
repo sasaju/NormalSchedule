@@ -2,8 +2,6 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -17,11 +15,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.GetApp
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
@@ -39,33 +36,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.request.ImageRequest
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.pager.*
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
-import com.liflymark.schedule.data.Settings
 import com.liflymark.normalschedule.logic.Repository
-import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
-import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GifLoader
 import com.liflymark.normalschedule.logic.utils.TutorialOverlay
 import com.liflymark.normalschedule.ui.add_course.AddCourseComposeActivity
-import com.liflymark.normalschedule.ui.class_course.SingleClass3
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.theme.NorScTheme
+import com.liflymark.schedule.data.Settings
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -75,6 +65,7 @@ import kotlinx.coroutines.launch
 
 class ShowTimetableActivity2 : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
+
     @ExperimentalCoilApi
     @DelicateCoroutinesApi
     @ExperimentalAnimationApi
@@ -134,6 +125,21 @@ fun Drawer(
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
     val newUserOrNot =
         viewModel.newUserFLow.collectAsState(initial = false)
+    val newUserVersion = viewModel.userVersion.collectAsState(initial = null)
+    val quickJumpShow = remember { mutableStateOf(false) }
+    val activity = LocalContext.current as ShowTimetableActivity2
+    LaunchedEffect(newUserVersion.value){
+        val allCourse = Repository.loadAllCourseNameNoFlow().toSet()
+        val needCourse = setOf("成本管理会计", "无机化学I(上)", "仪器分析", "学前儿童科学教育", "矩阵论", "数据结构课程设计", "最优化方法实验", "Java程序设计课程设计", "操作系统课程设计", "数据库原理课程设计", "分布式计算框架课程设计", "优化理论及方法实验", "论文写作实践", "二外日语2", "二外法语2", "美国文学选读（文学）", "中药学", "声乐主修7", "声乐主修7", "器乐主修7", "器乐主 修7", "器乐主修7", "篆刻学", "动画透视学原理", "素描2（人体结构）", "声乐主修1", "声乐主修3", "声乐主修3", "声乐主修5", "声乐主修5", "声乐主修5", "声乐主修5", "器乐主修3", "器乐主修5", "器乐主修5", "器乐主修5", "室内陈设设计", "小楷技法", "大学计算机B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础C", "大学计算机基础C", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7")
+        if (newUserVersion.value == 1 && (allCourse intersect needCourse).isNotEmpty()){
+            Toasty.info(activity,"由于版本更新，需要重新导入一次").show()
+            val intent = Intent(activity, ImportCourseAgain::class.java)
+            activity.startActivity(intent)
+            Repository.importAgain()
+            Repository.saveUserVersion(0)
+            activity.finish()
+        }
+    }
     // 拦截返回键请求
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
     val backCallback = remember {
@@ -170,7 +176,6 @@ fun Drawer(
             DrawerNavHost(drawerState)
         },
         content = {
-
             Column(modifier = Modifier.background(Color.Transparent)) {
                 var userNowWeek by remember {
                     mutableStateOf(
@@ -182,10 +187,10 @@ fun Drawer(
                     )
                 }
                 val pagerState = rememberPagerState(
-                    pageCount = 19,
-                    initialOffscreenLimit = 2,
+//                    pageCount = 19,
+//                    initialOffscreenLimit = 1,
                     initialPage = userNowWeek,
-                    infiniteLoop = true
+//                    infiniteLoop = true
                 )
                 statusSpacer()
 
@@ -195,16 +200,47 @@ fun Drawer(
                     newUserOrNot.value
                 ) { overMod ->
                     settings.value?.let {
-                        ScheduleToolBar(scope, drawerState, userNowWeek, pagerState, overMod, it)
+                        ScheduleToolBar(
+                            scope,
+                            drawerState,
+                            userNowWeek,
+                            pagerState,
+                            overMod,
+                            it,
+                            quickJumpClick = {quickJumpShow.value = !quickJumpShow.value}
+                        )
+                    }
+                }
+                if (quickJumpShow.value) {
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .horizontalScroll(
+                            rememberScrollState()
+                        )) {
+                        for (week in 0 until pagerState.pageCount){
+                            TextButton(
+                                onClick = {
+                                    scope.launch {
+                                        pagerState.animateScrollToPage(week)
+                                    }
+                                },
+                                modifier = Modifier.padding(2.dp)
+                            ) {
+                                Text("第${week+1}周", color = MaterialTheme.colors.onBackground)
+                            }
+                        }
                     }
                 }
                 HorizontalPager(
                     state = pagerState,
-                    flingBehavior = PagerDefaults.defaultPagerFlingConfig(
-                        state = pagerState,
-                        snapAnimationSpec = spring(stiffness = 500f)
-                    )
-                ) { page ->
+                    count = 19
+//                    flingBehavior = PagerDefaults.defaultPagerFlingConfig(
+//                        state = pagerState,
+//                        snapAnimationSpec = spring(stiffness = 500f)
+//                    )
+                ) { index ->
+                    val page= index
                     settings.value?.let {
                         SingleLineClass(
                             oneWeekClass = courseList,
@@ -225,9 +261,11 @@ fun Drawer(
             }
         }
     )
+
 }
 
 @Composable
+@OptIn(ExperimentalCoilApi::class)
 fun BackGroundImage(viewModel: ShowTimetableViewModel) {
     val path = viewModel.backgroundUriStringLiveData.observeAsState()
     val showDarkBack = Repository.getShowDarkBack().collectAsState(initial = false)
@@ -280,6 +318,7 @@ fun ScheduleToolBar(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     settings: Settings,
+    quickJumpClick:() -> Unit = {},
     stViewModel: ShowTimetableViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -317,9 +356,14 @@ fun ScheduleToolBar(
                 // 开学了，而且页面是当前周 显示“当前周”
                 // 放假了，显示放假
                 if (startSchoolOrNot && !nowWeekOrNot) {
-                    Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(5.dp))
+            }
+                Row {
+                    Text(text = "第${userNowWeek + 1}周")
+                    IconButton(onClick = { quickJumpClick() }, modifier = Modifier.size(30.dp)) {
+                        Icon(Icons.Default.ExpandMore, null)
+                    }
                 }
-                Text(text = "第${userNowWeek + 1}周")
                 if (nowWeekOrNot && startSchoolOrNot) {
                     Text(text = "当前周", fontSize = 15.sp)
                 } else if (!startSchoolOrNot) {
@@ -383,7 +427,27 @@ fun SingleLineClass(
     val mode = settings.colorMode
     val iconColor = if (!settings.darkShowBack){ MaterialTheme.colors.onBackground } else{ Color.Black
     }
+    val snackbarVisibleState = remember { mutableStateOf(false) }
+    val snackbarVisibleShowState = remember { mutableStateOf(true) }
+    var snackbarText by remember { mutableStateOf("") }
     Column {
+        // snackbar
+        if (snackbarVisibleState.value && snackbarVisibleShowState.value) {
+            Snackbar(
+                action = {
+                    TextButton(onClick = {
+                        snackbarVisibleState.value = false
+                        snackbarVisibleShowState.value = false
+                        Toasty.error(context,"注意可能存在其他课程冲突,解决冲突后将不再提示！！！").show()
+                    }) {
+                        Text("关闭提示")
+                    }
+                },
+                modifier = Modifier
+                    .padding(4.dp)
+                    .alpha(0.8f)
+            ) { Text(text = snackbarText) }
+        }
         //星期行
         Row {
             Column(
@@ -473,6 +537,8 @@ fun SingleLineClass(
             // 课程
             val realOneWeekList =
                 getNeededClassList(oneWeekClass.value!!.getOrElse(page) { getData() })
+
+
             for (oneDayClass in realOneWeekList) {
                 var count = 0
                 val nowJieShu = IntArray(12) { it + 1 }.toMutableList()
@@ -495,22 +561,31 @@ fun SingleLineClass(
                                     oneClass.end + 1 - oneClass.start,
                                     nowClassBuild
                                 )
-                                Toasty.info(context, "检测到《${nowClassAllName[0]}》存在多位老师，已合并。重启生效")
-                                    .show()
+//                                Toasty.info(context, "检测到《${nowClassAllName[0]}》存在多位老师，已合并。重启生效")
+//                                    .show()
+                                snackbarText = "检测到《${nowClassAllName[0]}》存在多位老师，已合并。重启生效"
+                                snackbarVisibleState.value = true
                                 continue
                             } else if (nowClassName == lastClassName) {
-                                if (stViewModel.showToast < 5) {
-                                    Toasty.info(
-                                        context,
-                                        "检测到${nowClassAllName[0]}课程冲突，无法正常显示，请尝试登陆导入"
-                                    ).show()
+                                snackbarText = "检测到${nowClassAllName[0]}课程冲突，无法正常显示，请尝试登陆导入"
+                                snackbarVisibleState.value = true
+                                stViewModel.showToast += 1
+                            } else {
+                                snackbarText = "检测到${nowClassAllName[0]}课程冲突，务必仔细检查"
+                                snackbarVisibleState.value = true
+                                key(oneClass.courseName + oneClass.start + oneClass.end + stViewModel.showToast) {
+                                    SingleClass2(
+                                        singleClass = oneClass,
+                                        perHeight = perHeight,
+                                        mode = mode,
+                                        conflict = true
+                                    ) {
+                                        courseClick(it)
+                                    }
                                 }
                                 stViewModel.showToast += 1
+                                continue
                             }
-                            if (stViewModel.showToast < 5) {
-                                Toasty.info(context, "检测到${nowClassAllName[0]}课程冲突，务必仔细检查").show()
-                            }
-                            stViewModel.showToast += 1
                         }
 
                         Spacer(
@@ -522,7 +597,8 @@ fun SingleLineClass(
                             SingleClass2(
                                 singleClass = oneClass,
                                 perHeight = perHeight,
-                                mode = mode
+                                mode = mode,
+                                bottomRight = settings.showRight
                             ){
                                 courseClick(it)
                             }
@@ -542,60 +618,93 @@ fun SingleClass2(
     singleClass: OneByOneCourseBean,
     perHeight: Int = 70,
     mode:Int = 0,
+    conflict:Boolean = false,
+    bottomRight:Int = 0,
     courseClick:(oneByOne:OneByOneCourseBean) -> Unit
 ) {
 //    val context = LocalContext.current
 //    val activity = (LocalContext.current as? Activity)
 //    val interactionSource = remember { MutableInteractionSource() }
-    val height = perHeight * (singleClass.end - singleClass.start + 1)
-    Card(
+    val height =
+        if (!conflict){
+            perHeight * (singleClass.end - singleClass.start + 1)
+        }else{
+            (perHeight * (singleClass.end - singleClass.start + 1) *0.6).toInt()
+        }
+    val nameList = singleClass.courseName.split("\n")
+    val workNameList = Repository
+        .loadUnFinishCourseName()
+        .collectAsState(initial = listOf("正在查询"))
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(height.dp)
-            .padding(2.dp) // 外边距
-            .alpha(0.75F),
-        elevation = 1.dp, // 设置阴影
-    ) {
-        val nameList = singleClass.courseName.split("\n")
-
-//        val showDetailDialog = remember { mutableStateOf(false) }
-//        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
-        Text(
-            buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.W600,
-                        color = Color.White,
-                        fontSize = 13.sp
-                    )
-                ) {
-                    append(nameList[0] + "\n" + nameList[1] + "\n\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.W600,
-                        color = Color.White,
-                        fontSize = 10.sp
-                    )
-                ) {
-                    append(nameList[2])
-                }
-            },
+            .height(height.dp),
+        contentAlignment = Alignment.BottomEnd
+    ){
+        Card(
             modifier = Modifier
-                .background(
-                    Brush.verticalGradient(
-                        Convert.stringToBrush(
-                            singleClass.color.value,
-                            mode = mode
+                .fillMaxWidth()
+                .height(height.dp)
+                .padding(2.dp) // 外边距
+                .alpha(0.75F),
+            elevation = 1.dp, // 设置阴影
+        ) {
+
+    //        val showDetailDialog = remember { mutableStateOf(false) }
+    //        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
+            Text(
+                buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.W600,
+                            color = Color.White,
+                            fontSize = 13.sp
+                        )
+                    ) {
+                        append(nameList[0] + "\n" + nameList[1] + "\n\n")
+                    }
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.W600,
+                            color = Color.White,
+                            fontSize = 10.sp
+                        )
+                    ) {
+                        append(nameList[2])
+                    }
+                },
+                modifier = Modifier
+                    .background(
+                        Brush.verticalGradient(
+                            Convert.stringToBrush(
+                                singleClass.color.value,
+                                mode = mode
+                            )
                         )
                     )
+                    .clickable {
+                        //                    showDetailDialog.value = true
+                        courseClick(singleClass)
+                    },
+                textAlign = TextAlign.Center
+
+            )
+        }
+        if (bottomRight != 0 && (nameList[0].replace("?", "") in workNameList.value)) {
+            IconButton(
+                onClick = { },
+                modifier = Modifier
+                    .alpha(0.5f)
+                    .offset(x = (-5).dp)
+                    .size(20.dp)
+            ) {
+                Icon(
+                    Icons.Default.Bookmark,
+                    null,
+                    tint = Color.White
                 )
-                .clickable {
-//                    showDetailDialog.value = true
-                    courseClick(singleClass)
-                },
-            textAlign = TextAlign.Center
-        )
+            }
+        }
     }
 }
 
@@ -643,51 +752,62 @@ fun DefaultPreview() {
             color = Color.Gray
         )
         val height = 70 * (singleClass.end - singleClass.start + 1)
-        Card(
-            modifier = Modifier
-                .fillMaxWidth(0.6f)
-                .height(height.dp)
-                .padding(2.dp) // 外边距
-                .alpha(0.75F),
-            elevation = 1.dp, // 设置阴影
-        ) {
-            val nameList = singleClass.courseName.split("\n")
-
-            val showDetailDialog = remember { mutableStateOf(false) }
-
-            Text(
-                buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            fontWeight = FontWeight.W600,
-                            color = Color.White,
-                            fontSize = 13.sp
-                        )
-                    ) {
-                        append(nameList[0] + "\n" + nameList[1] + "\n\n")
-                    }
-                    withStyle(
-                        style = SpanStyle(
-                            fontWeight = FontWeight.W600,
-                            color = Color.White,
-                            fontSize = 10.sp
-                        )
-                    ) {
-                        append(nameList[2])
-                    }
-                },
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ){
+            Card(
                 modifier = Modifier
-                    .background(
-                        Brush.horizontalGradient(
-                            listOf(
-                                Color(0xFFFC354C), Color(0xFF0ABFBC)
+                    .fillMaxWidth(0.6f)
+                    .height(height.dp)
+                    .padding(2.dp) // 外边距
+                    .alpha(0.75F),
+                elevation = 1.dp, // 设置阴影
+            ) {
+                val nameList = singleClass.courseName.split("\n")
+
+                val showDetailDialog = remember { mutableStateOf(false) }
+
+                Text(
+                    buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.W600,
+                                color = Color.White,
+                                fontSize = 13.sp
+                            )
+                        ) {
+                            append(nameList[0] + "\n" + nameList[1] + "\n\n")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.W600,
+                                color = Color.White,
+                                fontSize = 10.sp
+                            )
+                        ) {
+                            append(nameList[2])
+                        }
+                    },
+                    modifier = Modifier
+                        .background(
+                            Brush.horizontalGradient(
+                                listOf(
+                                    Color(0xFFFC354C), Color(0xFF0ABFBC)
+                                )
                             )
                         )
-                    )
-                    .clickable {
-                        showDetailDialog.value = true
-                    },
-                textAlign = TextAlign.Center
+                        .clickable {
+                            showDetailDialog.value = true
+                        },
+                    textAlign = TextAlign.Center
+                )
+            }
+            Icon(
+                Icons.Default.Bookmark,
+                null,
+                modifier = Modifier
+                    .offset(y = (-20).dp)
+                    .size(10.dp)
             )
         }
     }

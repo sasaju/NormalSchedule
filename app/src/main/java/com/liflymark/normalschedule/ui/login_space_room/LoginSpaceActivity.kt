@@ -62,6 +62,7 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
     val spaceResult =
         lsViewModel.loginSpaceLiveData.observeAsState(initial = lsViewModel.initialSpace)
     val activity = (LocalContext.current as LoginSpaceActivity)
+    val scope = rememberCoroutineScope()
     ProgressDialog(openDialog = openWaitDialog, label = "正在链接\n教务系统"){
         Spacer(modifier = Modifier
             .width(100.dp)
@@ -112,8 +113,12 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
                 val intent = Intent(activity, ShowSpaceActivity::class.java).apply {
                     putExtra("ids", ids.value.id)
                 }
+
                 activity.startActivity(intent)
-                activity.finish()
+                scope.launch {
+                    Repository.saveAccount(user, password)
+                    activity.finish()
+                }
             }
             "初始化" -> {
                 Toasty.success(activity, "正在链接，请等待").show()

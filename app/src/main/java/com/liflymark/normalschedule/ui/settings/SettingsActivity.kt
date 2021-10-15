@@ -60,20 +60,19 @@ fun SettingsContent(){
         mutableStateOf("主题")
     }
     val settings = Repository.getScheduleSettings().collectAsState(
-        initial = Settings.getDefaultInstance()
-    )
-    var perHeight by remember {
-        mutableStateOf(0)
-    }
+        initial = Settings.getDefaultInstance())
+    var perHeight by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showDarkBack by remember { mutableStateOf(settings.value.darkShowBack) }
-    Log.d("Settings", showDarkBack.toString())
+    var showHomeWorkIcon by remember { mutableStateOf("") }
+
     LaunchedEffect(settings.value){
         nowColor =
             if (settings.value.colorMode == 0){ "纯色主题" } else { "渐变色主题" }
         perHeight =
             if (settings.value.coursePerHeight==0){ 70 } else{ settings.value.coursePerHeight }
         showDarkBack = settings.value.darkShowBack
+        showHomeWorkIcon = if(settings.value.showRight!=0){"显示标识"}else{"不显示标识"}
     }
 
     val showNorSetDialog = remember { mutableStateOf(false) }
@@ -118,6 +117,26 @@ fun SettingsContent(){
                     showDarkBack = false
                 }
             }
+            "显示标识" -> {
+                scope.launch {
+                    Repository.updateSettings {
+                        it.toBuilder()
+                            .setShowRight(1)
+                            .build()
+                    }
+                    showDarkBack = false
+                }
+            }
+            "不显示标识" -> {
+                scope.launch {
+                    Repository.updateSettings {
+                        it.toBuilder()
+                            .setShowRight(0)
+                            .build()
+                    }
+                    showDarkBack = false
+                }
+            }
             else -> {}
         }
     }
@@ -148,11 +167,19 @@ fun SettingsContent(){
             showNorSetDialog.value = true
         }
         SettingsItem(
-            title = "时间列字体颜色",
-            description = "暂时只支持黑白色设置"
+            title = "有作业时右下角显示标识",
+            description = showHomeWorkIcon
         ) {
-
+            selectInit = if (showDarkBack)(0)else{1}
+            selectList = listOf("显示标识", "不显示标识")
+            showNorSetDialog.value = true
         }
+//        SettingsItem(
+//            title = "时间列字体颜色",
+//            description = "暂时只支持黑白色设置"
+//        ) {
+//
+//        }
     }
 }
 

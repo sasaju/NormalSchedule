@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
@@ -98,12 +99,15 @@ fun getDayOfWeek(nowColumn: Int): String {// 当前列是星期几  星期一,�
         else -> "一"
     }
 }
-val LocalDialog = compositionLocalOf {
-    getInitial()
+
+fun Int.floorMod(other: Int): Int = when (other) {
+    0 -> this
+    else -> this - floorDiv(other) * other
 }
-val LocalShowSingle  = compositionLocalOf {
-    false
-}
+
+// snackbar
+//val LocalShowSnackbar = compositionLocalOf { false }
+//val LocalSnackText = staticCompositionLocalOf { "" }
 
 //fun main(){
 //    val a = getNeededClassList(getData())

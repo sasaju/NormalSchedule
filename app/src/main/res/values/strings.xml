@@ -29,4 +29,5 @@
     <string name="title_activity_work_book">WorkBookActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_add_course_compose">AddCourseComposeActivity</string>
+    <string name="title_activity_update_course">UpdateCourseActivity</string>
 </resources>

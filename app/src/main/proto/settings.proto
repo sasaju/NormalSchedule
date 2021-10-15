@@ -19,4 +19,7 @@ message Settings {
   // 星期行颜色 默认黑色
   int64  week_row_color = 5;
 
+  // 显示右下角作业本 0-不显示 1-样式1
+  int32 show_right = 6;
+
 }
