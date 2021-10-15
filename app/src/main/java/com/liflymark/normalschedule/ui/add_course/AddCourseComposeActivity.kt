@@ -156,7 +156,7 @@ fun AddPage(
                         Text(text = "删除末尾时段")
                     }
                     TextButton(onClick = {
-                        newCourseMutableList.add(ecViewModel.initCourseBean[0])
+                        newCourseMutableList.add(ecViewModel.getNewBean(sideEffectCourse))
                         newCourseMutableList.last().courseName = sideEffectCourse
                     }, modifier = textBtMod) {
                         Text(text = "增加时段")

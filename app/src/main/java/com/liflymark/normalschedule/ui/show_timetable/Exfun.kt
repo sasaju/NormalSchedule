@@ -100,6 +100,11 @@ fun getDayOfWeek(nowColumn: Int): String {// 当前列是星期几  星期一,�
     }
 }
 
+fun Int.floorMod(other: Int): Int = when (other) {
+    0 -> this
+    else -> this - floorDiv(other) * other
+}
+
 // snackbar
 //val LocalShowSnackbar = compositionLocalOf { false }
 //val LocalSnackText = staticCompositionLocalOf { "" }

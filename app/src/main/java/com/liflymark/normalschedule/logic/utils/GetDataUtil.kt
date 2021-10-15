@@ -37,7 +37,7 @@ internal object GetDataUtil {
         val calendar = GregorianCalendar()
         calendar.add(Calendar.DATE, -1)
         threeDay.add(sdf.format(calendar.time))
-        repeat(2){
+        repeat(8){
             calendar.add(Calendar.DATE, 1)
             threeDay.add(sdf.format(calendar.time))
         }

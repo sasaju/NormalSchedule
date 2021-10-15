@@ -111,7 +111,7 @@ fun TutorialOverlay(
                         scope.launch {
                             Log.d("newUser", "开始存储")
                             animatedAlpha.animateTo(0f, HighlightDisappearanceAnimationSpec)
-                            Repository.saveUserVersion(1)
+                            Repository.saveUserVersion(3)
                             Log.d("newUser", "存储完毕")
                         }
                     }

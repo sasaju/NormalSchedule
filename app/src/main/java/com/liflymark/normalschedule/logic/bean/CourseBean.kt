@@ -1,11 +1,13 @@
 package com.liflymark.normalschedule.logic.bean
 
 import androidx.annotation.Keep
+import androidx.room.ColumnInfo
+import androidx.room.ColumnInfo.INTEGER
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Keep
-@Entity
+@Entity(primaryKeys = ["courseName", "teacher", "classWeek", "classDay", "classSessions", "continuingSession", "removed"])
 data class CourseBean(
     var campusName: String,
     var classDay: Int,
@@ -15,10 +17,12 @@ data class CourseBean(
     var courseName: String,
     var teacher: String,
     var teachingBuildName: String,
-    var color: String
+    var color: String,
+    @ColumnInfo(defaultValue = "0")
+    var removed: Boolean = false
 ) {
-    @PrimaryKey(autoGenerate = false)
-    var id = courseName+teacher+classWeek+classDay.toString()
+//    @PrimaryKey(autoGenerate = false)
+//    var id = courseName+teacher+classWeek+classDay.toString()+classSessions.toString()+continuingSession.toString()+removed.toString()
 }
 
 fun getInitial(): List<CourseBean> {

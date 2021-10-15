@@ -36,6 +36,7 @@ import com.liflymark.normalschedule.ui.set_background.DefaultBackground
 import com.liflymark.normalschedule.ui.settings.SettingsActivity
 import com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity
 import com.liflymark.normalschedule.ui.theme.NorScTheme
+import com.liflymark.normalschedule.ui.update_course.UpdateCourseActivity
 import com.liflymark.normalschedule.ui.work_book.WorkBookActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
@@ -64,6 +65,12 @@ fun DrawerNavHost(drawerState: DrawerState){
         NavButton(activity = LoginSpaceActivity(),
             drawerState = drawerState,
             icon = Icons.Filled.EventSeat, text = "空教室查询")
+
+//        NavButton(
+//            activity = UpdateCourseActivity(), drawerState = drawerState,
+//            icon = Icons.Filled.Rule, text = "公共调课"
+//        )
+
 
         Spacer(modifier = Modifier
             .fillMaxWidth()

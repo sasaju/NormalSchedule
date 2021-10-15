@@ -2,28 +2,27 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
+//    id 'kotlin-kapt'
     id "com.google.protobuf" version "0.8.17"
 }
+
+apply plugin: 'com.google.devtools.ksp'
 
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
-
     defaultConfig {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 5
-        versionName "0.0.8"
+        versionCode 6
+        versionName "0.0.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
 
     }
@@ -31,6 +30,7 @@ android {
         // Enables Jetpack Compose for this module
         compose true
         dataBinding true
+        viewBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
@@ -62,7 +62,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug{
-            minifyEnabled true
+            minifyEnabled false
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             resValue "string", "app_name", "河大课表Debug"
@@ -83,7 +83,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         useIR = true
-        freeCompilerArgs = ["-Xallow-result-return-type"]
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
     packagingOptions {
         resources {
@@ -120,7 +120,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
 
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
@@ -132,13 +132,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
-    implementation 'androidx.room:room-ktx:2.4.0-alpha04'
-    implementation 'androidx.room:room-runtime:2.4.0-alpha04'
+    implementation 'androidx.room:room-ktx:2.4.0-alpha05'
+    implementation 'androidx.room:room-runtime:2.4.0-alpha05'
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt "androidx.room:room-compiler:2.4.0-alpha04"
+    ksp "androidx.room:room-compiler:2.4.0-alpha05"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
 //    implementation "com.xwray:groupie:2.8.0"
@@ -152,7 +152,7 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.2'
-    implementation "androidx.security:security-identity-credential:1.0.0-alpha02"
+    implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
     implementation 'com.jaredrummler:material-spinner:1.3.1'
 
     testImplementation 'junit:junit:4.13.2'
@@ -174,12 +174,12 @@ dependencies {
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.3.1'
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01'
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
-    implementation 'com.google.accompanist:accompanist-pager:0.13.0'
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha06"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     // UI Tests
@@ -197,6 +197,7 @@ dependencies {
     implementation "androidx.datastore:datastore:1.0.0"
     implementation "com.google.protobuf:protobuf-javalite:3.10.0"
     implementation 'com.jaredrummler:colorpicker:1.1.0'
+    implementation "com.google.code.gson:gson:2.8.8"
 //    implementation project(":IcyTimeTable")
     debugImplementation 'com.glance.guolindev:glance:1.0.0'
 }

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.liveData
+import com.google.gson.Gson
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.*
@@ -211,7 +212,7 @@ object  Repository {
     }
 
     fun loadAllCourse2() = liveData(Dispatchers.IO) {
-        emit(Convert.courseBeanToOneByOne2(courseDao.loadAllCourse()))
+        emit(Convert.courseBeanToOneByOne2(courseDao.loadAllUnRemoveCourse()))
     }
 
     fun getDepartmentList() = flow {
@@ -268,6 +269,22 @@ object  Repository {
             )
         )
     }.flowOn(Dispatchers.IO)
+
+    suspend fun loadCourseByName(courseName: String) =
+        try {
+            courseDao.loadCourseByName(courseName)
+        } catch (e:Exception){
+            listOf(CourseBean(
+                campusName="五四路校区",
+                classDay=3,
+                classSessions=9, classWeek="111111111111110000000000",
+                continuingSession=3,
+                courseName="发生错误",
+                teacher="发生错误 ",
+                teachingBuildName="发生错误 ",
+                color="#f0c239")
+            )
+        }
 
     suspend fun deleteCourseByList(courseBeanList: List<CourseBean>){
         courseDao.deleteCourse(courseBeanList)
@@ -353,10 +370,13 @@ object  Repository {
     }
 
     suspend fun insertCourse(courseBean:List<CourseBean>) {
-        try {
-            courseDao.insertCourse(courseBean)
-        } catch (e:Exception){
-
+        courseBean.forEach {
+            try {
+                Log.d("Repo", courseBean.toString())
+                courseDao.insertCourse(it)
+            } catch (e:Exception){
+                courseDao.updateCourse(it)
+            }
         }
     }
 
@@ -595,21 +615,91 @@ object  Repository {
         emit(res)
     }.flowOn(Dispatchers.IO)
 
-    fun gotNewCourse(userNumber: String, pk:Int) = flow {
-        val res = NormalScheduleNetwork.gotNewCourse(userNumber, pk)
-        emit(res)
+    // 200正常，301未链接，302未登录
+    fun getNewCourse() = flow {
+        val userNumber = getSavedAccount()["user"]
+        if (userNumber != null) {
+            val res = NormalScheduleNetwork.getNewCourse(userNumber)
+            emit(res)
+        }else{
+            emit(GetNewCourseResponse(content= listOf(), statusCode = 302))
+        }
+    }
+        .catch {
+            emit(GetNewCourseResponse(content= listOf(), statusCode = 301))
+        }
+        .flowOn(Dispatchers.IO)
+
+
+    // 200正常，301未链接，302未登录
+    fun gotNewCourse(pk:Int) = flow {
+        val userNumber = getSavedAccount()["user"]
+        if(userNumber != null) {
+            val res = NormalScheduleNetwork.gotNewCourse(userNumber, pk)
+            emit(res)
+        } else {
+            emit(GotResponse(302))
+        }
     }
         .catch {
             emit(GotResponse(301))
         }
         .flowOn(Dispatchers.IO)
 
-    fun uploadNewCourse(userNumber: String, userCode:String, beanListStr:String) = flow {
+    fun uploadNewCourse(
+        courseNames: List<String>?,
+        userNumber: String,
+        userCode:String,
+    ) = flow {
+        val newBeanList = mutableListOf<CourseBean>()
+        courseNames?.forEach {
+            newBeanList.addAll(loadCourseByName(it))
+        }
+        val beanListStr= Gson().toJson(newBeanList)
         val res  = NormalScheduleNetwork.uploadNewCourse(
             userNumber, userCode, beanListStr
         )
         emit(res)
+    }
+        .catch {
+            emit(
+                UploadResponse(statusCode = 301,status = "上传服务器异常")
+            )
+        }
+        .flowOn(Dispatchers.IO)
+
+    fun loadAllCourseName() = flow {
+        val res = courseDao.loadAllCourseName()
+        emit(res)
     }.flowOn(Dispatchers.IO)
+
+    suspend fun loadAllCourseNameNoFlow() = courseDao.loadAllCourseName()
+
+    suspend fun unRemovedCourseToRemoved(
+        courseList: List<String>
+    ){
+        courseList.forEach { courseName ->
+            val courseBeanList = courseDao.loadCourseByName(courseName)
+            courseBeanList.forEach {
+                Log.d("rep", it.toString())
+                it.removed = true
+                Log.d("rep", it.toString())
+            }
+            courseDao.updateCourse(courseBeanList)
+        }
+    }
+
+    suspend fun removedCourseToUnRemoved(){
+        val removedCourseBeanList = courseDao.loadRemovedCourse()
+        val removedName = removedCourseBeanList.map { it.courseName }.toSet()
+        removedCourseBeanList.forEach {
+            it.removed = false
+        }
+        removedName.forEach {
+            courseDao.deleteCourseByName(it)
+        }
+        courseDao.updateCourse(removedCourseBeanList)
+    }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {
@@ -646,7 +736,9 @@ object  Repository {
     fun importAgain() = AccountDao.importedAgain()
     fun saveLogin() = AccountDao.saveLogin()
 
+    // 0-未读取，1-显示过快速跳转，3-显示过快速跳转，已完成重大Bug检测
     suspend fun saveUserVersion(version:Int = 1) = AccountDataDao.saveUserVersion(version)
     fun getNewUserOrNot() = AccountDataDao.getNewUserOrNot()
+    fun getUserVersion() = AccountDataDao.getUserVersion()
 }
 

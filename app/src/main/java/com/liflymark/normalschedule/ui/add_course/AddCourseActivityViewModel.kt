@@ -98,9 +98,9 @@ class AddCourseActivityViewModel: ViewModel() {
         campusName="五四路校区",
         classDay=3,
         classSessions=9, classWeek="111111111111110000000000", continuingSession=3,
-        courseName="未知",
-        teacher="未知 ",
-        teachingBuildName="未知",
+        courseName="",
+        teacher="发生错误 ",
+        teachingBuildName="发生错误",
         color="#f0c239"
     ))
     private val deleteClass = mutableListOf<CourseBean>()
@@ -110,11 +110,24 @@ class AddCourseActivityViewModel: ViewModel() {
 
     fun addDeleteClass(beanList: List<CourseBean>){
         deleteClass.addAll(beanList)
+        Log.d("Add", beanList.toString())
     }
 
     fun addNewClass(beanList:List<CourseBean>){
         newClass.addAll(beanList)
     }
+
+    fun getNewBean(courseName: String) =
+        CourseBean(
+            campusName="五四路校区",
+            classDay=3,
+            classSessions=9, classWeek="111111111111110000000000", continuingSession=3,
+            courseName=courseName,
+            teacher="未知",
+            teachingBuildName="未知",
+            color="#f0c239"
+        )
+
 
     suspend fun updateClass(){
         Repository.deleteCourseByList(deleteClass)

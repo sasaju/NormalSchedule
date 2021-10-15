@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import com.afollestad.materialdialogs.MaterialDialog
@@ -458,22 +459,22 @@ fun SelectSessionContent(initialWeek:Int, initialStart:Int, initialEnd:Int,
     }
 
     val weekListPager = rememberPagerState(
-        pageCount = weekList.size,
+//        pageCount = weekList.size,
         initialPage = initialWeek,
-        initialOffscreenLimit = weekList.size,
-        infiniteLoop = false
+//        initialOffscreenLimit = weekList.size,
+//        infiniteLoop = false
     )
     val startPager = rememberPagerState(
-        pageCount = startSection.size,
+//        pageCount = startSection.size,
         initialPage = initialStart,
-        initialOffscreenLimit = startSection.size,
-        infiniteLoop = false
+//        initialOffscreenLimit = startSection.size,
+//        infiniteLoop = false
     )
     val endPager = rememberPagerState(
-        pageCount = endSection.size,
+//        pageCount = endSection.size,
         initialPage = initialEnd,
-        initialOffscreenLimit = endSection.size,
-        infiniteLoop = false
+//        initialOffscreenLimit = endSection.size,
+//        infiniteLoop = false
     )
     Box(
         modifier = Modifier
@@ -495,7 +496,9 @@ fun SelectSessionContent(initialWeek:Int, initialStart:Int, initialEnd:Int,
                     Log.d("Dialog", it.toString())
                     result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
                 },
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .wrapContentWidth()
             )
             Spacer(modifier = Modifier.width(15.dp))
             StringPicker(
@@ -655,25 +658,9 @@ fun SelectDate(
     }
     Log.d("Dialog","重组一次")
 
-
-    val yearListPager = rememberPagerState(
-        pageCount = yearList.size,
-        initialPage = year,
-        initialOffscreenLimit = yearList.size,
-        infiniteLoop = false
-    )
-    val monthPager = rememberPagerState(
-        pageCount = monthStrList.size,
-        initialPage = initialMonth,
-        initialOffscreenLimit = monthList.size,
-        infiniteLoop = false
-    )
-    val dayPager = rememberPagerState(
-        pageCount = dayList.value.size,
-        initialPage = initialDay,
-        initialOffscreenLimit = dayList.value.size,
-        infiniteLoop = false
-    )
+    var yearIndex by rememberSaveable { mutableStateOf(year) }
+    var monthIndex by rememberSaveable { mutableStateOf(initialMonth) }
+    var dayIndex by rememberSaveable { mutableStateOf(initialDay) }
     Box(
         modifier = Modifier
             .height(200.dp)
@@ -687,74 +674,60 @@ fun SelectDate(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            StringPicker(
+            StringPicker2(
                 strList = yearList,
-                pagerState = yearListPager,
-                pageChange = {
+                value = year,
+                onValueChange = {
                     Log.d("Dialog", it.toString())
-                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
+                    yearIndex = it
+                    result(yearIndex, monthIndex, dayIndex)
                 },
-                modifier = Modifier.fillMaxHeight()
+//                modifier = Modifier.fillMaxHeight()
             )
             Spacer(modifier = Modifier.width(15.dp))
-            StringPicker(
+            StringPicker2(
                 strList = monthStrList,
-                pagerState = monthPager,
-                pageChange = {
+                value = initialMonth,
+                onValueChange = {
                     Log.d("Dialog", it.toString())
-                    val year_ =yearList[yearListPager.currentPage].toInt()
-                    val month_ = monthList[monthPager.currentPage].toInt()-1
+                    monthIndex = it
+                    val year_ =yearList[yearIndex].toInt()
+                    val month_ = monthList[monthIndex].toInt()-1
                     scope.launch {
                         dayList.value = GetDataUtil.getMonthAllDay(year_,month_)
                     }
-                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
+                    result(yearIndex, monthIndex, dayIndex)
 //                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
                 },
-                modifier = Modifier.fillMaxHeight()
             )
-//            TextButton(onClick = {
-//                scope.launch {
-//                    monthPager.scrollToPage(monthPager.currentPage+1)
-//                }
-//            }) {
-//                Text(text = "+")
-//            }
             Spacer(modifier = Modifier.width(15.dp))
-            StringPicker(
+            StringPicker2(
                 strList = dayList.value,
-                pagerState = dayPager,
-                pageChange = {
+                value = initialDay,
+                onValueChange = {
                     Log.d("Dialog", it.toString())
-                    result(yearListPager.currentPage, monthPager.currentPage, dayPager.currentPage)
-//                    result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
+                    dayIndex = it
+                    result(yearIndex, monthIndex, dayIndex)
                 },
-                modifier = Modifier.fillMaxHeight()
             )
-//            TextButton(onClick = {
-//                scope.launch {
-//                    dayPager.scrollToPage(dayPager.currentPage+1)
-//                }
-//            }) {
-//                Text(text = "+")
+        }
+//        Box(modifier = Modifier.fillMaxSize(),
+//            contentAlignment = Alignment.Center
+//        ){
+//            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+//                Spacer(modifier = Modifier
+//                    .fillMaxWidth(0.9f)
+//                    .height(2.dp)
+//                    .background(Color.Gray))
+//                Spacer(modifier = Modifier
+//                    .height(40.dp)
+//                    .width(0.dp))
+//                Spacer(modifier = Modifier
+//                    .fillMaxWidth(0.9f)
+//                    .height(2.dp)
+//                    .background(Color.Gray))
 //            }
-        }
-        Box(modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ){
-            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Spacer(modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .height(2.dp)
-                    .background(Color.Gray))
-                Spacer(modifier = Modifier
-                    .height(40.dp)
-                    .width(0.dp))
-                Spacer(modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .height(2.dp)
-                    .background(Color.Gray))
-            }
-        }
+//        }
     }
 }
 
@@ -827,6 +800,7 @@ fun RadioTextButton(
         Text(text = text, style = MaterialTheme.typography.body1)
     }
 }
+
 
 
 @ExperimentalMaterialApi

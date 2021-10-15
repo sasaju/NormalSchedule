@@ -2,8 +2,6 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -38,33 +36,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.request.ImageRequest
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.pager.*
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
-import com.liflymark.schedule.data.Settings
 import com.liflymark.normalschedule.logic.Repository
-import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
-import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GifLoader
 import com.liflymark.normalschedule.logic.utils.TutorialOverlay
 import com.liflymark.normalschedule.ui.add_course.AddCourseComposeActivity
-import com.liflymark.normalschedule.ui.class_course.SingleClass3
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.theme.NorScTheme
+import com.liflymark.schedule.data.Settings
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -74,6 +65,7 @@ import kotlinx.coroutines.launch
 
 class ShowTimetableActivity2 : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
+
     @ExperimentalCoilApi
     @DelicateCoroutinesApi
     @ExperimentalAnimationApi
@@ -133,8 +125,21 @@ fun Drawer(
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
     val newUserOrNot =
         viewModel.newUserFLow.collectAsState(initial = false)
+    val newUserVersion = viewModel.userVersion.collectAsState(initial = null)
     val quickJumpShow = remember { mutableStateOf(false) }
-
+    val activity = LocalContext.current as ShowTimetableActivity2
+    LaunchedEffect(newUserVersion.value){
+        val allCourse = Repository.loadAllCourseNameNoFlow().toSet()
+        val needCourse = setOf("成本管理会计", "无机化学I(上)", "仪器分析", "学前儿童科学教育", "矩阵论", "数据结构课程设计", "最优化方法实验", "Java程序设计课程设计", "操作系统课程设计", "数据库原理课程设计", "分布式计算框架课程设计", "优化理论及方法实验", "论文写作实践", "二外日语2", "二外法语2", "美国文学选读（文学）", "中药学", "声乐主修7", "声乐主修7", "器乐主修7", "器乐主 修7", "器乐主修7", "篆刻学", "动画透视学原理", "素描2（人体结构）", "声乐主修1", "声乐主修3", "声乐主修3", "声乐主修5", "声乐主修5", "声乐主修5", "声乐主修5", "器乐主修3", "器乐主修5", "器乐主修5", "器乐主修5", "室内陈设设计", "小楷技法", "大学计算机B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础C", "大学计算机基础C", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7")
+        if (newUserVersion.value == 1 && (allCourse intersect needCourse).isNotEmpty()){
+            Toasty.info(activity,"由于版本更新，需要重新导入一次").show()
+            val intent = Intent(activity, ImportCourseAgain::class.java)
+            activity.startActivity(intent)
+            Repository.importAgain()
+            Repository.saveUserVersion(0)
+            activity.finish()
+        }
+    }
     // 拦截返回键请求
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
     val backCallback = remember {
@@ -182,10 +187,10 @@ fun Drawer(
                     )
                 }
                 val pagerState = rememberPagerState(
-                    pageCount = 19,
-                    initialOffscreenLimit = 1,
+//                    pageCount = 19,
+//                    initialOffscreenLimit = 1,
                     initialPage = userNowWeek,
-                    infiniteLoop = true
+//                    infiniteLoop = true
                 )
                 statusSpacer()
 
@@ -229,11 +234,13 @@ fun Drawer(
                 }
                 HorizontalPager(
                     state = pagerState,
-                    flingBehavior = PagerDefaults.defaultPagerFlingConfig(
-                        state = pagerState,
-                        snapAnimationSpec = spring(stiffness = 500f)
-                    )
-                ) { page ->
+                    count = 19
+//                    flingBehavior = PagerDefaults.defaultPagerFlingConfig(
+//                        state = pagerState,
+//                        snapAnimationSpec = spring(stiffness = 500f)
+//                    )
+                ) { index ->
+                    val page= index
                     settings.value?.let {
                         SingleLineClass(
                             oneWeekClass = courseList,
@@ -258,6 +265,7 @@ fun Drawer(
 }
 
 @Composable
+@OptIn(ExperimentalCoilApi::class)
 fun BackGroundImage(viewModel: ShowTimetableViewModel) {
     val path = viewModel.backgroundUriStringLiveData.observeAsState()
     val showDarkBack = Repository.getShowDarkBack().collectAsState(initial = false)

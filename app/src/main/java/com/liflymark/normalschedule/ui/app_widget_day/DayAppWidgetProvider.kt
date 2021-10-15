@@ -14,11 +14,8 @@ import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
-
-
-
 class DayAppWidgetProvider: AppWidgetProvider() {
-    var clickAction = "com.liflymark.DayAppWidgetProvider.onclick"
+    private val clickAction = "com.liflymark.DayAppWidgetProvider.onclick"
     @SuppressLint("ResourceType")
     override fun onUpdate(
         context: Context?,

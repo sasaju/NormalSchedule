@@ -160,6 +160,7 @@ fun AllPage(
                     }
                     TextButton(onClick = {
                         newCourseMutableList.add(ecViewModel.initCourseBean[0])
+                        newCourseMutableList.last().courseName = sideEffectCourse
                     }, modifier = textBtMod) {
                         Text(text = "增加时段")
                     }
@@ -186,9 +187,9 @@ fun Test() {
     val scope = rememberCoroutineScope()
     val list = listOf("page1", "page2", "page3", "page4", "page5", "page6", "page7")
     val pagerState = rememberPagerState(
-        pageCount = list.size,
+//        pageCount = list.size,
         initialPage = 0,
-        initialOffscreenLimit = list.size
+//        initialOffscreenLimit = list.size
     )
     Column {
         StringPicker(strList = list, pagerState = pagerState, modifier = Modifier.height(200.dp)) {}
