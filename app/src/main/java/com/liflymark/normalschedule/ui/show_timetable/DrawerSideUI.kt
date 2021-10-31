@@ -29,14 +29,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsHeight
 import com.liflymark.normalschedule.ui.about.ComposeAboutActivity
 import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
+import com.liflymark.normalschedule.ui.exam_arrange.ExamActivity
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity
 import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.DefaultBackground
 import com.liflymark.normalschedule.ui.settings.SettingsActivity
-import com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity
 import com.liflymark.normalschedule.ui.theme.NorScTheme
-import com.liflymark.normalschedule.ui.update_course.UpdateCourseActivity
+import com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity
 import com.liflymark.normalschedule.ui.work_book.WorkBookActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
@@ -70,6 +70,12 @@ fun DrawerNavHost(drawerState: DrawerState){
 //            activity = UpdateCourseActivity(), drawerState = drawerState,
 //            icon = Icons.Filled.Rule, text = "公共调课"
 //        )
+        NavButton(
+            activity = ExamActivity(),
+            drawerState = drawerState,
+            icon = Icons.Filled.Rule,
+            text = "考试安排"
+        )
 
 
         Spacer(modifier = Modifier

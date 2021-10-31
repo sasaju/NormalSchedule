@@ -184,7 +184,7 @@ fun HbuCalendar(navController: NavController) {
 
 
 /**
- * 全圆角卡片
+ * 半圆角卡片
  */
 @Composable
 fun BoardCard(

@@ -701,6 +701,20 @@ object  Repository {
         courseDao.updateCourse(removedCourseBeanList)
     }
 
+    fun getExamArrange(user: String, password: String, id: String) = flow {
+        val res = NormalScheduleNetwork.getExamArrange(user, password, id)
+        Log.d("Repo", res.toString())
+        emit(res)
+    }
+        .catch {
+            val fail = ExamArrangeResponse(
+                result = "查询异常",
+                arrange_list = listOf()
+            )
+            emit(fail)
+        }
+        .flowOn(Dispatchers.IO)
+
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {
                 val result = try {

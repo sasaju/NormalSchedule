@@ -30,4 +30,6 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_add_course_compose">AddCourseComposeActivity</string>
     <string name="title_activity_update_course">UpdateCourseActivity</string>
+    <string name="title_activity_exam">ExamActivity</string>
+    <string name="title_activity_show_arrange">ShowArrangeActivity</string>
 </resources>

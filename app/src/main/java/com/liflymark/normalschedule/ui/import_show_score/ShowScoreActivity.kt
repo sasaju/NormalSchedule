@@ -31,6 +31,7 @@ class ShowScoreActivity : AppCompatActivity() {
 
         ImmersionBar.with(this)
             .statusBarDarkFont(true)
+            .barColor("#2196f3")
             .init()
 
         val allGradeListString = intent.getStringExtra("grade_list_string")?:""

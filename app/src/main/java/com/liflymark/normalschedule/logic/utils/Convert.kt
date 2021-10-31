@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -20,6 +21,7 @@ import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getInitial
 import com.liflymark.normalschedule.logic.model.AllCourse
+import com.liflymark.normalschedule.logic.model.Arrange
 import com.liflymark.normalschedule.logic.model.Grade
 import com.liflymark.normalschedule.logic.model.Grades
 import com.liflymark.normalschedule.ui.theme.NorScTheme
@@ -132,6 +134,17 @@ internal object Convert {
     fun jsonToGradesList(str: String): List<Grades>{
         lateinit var a: List<Grades>
         val listType = object : TypeToken<List<Grades>>() {}.type
+        a = Gson().fromJson(str, listType)
+        return a
+    }
+
+    fun examArrangeToJson(examArrange: List<Arrange>):String{
+        return Gson().toJson(examArrange)
+    }
+
+    fun jsonToExamArrange(str: String): List<Arrange>{
+        lateinit var a: List<Arrange>
+        val listType = object : TypeToken<List<Arrange>>() {}.type
         a = Gson().fromJson(str, listType)
         return a
     }

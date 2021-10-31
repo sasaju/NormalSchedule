@@ -19,6 +19,16 @@
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
+            android:name=".ui.exam_arrange.ShowArrangeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_show_arrange"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
+            android:name=".ui.exam_arrange.ExamActivity"
+            android:exported="true"
+            android:label="@string/title_activity_exam"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+        <activity
             android:name=".ui.update_course.UpdateCourseActivity"
             android:exported="true"
             android:label="@string/title_activity_update_course"
@@ -108,9 +118,9 @@
         <!-- android:theme="@style/Theme.NormalSchedule.NoActionBar" /> -->
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash"
-            android:exported="true">
+            android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -150,11 +160,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_week_info" />
         </receiver>
-
-<!--        <service-->
-<!--            android:name=".ui.app_widget_week.WeekRemoterViewService"-->
-<!--            android:exported="false"-->
-<!--            android:permission="android.permission.BIND_REMOTEVIEWS" />-->
     </application>
 
 </manifest>
