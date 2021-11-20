@@ -6,13 +6,17 @@ import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.bean.ExamArrangeBean
 import com.liflymark.normalschedule.logic.bean.HomeworkBean
 import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 
 @Database(
     version = 4,
     entities = [CourseBean::class, UserBackgroundBean::class, HomeworkBean::class],
-    autoMigrations = [AutoMigration(from = 2, to = 3), AutoMigration(from = 3, to = 4, spec = AppDatabase.DeleteId::class)]
+    autoMigrations = [
+        AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4, spec = AppDatabase.DeleteId::class),
+    ]
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun courseDao(): CourseOriginalDao

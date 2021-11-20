@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/single_course_app"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/top_dot"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_alignTop="@id/app_course_name"
+        android:contentDescription="TODO"
+        android:src="@drawable/img_1" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:textColor="#43D2FF"-->
+<!--        android:text="·"-->
+<!--        android:textSize="20dp"-->
+<!--        android:textStyle="bold" />-->
+
+    <TextView
+        android:layout_width="6dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_dot"
+        android:text="1"
+        android:textAlignment="center"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="6dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/end_dot"
+        android:textAlignment="center"
+        android:textSize="12dp"
+        android:text="2"
+        />
+
+    <ImageView
+        android:id="@+id/end_dot"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_alignBottom="@id/app_course_time"
+        android:layout_toStartOf="@id/app_course_time"
+        android:contentDescription="TODO"
+        android:src="@drawable/img_1" />
+
+    <TextView
+        android:id="@+id/app_course_name"
+        style="@style/AppWidgetDayCourseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/top_dot"
+        android:textStyle="bold"
+        android:text="高等数学4"
+        android:textSize="16dp" />
+
+
+    <TextView
+        android:id="@+id/app_course_teacher"
+        style="@style/AppWidgetDayTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_course_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0.5dp"
+        android:layout_toEndOf="@id/top_dot"
+        android:text="九教302-张三"
+        android:textStyle="bold"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/app_course_time"
+        style="@style/AppWidgetDayTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_course_teacher"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0.5dp"
+        android:layout_toEndOf="@id/top_dot"
+        android:text="8:00 - 9:30"
+        android:textSize="13dp" />
+</RelativeLayout>

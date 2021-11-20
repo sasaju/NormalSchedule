@@ -29,11 +29,6 @@
             android:label="@string/title_activity_exam"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
-            android:name=".ui.update_course.UpdateCourseActivity"
-            android:exported="true"
-            android:label="@string/title_activity_update_course"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-        <activity
             android:name=".ui.add_course.AddCourseComposeActivity"
             android:exported="true"
             android:label="@string/title_activity_add_course_compose"
@@ -92,9 +87,7 @@
             android:name=".ui.show_timetable.ShowTimetableActivity2"
             android:exported="false"
             android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash" />
-        <activity
-            android:name=".ui.lib_order.LibOrderActivity"
-            android:exported="true" />
+
         <activity
             android:name=".ui.about.GitListActivity"
             android:exported="true" />
@@ -134,6 +127,7 @@
 
         <receiver
             android:name=".ui.app_widget_day.DayAppWidgetProvider"
+            android:label="日视图(可滑动)"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -149,16 +143,43 @@
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
+<!--        <receiver-->
+<!--            android:name=".ui.app_widget_week.WeekAppWidgetProvider"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
+<!--            </intent-filter>-->
+
+<!--            <meta-data-->
+<!--                android:name="android.appwidget.provider"-->
+<!--                android:resource="@xml/appwidget_week_info" />-->
+<!--        </receiver>-->
         <receiver
-            android:name=".ui.app_widget_week.WeekAppWidgetProvider"
-            android:exported="false">
+            android:exported="true"
+            android:name=".ui.app_widget_new_day.DayNewWidgetProvider"
+            android:label="日视图(非滑动)"
+            >
+            <meta-data
+                android:name="miuiWidgetRefresh"
+                android:value="exposure" />
+<!--            // 定义曝光刷新的时间间隔-->
+            <meta-data
+                android:name="miuiWidgetRefreshMinInterval"
+                android:value="200000" />
+<!--            // MIUI Widget 标识-->
+<!--            <meta-data-->
+<!--                android:name="miuiWidget"-->
+<!--                android:value="true" />-->
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="miui.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_week_info" />
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_new_day_info" />
         </receiver>
     </application>
 

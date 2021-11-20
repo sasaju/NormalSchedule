@@ -40,4 +40,10 @@
         <item>@color/lightBlue</item>
         <item>@color/ruri</item>
     </integer-array>
+    
+    <color name="appwidgetDayCourseBack">#EBFFD7</color>
+    <color name="appwidgetDayBackground">@color/white</color>
+
+    <color name="appwidgetDayCourseNight">#808080</color>
+    <color name="appwidgetDayBackgroundNight">#2B2B2B</color>
 </resources>

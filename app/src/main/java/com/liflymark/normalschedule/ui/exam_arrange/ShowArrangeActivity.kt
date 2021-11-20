@@ -54,7 +54,7 @@ fun ExamArrangeContent(
             .padding(top = 4.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        Text(text = "该功能还尚不完善，结果可能发生缺失，请谨慎参考！", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+        Text(text = "该功能尚不完善，结果可能发生缺失，请谨慎参考！", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
         if (arrangeList.isEmpty()){
             Text(text = "未在教务系统查询到考试安排", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
         }

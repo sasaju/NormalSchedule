@@ -102,55 +102,6 @@ object Dialog {
         return dialog
     }
 
-    fun getClassDetailDialog(_context: Context, courseBean: CourseBean): MaterialDialog {
-        val dialog = MaterialDialog(_context)
-                .customView(R.layout.item_course_detail)
-
-        val customView = dialog.getCustomView()
-        val courseName = customView.findViewById<AppCompatTextView>(R.id.tv_item)
-        val courseTime = customView.findViewById<AppCompatTextView>(R.id.et_time)
-        val weekNum = customView.findViewById<AppCompatTextView>(R.id.et_weeks)
-        val courseTeacher = customView.findViewById<AppCompatTextView>(R.id.et_teacher)
-        val courseRoom = customView.findViewById<AppCompatTextView>(R.id.et_room)
-
-        val oneList = courseBean.classWeek.whichIs1()
-        val courseStartToEnd =
-            "    第${courseBean.classSessions} - ${courseBean.classSessions+courseBean.continuingSession-1}节"
-
-
-        courseName.text= courseBean.courseName
-        courseTime.text = getWeekNumFormat(oneList)
-        weekNum.text = when(courseBean.classDay){
-            1 -> "周一$courseStartToEnd"
-            2 -> "周二$courseStartToEnd"
-            3 -> "周三$courseStartToEnd"
-            4 -> "周四$courseStartToEnd"
-            5 -> "周五$courseStartToEnd"
-            6 -> "周六$courseStartToEnd"
-            7 -> "周日$courseStartToEnd"
-            else -> "错误"
-        }
-        courseTeacher.text = courseBean.teacher
-        courseRoom.text = courseBean.teachingBuildName
-
-        val closeButton = customView.findViewById<AppCompatTextView>(R.id.ib_delete)
-        closeButton.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        return dialog
-    }
-
-    fun getSelectClassTime(_context: Context): MaterialDialog{
-        val dialog = MaterialDialog(_context).customView(R.layout.dialog_select_class_time)
-            .title(text = "输入周数")
-        dialog.apply {
-            noAutoDismiss()
-            cancelable(false)
-            cancelOnTouchOutside(true)
-        }
-        return dialog
-    }
 
 //    fun getSelectWeekAndSection(_context: Context) {
 //        val allWeek = listOf("周一","周二","周三","周四","周五","周六","周日",)
@@ -192,12 +143,6 @@ object Dialog {
             cancelable(true)
             cancelOnTouchOutside(false)
         }
-        return dialog
-    }
-
-    fun getSelectDepartmentAndClass(_context: Context, departmentAndMajorList: List<Structure>): MaterialDialog {
-        val dialog = MaterialDialog(_context)
-                .customView(R.layout.dialog_select_class)
         return dialog
     }
 

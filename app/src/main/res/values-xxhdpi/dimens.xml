@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="perCourseHeight">70dp</dimen>
+    <dimen name="paddingTop">50dp</dimen>
+    <dimen name="paddingLeft">30dp</dimen>
+    <dimen name="textSize" tools:ignore="SmallSp">10sp</dimen>
+    <dimen name="weekSize">12sp</dimen>
+    <dimen name="coursePadding">2dp</dimen>
+    <dimen name="numberSize">18sp</dimen>
+    <dimen name="widget_parent_radius_dimen">38px</dimen>
+    <dimen name="widget_parent_padding">40px</dimen>
+    <dimen name="widget_child_radius_dimen">30px</dimen>
+</resources>

@@ -87,18 +87,18 @@
       },
       {
         "tableName": "UserBackgroundBean",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userBackground` TEXT NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `userBackground` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
-          {
-            "fieldPath": "userBackground",
-            "columnName": "userBackground",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userBackground",
+            "columnName": "userBackground",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],

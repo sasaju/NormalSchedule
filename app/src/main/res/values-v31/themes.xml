@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppWidgetDay" parent="@android:style/Theme.DeviceDefault.DayNight">
+<!--        <item name="backgroundRadius">@dimen/widget_parent_radius_dimen</item>-->
+        <item name="android:padding">@dimen/widget_parent_padding</item>
+    </style>
+</resources>

@@ -13,6 +13,27 @@
         <entry key="../../../../layout/compose-model-1635404860207.xml" value="1.1768953068592058" />
         <entry key="../../../../layout/compose-model-1635405285251.xml" value="0.30185185185185187" />
         <entry key="../../../../layout/compose-model-1635405359715.xml" value="0.30185185185185187" />
+        <entry key="../../../../layout/compose-model-1635689711926.xml" value="0.29814814814814816" />
+        <entry key="../../../../layout/compose-model-1635689728034.xml" value="0.29814814814814816" />
+        <entry key="../../../../layout/compose-model-1635689798548.xml" value="2.0" />
+        <entry key="../../../../layout/compose-model-1635817416507.xml" value="1.3249097472924187" />
+        <entry key="../../../../layout/compose-model-1635818358311.xml" value="0.3398148148148148" />
+        <entry key="../../../../layout/compose-model-1636381706921.xml" value="2.0" />
+        <entry key="../../../../layout/compose-model-1636382416816.xml" value="0.3112331081081081" />
+        <entry key="../../../../layout/compose-model-1636383162448.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1636383302809.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1636424230743.xml" value="0.3108108108108108" />
+        <entry key="../../../../layout/compose-model-1636424275510.xml" value="2.0" />
+        <entry key="../../../../layout/compose-model-1636424511543.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1636426534294.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1636426536482.xml" value="2.0" />
+        <entry key="../../../../layout/compose-model-1636427145388.xml" value="0.3112331081081081" />
+        <entry key="../../../../layout/compose-model-1636427828850.xml" value="0.3398148148148148" />
+        <entry key="../../../../layout/compose-model-1636428599053.xml" value="0.3112331081081081" />
+        <entry key="../../../../layout/compose-model-1636553455396.xml" value="0.3112331081081081" />
+        <entry key="../../../../layout/compose-model-1636598924413.xml" value="0.3112331081081081" />
+        <entry key="../../../../layout/compose-model-1636730487158.xml" value="0.6972318339100346" />
+        <entry key="../../../../layout/compose-model-1637229954445.xml" value="1.6245487364620939" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable-xxhdpi/background_splash.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/appwiget_background.xml" value="0.21574074074074073" />
@@ -53,8 +74,52 @@
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23796296296296296" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/xml/appwidget_week_info.xml" value="0.21875" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/xml/text_cornor.xml" value="0.2259963768115942" />
+        <entry key="app/src/main/res/drawable-xxhdpi/background_splash.xml" value="0.19" />
+        <entry key="app/src/main/res/drawable/appwidget_new_back.xml" value="0.289" />
+        <entry key="app/src/main/res/drawable/appwiget_background.xml" value="0.289" />
+        <entry key="app/src/main/res/drawable/text_cornor.xml" value="0.289" />
+        <entry key="app/src/main/res/drawable/text_cornor_new.xml" value="0.225" />
+        <entry key="app/src/main/res/layout/activity_add_course.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/activity_default_background.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/activity_git_list.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/activity_git_list_item.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/activity_import_score.xml" value="0.2875905797101449" />
+        <entry key="app/src/main/res/layout/activity_lib_order.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/activity_show_score.xml" value="0.2875905797101449" />
+        <entry key="app/src/main/res/layout/activity_show_timetable.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/app_widget_day.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/app_widget_day_item.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/app_widget_none_data.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/app_widget_week.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/appwidget_course_day.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/appwidget_for_compose.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/appwidget_item_course.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/appwidget_new_day.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/appwidget_new_day_item.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/compose_webview.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/course_detail_fragment.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/dialog_select_class.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/dialog_select_class_time.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/dialog_select_week_section.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/empty_toolbar.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_header_toolbar.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_import_login.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_show_course_list.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_timetable.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/item_class_time.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/item_course.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/item_course_detail.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/item_project_score.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/item_score.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/item_space.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/login_fragment.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/nav_header.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/show_timetable_item.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1835" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1835" />
+        <entry key="app/src/main/res/xml/appwidget_new_day_info.xml" value="0.35572916666666665" />
       </map>
     </option>
   </component>

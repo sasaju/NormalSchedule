@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@android:id/background"
+    style="@style/AppWidgetDay"
+    android:background="@drawable/appwidget_new_back"
+    >
+
+    <TextView
+        android:id="@+id/date_text"
+        style="@style/AppWidgetDayTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="第12周"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/week_text"
+        style="@style/AppWidgetDayTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="2dp"
+        android:alpha="0.8"
+        android:text="11月21日"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/date_text"
+        android:layout_marginTop="10dp"
+        >
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            layout="@layout/appwidget_new_day_item"
+            />
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            layout="@layout/appwidget_new_day_item"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

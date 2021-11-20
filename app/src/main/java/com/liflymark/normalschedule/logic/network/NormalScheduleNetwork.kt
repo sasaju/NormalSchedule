@@ -14,7 +14,6 @@ object NormalScheduleNetwork {
     private val SentenceService = ServiceCreator.create(SentenceService::class.java)
     private val SpacesService = ServiceCreator.create(SpaceService::class.java)
     private val DevService = ServiceCreator.create(DevBoardService::class.java)
-    private val UpdateCourseService = ServiceCreator.create(UpdateCourseService::class.java)
     private val ExamArrangeService = ServiceCreator.create(ExamArrangeService::class.java)
 
     suspend fun getId() =
@@ -59,18 +58,6 @@ object NormalScheduleNetwork {
 
     suspend fun getSchoolBusTime(searchType: String) =
         DevService.getSchoolBusTime(searchType).await()
-
-    suspend fun getUserType(userNumbers:String) =
-        UpdateCourseService.getUserType(userNumbers).await()
-
-    suspend fun getNewCourse(userNumber: String) =
-        UpdateCourseService.getNewCourse(userNumber).await()
-
-    suspend fun gotNewCourse(userNumber: String, pk:Int) =
-        UpdateCourseService.gotNewCourse(userNumber, pk).await()
-
-    suspend fun uploadNewCourse(userNumber: String, userCode:String, beanListStr:String) =
-        UpdateCourseService.uploadNewCourse(userNumber, userCode, beanListStr).await()
 
     suspend fun getExamArrange(userNumber: String, password: String, id: String) =
         ExamArrangeService.getExamArrange(userNumber, password, id).await()

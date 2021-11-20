@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.afollestad.materialdialogs.MaterialDialog
 import com.liflymark.normalschedule.R
@@ -66,6 +67,7 @@ class ComposeAboutActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun AboutPage(){
     Column(
