@@ -155,7 +155,7 @@
 <!--                android:resource="@xml/appwidget_week_info" />-->
 <!--        </receiver>-->
         <receiver
-            android:exported="true"
+            android:exported="false"
             android:name=".ui.app_widget_new_day.DayNewWidgetProvider"
             android:label="日视图(非滑动)"
             >

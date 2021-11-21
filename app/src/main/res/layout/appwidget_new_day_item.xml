@@ -2,87 +2,56 @@
 <RelativeLayout
     android:id="@+id/single_course_app"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/appwidget_new_course"
     android:paddingHorizontal="5dp"
     android:paddingVertical="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/top_dot"
-        android:layout_width="6dp"
-        android:layout_height="6dp"
-        android:layout_alignTop="@id/app_course_name"
-        android:contentDescription="TODO"
-        android:src="@drawable/img_1" />
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="20dp"-->
-<!--        android:textColor="#43D2FF"-->
-<!--        android:text="·"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textStyle="bold" />-->
-
-    <TextView
-        android:layout_width="6dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/top_dot"
-        android:text="1"
-        android:textAlignment="center"
-        android:textSize="12dp" />
-
-    <TextView
-        android:layout_width="6dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/end_dot"
-        android:textAlignment="center"
-        android:textSize="12dp"
-        android:text="2"
-        />
-
-    <ImageView
-        android:id="@+id/end_dot"
-        android:layout_width="6dp"
-        android:layout_height="6dp"
-        android:layout_alignBottom="@id/app_course_time"
-        android:layout_toStartOf="@id/app_course_time"
-        android:contentDescription="TODO"
-        android:src="@drawable/img_1" />
-
     <TextView
         android:id="@+id/app_course_name"
-        style="@style/AppWidgetDayCourseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/top_dot"
-        android:textStyle="bold"
-        android:text="高等数学4"
-        android:textSize="16dp" />
-
+        android:paddingStart="2dp"
+        android:text="大学生职业规划"
+        android:textColor="#333333"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/line_1"
+        android:layout_width="15dp"
+        android:layout_height="2dp"
+        android:background="#626262"
+        android:layout_marginStart="2dp"
+        android:layout_below="@id/app_course_name"
+        android:contentDescription="null" />
 
     <TextView
         android:id="@+id/app_course_teacher"
-        style="@style/AppWidgetDayTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/app_course_name"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0.5dp"
-        android:layout_toEndOf="@id/top_dot"
-        android:text="九教302-张三"
-        android:textStyle="bold"
-        android:textSize="14dp" />
+        android:layout_below="@id/line_1"
+        android:text="张三 九教102"
+        android:textSize="12dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/app_course_time"
-        style="@style/AppWidgetDayTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/app_course_teacher"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0.5dp"
-        android:layout_toEndOf="@id/top_dot"
-        android:text="8:00 - 9:30"
-        android:textSize="13dp" />
+        android:text="8:00 - 9:40"
+        android:textColor="#333333"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="12"
+        android:textColor="#6ba3dc"
+        android:textSize="60dp"
+        android:textStyle="italic" />
 </RelativeLayout>

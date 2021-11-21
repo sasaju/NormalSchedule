@@ -76,6 +76,7 @@
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/xml/text_cornor.xml" value="0.2259963768115942" />
         <entry key="app/src/main/res/drawable-xxhdpi/background_splash.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/appwidget_new_back.xml" value="0.289" />
+        <entry key="app/src/main/res/drawable/appwidget_new_course.xml" value="0.2335" />
         <entry key="app/src/main/res/drawable/appwiget_background.xml" value="0.289" />
         <entry key="app/src/main/res/drawable/text_cornor.xml" value="0.289" />
         <entry key="app/src/main/res/drawable/text_cornor_new.xml" value="0.225" />
@@ -95,8 +96,8 @@
         <entry key="app/src/main/res/layout/appwidget_course_day.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/appwidget_for_compose.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/appwidget_item_course.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/appwidget_new_day.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/appwidget_new_day_item.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/appwidget_new_day.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/appwidget_new_day_item.xml" value="0.9" />
         <entry key="app/src/main/res/layout/compose_webview.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/course_detail_fragment.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.35572916666666665" />

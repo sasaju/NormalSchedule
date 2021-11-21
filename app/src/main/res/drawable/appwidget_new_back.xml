@@ -4,10 +4,10 @@
     android:shape="rectangle"
     >
     <corners android:radius="@dimen/widget_parent_radius_dimen" />
-<!--    <solid android:color="@color/white"/>-->
+    <solid android:color="@color/white"/>
 
-    <gradient
-        android:startColor="#69FF97"
-        android:endColor="#00E4FF"
-        android:angle="135"/>
+<!--    <gradient-->
+<!--        android:startColor="#69FF97"-->
+<!--        android:endColor="#00E4FF"-->
+<!--        android:angle="135"/>-->
 </shape>
