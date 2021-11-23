@@ -19,7 +19,6 @@ class DayRemoteViewsFactory(private val mContext: Context, intent: Intent) :Remo
         intent.getIntExtra("random", 0)
     companion object {
         var mList: MutableList<OneByOneCourseBean> = mutableListOf()
-
     }
 
 

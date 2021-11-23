@@ -17,6 +17,7 @@ import com.liflymark.normalschedule.logic.model.*
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
+import com.liflymark.normalschedule.ui.app_widget_new_day.DayNewRemoteFactory
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
 import com.liflymark.schedule.data.Settings
 import kotlinx.coroutines.Dispatchers

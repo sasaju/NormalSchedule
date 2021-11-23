@@ -9,8 +9,8 @@ internal object GetDataUtil {
     private val firstWeekMondayDate =  GregorianCalendar(2021, 7, 23)
     //获取当前完整的日期和时间
     @SuppressLint("SimpleDateFormat")
-    fun getNowDateTime(): String? {
-        val sdf = SimpleDateFormat("yyyy/MM/dd")
+    fun getNowDateTime(): String {
+        val sdf = SimpleDateFormat("MM月dd日")
         return sdf.format(Date())
     }
 

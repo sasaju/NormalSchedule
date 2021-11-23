@@ -52,7 +52,9 @@ class DayAppWidgetProvider: AppWidgetProvider() {
             views.setRemoteAdapter(R.id.course_day_list, intent)
 
             views.setEmptyView(R.id.course_day_list, R.layout.app_widget_none_data)
-
+            val miuiIntent = Intent(context, MainActivity::class.java)
+            val pendingIntent1 = PendingIntent.getActivity(context, 0, miuiIntent, 0)
+            views.setPendingIntentTemplate(R.id.course_day_list, pendingIntent1)
 //            val intentSync = Intent(context, DayAppWidgetProvider::class.java)
 //            intentSync.action =
 //                AppWidgetManager.ACTION_APPWIDGET_UPDATE //You need to specify the action for the intent. Right now that intent is doing nothing for there is no action to be broadcasted.

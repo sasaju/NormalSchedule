@@ -11,12 +11,12 @@
 
     <TextView
         android:id="@+id/date_text"
-        style="@style/AppWidgetDayTextView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:text="第12周"
-        android:textSize="14dp" />
+        android:text="11月21日"
+        android:textColor="#3685d5"
+        android:textSize="12dp" />
 
     <TextView
         android:id="@+id/week_text"
@@ -25,30 +25,49 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:alpha="0.8"
-        android:text="11月21日"
-        android:textSize="14dp" />
+        android:text="周四"
+        android:textColor="#3685d5"
+        android:textSize="12dp" />
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/new_appwidget_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/week_text"
         android:orientation="vertical"
-        android:layout_below="@id/date_text"
-        android:layout_marginTop="8dp"
-        >
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            layout="@layout/appwidget_new_day_item"
-            />
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            layout="@layout/appwidget_new_day_item"
-            />
-    </LinearLayout>
-
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="3dp"
+        android:scrollbars="none"
+        android:divider="#00000000"
+        android:dividerHeight="2dp"
+        />
+<!--    <ImageView-->
+<!--        android:id="@+id/spot1"-->
+<!--        android:layout_width="8dp"-->
+<!--        android:layout_height="8dp"-->
+<!--        android:src="@drawable/img_1"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:contentDescription="null"-->
+<!--        />-->
+<!--    <ImageView-->
+<!--        android:id="@+id/spot2"-->
+<!--        android:layout_width="8dp"-->
+<!--        android:layout_height="8dp"-->
+<!--        android:src="@drawable/img_1"-->
+<!--        android:layout_marginEnd="2dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_toStartOf="@id/spot1"-->
+<!--        android:contentDescription="null"-->
+<!--        />-->
+<!--    <ImageView-->
+<!--        android:id="@+id/spot3"-->
+<!--        android:layout_width="8dp"-->
+<!--        android:layout_height="8dp"-->
+<!--        android:layout_marginEnd="2dp"-->
+<!--        android:src="@drawable/img_1"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_toStartOf="@id/spot2"-->
+<!--        android:contentDescription="null"-->
+<!--        />-->
 </RelativeLayout>

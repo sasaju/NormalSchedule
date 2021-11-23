@@ -128,6 +128,8 @@ fun Drawer(
     val newUserVersion = viewModel.userVersion.collectAsState(initial = null)
     val quickJumpShow = remember { mutableStateOf(false) }
     val activity = LocalContext.current as ShowTimetableActivity2
+
+    // 修复一次bug
     LaunchedEffect(newUserVersion.value){
         val allCourse = Repository.loadAllCourseNameNoFlow().toSet()
         val needCourse = setOf("成本管理会计", "无机化学I(上)", "仪器分析", "学前儿童科学教育", "矩阵论", "数据结构课程设计", "最优化方法实验", "Java程序设计课程设计", "操作系统课程设计", "数据库原理课程设计", "分布式计算框架课程设计", "优化理论及方法实验", "论文写作实践", "二外日语2", "二外法语2", "美国文学选读（文学）", "中药学", "声乐主修7", "声乐主修7", "器乐主修7", "器乐主 修7", "器乐主修7", "篆刻学", "动画透视学原理", "素描2（人体结构）", "声乐主修1", "声乐主修3", "声乐主修3", "声乐主修5", "声乐主修5", "声乐主修5", "声乐主修5", "器乐主修3", "器乐主修5", "器乐主修5", "器乐主修5", "室内陈设设计", "小楷技法", "大学计算机B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础C", "大学计算机基础C", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7")
@@ -269,7 +271,6 @@ fun Drawer(
 fun BackGroundImage(viewModel: ShowTimetableViewModel) {
     val path = viewModel.backgroundUriStringLiveData.observeAsState()
     val showDarkBack = Repository.getShowDarkBack().collectAsState(initial = false)
-    Log.d("SHowTimetable", showDarkBack.value.toString())
     val context = LocalContext.current
     if (!isSystemInDarkTheme() || showDarkBack.value) {
 //        Image(

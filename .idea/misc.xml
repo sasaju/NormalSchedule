@@ -34,6 +34,8 @@
         <entry key="../../../../layout/compose-model-1636598924413.xml" value="0.3112331081081081" />
         <entry key="../../../../layout/compose-model-1636730487158.xml" value="0.6972318339100346" />
         <entry key="../../../../layout/compose-model-1637229954445.xml" value="1.6245487364620939" />
+        <entry key="../../../../layout/compose-model-1637590947727.xml" value="0.41944444444444445" />
+        <entry key="../../../../layout/compose-model-1637596682412.xml" value="0.41944444444444445" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable-xxhdpi/background_splash.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/appwiget_background.xml" value="0.21574074074074073" />
@@ -96,8 +98,9 @@
         <entry key="app/src/main/res/layout/appwidget_course_day.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/appwidget_for_compose.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/appwidget_item_course.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/appwidget_new_day.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/appwidget_new_day_item.xml" value="0.9" />
+        <entry key="app/src/main/res/layout/appwidget_new_day.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/appwidget_new_day_item.xml" value="0.5031210986267166" />
+        <entry key="app/src/main/res/layout/appwidget_new_day_miui.xml" value="0.29200513039760584" />
         <entry key="app/src/main/res/layout/compose_webview.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/course_detail_fragment.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.35572916666666665" />

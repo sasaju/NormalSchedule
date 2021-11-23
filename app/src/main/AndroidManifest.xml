@@ -154,33 +154,52 @@
 <!--                android:name="android.appwidget.provider"-->
 <!--                android:resource="@xml/appwidget_week_info" />-->
 <!--        </receiver>-->
-        <receiver
-            android:exported="false"
-            android:name=".ui.app_widget_new_day.DayNewWidgetProvider"
-            android:label="日视图(非滑动)"
-            >
-            <meta-data
-                android:name="miuiWidgetRefresh"
-                android:value="exposure" />
-<!--            // 定义曝光刷新的时间间隔-->
-            <meta-data
-                android:name="miuiWidgetRefreshMinInterval"
-                android:value="200000" />
-<!--            // MIUI Widget 标识-->
+
+<!--        <receiver-->
+<!--            android:exported="false"-->
+<!--            android:name=".ui.app_widget_miui.DayNewWidgetProvider"-->
+<!--            android:label="日视图(非滑动)"-->
+<!--            >-->
+<!--            <meta-data-->
+<!--                android:name="miuiWidgetRefresh"-->
+<!--                android:value="exposure" />-->
+<!--&lt;!&ndash;            // 定义曝光刷新的时间间隔&ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="miuiWidgetRefreshMinInterval"-->
+<!--                android:value="200000" />-->
+<!--&lt;!&ndash;            // MIUI Widget 标识&ndash;&gt;-->
 <!--            <meta-data-->
 <!--                android:name="miuiWidget"-->
 <!--                android:value="true" />-->
 
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="miui.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
+<!--                <action android:name="miui.appwidget.action.APPWIDGET_UPDATE" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
+<!--            </intent-filter>-->
+<!--            <meta-data android:name="android.appwidget.provider"-->
+<!--                android:resource="@xml/appwidget_new_day_info" />-->
+<!--        </receiver>-->
+
+        <receiver
+            android:exported="false"
+            android:name=".ui.app_widget_new_day.DayNewWidgetProvider"
+            android:label="日视图-新"
+            >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_new_day_info" />
         </receiver>
+        <service
+            android:name=".ui.app_widget_new_day.DayNewRvService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+
     </application>
 
 </manifest>
