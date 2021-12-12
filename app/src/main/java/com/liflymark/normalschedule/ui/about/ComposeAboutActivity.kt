@@ -14,10 +14,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +28,7 @@ import coil.compose.rememberImagePainter
 import com.afollestad.materialdialogs.MaterialDialog
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.model.CheckUpdateResponse
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
@@ -97,6 +96,32 @@ fun Introduce(){
     val activity = LocalContext.current as ComposeAboutActivity
     val pm = context.packageManager
     val versionName = pm.getPackageInfo(context.packageName, 0).versionName
+    val versionCode = pm.getPackageInfo(context.packageName, 0).versionCode
+    val checkNewOrNot = rememberSaveable { mutableStateOf(false) }
+//    var checkRes by remember {
+//        mutableStateOf(
+//            CheckUpdateResponse(
+//                result = "正在查询",
+//                status = "301",
+//                force = null,
+//                newUrl = null
+//            )
+//        )
+//    }
+    LaunchedEffect(checkNewOrNot.value){
+        if (checkNewOrNot.value){
+            Toasty.info(context, "正在查询新版本", Toasty.LENGTH_SHORT).show()
+            val res = Repository.getNewVerison2(versionCode = versionCode.toString())
+            if (res.status == "200"){
+                Toasty.success(context, res.result).show()
+                val uri = Uri.parse(res.newUrl)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                context.startActivity(intent)
+            }else{
+                Toasty.success(context,res.result).show()
+            }
+        }
+    }
     val dialog = remember {
         Dialog.getContractDialog(
             context,
@@ -122,7 +147,10 @@ fun Introduce(){
     Column {
         SingleIconButton(
             icon =Icons.Default.BubbleChart,
-            text = "当前版本：$versionName") {}
+            text = "当前版本：$versionName"
+        ) {
+            checkNewOrNot.value = true
+        }
         SingleIconButton(
             icon = Icons.Default.Groups, 
             text = "加入反馈群" 

@@ -15,6 +15,7 @@ object NormalScheduleNetwork {
     private val SpacesService = ServiceCreator.create(SpaceService::class.java)
     private val DevService = ServiceCreator.create(DevBoardService::class.java)
     private val ExamArrangeService = ServiceCreator.create(ExamArrangeService::class.java)
+    private val CheckUpdateService = ServiceCreator.create(CheckUpdateService::class.java)
 
     suspend fun getId() =
         CourseService.getId().await()
@@ -61,6 +62,9 @@ object NormalScheduleNetwork {
 
     suspend fun getExamArrange(userNumber: String, password: String, id: String) =
         ExamArrangeService.getExamArrange(userNumber, password, id).await()
+
+    suspend fun getNewVersion(versionCode:String) =
+        CheckUpdateService.getNewVersion(versionCode).await()
 
 
     private suspend fun <T> Call<T>.await(): T {

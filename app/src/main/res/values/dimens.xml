@@ -10,4 +10,11 @@
     <dimen name="widget_parent_radius_dimen">38px</dimen>
     <dimen name="widget_parent_padding">40px</dimen>
     <dimen name="widget_child_radius_dimen">30px</dimen>
+
+    <!--miui圆角-->
+    <dimen name="miui_board">12.67dp</dimen>
+
+    <!--miui_padding-->
+    <dimen name="miui_padding">40px</dimen>
+
 </resources>

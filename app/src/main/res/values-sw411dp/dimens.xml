@@ -1,0 +1,4 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="miui_board">14.48dp</dimen>
+    <dimen name="miui_padding">54px</dimen>
+</resources>

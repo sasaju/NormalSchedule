@@ -1,44 +1,31 @@
 package com.liflymark.normalschedule.ui.app_widget_new_day
 
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService.RemoteViewsFactory
-import com.liflymark.normalschedule.MainActivity
+import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
-class DayNewRemoteFactory(private val mContext: Context): RemoteViewsFactory {
-
-    companion object {
-        var mList: MutableList<OneByOneCourseBean> = mutableListOf()
-    }
+class DayNewRemoteFactory(
+//    private val mContext: Context,
+    private val mList:MutableList<OneByOneCourseBean>
+    ): RemoteViewsFactory {
 
     override fun onCreate() {}
 
     override fun onDataSetChanged() {
-        val allCourse = Repository.loadAllCourse3()
-        val nowWeekNum = GetDataUtil.whichWeekNow()
-        val nowDayNum = GetDataUtil.getNowWeekNum()
-        allCourse?.get(nowWeekNum)?.let {
-            mList.addAll(it.filter { it1 ->
-                it1.whichColumn == nowDayNum
-            })
-            Log.d("DayNewRemoteFactory", mList.toString())
-        }
         if (!GetDataUtil.startSchool() || GetDataUtil.getNowWeekNum() > 19) {
             mList.clear()
         }
-        Log.d("DayNewRemoteFactory", mList.toString())
     }
 
     override fun onDestroy() {
-        mList.clear()
+        val intent = Intent(NormalScheduleApplication.context,DayNewRvService::class.java)
+        NormalScheduleApplication.context.stopService(intent)
     }
 
     override fun getCount(): Int {
@@ -58,7 +45,7 @@ class DayNewRemoteFactory(private val mContext: Context): RemoteViewsFactory {
             }
         }
         val rv = RemoteViews(
-            mContext.packageName,
+            NormalScheduleApplication.context.packageName,
             R.layout.appwidget_new_day_item
         )
         val startTime = getStartTime(content.start)
@@ -66,7 +53,7 @@ class DayNewRemoteFactory(private val mContext: Context): RemoteViewsFactory {
         val needName = "$startTime - $endTime"
         val nowWeek = GetDataUtil.whichWeekNow()+1
         rv.setTextViewText(R.id.now_week, nowWeek.toString())
-        rv.setTextViewText(R.id.app_course_name, nameSplit[0])
+        rv.setTextViewText(R.id.app_course_name_1, nameSplit[0])
         rv.setTextViewText(R.id.app_course_teacher, "${nameSplit[1]}\n${nameSplit[2]}")
         rv.setTextViewText(R.id.app_course_time, needName)
 
@@ -76,6 +63,7 @@ class DayNewRemoteFactory(private val mContext: Context): RemoteViewsFactory {
         fillIntent.putExtras(extras)
 
         rv.setOnClickFillInIntent(R.id.single_course_app,fillIntent)
+        Log.d("DayNEwFac", "u1")
         return rv
     }
 

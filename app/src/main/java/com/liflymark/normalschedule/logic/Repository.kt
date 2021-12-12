@@ -645,6 +645,20 @@ object  Repository {
         }
         .flowOn(Dispatchers.IO)
 
+    fun getNewVersion(versionCode: String) = flow {
+        val res = NormalScheduleNetwork.getNewVersion(versionCode)
+        emit(res)
+    }.catch {
+        CheckUpdateResponse(
+            status = "404",
+            result = "链接服务器失败",
+            force = null,
+            newUrl = null
+        )
+    }
+
+    suspend fun getNewVerison2(versionCode: String) = NormalScheduleNetwork.getNewVersion(versionCode)
+
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {
                 val result = try {

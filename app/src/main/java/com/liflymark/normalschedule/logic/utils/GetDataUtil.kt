@@ -1,8 +1,10 @@
 package com.liflymark.normalschedule.logic.utils
 
 import android.annotation.SuppressLint
+import com.liflymark.normalschedule.ui.exam_arrange.Greeting
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
 
 internal object GetDataUtil {
     // 修改开学日期仅需修改此处 如2021.8.23 则 GregorianCalendar(2021, 7, 23)，January-0
@@ -160,5 +162,111 @@ internal object GetDataUtil {
         return calendar
     }
 
+    fun hadOvered(endRow:Int):Boolean{
+        val calendar = GregorianCalendar()
+        val courseTimeStrList = getEndTime(endRow).split(":")
+        var endHour = courseTimeStrList[0].toInt()
+        val endMinute = courseTimeStrList[1].toInt()
+        if (endHour > 12){
+            calendar.set(Calendar.AM_PM, Calendar.PM)
+            endHour -= 12
+        } else {
+            calendar.set(Calendar.AM_PM, Calendar.AM)
+        }
+        calendar.set(Calendar.HOUR, endHour)
+        calendar.set(Calendar.MINUTE, endMinute)
+        val nowCalendar = GregorianCalendar()
+        return nowCalendar.after(calendar)
+    }
 
+    fun hadStarted(startRow: Int):Boolean{
+        val calendar = GregorianCalendar()
+        val courseTimeStrList = getEndTime(startRow).split(":")
+        var endHour = courseTimeStrList[0].toInt()
+        val endMinute = courseTimeStrList[1].toInt()
+        if (endHour > 12){
+            calendar.set(Calendar.AM_PM, Calendar.PM)
+            endHour -= 12
+        } else {
+            calendar.set(Calendar.AM_PM, Calendar.AM)
+        }
+        calendar.set(Calendar.HOUR, endHour)
+        calendar.set(Calendar.MINUTE, endMinute)
+        val nowCalendar = GregorianCalendar()
+        return nowCalendar.after(calendar)
+    }
+
+    // 返回结束分钟数
+    fun hadStartedOrOver(startRow: Int, endRow: Int): Result {
+        val calendar = GregorianCalendar()
+        var nowType = "开始"
+        var nowTimeStrList = getStartTime(startRow).split(":")
+        if (hadStarted(startRow)){
+            nowTimeStrList = getEndTime(endRow).split(":")
+            nowType = "结束"
+        }
+        var nowHour = nowTimeStrList[0].toInt()
+        val nowMinute = nowTimeStrList[1].toInt()
+        if (nowHour > 12) {
+            calendar.set(Calendar.AM_PM, Calendar.PM)
+            nowHour -= 12
+        } else {
+            calendar.set(Calendar.AM_PM, Calendar.AM)
+        }
+        calendar.set(Calendar.HOUR, nowHour)
+        calendar.set(Calendar.MINUTE, nowMinute)
+        val nowCalendar = GregorianCalendar()
+
+        val minusResult = abs(calendar.timeInMillis - nowCalendar.timeInMillis)
+        return Result(nowType,minusResult.toInt() / 60000)
+    }
+
+    fun getStartTime(rowNumber: Int): String {
+        return when(rowNumber){
+            1->"08:00"
+            2->"08:55"
+            3->"10:10"
+            4->"11:05"
+            5->"14:30"
+            6->"15:25"
+            7->"16:20"
+            8->"17:15"
+            9->"19:00"
+            10->"19:55"
+            11->"20:50"
+            else->"00:00"
+        }
+    }
+
+    fun getEndTime(rowNumber: Int): String {
+        return when(rowNumber){
+            1->"08:45"
+            2->"09:40"
+            3->"10:55"
+            4->"11:50"
+            5->"15:15"
+            6->"16:10"
+            7->"17:05"
+            8->"18:00"
+            9->"19:45"
+            10->"20:40"
+            11->"21:35"
+            else->"00:00"
+        }
+    }
+    fun getDayOfWeek(): String {// 当前列是星期几  星期一,星期二....
+        val nowColumnCalendar = GregorianCalendar()
+        return when (nowColumnCalendar.get(Calendar.DAY_OF_WEEK)) {
+            1 -> "周一"
+            2 -> "周二"
+            3 -> "周三"
+            4 -> "周四"
+            5 -> "周五"
+            6 -> "周六"
+            7 -> "周日"
+            else -> "一"
+        }
+    }
 }
+
+data class Result(val nowType: String, val minus: Int)
