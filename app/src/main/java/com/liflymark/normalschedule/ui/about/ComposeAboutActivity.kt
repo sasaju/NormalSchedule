@@ -1,17 +1,15 @@
 package com.liflymark.normalschedule.ui.about
 
+import android.R.attr.path
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
@@ -28,13 +26,13 @@ import coil.compose.rememberImagePainter
 import com.afollestad.materialdialogs.MaterialDialog
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
-import com.liflymark.normalschedule.logic.model.CheckUpdateResponse
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_import_login.*
+
 
 class ComposeAboutActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,16 +59,42 @@ class ComposeAboutActivity : ComponentActivity() {
             intent.data = Uri.parse(url)
             startActivity(intent)
         } catch (e: Exception) {
-            println("当前手机未安装浏览器")
+            Toasty.error(this,"当前手机未安装浏览器").show()
         }
     }
+
 }
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun AboutPage(){
+    val context = LocalContext.current
+    val dialog = remember {
+        Dialog.getContractDialog(
+            context,
+            yes = {
+                Toasty.success(context, "您已同意隐私政策及用户协议").show()
+            },
+            no = {
+                Toasty.info(context,"如果您拒绝该隐私政策或用户协议请立即关闭应用程序").show()
+            }
+        )
+    }
+    val userDialog = remember {
+        Dialog.getUerContract(
+            context,
+            yes = {
+                Toasty.info(context, "请点击登陆按钮上方的复选框以再次确认").show()
+            },
+            no = {
+                Toasty.info(context,"如果您拒绝该隐私政策或用户协议请立即关闭应用程序").show()
+            }
+        )
+    }
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+        ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(15.dp))
@@ -87,6 +111,27 @@ fun AboutPage(){
         Spacer(modifier = Modifier.height(30.dp))
 
         Introduce()
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            TextButton(onClick = { dialog.show() }) {
+                Text("隐私政策")
+            }
+            Spacer(
+                modifier = Modifier
+                    .width(10.dp)
+                    .padding(horizontal = 4.25.dp, vertical = 8.dp)
+                    .background(Color.Gray)
+                    .height(15.dp)
+            )
+            TextButton(onClick = { userDialog.show() }) {
+                Text(text = "用户协议")
+            }
+        }
+
+
     }
 }
 
@@ -122,29 +167,10 @@ fun Introduce(){
             }
         }
     }
-    val dialog = remember {
-        Dialog.getContractDialog(
-            context,
-            yes = {
-                Toasty.success(context, "您已同意隐私政策及用户协议").show()
-            },
-            no = {
-                Toasty.info(context,"如果您拒绝该隐私政策或用户协议请立即关闭应用程序").show()
-            }
-        )
-    }
-    val userDialog = remember {
-        Dialog.getUerContract(
-            context,
-            yes = {
-                Toasty.info(context, "请点击登陆按钮上方的复选框以再次确认").show()
-            },
-            no = {
-                Toasty.info(context,"如果您拒绝该隐私政策或用户协议请立即关闭应用程序").show()
-            }
-        )
-    }
-    Column {
+
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
         SingleIconButton(
             icon =Icons.Default.BubbleChart,
             text = "当前版本：$versionName"
@@ -179,17 +205,33 @@ fun Introduce(){
         ) {
             activity.openBrowser("https://liflymark.top/privacy/")
         }
+//        SingleIconButton(
+//            icon = Icons.Default.Star,
+//            text = "隐私政策(内置)"
+//        ) {
+//            dialog.show()
+//        }
+//        SingleIconButton(
+//            icon = Icons.Default.Star,
+//            text = "用户协议(内置)"
+//        ) {
+//            userDialog.show()
+//        }
         SingleIconButton(
-            icon = Icons.Default.Star,
-            text = "隐私政策(内置)"
+            icon = Icons.Default.Share,
+            text = "分享APP给同学"
         ) {
-            dialog.show()
+            val it = Intent(Intent.ACTION_SEND)
+            it.putExtra(Intent.EXTRA_TEXT, "河大课表APP下载：\nhttp://app.lifly.cn\n非官方开发，仅为个人开发")
+            it.type = "text/plain"
+            context.startActivity(Intent.createChooser(it, "分享APP"))
+            Toasty.success(context, "感谢你的分享和认可").show()
         }
         SingleIconButton(
-            icon = Icons.Default.Star,
-            text = "用户协议(内置)"
+            icon = Icons.Default.EmojiNature,
+            text = "项目开源"
         ) {
-            userDialog.show()
+            activity.openBrowser("https://github.com/sasaju/NormalSchedulePublic")
         }
         SingleIconButton(
             icon = Icons.Default.Category,
@@ -216,7 +258,7 @@ fun SingleIconButton(
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Spacer(modifier = Modifier.width(10.dp))
             Icon(imageVector = icon, contentDescription = null, modifier = Modifier.padding(10.dp))
@@ -229,5 +271,16 @@ fun SingleIconButton(
 @Preview(showBackground = true)
 @Composable
 fun PreViewAbout(){
-    SingleIconButton(Icons.Default.AccessAlarm, "当前版本：0.0.1"){}
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        TextButton(onClick = {  }) {
+            Text("隐私政策")
+        }
+        Text(text = " | ")
+        TextButton(onClick = {  }) {
+            Text(text = "用户协议")
+        }
+    }
 }

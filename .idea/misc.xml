@@ -41,6 +41,10 @@
         <entry key="../../../../layout/compose-model-1639309103367.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1639309105425.xml" value="0.3472222222222222" />
         <entry key="../../../../layout/compose-model-1639310980708.xml" value="0.3472222222222222" />
+        <entry key="../../../../layout/compose-model-1640412716583.xml" value="0.3472222222222222" />
+        <entry key="../../../../layout/compose-model-1640510082070.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1640510084011.xml" value="0.3112331081081081" />
+        <entry key="../../../../layout/compose-model-1640523223357.xml" value="2.0" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable-xxhdpi/background_splash.xml" value="0.23425925925925925" />
         <entry key="..\:/Schedule/NormalSchedule/app/src/main/res/drawable/appwiget_background.xml" value="0.21574074074074073" />
@@ -133,7 +137,7 @@
         <entry key="app/src/main/res/layout/item_score.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/item_space.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.18177083333333333" />
-        <entry key="app/src/main/res/layout/miui_appwidget_day.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/miui_appwidget_day.xml" value="0.3723404255319149" />
         <entry key="app/src/main/res/layout/miui_appwidget_day_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/miui_appwidget_day_loading.xml" value="0.33" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.35572916666666665" />

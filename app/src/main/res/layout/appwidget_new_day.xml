@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:maxLines="1"
         android:text="周四"
         android:textColor="#3685d5"
         android:textSize="12dp" />

@@ -1,14 +1,19 @@
 package com.liflymark.normalschedule.logic.utils
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.liflymark.normalschedule.ui.exam_arrange.Greeting
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.max
 
 internal object GetDataUtil {
-    // 修改开学日期仅需修改此处 如2021.8.23 则 GregorianCalendar(2021, 7, 23)，January-0
-    private val firstWeekMondayDate =  GregorianCalendar(2021, 7, 23)
+    // 修改开学日期仅需修改此处 如2021.8.23 则 GregorianCalendar(2021, 7, 23)，January-0 2022-2-28
+    private val firstWeekMondayDate =  GregorianCalendar(2022, 1, 28)
     //获取当前完整的日期和时间
     @SuppressLint("SimpleDateFormat")
     fun getNowDateTime(): String {
@@ -179,46 +184,29 @@ internal object GetDataUtil {
         return nowCalendar.after(calendar)
     }
 
-    fun hadStarted(startRow: Int):Boolean{
-        val calendar = GregorianCalendar()
-        val courseTimeStrList = getEndTime(startRow).split(":")
-        var endHour = courseTimeStrList[0].toInt()
-        val endMinute = courseTimeStrList[1].toInt()
-        if (endHour > 12){
-            calendar.set(Calendar.AM_PM, Calendar.PM)
-            endHour -= 12
-        } else {
-            calendar.set(Calendar.AM_PM, Calendar.AM)
-        }
-        calendar.set(Calendar.HOUR, endHour)
-        calendar.set(Calendar.MINUTE, endMinute)
-        val nowCalendar = GregorianCalendar()
-        return nowCalendar.after(calendar)
-    }
-
-    // 返回结束分钟数
+    // return how many min are will start or end, but this function request 课间时间 < 上课时间
     fun hadStartedOrOver(startRow: Int, endRow: Int): Result {
-        val calendar = GregorianCalendar()
         var nowType = "开始"
-        var nowTimeStrList = getStartTime(startRow).split(":")
-        if (hadStarted(startRow)){
-            nowTimeStrList = getEndTime(endRow).split(":")
-            nowType = "结束"
-        }
-        var nowHour = nowTimeStrList[0].toInt()
-        val nowMinute = nowTimeStrList[1].toInt()
-        if (nowHour > 12) {
-            calendar.set(Calendar.AM_PM, Calendar.PM)
-            nowHour -= 12
-        } else {
-            calendar.set(Calendar.AM_PM, Calendar.AM)
-        }
-        calendar.set(Calendar.HOUR, nowHour)
-        calendar.set(Calendar.MINUTE, nowMinute)
-        val nowCalendar = GregorianCalendar()
+        var minusResult = 24 * 60 * 60 - 1
+        for (nowLesson in startRow..endRow){
+            // Time's format is string, Convert it to List<Int>
+            val startTime = getStartTime(nowLesson).split(":").map { it.toInt() }
+            val endTime = getEndTime(nowLesson).split(":").map { it.toInt() }
 
-        val minusResult = abs(calendar.timeInMillis - nowCalendar.timeInMillis)
-        return Result(nowType,minusResult.toInt() / 60000)
+            // Set start and end Time by LocalTime
+            val startDate = LocalTime.of(startTime[0], startTime[1])
+            val endDate = LocalTime.of(endTime[0], endTime[1])
+            val nowDate = LocalTime.now()
+            if (nowDate.isAfter(startDate) && nowDate.isBefore(endDate)){
+                nowType = "结束"
+                minusResult = endDate.toSecondOfDay() - nowDate.toSecondOfDay()
+                Log.d("GetDateUnit","startRow=$startRow endRow=$endRow")
+                break
+            } else {
+                minusResult = minOf(abs(nowDate.toSecondOfDay()-startDate.toSecondOfDay()), minusResult)
+            }
+        }
+        return Result(nowType,minusResult / 60)
     }
 
     fun getStartTime(rowNumber: Int): String {
@@ -257,13 +245,13 @@ internal object GetDataUtil {
     fun getDayOfWeek(): String {// 当前列是星期几  星期一,星期二....
         val nowColumnCalendar = GregorianCalendar()
         return when (nowColumnCalendar.get(Calendar.DAY_OF_WEEK)) {
-            1 -> "周一"
-            2 -> "周二"
-            3 -> "周三"
-            4 -> "周四"
-            5 -> "周五"
-            6 -> "周六"
-            7 -> "周日"
+            1 -> "周日"
+            2 -> "周一"
+            3 -> "周二"
+            4 -> "周三"
+            5 -> "周四"
+            6 -> "周五"
+            7 -> "周六"
             else -> "一"
         }
     }

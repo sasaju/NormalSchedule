@@ -10,7 +10,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.NormalScheduleApplication.Companion.context
 import com.liflymark.schedule.data.Settings
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 object AccountDataDao {
     fun getNewUserOrNot() = run {
@@ -66,6 +68,21 @@ object AccountDataDao {
                 .setDarkShowBack(show)
                 .build()
         }
+    }
+
+    // 同步写入成绩详情的缓存
+    fun updateScoreDetail(scoreDetail:String) = runBlocking {
+        context.settingsStore.updateData {
+            it.toBuilder()
+                .setScoreDetail(scoreDetail).build()
+        }
+    }
+
+    // 同步读取成绩详情缓存
+    fun getScoreDetail(): String = runBlocking {
+        scheduleSettings.map { settings ->
+            settings.scoreDetail
+        }.first()
     }
 
     suspend fun updateSettings(setSettings:(settings:Settings)->Settings){

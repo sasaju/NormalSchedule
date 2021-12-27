@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
@@ -80,17 +81,15 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
     val activity = (LocalContext.current as? LoginToScoreActivity)
     WaitDialog(openDialog = openWaitDialog)
     LaunchedEffect(true){
-        launch{
-            if (loginToScoreViewModel.isAccountSaved()){
-                user = loginToScoreViewModel.getSavedAccount()["user"].toString()
-                password = loginToScoreViewModel.getSavedAccount()["password"].toString()
-            }
-            loginToScoreViewModel.getId()
-            if (activity != null) {
-                refreshId(activity = activity, viewModel = loginToScoreViewModel, openDialog = openWaitDialog)
-            } else {
-                loginToScoreViewModel.id = ""
-            }
+        if (loginToScoreViewModel.isAccountSaved()){
+            user = loginToScoreViewModel.getSavedAccount()["user"].toString()
+            password = loginToScoreViewModel.getSavedAccount()["password"].toString()
+        }
+        loginToScoreViewModel.getId()
+        if (activity != null) {
+            refreshId(activity = activity, viewModel = loginToScoreViewModel, openDialog = openWaitDialog)
+        } else {
+            loginToScoreViewModel.id = ""
         }
     }
 //    Image(
@@ -102,7 +101,7 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
     Canvas(modifier = Modifier.fillMaxSize()) {
         val canvasWidth = size.width
         val canvasHeight = size.height
-        val lightBlue = Color(0xff2196f3)
+        val lightBlue = Color(0x652196F3)
         drawPath(
             path = starPath(canvasWidth/2,canvasHeight/2),
             color = lightBlue,
@@ -112,16 +111,17 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(40.dp))
         Card(modifier = Modifier
-            .height(350.dp)
+            .wrapContentHeight()
             .fillMaxWidth(0.95f)
             .alpha(0.8f)
             .padding(5.dp),elevation = 5.dp, shape =  RoundedCornerShape(10.dp)
         ) {
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(),
+                .wrapContentHeight(),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Spacer(modifier = Modifier.height(40.dp))
                 OutlinedTextField(
                     value = user,
@@ -153,6 +153,24 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
                 }) {
                     Text(text = "登陆并查看成绩")
                 }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(onClick = {
+                    openWaitDialog.value = true
+                    val detail = Repository.getScoreDetail()
+                    if (detail == ""){
+                        Toasty.info(activity!!, "当前没有缓存数据").show()
+                        openWaitDialog.value = false
+                    } else {
+                        val intent = Intent(activity, ShowDetailScoreActivity::class.java).apply {
+                            putExtra("detail_list", detail)
+                        }
+                        activity?.startActivity(intent)
+                        activity?.finish()
+                    }
+                }) {
+                    Text(text = "查看离线数据")
+                }
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }

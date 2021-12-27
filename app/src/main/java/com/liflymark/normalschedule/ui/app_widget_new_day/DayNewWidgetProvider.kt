@@ -106,6 +106,7 @@ class DayNewWidgetProvider: AppWidgetProvider() {
                 this::class.java.name
             )
             val appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget)
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.new_appwidget_list)
             onUpdate(context, appWidgetManager, appWidgetIds)
 //            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.new_appwidget_list)
         }

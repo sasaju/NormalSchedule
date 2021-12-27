@@ -5,5 +5,6 @@
     android:updatePeriodMillis="4000"
     android:initialLayout="@layout/miui_appwidget_day_loading"
     android:resizeMode="horizontal|vertical"
+    android:previewImage="@drawable/miui_appwidget_preview"
     android:widgetCategory="home_screen">
 </appwidget-provider>

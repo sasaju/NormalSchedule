@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:visibility="gone"
+        android:textSize="15dp"
         android:text="ヾ(*´▽‘*)ﾉ\n今天没有课程了"/>
 
     <TextView
@@ -47,7 +48,6 @@
         android:layout_below="@id/week_num"
         android:orientation="vertical"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="3dp"
         >
 <!--        <include-->
 <!--            android:id="@+id/course_1"-->
@@ -64,127 +64,146 @@
 <!--            android:layout_marginTop="5dp"-->
 <!--            layout="@layout/miui_appwidget_day_item"-->
 <!--            />-->
-        <RelativeLayout
+
+        <LinearLayout
             android:id="@+id/course_1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@drawable/miui_appwidget_course"
-            android:paddingVertical="15px"
+            android:paddingVertical="10px"
             android:paddingStart="4dp"
             android:paddingEnd="0dp">
 
-
-            <TextView
-                android:id="@+id/app_course_name_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="35px"
-                android:text="大学生职业规划"
-                android:textColor="#333333"
-                android:textSize="13dp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/line_1"
-                android:layout_width="10px"
-                android:layout_height="match_parent"
-                android:layout_alignTop="@id/app_course_name_1"
-                android:layout_alignBottom="@id/app_course_time_1"
-                android:layout_alignParentStart="true"
-                android:layout_marginVertical="10px"
-                android:layout_marginStart="15px"
-                android:background="@drawable/miui_bar"
-                android:contentDescription="null" />
-
-            <TextView
-                android:id="@+id/app_course_teacher_1"
+            <RelativeLayout
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/app_course_name_1"
-                android:layout_marginStart="35px"
-                android:alpha="0.5"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:paddingEnd="5dp"
-                android:text="第八教学楼 102"
-                android:textColor="@color/black"
-                android:textSize="11dp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/app_course_time_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/app_course_teacher_1"
-                android:layout_marginStart="35px"
-                android:alpha="0.3"
-                android:text="8:00 - 9:40"
-                android:textColor="@color/black"
-                android:textSize="10dp" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/app_course_name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="35px"
+                    android:maxLines="1"
+                    android:paddingEnd="3dp"
+                    android:text="大学生职业规划"
+                    android:textColor="#333333"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
 
-        <RelativeLayout
+                <ImageView
+                    android:id="@+id/line_1"
+                    android:layout_width="10px"
+                    android:layout_height="match_parent"
+                    android:layout_alignTop="@id/app_course_name_1"
+                    android:layout_alignBottom="@id/app_course_time_1"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginVertical="10px"
+                    android:layout_marginStart="15px"
+                    android:background="@drawable/miui_bar"
+                    android:contentDescription="null" />
+
+                <TextView
+                    android:id="@+id/app_course_teacher_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/app_course_name_1"
+                    android:layout_marginStart="35px"
+                    android:alpha="0.5"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingEnd="5dp"
+                    android:text="第八教学楼 102"
+                    android:textColor="@color/black"
+                    android:textSize="11dp"
+                    android:textStyle="bold"
+
+                    />
+
+                <TextView
+                    android:id="@+id/app_course_time_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/app_course_teacher_1"
+                    android:layout_marginStart="35px"
+                    android:alpha="0.3"
+                    android:text="8:00 - 9:40"
+                    android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:textSize="10dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:background="@drawable/miui_appwidget_course"
             android:paddingStart="4dp"
             android:paddingEnd="0dp"
-            android:paddingVertical="15px"
+            android:paddingVertical="10px"
             android:id="@+id/course_2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginTop="5dp">
 
-
-            <TextView
-                android:id="@+id/app_course_name_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="35px"
-                android:text="大学生职业规划"
-                android:textColor="#333333"
-                android:textSize="13dp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/line_2"
-                android:layout_width="10px"
-                android:layout_height="match_parent"
-                android:layout_alignTop="@id/app_course_name_2"
-                android:layout_alignBottom="@id/app_course_time_2"
-                android:layout_alignParentStart="true"
-                android:layout_marginVertical="10px"
-                android:layout_marginStart="15px"
-                android:background="@drawable/miui_bar"
-                android:contentDescription="null" />
-
-            <TextView
-                android:id="@+id/app_course_teacher_2"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/app_course_name_2"
-                android:layout_marginStart="35px"
-                android:alpha="0.5"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:paddingEnd="5dp"
-                android:text="第八教学楼 102"
-                android:textColor="@color/black"
-                android:textSize="11dp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:id="@+id/app_course_name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="35px"
+                    android:text="大学生职业规划"
+                    android:textColor="#333333"
+                    android:textSize="13dp"
+                    android:paddingEnd="3dp"
+                    android:maxLines="1"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/app_course_time_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/app_course_teacher_2"
-                android:layout_marginStart="35px"
-                android:alpha="0.3"
-                android:text="8:00 - 9:40"
-                android:textColor="@color/black"
-                android:textSize="10dp" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/line_2"
+                    android:layout_width="10px"
+                    android:layout_height="match_parent"
+                    android:layout_alignTop="@id/app_course_name_2"
+                    android:layout_alignBottom="@id/app_course_time_2"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginVertical="10px"
+                    android:layout_marginStart="15px"
+                    android:background="@drawable/miui_bar"
+                    android:contentDescription="null" />
+
+                <TextView
+                    android:id="@+id/app_course_teacher_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/app_course_name_2"
+                    android:layout_marginStart="35px"
+                    android:alpha="0.5"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingEnd="5dp"
+                    android:text="第八教学楼 102"
+                    android:textColor="@color/black"
+                    android:textSize="11dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/app_course_time_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/app_course_teacher_2"
+                    android:layout_marginStart="35px"
+                    android:alpha="0.3"
+                    android:maxLines="1"
+                    android:text="8:00 - 9:40"
+                    android:textColor="@color/black"
+                    android:textSize="10dp" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

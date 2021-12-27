@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.liveData
-import com.google.gson.Gson
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.bean.*
@@ -17,7 +16,6 @@ import com.liflymark.normalschedule.logic.model.*
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
-import com.liflymark.normalschedule.ui.app_widget_new_day.DayNewRemoteFactory
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
 import com.liflymark.schedule.data.Settings
 import kotlinx.coroutines.Dispatchers
@@ -90,28 +88,7 @@ object  Repository {
         try {
             when {
                 user=="123456" -> {
-                    val courseResponse = CourseResponse(listOf(
-                        AllCourse(
-                            "五四路",
-                            4,
-                            2,
-                            "11111111111111111111111",
-                            1,
-                            "点击右上角重新导入课程",
-                            "",
-                            ""
-                        ),
-                        AllCourse(
-                            "五四路",
-                            3,
-                            3,
-                            "11111111111111111111111",
-                            2,
-                            "这是一个示例课程",
-                            "张老师",
-                            "九教999"
-                        ),
-                    ), status = "yes")
+                    val courseResponse = courseSampleData()
                     emit(courseResponse)
                 }
                 headers!="" -> {
@@ -134,28 +111,7 @@ object  Repository {
     fun getCourse2(user: String, password: String) = liveData(Dispatchers.IO){
         try {
             if (user=="123456"){
-                val courseResponse = CourseResponse(listOf(
-                    AllCourse(
-                        "五四路",
-                        4,
-                        2,
-                        "11111111111111111111111",
-                        1,
-                        "点击右上角重新导入课程",
-                        "",
-                        ""
-                    ),
-                    AllCourse(
-                        "五四路",
-                        3,
-                        3,
-                        "11111111111111111111111",
-                        2,
-                        "这是一个示例课程",
-                        "张老师",
-                        "九教999"
-                    ),
-                ), status = "yes")
+                val courseResponse = courseSampleData()
                 emit(courseResponse)
             } else {
                 val courseResponse = NormalScheduleNetwork.getCourse(user, password)
@@ -659,6 +615,9 @@ object  Repository {
 
     suspend fun getNewVerison2(versionCode: String) = NormalScheduleNetwork.getNewVersion(versionCode)
 
+    fun getScoreDetail() = AccountDataDao.getScoreDetail()
+    fun setScoreDetail(detail:String) = AccountDataDao.updateScoreDetail(detail)
+
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
             liveData<Result<T>>(context) {
                 val result = try {
@@ -698,5 +657,89 @@ object  Repository {
     suspend fun saveUserVersion(version:Int = 1) = AccountDataDao.saveUserVersion(version)
     fun getNewUserOrNot() = AccountDataDao.getNewUserOrNot()
     fun getUserVersion() = AccountDataDao.getUserVersion()
+    fun courseSampleData() =  CourseResponse(
+        listOf(
+            AllCourse(
+                "五四路",
+                4,
+                2,
+                "11111111111111111111111",
+                4,
+                "物理化学",
+                "王老师",
+                "第九教学楼808"
+            ),
+            AllCourse(
+                "五四路",
+                6,
+                3,
+                "11111111111111111111111",
+                2,
+                "这是一个示例课程",
+                "张老师",
+                "九教999"
+            ),
+            AllCourse(
+                "五四路",
+                5,
+                2,
+                "11111111111111111111111",
+                2,
+                "点击右上角重新导入课程",
+                "王老师",
+                "第九教学楼808"
+            ),
+            AllCourse(
+                "五四路",
+                3,
+                3,
+                "11111111111111111111111",
+                3,
+                "这是一个示例课程",
+                "张老师",
+                "九教999"
+            ),AllCourse(
+                "五四路",
+                2,
+                2,
+                "11111111111111111111111",
+                5,
+                "点击右上角重新导入课程",
+                "王老师",
+                "第九教学楼808"
+            ),
+            AllCourse(
+                "五四路",
+                2,
+                9,
+                "11111111111111111111111",
+                2,
+                "这是一个示例课程",
+                "张老师",
+                "九教999"
+            ),AllCourse(
+                "五四路",
+                1,
+                2,
+                "11111111111111111111111",
+                1,
+                "点击右上角重新导入课程",
+                "王老师",
+                "第九教学楼808"
+            ),
+            AllCourse(
+                "五四路",
+                3,
+                9,
+                "11111111111111111111111",
+                2,
+                "这是一个示例课程",
+                "张老师",
+                "九教999"
+            ),
+        ), status = "yes"
+    )
+
+
 }
 

@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -52,6 +53,7 @@ import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.GifLoader
 import com.liflymark.normalschedule.logic.utils.TutorialOverlay
+import com.liflymark.normalschedule.ui.abase.BaseComment
 import com.liflymark.normalschedule.ui.add_course.AddCourseComposeActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.theme.NorScTheme
@@ -63,7 +65,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ShowTimetableActivity2 : ComponentActivity() {
+class ShowTimetableActivity2 : BaseComment() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
 
     @ExperimentalCoilApi
@@ -99,6 +101,10 @@ class ShowTimetableActivity2 : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun getResources(): Resources {
+        return super.getResources()
     }
 
     override fun onResume() {

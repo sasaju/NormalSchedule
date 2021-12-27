@@ -22,4 +22,6 @@ message Settings {
   // 显示右下角作业本 0-不显示 1-样式1
   int32 show_right = 6;
 
+  // 成绩详情的缓存
+  string score_detail = 7;
 }

@@ -156,9 +156,9 @@
 <!--        </receiver>-->
 
         <receiver
-            android:exported="false"
+            android:exported="true"
             android:name=".ui.app_widget_miui.DayNewWidgetProvider"
-            android:process=":widgetProvide"
+            android:process=":widgetProvider"
             android:label="日视图"
             >
             <meta-data
@@ -177,18 +177,15 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="miui.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_new_day_info" />
+                android:resource="@xml/miui_appwidget_day_info" />
         </receiver>
 
-        <provider
-            android:authorities="河大课表小部件"
-            android:name=".ui.app_widget_miui.DayNewWidgetProvider"
-            android:process=":widgetProvider"
-            android:exported="false" />
+<!--        <provider-->
+<!--            android:authorities="河大课表Debug小部件"-->
+<!--            android:name=".ui.app_widget_miui.DayNewWidgetProvider"-->
+<!--            android:process=":widgetProvider"-->
+<!--            android:exported="false" />-->
 
         <receiver
             android:exported="false"

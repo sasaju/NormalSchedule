@@ -3,13 +3,13 @@ package com.liflymark.normalschedule.ui.app_widget_miui
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.RemoteViews
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
@@ -37,9 +37,10 @@ class DayNewWidgetProvider: AppWidgetProvider() {
                 context.packageName,
                 R.layout.miui_appwidget_day
             )
+//            Thread.sleep(10000)
             val pendingIntent: PendingIntent = Intent(context, MainActivity::class.java)
                 .let { intent ->
-                    PendingIntent.getActivity(context, 0, intent, 0)
+                    PendingIntent.getActivity(context, 0, intent,  PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
                 }
             pendingIntent.let {
                 views.setOnClickPendingIntent(R.id.course_1, it)
@@ -54,20 +55,21 @@ class DayNewWidgetProvider: AppWidgetProvider() {
                 context,
                 0,
                 intentSync,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             ) //You need to specify a proper flag for the intent. Or else the intent will become deleted.
 
             views.setOnClickPendingIntent(R.id.week_num, pendingSync)
             // get today course
             val mList = mutableListOf<OneByOneCourseBean>()
             val allCourse = Repository.loadAllCourse3()
-            val nowWeekNum = GetDataUtil.whichWeekNow()
+            val nowWeekNum = GetDataUtil.whichWeekNow()+1
             val nowDayNum = GetDataUtil.getNowWeekNum()
-            allCourse?.get(nowWeekNum)?.let {
+            allCourse?.get(nowWeekNum-1)?.let {
                 mList.addAll(it.filter { it1 ->
                     it1.whichColumn == nowDayNum && !GetDataUtil.hadOvered(it1.end)
                 })
             }
+            Log.d("miuiPro", mList.toString())
             views.setTextViewText(R.id.week_now, GetDataUtil.getDayOfWeek())
             views.setTextViewText(R.id.week_num, "第${nowWeekNum}周")
             // set when have one course, two course, zero course or more course
@@ -78,8 +80,9 @@ class DayNewWidgetProvider: AppWidgetProvider() {
                     views.setViewVisibility(R.id.no_class, View.VISIBLE)
                 }
                 1 -> {
+                    views.setViewVisibility(R.id.course_1, View.VISIBLE)
                     views.setViewVisibility(R.id.course_2, View.GONE)
-
+                    views.setViewVisibility(R.id.no_class, View.GONE)
                     val courseInfo1 = mList[0]
                     val courseNameBuild = courseInfo1.courseName.split("\n")
                     val courseName = courseNameBuild.getOrNull(0)?:""
@@ -108,6 +111,9 @@ class DayNewWidgetProvider: AppWidgetProvider() {
                     val courseBuild2 = courseNameBuild2.getOrNull(1)?:""
                     val courseTimeStr2 = "${GetDataUtil.getStartTime(courseInfo2.start)} - " +
                             GetDataUtil.getEndTime(courseInfo2.end)
+                    views.setViewVisibility(R.id.no_class, View.GONE)
+                    views.setViewVisibility(R.id.course_1, View.VISIBLE)
+                    views.setViewVisibility(R.id.course_2, View.VISIBLE)
                     views.setTextViewText(R.id.app_course_name_2, courseName2)
                     views.setTextViewText(R.id.app_course_teacher_2, courseBuild2)
                     views.setTextViewText(R.id.app_course_time_2, courseTimeStr2)
@@ -118,16 +124,24 @@ class DayNewWidgetProvider: AppWidgetProvider() {
         }
     }
 
-    override fun onReceive(context: Context, intent: Intent?) {
-        if ("miui.appwidget.action.APPWIDGET_UPDATE" == intent!!.action) {
-            val appWidgets = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
-            if (appWidgets != null) {
-                onUpdate(context, AppWidgetManager.getInstance(context), appWidgets)
-                intent.action?.let { Log.d("miui", it+"+update") }
-            } //或者自定义刷新逻辑
-        } else {
+    override fun onReceive(context: Context?, intent: Intent?) {
+
+        // Protect against rogue update broadcasts (not really a security issue,
+        // just filter bad broacasts out so subclasses are less likely to crash).
+        val action = intent!!.action
+        if ("miui.appwidget.action.APPWIDGET_UPDATE" == action) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val thisAppWidget = ComponentName(
+                context!!.packageName,
+                this::class.java.name
+            )
+            val appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget)
+//            val appWidgets = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
+            if (appWidgetIds != null) {
+                onUpdate(context, AppWidgetManager.getInstance(context), appWidgetIds)
+            }
+        }else{
             super.onReceive(context, intent)
         }
-        intent.action?.let { Log.d("miui", it) }
     }
 }
