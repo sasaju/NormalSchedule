@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 10
-        versionName "0.0.13"
+        versionCode 11
+        versionName "0.0.14"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -24,7 +24,6 @@ android {
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
-
     }
     buildFeatures {
         // Enables Jetpack Compose for this module
@@ -148,7 +147,7 @@ dependencies {
 //    implementation "de.hdodenhof:circleimageview:3.0.1"
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
     implementation 'com.github.GrenderG:Toasty:1.5.0'
-    implementation 'com.afollestad.material-dialogs:core:3.2.1'
+//    implementation 'com.afollestad.material-dialogs:core:3.2.1'
 //    implementation 'com.github.bumptech.glide:glide:4.12.0'
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
@@ -198,10 +197,12 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.datastore:datastore:1.0.0"
     implementation "com.google.protobuf:protobuf-javalite:3.10.0"
-    implementation 'com.jaredrummler:colorpicker:1.1.0'
+//    implementation 'com.jaredrummler:colorpicker:1.1.0'
     implementation "com.google.code.gson:gson:2.8.8"
 //    implementation "androidx.glance:glance-appwidget:1.0.0-alpha01"
 //    implementation project(":IcyTimeTable")
 //    debugImplementation 'com.glance.guolindev:glance:1.0.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+//    implementation "com.github.skydoves:colorpickerpreference:2.0.6"
+    implementation 'com.afollestad.material-dialogs:color:3.2.1'
 }

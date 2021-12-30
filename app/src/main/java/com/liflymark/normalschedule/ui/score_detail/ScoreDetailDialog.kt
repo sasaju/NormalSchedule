@@ -40,13 +40,14 @@ fun WaitDialog(openDialog: MutableState<Boolean>){
 fun ProgressDialog(
     openDialog: MutableState<Boolean>,
     label:String,
-    content:@Composable () -> Unit = {}
+    dismissOnClickOutside:Boolean = true,
+    content:@Composable () -> Unit = {},
 ){
 
     if (openDialog.value) {
         Dialog(
             onDismissRequest = { openDialog.value = false },
-            DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+            DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = dismissOnClickOutside)
         ) {
             Box(
                 contentAlignment= Alignment.Center,

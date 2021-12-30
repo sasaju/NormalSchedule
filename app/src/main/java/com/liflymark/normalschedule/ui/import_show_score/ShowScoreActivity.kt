@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.Convert
@@ -19,7 +20,7 @@ import java.util.*
 
 
 class ShowScoreActivity : AppCompatActivity() {
-
+    private val viewModel by lazy { ViewModelProvider(this)[ShowScoreViewModel::class.java] }
     private val scoreList = mutableListOf<View>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +36,10 @@ class ShowScoreActivity : AppCompatActivity() {
             .init()
 
         val allGradeListString = intent.getStringExtra("grade_list_string")?:""
-        val allGradeList = Convert.jsonToAllGrade(allGradeListString)
+        if (allGradeListString!=""){
+            viewModel.gradeString = allGradeListString
+        }
+        val allGradeList = Convert.jsonToAllGrade(viewModel.gradeString)
         val allGradeListSize = allGradeList.size
         all_grade.removeAllViews()
         val niceSpinner = findViewById<View>(R.id.team_spinner) as NiceSpinner

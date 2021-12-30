@@ -29,7 +29,6 @@ import com.liflymark.schedule.data.Settings
 import java.lang.Exception
 
 internal object Convert {
-    lateinit var oneCourse: OneByOneCourseBean
 
     fun courseResponseToBean(courseResponse: AllCourse): CourseBean {
         val color = stringToColor(courseResponse.courseName)
@@ -177,6 +176,16 @@ internal object Convert {
         return colorStr.toLong(16)
     }
 
+    fun colorStringToInt(colorString: String): Int{
+        var colorStr = colorString.replace("#", "")
+        while (true){
+            if (colorStr.length >= 8)
+                break
+            colorStr = "f$colorStr"
+        }
+        return colorStr.toLong(16).toInt()
+    }
+
     fun stringToColor(name: String): String {
         val colorList = arrayListOf<String>()
         colorList.apply {
@@ -195,8 +204,8 @@ internal object Convert {
             add("#c32136")
             add("#b35c44")
         }
-        val num = string2Unicode(name).toInt()
         return try {
+            val num = string2Unicode(name).toInt()
             colorList[num % colorList.count()]
         } catch (e: Exception) {
             colorList[0]
@@ -280,7 +289,7 @@ internal object Convert {
         return view
     }
 
-    private fun Long.toColorULong() = (this.toULong() and 0xffffffffUL) shl 32
+    fun Long.toColorULong() = (this.toULong() and 0xffffffffUL) shl 32
 
 }
 //    fun getAllOneCourse(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {

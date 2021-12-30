@@ -19,7 +19,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.VerticalPager
-import com.liflymark.normalschedule.ui.edit_course.ui.theme.NormalScheduleTheme
 import kotlinx.coroutines.flow.collect
 import android.util.Log
 import androidx.compose.animation.*
@@ -43,6 +42,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -401,7 +401,7 @@ fun CustomWebView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewNumberPicker() {
-    NormalScheduleTheme {
+    NorScTheme {
         StringPicker2(
             strList = listOf("1","嫩爹", "hhhh"),
             value = 1,

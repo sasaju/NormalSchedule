@@ -10,7 +10,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -68,11 +70,12 @@ import kotlinx.coroutines.launch
 class ShowTimetableActivity2 : BaseComment() {
     private val viewModel by lazy { ViewModelProvider(this).get(ShowTimetableViewModel::class.java) }
 
-    @ExperimentalCoilApi
-    @DelicateCoroutinesApi
-    @ExperimentalAnimationApi
-    @ExperimentalMaterialApi
-    @ExperimentalPagerApi
+
+    @OptIn(
+        ExperimentalAnimationApi::class,
+        ExperimentalMaterialApi::class,
+        ExperimentalPagerApi::class
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -242,11 +245,14 @@ fun Drawer(
                 }
                 HorizontalPager(
                     state = pagerState,
-                    count = 19
-//                    flingBehavior = PagerDefaults.defaultPagerFlingConfig(
-//                        state = pagerState,
-//                        snapAnimationSpec = spring(stiffness = 500f)
-//                    )
+                    count = 19,
+                    flingBehavior = PagerDefaults.flingBehavior(
+                        state = pagerState,
+                        snapAnimationSpec = spring(
+                            stiffness = 25f,
+                            visibilityThreshold = 1f,
+                        ),
+                    )
                 ) { index ->
                     val page= index
                     settings.value?.let {

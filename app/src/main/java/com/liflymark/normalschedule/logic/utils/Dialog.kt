@@ -1,9 +1,10 @@
 package com.liflymark.normalschedule.logic.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.util.Log
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,11 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.accompanist.flowlayout.FlowRow
@@ -32,10 +32,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.logic.bean.CourseBean
-import com.liflymark.normalschedule.logic.model.Structure
 import kotlinx.coroutines.launch
 import java.util.*
+
 
 class test:AndroidViewModel(NormalScheduleApplication()){
 
@@ -200,6 +199,22 @@ object Dialog {
             }
         }
         return courseTimeFormat
+    }
+
+
+    @SuppressLint("CheckResult")
+    fun getColorPickerDialog(
+        context: Context,
+        colors: IntArray,
+        onResult:(dialog:MaterialDialog, color:Int) -> Unit,
+    ):MaterialDialog {
+        return MaterialDialog(context).apply {
+            title(text="选择颜色")
+            colorChooser(colors) { dialog, color ->
+                onResult(dialog, color)
+            }
+            positiveButton(text="确定")
+        }
     }
 }
 @Composable
@@ -367,8 +382,7 @@ fun SelectSessionDialog(
                     .wrapContentHeight()
                     .width(300.dp)
                     .verticalScroll(rememberScrollState())
-                    .background(Color.White)
-                ,
+                    .background(Color.White),
             ){
                 Text(text = "  \n   选择周数 \n", fontSize = 19.sp)
                 SelectSessionContent(initialWeek, initialStart, initialEnd){week,start,end ->
@@ -391,11 +405,12 @@ fun SelectSessionDialog(
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
-fun SelectSessionContent(initialWeek:Int, initialStart:Int, initialEnd:Int,
-                         result:(week:Int, start:Int, end:Int)->Unit,
+fun SelectSessionContent(
+    initialWeek: Int, initialStart: Int, initialEnd: Int,
+    result: (week: Int, start: Int, end: Int) -> Unit,
 ){
     val scope = rememberCoroutineScope()
-    val weekList = listOf("周一","周二","周三","周四","周五","周六","周日",)
+    val weekList = listOf("周一", "周二", "周三", "周四", "周五", "周六", "周日")
     val startSection = mutableListOf<String>()
     val endSection = mutableListOf<String>()
     for (i in 1..11){
@@ -547,8 +562,7 @@ fun SelectDateDialog(
                     .wrapContentHeight()
                     .width(300.dp)
                     .verticalScroll(rememberScrollState())
-                    .background(Color.White)
-                ,
+                    .background(Color.White),
             ){
                 Text(text = "  \n   选择日期 \n", fontSize = 19.sp)
                 SelectDate(
@@ -745,6 +759,9 @@ fun RadioTextButton(
         Text(text = text, style = MaterialTheme.typography.body1)
     }
 }
+
+
+
 
 
 
