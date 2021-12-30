@@ -19,6 +19,9 @@
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
+            android:name=".ui.GetViewToPng"
+            android:exported="true" />
+        <activity
             android:name=".ui.exam_arrange.ShowArrangeActivity"
             android:exported="true"
             android:label="@string/title_activity_show_arrange"
@@ -87,7 +90,6 @@
             android:name=".ui.show_timetable.ShowTimetableActivity2"
             android:exported="false"
             android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash" />
-
         <activity
             android:name=".ui.about.GitListActivity"
             android:exported="true" />
@@ -127,8 +129,8 @@
 
         <receiver
             android:name=".ui.app_widget_day.DayAppWidgetProvider"
-            android:label="日视图(可滑动)"
-            android:exported="false">
+            android:exported="false"
+            android:label="日视图(可滑动)">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -141,34 +143,29 @@
         <service
             android:name=".ui.app_widget_day.DayRemoteViewsService"
             android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-<!--        <receiver-->
-<!--            android:name=".ui.app_widget_week.WeekAppWidgetProvider"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />-->
-<!--            </intent-filter>-->
-
-<!--            <meta-data-->
-<!--                android:name="android.appwidget.provider"-->
-<!--                android:resource="@xml/appwidget_week_info" />-->
-<!--        </receiver>-->
-
+            android:permission="android.permission.BIND_REMOTEVIEWS" /> <!-- <receiver -->
+        <!-- android:name=".ui.app_widget_week.WeekAppWidgetProvider" -->
+        <!-- android:exported="false"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.appwidget.action.APPWIDGET_UPDATE" /> -->
+        <!-- </intent-filter> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.appwidget.provider" -->
+        <!-- android:resource="@xml/appwidget_week_info" /> -->
+        <!-- </receiver> -->
         <receiver
-            android:exported="true"
             android:name=".ui.app_widget_miui.DayNewWidgetProvider"
-            android:process=":widgetProvider"
+            android:exported="true"
             android:label="日视图"
-            >
+            android:process=":widgetProvider">
             <meta-data
                 android:name="miuiWidgetRefresh"
                 android:value="exposure" />
-<!--            // 定义曝光刷新的时间间隔-->
+            <!-- // 定义曝光刷新的时间间隔 -->
             <meta-data
                 android:name="miuiWidgetRefreshMinInterval"
                 android:value="50000" />
-<!--            // MIUI Widget 标识-->
+            <!-- // MIUI Widget 标识 -->
             <meta-data
                 android:name="miuiWidget"
                 android:value="true" />
@@ -177,33 +174,32 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="miui.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/miui_appwidget_day_info" />
-        </receiver>
-
-<!--        <provider-->
-<!--            android:authorities="河大课表Debug小部件"-->
-<!--            android:name=".ui.app_widget_miui.DayNewWidgetProvider"-->
-<!--            android:process=":widgetProvider"-->
-<!--            android:exported="false" />-->
-
+        </receiver> <!-- <provider -->
+        <!-- android:authorities="河大课表Debug小部件" -->
+        <!-- android:name=".ui.app_widget_miui.DayNewWidgetProvider" -->
+        <!-- android:process=":widgetProvider" -->
+        <!-- android:exported="false" /> -->
         <receiver
-            android:exported="false"
             android:name=".ui.app_widget_new_day.DayNewWidgetProvider"
-            android:label="日视图-新"
-            >
+            android:exported="false"
+            android:label="日视图-新">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_new_day_info" />
         </receiver>
+
         <service
             android:name=".ui.app_widget_new_day.DayNewRvService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-
     </application>
 
 </manifest>

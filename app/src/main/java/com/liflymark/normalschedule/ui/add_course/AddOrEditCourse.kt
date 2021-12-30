@@ -44,7 +44,7 @@ fun ShowAllCourseToEdit(
     var courseNameState by rememberSaveable { mutableStateOf(courseName) }
     val deleteCourseList = remember{ mutableListOf<CourseBean>() }
     val needAddCourseList = remember{ mutableStateListOf<CourseBean>() }
-    val courseBeanList = remember{ mutableStateListOf<CourseBean>() }
+    val courseBeanList = remember(needAddCourseList){ mutableStateListOf<CourseBean>() }
     val progressShow = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var setColor by rememberSaveable{ mutableStateOf("") }
@@ -75,6 +75,18 @@ fun ShowAllCourseToEdit(
         courseBeanList.clear()
         courseBeanList.addAll(needAddCourseList)
     }
+
+    fun sideAddToState(index:Int,courseBean:CourseBean){
+        courseBeanList[index].apply {
+            classWeek=courseBean.classWeek
+            classDay=courseBean.classDay
+            classSessions = courseBean.classSessions
+            continuingSession = courseBean.continuingSession
+            teacher = courseBean.teacher
+            teachingBuildName = courseBean.teachingBuildName
+        }
+    }
+
     LaunchedEffect(true){
         progressShow.value = true
         val courseBeanLoad = Repository.loadCourseByName(courseName)
@@ -105,9 +117,13 @@ fun ShowAllCourseToEdit(
             }
         }
 
-
+//        SideEffect {
+//            needAddToStateList()
+//        }
         // 课程时间段显示
         courseBeanList.forEachIndexed { index,courseBean ->
+            Log.d("AddorEdit", "ShowAll重组一次")
+//            sideAddToState()
             key(
                 courseBean.campusName+courseBean.classDay+courseBean.classSessions+courseBean.classWeek+
                         courseBean.color+courseBean.continuingSession+courseBean.teacher+courseBean.teachingBuildName
@@ -115,7 +131,11 @@ fun ShowAllCourseToEdit(
                 Spacer(modifier = Modifier.height(3.dp))
                 ShowTimePart(
                     courseBean =courseBean,
-                    onValueChange = { needAddCourseList[index] = it },
+                    onValueChange = {
+                        needAddCourseList[index] = it
+                        sideAddToState(index, it)
+                        Log.d("AddorEdit", it.classDay.toString())
+                                    },
                     deleteClick = {
                         needAddCourseList.remove(it)
                         needAddToStateList()
@@ -169,6 +189,7 @@ fun ShowAllCourseToEdit(
                             it.color = if (setColor==""){ Convert.stringToColor(courseNameState) }else{ setColor }
                         }
                         Repository.insertCourse(needAddCourseList)
+                        updateWidget(context = context)
                         progressShow.value = false
                         context.finish()
                     }
@@ -190,27 +211,33 @@ fun ShowTimePart(
 ){
     val (courseBeanState, setCourseBean) = remember { mutableStateOf(courseBean) }
     val oneList = courseBeanState.classWeek.whichIs1()
-    val courseStartToEnd =
-        "    第${courseBeanState.classSessions} - ${courseBeanState.classSessions + courseBeanState.continuingSession - 1}节"
+    var courseStartToEnd by
+        remember {
+            mutableStateOf("    第${courseBeanState.classSessions} - ${courseBeanState.classSessions + courseBeanState.continuingSession - 1}节")
+        }
     var courseTime by remember { mutableStateOf(Dialog.getWeekNumFormat(oneList)) }
-    val weekNum = when (courseBeanState.classDay) {
-        1 -> "周一$courseStartToEnd"
-        2 -> "周二$courseStartToEnd"
-        3 -> "周三$courseStartToEnd"
-        4 -> "周四$courseStartToEnd"
-        5 -> "周五$courseStartToEnd"
-        6 -> "周六$courseStartToEnd"
-        7 -> "周日$courseStartToEnd"
-        else -> "错误"
+    var weekNum by remember{
+        mutableStateOf(
+            when (courseBeanState.classDay) {
+                1 -> "周一$courseStartToEnd"
+                2 -> "周二$courseStartToEnd"
+                3 -> "周三$courseStartToEnd"
+                4 -> "周四$courseStartToEnd"
+                5 -> "周五$courseStartToEnd"
+                6 -> "周六$courseStartToEnd"
+                7 -> "周日$courseStartToEnd"
+                else -> "错误"
+            }
+        )
     }
-    val courseTeacher = courseBeanState.teacher
-    val courseRoom = courseBeanState.teachingBuildName
+    var courseTeacher by rememberSaveable { mutableStateOf(courseBean.teacher) }
+    var courseRoom by rememberSaveable { mutableStateOf(courseBean.teachingBuildName) }
     LaunchedEffect(courseBeanState){
         onValueChange(courseBeanState)
     }
 
-    val showSelectWeekDialog = remember { mutableStateOf(false) }
-    val showSessionWeekDialog = remember { mutableStateOf(false) }
+    val showSelectWeekDialog = rememberSaveable { mutableStateOf(false) }
+    val showSessionWeekDialog = rememberSaveable { mutableStateOf(false) }
 
     fun <T> onChange(field: KMutableProperty1<CourseBean, T>, value: T){
         val next = courseBean.copy()
@@ -234,9 +261,24 @@ fun ShowTimePart(
         val classWeek = week + 1
         val classSessions = start + 1
         val continueSession = end + 2 - classSessions
-//        weekNum1(classWeek, classSessions, continueSession)
-        onChange(CourseBean::classDay,classWeek)
-        onChange(CourseBean::classSessions, classSessions)
+//        weekNum1(classWeek, classSessions, -continueSession)
+        Log.d("addOrEdit", classWeek.toString())
+//        onChange(CourseBean::classDay,classWeek)
+//        onChange(CourseBean::classSessions, classSessions)
+        courseBeanState.classDay = classWeek
+        courseBeanState.classSessions = classSessions
+        courseBeanState.continuingSession = continueSession
+        courseStartToEnd = "    第${courseBeanState.classSessions} - ${courseBeanState.classSessions + courseBeanState.continuingSession - 1}节"
+        weekNum = when (classWeek) {
+            1 -> "周一$courseStartToEnd"
+            2 -> "周二$courseStartToEnd"
+            3 -> "周三$courseStartToEnd"
+            4 -> "周四$courseStartToEnd"
+            5 -> "周五$courseStartToEnd"
+            6 -> "周六$courseStartToEnd"
+            7 -> "周日$courseStartToEnd"
+            else -> "错误"
+        }
         onChange(CourseBean::continuingSession, continueSession)
     }
     Card(
@@ -277,7 +319,8 @@ fun ShowTimePart(
             TeacherOrBuildTextField(
                 onValueChange =
                 {
-                    onChange(CourseBean::teacher, it)
+                    courseTeacher = it
+                    onChange(CourseBean::teacher, courseTeacher)
                 },
                 value = courseTeacher,
                 placeHolder = "点击此处输入任课老师",
@@ -290,7 +333,8 @@ fun ShowTimePart(
             TeacherOrBuildTextField(
                 onValueChange =
                 {
-                    onChange(CourseBean::teachingBuildName, it)
+                    courseRoom = it
+                    onChange(CourseBean::teachingBuildName, courseRoom)
                 },
                 value = courseRoom,
                 placeHolder = "点击此处输入教室",

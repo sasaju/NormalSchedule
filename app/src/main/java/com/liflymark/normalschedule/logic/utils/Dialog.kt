@@ -394,6 +394,7 @@ fun SelectSessionDialog(
                 Row(modifier = Modifier.fillMaxWidth(0.98f),horizontalArrangement = Arrangement.End) {
                     TextButton(onClick = {
                         result(week1, start1, end1)
+                        showDialog.value = false
                     }) { Text(text = "确定")}
                 }
                 Spacer(modifier = Modifier.height(8.dp))

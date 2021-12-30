@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/background"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/miui_appwidget_back"
@@ -129,9 +129,9 @@
                     android:layout_below="@id/app_course_teacher_1"
                     android:layout_marginStart="35px"
                     android:alpha="0.3"
-                    android:text="8:00 - 9:40"
-                    android:textColor="@color/black"
                     android:maxLines="1"
+                    android:text="距离上课3分钟"
+                    android:textColor="@color/black"
                     android:textSize="10dp" />
             </RelativeLayout>
         </LinearLayout>
@@ -152,17 +152,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 >
+
                 <TextView
                     android:id="@+id/app_course_name_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="35px"
-                    android:text="大学生职业规划"
+                    android:maxLines="1"
+                    android:paddingEnd="3dp"
+                    android:text="药物化学"
                     android:textColor="#333333"
                     android:textSize="13dp"
-                    android:paddingEnd="3dp"
-                    android:maxLines="1"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -187,10 +188,11 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingEnd="5dp"
-                    android:text="第八教学楼 102"
+                    android:text="第九教学楼 102"
                     android:textColor="@color/black"
                     android:textSize="11dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="PxUsage" />
 
                 <TextView
                     android:id="@+id/app_course_time_2"
