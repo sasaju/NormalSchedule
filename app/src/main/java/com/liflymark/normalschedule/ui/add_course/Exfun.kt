@@ -54,7 +54,6 @@ fun updateWidget(context: Context) {
             it1.whichColumn == nowDayNum && !GetDataUtil.hadOvered(it1.end)
         })
     }
-    Log.d("miuiPro", mList.toString())
     views.setTextViewText(R.id.week_now, GetDataUtil.getDayOfWeek())
     views.setTextViewText(R.id.week_num, "第${nowWeekNum}周")
     // set when have one course, two course, zero course or more course
