@@ -3,32 +3,30 @@ package com.liflymark.normalschedule.ui.import_show_score
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableStringBuilder
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.afollestad.materialdialogs.customview.customView
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.databinding.ActivityImportScoreBinding
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_import_score.*
-import kotlinx.android.synthetic.main.fragment_import_login.btnSign
-import kotlinx.android.synthetic.main.fragment_import_login.input_pwd
 
 class ImportScoreActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ImportScoreViewModel::class.java) }
+    private lateinit var binding: ActivityImportScoreBinding
     var userName = ""
     var userPassword = ""
     private var id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_import_score)
-        btnSign.text = "登陆以导入成绩"
-        input_pwd.hint = "请输入统一认证密码"
+        binding = ActivityImportScoreBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.btnSign.text = "登陆以导入成绩"
+        binding.inputId.hint = "请输入统一认证密码"
         Toasty.Config.getInstance().setTextSize(15).apply()
-        setSupportActionBar(import_toolbar)
+        setSupportActionBar(binding.importToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);//添加默认的返回图标
         supportActionBar?.setHomeButtonEnabled(true); //设置返回键可用
         ImmersionBar.with(this)
@@ -37,8 +35,8 @@ class ImportScoreActivity : AppCompatActivity() {
 
         val saved = viewModel.isAccountSaved()
         if (saved) {
-            user0.text = SpannableStringBuilder(viewModel.getSavedAccount()["user"])
-            password0.text = SpannableStringBuilder(viewModel.getSavedAccount()["password"])
+            binding.user0.text = SpannableStringBuilder(viewModel.getSavedAccount()["user"])
+            binding.password0.text = SpannableStringBuilder(viewModel.getSavedAccount()["password"])
         }
 
         val progressDialog = Dialog.getProgressDialog(this, "正在加载内容")
@@ -67,7 +65,7 @@ class ImportScoreActivity : AppCompatActivity() {
                     // 此处服务信息传输易造成错误 后期需修改
                     "登陆成功" -> {
                         // saveAccount()
-                        if (save_or_not.isChecked) {
+                        if (binding.saveOrNot.isChecked) {
                             viewModel.saveAccount(userName, userPassword)
                         } else {
                             viewModel.saveAccount(userName, "")
@@ -89,10 +87,10 @@ class ImportScoreActivity : AppCompatActivity() {
         })
 
 
-        btnSign.setOnClickListener {
+        binding.btnSign.setOnClickListener {
             // 判断是否输入学号密码并提交数据至ViewModel层以更新数据
-            userName = user0.text.toString()
-            userPassword = password0.text.toString()
+            userName = binding.user0.text.toString()
+            userPassword = binding.password0.text.toString()
             progressDialog.show()
             when {
                 userName == "" -> {

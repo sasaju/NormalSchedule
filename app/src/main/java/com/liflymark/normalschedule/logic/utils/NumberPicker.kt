@@ -300,12 +300,17 @@ fun StringPicker(
         state = pagerState,
         count = strList.size,
         reverseLayout = reverseLayout,
-        itemSpacing = 0.dp,
-        modifier = Modifier
-            .height(100.dp)
-            .width(76.dp)
+        contentPadding = PaddingValues(vertical = 80.dp),
+        itemSpacing = itemSpacing,
+        modifier = modifier
     ) { page ->
-        Text(strList[page], fontSize = 19.sp)
+        Text(
+            strList[page],
+            fontSize = 19.sp,
+            modifier = Modifier
+                .wrapContentHeight()
+                .wrapContentWidth()
+        )
     }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -397,17 +402,17 @@ fun CustomWebView(
 //    }
 }
 
-@ExperimentalAnimationApi
-@Preview(showBackground = true)
-@Composable
-fun PreviewNumberPicker() {
-    NorScTheme {
-        StringPicker2(
-            strList = listOf("1","嫩爹", "hhhh"),
-            value = 1,
-            onValueChange = {
-
-            }
-        )
-    }
-}
+//@ExperimentalAnimationApi
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewNumberPicker() {
+//    NorScTheme {
+//        StringPicker2(
+//            strList = listOf("1","嫩爹", "hhhh"),
+//            value = 1,
+//            onValueChange = {
+//
+//            }
+//        )
+//    }
+//}

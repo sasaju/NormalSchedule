@@ -15,13 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import coil.load
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.databinding.ActivityDefaultBackgroundBinding
 import com.liflymark.normalschedule.logic.utils.CoilEngine
 import com.liflymark.normalschedule.logic.utils.GifLoader
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_default_background.*
-import kotlinx.android.synthetic.main.activity_show_score.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -30,7 +29,7 @@ import java.io.File
 
 class DefaultBackground : AppCompatActivity() {
     private val REQUEST_CODE_CHOOSE_BG = 23
-
+    private lateinit var binding:ActivityDefaultBackgroundBinding
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(DefaultBackgroundViewModel::class.java)
     }
@@ -43,11 +42,12 @@ class DefaultBackground : AppCompatActivity() {
         decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         window.statusBarColor = Color.TRANSPARENT
-        setContentView(R.layout.activity_default_background)
-        setSupportActionBar(image_toolbar)
+        binding = ActivityDefaultBackgroundBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.imageToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);//添加默认的返回图标
         supportActionBar?.setHomeButtonEnabled(true); //设置返回键可用
-        userImage.setOnClickListener {
+        binding.userImage.setOnClickListener {
             PictureSelector.create(this)
                 .openGallery(1)
                 .imageEngine(CoilEngine.create())
@@ -56,7 +56,7 @@ class DefaultBackground : AppCompatActivity() {
                 .selectionMode(PictureConfig.SINGLE)
                 .forResult(PictureConfig.CHOOSE_REQUEST)
         }
-        defaultBackground1.setOnClickListener {
+        binding.defaultBackground1.setOnClickListener {
             launch {
                 viewModel.userBackgroundUri = "0"
                 viewModel.updateBackground()
@@ -65,7 +65,7 @@ class DefaultBackground : AppCompatActivity() {
 
         }
 
-        imageView4.setOnClickListener {
+        binding.imageView4.setOnClickListener {
             launch {
                 viewModel.userBackgroundUri = "0"
                 viewModel.updateBackground()
@@ -90,18 +90,17 @@ class DefaultBackground : AppCompatActivity() {
                         val imageLoader = GifLoader(this@DefaultBackground)
                         Log.d("BackGround",uri.toString())
                         if (SDK_INT<29) {
-                            userImage.load(File(uri), imageLoader)
+                            binding.userImage.load(File(uri), imageLoader)
                         }else{
-                            userImage.load(uri)
+                            binding.userImage.load(uri)
                         }
-                        userImageText.text = "点击此处更换"
+                        binding.userImageText.text = "点击此处更换"
                         Toasty.success(this@DefaultBackground, "读取成功，返回看看吧", Toasty.LENGTH_SHORT)
                             .show()
                         Log.d("DefaultBackground", uri.toString())
                     }
                 }
-                else -> {
-                }
+                else -> {}
             }
         }
     }

@@ -60,6 +60,7 @@ import com.liflymark.normalschedule.ui.add_course.AddCourseComposeActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.schedule.data.Settings
+import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -74,7 +75,7 @@ class ShowTimetableActivity2 : BaseComment() {
     @OptIn(
         ExperimentalAnimationApi::class,
         ExperimentalMaterialApi::class,
-        ExperimentalPagerApi::class
+        ExperimentalPagerApi::class, kotlinx.coroutines.DelicateCoroutinesApi::class
     )
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -117,6 +118,7 @@ class ShowTimetableActivity2 : BaseComment() {
     }
 }
 
+@OptIn(ExperimentalSnapperApi::class)
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
@@ -188,21 +190,14 @@ fun Drawer(
         },
         content = {
             Column(modifier = Modifier.background(Color.Transparent)) {
-                var userNowWeek by remember {
-                    mutableStateOf(
-                        if (!startSchoolOrNot || startHolidayOrNot) {
-                            0
-                        } else {
-                            viewModel.getNowWeek()
-                        }
-                    )
+                val initialWeek = if (!startSchoolOrNot || startHolidayOrNot) {
+                    0
+                } else {
+                    viewModel.getNowWeek()
                 }
-                val pagerState = rememberPagerState(
-//                    pageCount = 19,
-//                    initialOffscreenLimit = 1,
-                    initialPage = userNowWeek,
-//                    infiniteLoop = true
-                )
+                val allWeek = 19
+                var userNowWeek by remember { mutableStateOf(initialWeek) }
+                val pagerState = rememberPagerState(initialPage = userNowWeek)
                 statusSpacer()
 
                 TutorialOverlay(
@@ -229,7 +224,7 @@ fun Drawer(
                         .horizontalScroll(
                             rememberScrollState()
                         )) {
-                        for (week in 0 until pagerState.pageCount){
+                        for (week in 0 until allWeek){
                             TextButton(
                                 onClick = {
                                     scope.launch {
@@ -243,18 +238,19 @@ fun Drawer(
                         }
                     }
                 }
+
+                // 鉴于Pager-0.19.0改版后Pager实现循环的复杂度，暂不实现循环
                 HorizontalPager(
                     state = pagerState,
-                    count = 19,
+                    count = allWeek,
                     flingBehavior = PagerDefaults.flingBehavior(
                         state = pagerState,
                         snapAnimationSpec = spring(
-                            stiffness = 25f,
                             visibilityThreshold = 1f,
                         ),
-                    )
+                    ),
                 ) { index ->
-                    val page= index
+                    val page= (index - initialWeek).floorMod(allWeek)
                     settings.value?.let {
                         SingleLineClass(
                             oneWeekClass = courseList,
@@ -269,13 +265,12 @@ fun Drawer(
 
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-                        userNowWeek = page
+                        userNowWeek = page.floorMod(allWeek)
                     }
                 }
             }
         }
     )
-
 }
 
 @Composable

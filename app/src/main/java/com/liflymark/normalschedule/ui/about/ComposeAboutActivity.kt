@@ -31,7 +31,6 @@ import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.fragment_import_login.*
 
 
 class ComposeAboutActivity : ComponentActivity() {
@@ -217,16 +216,16 @@ fun Introduce(){
 //        ) {
 //            userDialog.show()
 //        }
-        SingleIconButton(
-            icon = Icons.Default.Share,
-            text = "分享APP给同学"
-        ) {
-            val it = Intent(Intent.ACTION_SEND)
-            it.putExtra(Intent.EXTRA_TEXT, "河大课表APP下载：\nhttp://app.lifly.cn\n非官方开发，仅为个人开发")
-            it.type = "text/plain"
-            context.startActivity(Intent.createChooser(it, "分享APP"))
-            Toasty.success(context, "感谢你的分享和认可").show()
-        }
+//        SingleIconButton(
+//            icon = Icons.Default.Share,
+//            text = "分享APP给同学"
+//        ) {
+//            val it = Intent(Intent.ACTION_SEND)
+//            it.putExtra(Intent.EXTRA_TEXT, "河大课表APP下载：\nhttp://app.lifly.cn\n非官方开发，仅为个人开发")
+//            it.type = "text/plain"
+//            context.startActivity(Intent.createChooser(it, "分享APP"))
+//            Toasty.success(context, "感谢你的分享和认可").show()
+//        }
         SingleIconButton(
             icon = Icons.Default.EmojiNature,
             text = "项目开源"

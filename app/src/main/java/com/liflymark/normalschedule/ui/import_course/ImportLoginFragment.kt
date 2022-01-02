@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.databinding.FragmentImportLoginBinding
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.utils.Convert
@@ -21,19 +22,29 @@ import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.fragment_import_login.*
 
 class ImportLoginFragment: Fragment() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(CourseViewModel::class.java) }
+    private var _binding: FragmentImportLoginBinding? = null
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
     var userName = ""
     var userPassword = ""
     private var id = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_import_login, container, false)
+        _binding = FragmentImportLoginBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+//        return inflater.inflate(R.layout.fragment_import_login, container, false)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         ImmersionBar.with(this).init()
@@ -52,38 +63,38 @@ class ImportLoginFragment: Fragment() {
 
         if (activity is ImportCourseAgain){
             viewModel.accountLiveData.observe(viewLifecycleOwner){
-                user.text = SpannableStringBuilder(it[0])
-                password.text = SpannableStringBuilder(it[1])
+                binding.user.text = SpannableStringBuilder(it[0])
+                binding.password.text = SpannableStringBuilder(it[1])
             }
             viewModel.getAccount()
         }
 
-        select_sign_method.attachDataSource(listOf("统一认证", "URP登陆"))
-        select_sign_method.setOnSpinnerItemSelectedListener { parent, view, position, id ->
+        binding.selectSignMethod.attachDataSource(listOf("统一认证", "URP登陆"))
+        binding.selectSignMethod.setOnSpinnerItemSelectedListener { parent, view, position, id ->
             when(position){
                 0 -> {
-                    input_code.visibility = View.INVISIBLE
-                    rl_code.visibility = View.INVISIBLE
-                    tips_text.visibility = View.VISIBLE
-                    et_code.setText("")
+                    binding.inputCode.visibility = View.INVISIBLE
+                    binding.rlCode.visibility = View.INVISIBLE
+                    binding.tipsText.visibility = View.VISIBLE
+                    binding.etCode.setText("")
                 }
                 1 -> {
-                    input_code.visibility = View.VISIBLE
-                    rl_code.visibility = View.VISIBLE
-                    tips_text.visibility = View.INVISIBLE
+                    binding.inputCode.visibility = View.VISIBLE
+                    binding.rlCode.visibility = View.VISIBLE
+                    binding.tipsText.visibility = View.INVISIBLE
                 }
             }
         }
         viewModel.getId()// 获取cookie
         viewModel.idLiveData.observe(viewLifecycleOwner, { result ->
             if (result == null || result.id == "") {
-                server_status.text = "目前可能仅允许“统一认证”登陆，如失败请尝试班级导入"
-                select_sign_method.attachDataSource(listOf("统一认证"))
+                binding.serverStatus.text = "目前可能仅允许“统一认证”登陆，如失败请尝试班级导入"
+                binding.selectSignMethod.attachDataSource(listOf("统一认证"))
                 id = ""
-                server_status.setTextColor(Color.RED)
+                binding.serverStatus.setTextColor(Color.RED)
             } else {
                 this.id = result.id
-                server_status.text = "服务器正常"
+                binding.serverStatus.text = "服务器正常"
             }
         })
 
@@ -273,28 +284,28 @@ class ImportLoginFragment: Fragment() {
         })
 
         viewModel.imageLiveData.observe(viewLifecycleOwner, {
-            ivCode.visibility = View.VISIBLE
-            progress_bar.visibility = View.INVISIBLE
+            binding.ivCode.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
             if (it != null)
-                ivCode.setImageBitmap(it)
+                binding.ivCode.setImageBitmap(it)
         })
-        ivCode.setOnClickListener {
-            progress_bar.visibility = View.VISIBLE
+        binding.ivCode.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
             viewModel.getImage(id)
         }
 
 
 
-        btnSign.setOnClickListener {
+        binding.btnSign.setOnClickListener {
             // 判断是否输入学号密码并提交数据至ViewModel层以更新数据
-            userName = user.text.toString()
-            userPassword = password.text.toString()
+            userName = binding.user.text.toString()
+            userPassword = binding.password.text.toString()
             waitDialog?.show()
 //            dialog.Content()
 //            dialog.showDialog.value = true
-            val yzm = et_code.text.toString()
+            val yzm = binding.etCode.text.toString()
             when {
-                !agree_or_not.isChecked ->  activity?.let { it1 ->
+                !binding.agreeOrNot.isChecked ->  activity?.let { it1 ->
                     Toasty.warning(it1, "您未同意用户协议", Toasty.LENGTH_SHORT).show()
                     waitDialog?.dismiss()
                 }
@@ -334,19 +345,19 @@ class ImportLoginFragment: Fragment() {
                 }
             )
         contractDialog.show()
-        contact.setOnClickListener {
+        binding.contact.setOnClickListener {
             contractDialog.show()
         }
-        user_contact.setOnClickListener {
+        binding.userContact.setOnClickListener {
             userContractDialog.show()
         }
 
-        btnSignByClass.setOnClickListener {
+        binding.btnSignByClass.setOnClickListener {
             val intent = Intent(context,ClassCourseActivity::class.java).apply {
                 putExtra("allowImport", true)
             }
 
-            if(agree_or_not.isChecked) {
+            if(binding.agreeOrNot.isChecked) {
                 activity?.let { it1 ->
                     startActivity(intent)
                     it1.finish()
@@ -356,8 +367,8 @@ class ImportLoginFragment: Fragment() {
             }
         }
 
-        btnSignByVisitor.setOnClickListener {
-            if(agree_or_not.isChecked) {
+        binding.btnSignByVisitor.setOnClickListener {
+            if(binding.agreeOrNot.isChecked) {
                 viewModel.putValue()
                 viewModel.saveAccount("visit", "visit")
             } else {
@@ -370,8 +381,8 @@ class ImportLoginFragment: Fragment() {
 
 
     private fun saveAccount() {
-        userName = user.text.toString()
-        userPassword = password.text.toString()
+        userName = binding.user.text.toString()
+        userPassword = binding.password.text.toString()
         viewModel.saveAccount(userName, userPassword)
     }
 }

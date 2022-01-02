@@ -244,7 +244,15 @@ object  Repository {
         }
 
     suspend fun deleteCourseByList(courseBeanList: List<CourseBean>){
-        courseDao.deleteCourse(courseBeanList)
+        try {
+            courseBeanList.forEach {
+                courseDao.deleteCourse(it)
+                Log.d("Repo", it.toString())
+            }
+        } catch (e:java.lang.Exception){
+            Log.d("Repos", e.toString())
+        }
+
     }
 
 

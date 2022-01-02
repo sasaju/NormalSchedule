@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+//    id 'kotlin-android-extensions'
 //    id 'kotlin-kapt'
     id "com.google.protobuf" version "0.8.17"
 }
@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 11
-        versionName "0.0.14"
+        versionCode 12
+        versionName "0.0.15"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -151,7 +151,7 @@ dependencies {
 //    implementation 'com.afollestad.material-dialogs:core:3.2.1'
 //    implementation 'com.github.bumptech.glide:glide:4.12.0'
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+//    implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.2'
     implementation "androidx.security:security-identity-credential:1.0.0-alpha03"

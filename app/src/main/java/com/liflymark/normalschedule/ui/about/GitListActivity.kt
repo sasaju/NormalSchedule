@@ -8,22 +8,24 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.databinding.ActivityGitListBinding
 import com.liflymark.normalschedule.logic.model.GitProject
-import kotlinx.android.synthetic.main.activity_git_list.*
 
 class GitListActivity : AppCompatActivity() {
 
     private val gitProjectList = ArrayList<GitProject>()
+    private lateinit var binding: ActivityGitListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_git_list)
+        binding = ActivityGitListBinding.inflate(layoutInflater)
         ImmersionBar.with(this).init()
         initList()
         val layoutManager = LinearLayoutManager(this)
-        gitList.layoutManager = layoutManager
+        binding.gitList.layoutManager = layoutManager
         val adapter = GitListAdapter(this,gitProjectList)
-        gitList.adapter = adapter
+        binding.gitList.adapter = adapter
+        setContentView(binding.root)
 
 
     }

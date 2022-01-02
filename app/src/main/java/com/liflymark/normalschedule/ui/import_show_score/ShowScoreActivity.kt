@@ -11,21 +11,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.databinding.ActivityImportScoreBinding
+import com.liflymark.normalschedule.databinding.ActivityShowScoreBinding
+import com.liflymark.normalschedule.databinding.ItemProjectScoreBinding
+import com.liflymark.normalschedule.databinding.ItemScoreBinding
 import com.liflymark.normalschedule.logic.utils.Convert
-import kotlinx.android.synthetic.main.activity_show_score.*
-import kotlinx.android.synthetic.main.item_project_score.*
-import kotlinx.android.synthetic.main.item_score.*
 import org.angmarch.views.NiceSpinner
 import java.util.*
 
 
 class ShowScoreActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProvider(this)[ShowScoreViewModel::class.java] }
+    private lateinit var binding: ActivityShowScoreBinding
+    private lateinit var bindingItem: ItemProjectScoreBinding
     private val scoreList = mutableListOf<View>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_show_score)
-        setSupportActionBar(score_toolbar)
+        binding = ActivityShowScoreBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        setSupportActionBar(binding.scoreToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);//添加默认的返回图标
         supportActionBar?.setHomeButtonEnabled(true); //设置返回键可用
         // score_activity_layout.addStatusBarTopPadding()
@@ -41,7 +46,7 @@ class ShowScoreActivity : AppCompatActivity() {
         }
         val allGradeList = Convert.jsonToAllGrade(viewModel.gradeString)
         val allGradeListSize = allGradeList.size
-        all_grade.removeAllViews()
+        binding.allGrade.removeAllViews()
         val niceSpinner = findViewById<View>(R.id.team_spinner) as NiceSpinner
         val dataset = mutableListOf<String>()
 
@@ -56,16 +61,17 @@ class ShowScoreActivity : AppCompatActivity() {
 //                val headerText = singleScoreLayout.findViewById<TextView>(R.id.course_name)
 //                headerText.text = "第${singleProjectGrade.thisProjectGradeList.size-i}学期"
 //                single_project_score.addView(headerText)
+                bindingItem = ItemProjectScoreBinding.inflate(layoutInflater)
                 val cardViewLayout = LayoutInflater.from(this).inflate(
                     R.layout.item_project_score,
-                    all_grade,
+                    binding.allGrade,
                     false
                 )
                 val cardView = cardViewLayout.findViewById<LinearLayout>(R.id.single_project_score)
                 for (a in t) {
                     val singleScoreLayout = LayoutInflater.from(this).inflate(
                         R.layout.item_score,
-                        single_project_score,
+                        bindingItem.singleProjectScore,
                         false
                     )
                     val courseNameTextView =
@@ -85,7 +91,7 @@ class ShowScoreActivity : AppCompatActivity() {
 
         }
         niceSpinner.attachDataSource(dataset)
-        all_grade.addView(scoreList[0])
+        binding.allGrade.addView(scoreList[0])
 
         niceSpinner.setOnSpinnerItemSelectedListener { parent, view, position, id ->
             val item = parent.getItemAtPosition(position)
@@ -106,9 +112,9 @@ class ShowScoreActivity : AppCompatActivity() {
     }
 
     private fun refreshScore(pos:Int){
-        all_grade.removeAllViews()
+        binding.allGrade.removeAllViews()
         val size = scoreList.size
-        all_grade.addView(scoreList[size-pos])
+        binding.allGrade.addView(scoreList[size-pos])
     }
 
 }

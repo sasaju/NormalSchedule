@@ -44,10 +44,10 @@ fun ShowAllCourseToEdit(
     var courseNameState by rememberSaveable { mutableStateOf(courseName) }
     val deleteCourseList = remember{ mutableListOf<CourseBean>() }
     val needAddCourseList = remember{ mutableStateListOf<CourseBean>() }
-    val courseBeanList = remember(needAddCourseList){ mutableStateListOf<CourseBean>() }
+    val courseBeanList = remember{ mutableStateListOf<CourseBean>() }
     val progressShow = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    var setColor by rememberSaveable{ mutableStateOf("") }
+    var setColor by rememberSaveable{ mutableStateOf(Convert.stringToColor(courseName)) }
     val colorList = remember {
         arrayListOf(
             "#12c2e9",
@@ -90,11 +90,15 @@ fun ShowAllCourseToEdit(
     LaunchedEffect(true){
         progressShow.value = true
         val courseBeanLoad = Repository.loadCourseByName(courseName)
-        courseBeanList.addAll(courseBeanLoad)
-        needAddCourseList.addAll(courseBeanLoad)
-        deleteCourseList.addAll(courseBeanLoad)
+        courseBeanList.addAll(courseBeanLoad.map { it.copy() })
+        needAddCourseList.addAll(courseBeanLoad.map{ it.copy()} )
+        Log.d("AddOrEditCourse", "1:"+needAddCourseList.toList().toString())
+        deleteCourseList.addAll(courseBeanLoad.map { it.copy() })
+        Log.d("Repo", "in AddOrEdit"+deleteCourseList.toString())
+        setColor = if (courseBeanList.getOrNull(0) != null){courseBeanList[0].color}else{""}
         progressShow.value = false
     }
+    Log.d("AddorEdit",courseBeanList.toString())
     // 加载条
     ProgressDialog(openDialog = progressShow, label = "正在保存", dismissOnClickOutside = false)
     Column(
@@ -133,11 +137,15 @@ fun ShowAllCourseToEdit(
                     courseBean =courseBean,
                     onValueChange = {
                         needAddCourseList[index] = it
+                        Log.d("AddOrEditCourse", "2:"+needAddCourseList.toList().size.toString())
                         sideAddToState(index, it)
                         Log.d("AddorEdit", it.classDay.toString())
                                     },
                     deleteClick = {
                         needAddCourseList.remove(it)
+                        needAddToStateList()
+                    },
+                    forReCompose = {
                         needAddToStateList()
                     }
                 )
@@ -176,6 +184,7 @@ fun ShowAllCourseToEdit(
                             color="#f0c239"
                         )
                     )
+                    if (setColor==""){setColor=Convert.stringToColor(courseName)}
                     needAddToStateList()
                 }, modifier = textBtMod) {
                     Text(text = "增加时段")
@@ -184,10 +193,12 @@ fun ShowAllCourseToEdit(
                     scope.launch {
                         progressShow.value = true
                         Repository.deleteCourseByList(deleteCourseList)
+                        Log.d("AddOrEditCourse", "delete:"+deleteCourseList.toList().toString())
                         needAddCourseList.map {
                             it.courseName = courseNameState
                             it.color = if (setColor==""){ Convert.stringToColor(courseNameState) }else{ setColor }
                         }
+                        Log.d("AddOrEditCourse", "3:"+needAddCourseList.toList().toString())
                         Repository.insertCourse(needAddCourseList)
                         updateWidget(context = context)
                         progressShow.value = false
@@ -207,6 +218,7 @@ fun ShowAllCourseToEdit(
 fun ShowTimePart(
     courseBean:CourseBean,
     onValueChange: (CourseBean) -> Unit,
+    forReCompose:() -> Unit,
     deleteClick: (courseBean: CourseBean) -> Unit
 ){
     val (courseBeanState, setCourseBean) = remember { mutableStateOf(courseBean) }
@@ -235,7 +247,7 @@ fun ShowTimePart(
     LaunchedEffect(courseBeanState){
         onValueChange(courseBeanState)
     }
-
+    Log.d("AddOrEditCOurse","ShowTImePart重组")
     val showSelectWeekDialog = rememberSaveable { mutableStateOf(false) }
     val showSessionWeekDialog = rememberSaveable { mutableStateOf(false) }
 
@@ -244,25 +256,25 @@ fun ShowTimePart(
         field.set(next, value)
         setCourseBean(next)
     }
-
     SelectWeekDialog(
         showDialog = showSelectWeekDialog,
-        initialR = courseBean.classWeek
+        initialR = courseBeanState.classWeek
     ) {
         courseTime = Dialog.getWeekNumFormat(it.whichIs1())
         onChange(CourseBean::classWeek, it)
+        forReCompose()
     }
     SelectSessionDialog(
         showDialog = showSessionWeekDialog,
-        initialWeek = courseBean.classDay - 1,
-        initialStart = courseBean.classSessions - 1,
-        initialEnd = courseBean.classSessions + courseBean.continuingSession - 2
+        initialWeek = courseBeanState.classDay - 1,
+        initialStart = courseBeanState.classSessions - 1,
+        initialEnd = courseBeanState.classSessions + courseBeanState.continuingSession - 2
     ) { week, start, end ->
         val classWeek = week + 1
         val classSessions = start + 1
         val continueSession = end + 2 - classSessions
 //        weekNum1(classWeek, classSessions, -continueSession)
-        Log.d("addOrEdit", classWeek.toString())
+//        Log.d("addOrEdit", classWeek.toString())
 //        onChange(CourseBean::classDay,classWeek)
 //        onChange(CourseBean::classSessions, classSessions)
         courseBeanState.classDay = classWeek
@@ -280,6 +292,7 @@ fun ShowTimePart(
             else -> "错误"
         }
         onChange(CourseBean::continuingSession, continueSession)
+        forReCompose()
     }
     Card(
         modifier = Modifier

@@ -375,31 +375,87 @@ fun SelectSessionDialog(
     if (showDialog.value) {
         Dialog(
             onDismissRequest = { showDialog.value = false },
-            DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+            DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = false)
         ) {
-            Column(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .width(300.dp)
-                    .verticalScroll(rememberScrollState())
-                    .background(Color.White),
-            ){
-                Text(text = "  \n   选择周数 \n", fontSize = 19.sp)
-                SelectSessionContent(initialWeek, initialStart, initialEnd){week,start,end ->
-                    week1 = week
-                    start1 = start
-                    end1 = end
+            Surface(
+                shape = MaterialTheme.shapes.medium
+            ) {
+                Column(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .width(300.dp)
+                        .verticalScroll(rememberScrollState())
+                        .background(Color.White),
+                ){
+                    Text(text = "  \n   选择周数 \n", fontSize = 19.sp)
+                    SelectSessionContent(initialWeek, initialStart, initialEnd){week,start,end ->
+                        week1 = week
+                        start1 = start
+                        end1 = end
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(modifier = Modifier.fillMaxWidth(0.98f),horizontalArrangement = Arrangement.End) {
+                        TextButton(onClick = {
+                            result(week1, start1, end1)
+                            showDialog.value = false
+                        }) { Text(text = "确定")}
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(modifier = Modifier.fillMaxWidth(0.98f),horizontalArrangement = Arrangement.End) {
-                    TextButton(onClick = {
-                        result(week1, start1, end1)
-                        showDialog.value = false
-                    }) { Text(text = "确定")}
-                }
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
+    }
+}
+
+@Composable
+fun SelectSessionContent2(
+    initialWeek: Int, initialStart: Int, initialEnd: Int,
+    result: (week: Int, start: Int, end: Int) -> Unit,
+){
+    var selectWeek by rememberSaveable { mutableStateOf(initialWeek) }
+    var selectStart by rememberSaveable { mutableStateOf(initialStart) }
+    var selectEnd by rememberSaveable { mutableStateOf(initialEnd) }
+    val weekList = listOf("周一", "周二", "周三", "周四", "周五", "周六", "周日")
+    val startSection = mutableListOf<String>()
+    val endSection = mutableListOf<String>()
+    for (i in 1..11){
+        startSection.add("第 $i 节")
+        endSection.add("第 $i 节")
+    }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        StringPicker2(
+            strList = weekList,
+            value = selectWeek,
+            onValueChange = {
+                selectWeek = it
+                result(selectWeek, selectStart, selectEnd)
+            }
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        StringPicker2(
+            strList = startSection,
+            value = selectStart,
+            onValueChange = {
+                selectStart = it
+                if (selectEnd<it)
+                    selectEnd = it
+                result(selectWeek, selectStart, selectEnd)
+            }
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        StringPicker2(
+            strList = endSection,
+            value = selectEnd,
+            onValueChange = {
+                selectEnd = it
+                if (selectStart > it)
+                    selectStart = it
+                result(selectWeek, selectStart, selectEnd)
+            }
+        )
     }
 }
 
@@ -457,11 +513,8 @@ fun SelectSessionContent(
                     Log.d("Dialog", it.toString())
                     result(weekListPager.currentPage, startPager.currentPage, endPager.currentPage)
                 },
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentWidth()
             )
-            Spacer(modifier = Modifier.width(15.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             StringPicker(
                 strList = startSection,
                 pagerState = startPager,
@@ -476,7 +529,7 @@ fun SelectSessionContent(
                 },
                 modifier = Modifier.fillMaxHeight()
             )
-            Spacer(modifier = Modifier.width(15.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             StringPicker(
                 strList = endSection,
                 pagerState = endPager,
