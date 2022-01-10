@@ -24,6 +24,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -136,23 +137,21 @@ fun Drawer(
         viewModel.courseDatabaseLiveDataVal.observeAsState(getNeededClassList(getData()))
     val newUserOrNot =
         viewModel.newUserFLow.collectAsState(initial = false)
-    val newUserVersion = viewModel.userVersion.collectAsState(initial = null)
     val quickJumpShow = remember { mutableStateOf(false) }
-    val activity = LocalContext.current as ShowTimetableActivity2
 
     // 修复一次bug
-    LaunchedEffect(newUserVersion.value){
-        val allCourse = Repository.loadAllCourseNameNoFlow().toSet()
-        val needCourse = setOf("成本管理会计", "无机化学I(上)", "仪器分析", "学前儿童科学教育", "矩阵论", "数据结构课程设计", "最优化方法实验", "Java程序设计课程设计", "操作系统课程设计", "数据库原理课程设计", "分布式计算框架课程设计", "优化理论及方法实验", "论文写作实践", "二外日语2", "二外法语2", "美国文学选读（文学）", "中药学", "声乐主修7", "声乐主修7", "器乐主修7", "器乐主 修7", "器乐主修7", "篆刻学", "动画透视学原理", "素描2（人体结构）", "声乐主修1", "声乐主修3", "声乐主修3", "声乐主修5", "声乐主修5", "声乐主修5", "声乐主修5", "器乐主修3", "器乐主修5", "器乐主修5", "器乐主修5", "室内陈设设计", "小楷技法", "大学计算机B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础C", "大学计算机基础C", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7")
-        if (newUserVersion.value == 1 && (allCourse intersect needCourse).isNotEmpty()){
-            Toasty.info(activity,"由于版本更新，需要重新导入一次").show()
-            val intent = Intent(activity, ImportCourseAgain::class.java)
-            activity.startActivity(intent)
-            Repository.importAgain()
-            Repository.saveUserVersion(0)
-            activity.finish()
-        }
-    }
+//    LaunchedEffect(newUserVersion.value){
+//        val allCourse = Repository.loadAllCourseNameNoFlow().toSet()
+//        val needCourse = setOf("成本管理会计", "无机化学I(上)", "仪器分析", "学前儿童科学教育", "矩阵论", "数据结构课程设计", "最优化方法实验", "Java程序设计课程设计", "操作系统课程设计", "数据库原理课程设计", "分布式计算框架课程设计", "优化理论及方法实验", "论文写作实践", "二外日语2", "二外法语2", "美国文学选读（文学）", "中药学", "声乐主修7", "声乐主修7", "器乐主修7", "器乐主 修7", "器乐主修7", "篆刻学", "动画透视学原理", "素描2（人体结构）", "声乐主修1", "声乐主修3", "声乐主修3", "声乐主修5", "声乐主修5", "声乐主修5", "声乐主修5", "器乐主修3", "器乐主修5", "器乐主修5", "器乐主修5", "室内陈设设计", "小楷技法", "大学计算机B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础B", "大学计算机基础C", "大学计算机基础C", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7", "形势与政策7")
+//        if (newUserVersion.value == 1 && (allCourse intersect needCourse).isNotEmpty()){
+//            Toasty.info(activity,"由于版本更新，需要重新导入一次").show()
+//            val intent = Intent(activity, ImportCourseAgain::class.java)
+//            activity.startActivity(intent)
+//            Repository.importAgain()
+//            Repository.saveUserVersion(0)
+//            activity.finish()
+//        }
+//    }
     // 拦截返回键请求
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
     val backCallback = remember {
@@ -311,7 +310,7 @@ fun BackGroundImage(viewModel: ShowTimetableViewModel) {
             contentDescription = null,
             modifier = Modifier
                 .background(Color(1, 86, 127))
-                .fillMaxWidth()
+                .fillMaxSize()
         )
     }
 }
@@ -433,8 +432,7 @@ fun SingleLineClass(
     val context = LocalContext.current
     val perHeight = if (settings.coursePerHeight==0){70}else{settings.coursePerHeight}
     val mode = settings.colorMode
-    val iconColor = if (!settings.darkShowBack){ MaterialTheme.colors.onBackground } else{ Color.Black
-    }
+    val iconColor = if (!settings.darkShowBack){ MaterialTheme.colors.onBackground } else{ Color.Black }
     val snackbarVisibleState = remember { mutableStateOf(false) }
     val snackbarVisibleShowState = remember { mutableStateOf(true) }
     var snackbarText by remember { mutableStateOf("") }
@@ -627,7 +625,10 @@ fun SingleClass2(
     perHeight: Int = 70,
     mode:Int = 0,
     conflict:Boolean = false,
+    courseAlpha:Double=0.75,
     bottomRight:Int = 0,
+    borderWidth:Double = 1.05,
+    borderAlpha:Int = 50,
     courseClick:(oneByOne:OneByOneCourseBean) -> Unit
 ) {
 //    val context = LocalContext.current
@@ -653,13 +654,17 @@ fun SingleClass2(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(height.dp)
-                .padding(2.dp) // 外边距
-                .alpha(0.75F),
-            elevation = 1.dp, // 设置阴影
+                .padding(0.95.dp) // 外边距
+                .alpha(courseAlpha.toFloat()),
+//            elevation = 1.dp, // 设置阴影
+            border = BorderStroke(
+                width = borderWidth.dp,
+                color = Color(red = 255, green = 255, blue = 255, alpha = borderAlpha)
+            )
         ) {
 
-    //        val showDetailDialog = remember { mutableStateOf(false) }
-    //        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
+            //        val showDetailDialog = remember { mutableStateOf(false) }
+            //        ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
             Text(
                 buildAnnotatedString {
                     withStyle(
@@ -744,6 +749,7 @@ fun saveAllCourse(
                             "部分情况将导致课程冲突，请务必检查！！！如无法操作，请尝试登陆导入"
                 )
             }
+            updateWidget(context=activity2)
         }
     }
 }

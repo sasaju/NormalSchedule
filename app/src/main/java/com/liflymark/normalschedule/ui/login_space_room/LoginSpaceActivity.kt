@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.utils.LoadingDialogBottom
 import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.*
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
@@ -63,20 +64,26 @@ fun InputSpace(lsViewModel: LoginSpaceViewModel = viewModel()) {
         lsViewModel.loginSpaceLiveData.observeAsState(initial = lsViewModel.initialSpace)
     val activity = (LocalContext.current as LoginSpaceActivity)
     val scope = rememberCoroutineScope()
-    ProgressDialog(openDialog = openWaitDialog, label = "正在链接\n教务系统"){
+    LoadingDialogBottom(
+        showDialog = openWaitDialog.value,
+        text = "正在链接\n教务系统",
+        onDismissRequest = {
+            openWaitDialog.value = false
+        }
+    ){
         Spacer(modifier = Modifier
             .width(100.dp)
             .height(5.dp)
             .padding(2.dp)
             .background(Color.Gray))
         TextButton(onClick = {
-//            val intent = Intent(activity, ShowSpaceActivity::class.java).apply {
-//                putExtra("ids", "love")
-//            }
+            val intent = Intent(activity, ShowSpaceActivity::class.java).apply {
+                putExtra("ids", "love")
+            }
             Repository.cancelAll()
             openWaitDialog.value = false
-//            activity.startActivity(intent)
-//            activity.finish()
+            activity.startActivity(intent)
+            activity.finish()
         }) {
             Text(text = "进入离线查询")
         }

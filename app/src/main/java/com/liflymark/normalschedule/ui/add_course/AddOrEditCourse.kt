@@ -2,6 +2,7 @@ package com.liflymark.normalschedule.ui.add_course
 
 import android.app.Activity
 import android.util.Log
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -106,6 +107,7 @@ fun ShowAllCourseToEdit(
             .fillMaxWidth()
             .padding(vertical = 2.dp, horizontal = 3.dp)
             .verticalScroll(rememberScrollState())
+            .animateContentSize()
     ) {
         // 课程名称显示
         CourseNameShow(
@@ -137,9 +139,7 @@ fun ShowAllCourseToEdit(
                     courseBean =courseBean,
                     onValueChange = {
                         needAddCourseList[index] = it
-                        Log.d("AddOrEditCourse", "2:"+needAddCourseList.toList().size.toString())
                         sideAddToState(index, it)
-                        Log.d("AddorEdit", it.classDay.toString())
                                     },
                     deleteClick = {
                         needAddCourseList.remove(it)

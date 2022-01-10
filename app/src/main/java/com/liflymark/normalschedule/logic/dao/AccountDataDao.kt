@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.NormalScheduleApplication.Companion.context
 import com.liflymark.schedule.data.Settings
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking

@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 12
-        versionName "0.0.15"
+        versionCode 15
+        versionName "0.0.18"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -122,23 +122,23 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+//    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+//    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+//    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+//    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
     implementation 'androidx.room:room-ktx:2.4.0'
     implementation 'androidx.room:room-runtime:2.4.0'
-    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
+//    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     ksp "androidx.room:room-compiler:2.4.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
@@ -153,7 +153,7 @@ dependencies {
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 //    implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
-    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.2'
+//    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.2'
     implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
     implementation 'com.jaredrummler:material-spinner:1.3.1'
 
@@ -179,7 +179,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
+//    implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
     implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
 
@@ -206,4 +206,6 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 //    implementation "com.github.skydoves:colorpickerpreference:2.0.6"
     implementation 'com.afollestad.material-dialogs:color:3.2.1'
+    implementation "com.airbnb.android:lottie-compose:4.2.2"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
 }

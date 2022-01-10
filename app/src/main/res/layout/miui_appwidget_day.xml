@@ -86,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="35px"
+                    android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingEnd="3dp"
                     android:text="大学生职业规划"
@@ -119,7 +120,6 @@
                     android:textColor="@color/black"
                     android:textSize="11dp"
                     android:textStyle="bold"
-
                     />
 
                 <TextView
@@ -131,6 +131,7 @@
                     android:alpha="0.3"
                     android:maxLines="1"
                     android:text="距离上课3分钟"
+                    android:ellipsize="end"
                     android:textColor="@color/black"
                     android:textSize="10dp" />
             </RelativeLayout>
@@ -164,7 +165,9 @@
                     android:text="药物化学"
                     android:textColor="#333333"
                     android:textSize="13dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    />
 
                 <ImageView
                     android:id="@+id/line_2"
@@ -202,6 +205,7 @@
                     android:layout_marginStart="35px"
                     android:alpha="0.3"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="8:00 - 9:40"
                     android:textColor="@color/black"
                     android:textSize="10dp" />

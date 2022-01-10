@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.ui.about
 import android.R.attr.path
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.activity.ComponentActivity
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.pm.PackageInfoCompat
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.afollestad.materialdialogs.MaterialDialog
@@ -139,8 +141,14 @@ fun Introduce(){
     val context = LocalContext.current
     val activity = LocalContext.current as ComposeAboutActivity
     val pm = context.packageManager
+    val versionCode2 = PackageInfoCompat.getLongVersionCode(pm.getPackageInfo(context.packageName,0)).toInt()
     val versionName = pm.getPackageInfo(context.packageName, 0).versionName
-    val versionCode = pm.getPackageInfo(context.packageName, 0).versionCode
+    val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        pm.getPackageInfo(context.packageName,0).longVersionCode.toInt()
+    } else {
+        //noinspection deprecation
+        pm.getPackageInfo(context.packageName, 0).versionCode
+    }
     val checkNewOrNot = rememberSaveable { mutableStateOf(false) }
 //    var checkRes by remember {
 //        mutableStateOf(
@@ -155,7 +163,7 @@ fun Introduce(){
     LaunchedEffect(checkNewOrNot.value){
         if (checkNewOrNot.value){
             Toasty.info(context, "正在查询新版本", Toasty.LENGTH_SHORT).show()
-            val res = Repository.getNewVerison2(versionCode = versionCode.toString())
+            val res = Repository.getNewVerison2(versionCode = versionCode2.toString())
             if (res.status == "200"){
                 Toasty.success(context, res.result).show()
                 val uri = Uri.parse(res.newUrl)

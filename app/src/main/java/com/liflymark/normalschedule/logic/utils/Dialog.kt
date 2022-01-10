@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -17,7 +18,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -27,6 +31,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.airbnb.lottie.compose.*
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
@@ -814,7 +819,119 @@ fun RadioTextButton(
     }
 }
 
+@Composable
+fun LoadingDialogBottom(
+    showDialog:Boolean,
+    text: String?,
+    onDismissRequest:()->Unit,
+    properties:DialogProperties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false),
+    bottomContent:@Composable () -> Unit
+){
+    if (showDialog){
+        CornerDialog(
+            properties = properties,
+            onDismissRequest = {
+                onDismissRequest()
+            }
+        ) {
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadding))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .padding(5.dp)
+                        .wrapContentHeight(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    LottieAnimation(
+                        composition,
+                        iterations = LottieConstants.IterateForever,
+                        modifier = Modifier.size(60.dp)
+                    )
 
+                    if (text!=null && text!=""){
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            text = text,
+                            color = Color.Gray,
+                            fontSize = 15.sp
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
+                }
+                bottomContent()
+            }
+        }
+    }
+}
+
+@Composable
+fun LoadingDialog(
+    showDialog:Boolean,
+    text: String?,
+    onDismissRequest:()->Unit,
+    properties:DialogProperties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false),
+){
+    if (showDialog){
+        CornerDialog(
+            properties = properties,
+            onDismissRequest = {
+                onDismissRequest()
+            }
+        ) {
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadding))
+
+            Row(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(5.dp)
+                    .wrapContentHeight(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                LottieAnimation(
+                    composition,
+                    iterations = LottieConstants.IterateForever,
+                    modifier = Modifier.size(60.dp)
+                )
+
+                if (text!=null && text!=""){
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(
+                        text = text,
+                        color = Color.Gray,
+                        fontSize = 15.sp
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CornerDialog(
+    onDismissRequest:()->Unit,
+    properties:DialogProperties = DialogProperties(),
+    shapes: CornerBasedShape = MaterialTheme.shapes.medium,
+    content:@Composable () -> Unit
+){
+    Dialog(
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        properties = properties
+    ) {
+        Surface(
+            shape = shapes
+        ) {
+            content()
+        }
+    }
+}
 
 
 

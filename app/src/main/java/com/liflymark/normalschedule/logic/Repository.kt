@@ -383,6 +383,19 @@ object  Repository {
         }
     }
 
+    suspend fun loadBackgroundFileName():String? {
+        return try {
+            val a = backgroundDao.loadLastBackground()
+            if (a.userBackground != "0") {
+                a.userBackground.split('/').last()
+            } else {
+                null
+            }
+        } catch (e:java.lang.Exception){
+            null
+        }
+    }
+
     fun getSentences(force:Boolean = false) = flow {
         try {
             if (SentenceDao.isSentenceSaved() && !force){

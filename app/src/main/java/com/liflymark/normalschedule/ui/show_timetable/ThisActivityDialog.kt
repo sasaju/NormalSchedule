@@ -198,6 +198,7 @@ fun DeleteCourseDialog(deleteDialogOpen:MutableState<Boolean>,singleClass: OneBy
                     showTimetableViewModel.deleteCourse(realCourseName)
                     Toasty.success(context,"删除成功").show()
                     showTimetableViewModel.loadAllCourse()
+                    updateWidget(context)
                 }) {
                     Text(text = "仍然删除")
                 }

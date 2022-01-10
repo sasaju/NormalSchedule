@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -79,6 +80,7 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
         mutableStateOf(false)
     }
     val activity = (LocalContext.current as? LoginToScoreActivity)
+    var getIdOrNot by rememberSaveable { mutableStateOf(false) }
     WaitDialog(openDialog = openWaitDialog)
     LaunchedEffect(true){
         if (loginToScoreViewModel.isAccountSaved()){
@@ -86,8 +88,10 @@ fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
             password = loginToScoreViewModel.getSavedAccount()["password"].toString()
         }
         loginToScoreViewModel.getId()
-        if (activity != null) {
-            refreshId(activity = activity, viewModel = loginToScoreViewModel, openDialog = openWaitDialog)
+        if (activity != null && !getIdOrNot) {
+            refreshId(activity = activity, viewModel = loginToScoreViewModel, openDialog = openWaitDialog){
+                getIdOrNot = true
+            }
         } else {
             loginToScoreViewModel.id = ""
         }
@@ -203,10 +207,11 @@ fun checkInputAndShow(
     }
 }
 
-fun refreshId(activity: LoginToScoreActivity,viewModel: LoginToScoreViewModel, openDialog: MutableState<Boolean>){
+fun refreshId(activity: LoginToScoreActivity,viewModel: LoginToScoreViewModel, openDialog: MutableState<Boolean>, success:() -> Unit = {}){
     viewModel.idLiveData.observe(activity) {
         if (it.isSuccess) {
             viewModel.id = it.getOrNull()?.id ?: ""
+            success()
             Toasty.success(activity, "访问服务器成功").show()
         }
     }

@@ -1,21 +1,21 @@
 package com.liflymark.normalschedule.ui.set_background
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import coil.load
-import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.databinding.ActivityDefaultBackgroundBinding
+import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.utils.CoilEngine
 import com.liflymark.normalschedule.logic.utils.GifLoader
 import com.luck.picture.lib.PictureSelector
@@ -35,7 +35,6 @@ class DefaultBackground : AppCompatActivity() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val decorView = window.decorView
@@ -83,21 +82,27 @@ class DefaultBackground : AppCompatActivity() {
                 PictureConfig.CHOOSE_REQUEST -> {
                     Log.d("BackGround", PictureSelector.obtainMultipleResult(data).toString())
                     val uri = PictureSelector.obtainMultipleResult(data)[0].path
+                    val backgroundFileName = System.currentTimeMillis().toString()+"backImage"
+                    val realUri = if(SDK_INT<29){ Uri.fromFile(File(uri)).toString() }else{ uri }
+                    this.openFileOutput(backgroundFileName, Context.MODE_PRIVATE).use {
+                        val inputStream = this.contentResolver.openInputStream(realUri.toUri())
+                        it.write(inputStream?.readBytes())
+                    }
                     launch {
-                        val realUri = if(SDK_INT<29){ Uri.fromFile(File(uri)).toString() }else{ uri }
-                        viewModel.userBackgroundUri = realUri
+                        val internalUri = Uri.fromFile(File(this@DefaultBackground.filesDir,backgroundFileName)).toString()
+                        val lastFile = Repository.loadBackgroundFileName()
+                        lastFile?.let {
+                            this@DefaultBackground.deleteFile(it)
+                            Log.d("deletBack",it.toString())
+                        }
+                        viewModel.userBackgroundUri = internalUri
                         viewModel.updateBackground()
                         val imageLoader = GifLoader(this@DefaultBackground)
-                        Log.d("BackGround",uri.toString())
-                        if (SDK_INT<29) {
-                            binding.userImage.load(File(uri), imageLoader)
-                        }else{
-                            binding.userImage.load(uri)
-                        }
+                        binding.userImage.load(internalUri, imageLoader)
                         binding.userImageText.text = "点击此处更换"
                         Toasty.success(this@DefaultBackground, "读取成功，返回看看吧", Toasty.LENGTH_SHORT)
                             .show()
-                        Log.d("DefaultBackground", uri.toString())
+                        Log.d("DefaultBackground", internalUri.toString())
                     }
                 }
                 else -> {}

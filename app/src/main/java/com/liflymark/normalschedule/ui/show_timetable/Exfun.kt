@@ -1,11 +1,16 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.annotation.SuppressLint
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Context
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getInitial
+import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
+import com.liflymark.normalschedule.ui.app_widget_miui.DayNewWidgetProvider
 import java.util.*
 
 
@@ -105,6 +110,15 @@ fun Int.floorMod(other: Int): Int = when (other) {
     else -> this - floorDiv(other) * other
 }
 
+fun updateWidget(context: Context) {
+    val appWidgetManager = AppWidgetManager.getInstance(context)
+    val thisAppWidget = ComponentName(
+        context.packageName,
+        DayNewWidgetProvider::class.java.name
+    )
+    val appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget)
+    Convert.onUpdateMIUIWidget(context, appWidgetManager, appWidgetIds)
+}
 // snackbar
 //val LocalShowSnackbar = compositionLocalOf { false }
 //val LocalSnackText = staticCompositionLocalOf { "" }

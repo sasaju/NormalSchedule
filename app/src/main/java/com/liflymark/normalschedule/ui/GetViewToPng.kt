@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -26,7 +27,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.utils.LoadingDialog
 import com.liflymark.normalschedule.logic.utils.StringPicker
+import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.File.separator
@@ -38,24 +41,29 @@ class GetViewToPng : ComponentActivity() {
     @OptIn(ExperimentalPagerApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val view = LayoutInflater.from(this).inflate(R.layout.activity_test, null, false)
-        val drawingCacheEnabled = true
-        setContentView(view)
-        view.setDrawingCacheEnabled(drawingCacheEnabled)
-        view.buildDrawingCache(drawingCacheEnabled)
-        view.measure(
-            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-        );
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        val drawingCache: Bitmap = view.getDrawingCache()
-        val bitmap: Bitmap?
-        bitmap = Bitmap.createBitmap(drawingCache)
-        view.setDrawingCacheEnabled(false)
-//        MediaStore.Images.Media.insertImage(contentResolver, bitmap!!, "title", "")
-        saveImage(bitmap,this, "test")
-        lifecycle.coroutineScope.launch {
-
+//        val view = LayoutInflater.from(this).inflate(R.layout.activity_test, null, false)
+//        val drawingCacheEnabled = true
+//        setContentView(view)
+//        view.setDrawingCacheEnabled(drawingCacheEnabled)
+//        view.buildDrawingCache(drawingCacheEnabled)
+//        view.measure(
+//            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+//            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+//        );
+//        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+//        val drawingCache: Bitmap = view.getDrawingCache()
+//        val bitmap: Bitmap?
+//        bitmap = Bitmap.createBitmap(drawingCache)
+//        view.setDrawingCacheEnabled(false)
+////        MediaStore.Images.Media.insertImage(contentResolver, bitmap!!, "title", "")
+//        saveImage(bitmap,this, "test")
+//        lifecycle.coroutineScope.launch {
+//            
+//        }
+        setContent { 
+            NormalScheduleTheme {
+                LoadingDialog(showDialog = true, text = "正在请求", onDismissRequest = {  })
+            }
         }
     }
 
