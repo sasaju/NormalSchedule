@@ -76,7 +76,7 @@ class ShowTimetableActivity2 : BaseComment() {
     @OptIn(
         ExperimentalAnimationApi::class,
         ExperimentalMaterialApi::class,
-        ExperimentalPagerApi::class, kotlinx.coroutines.DelicateCoroutinesApi::class
+        ExperimentalPagerApi::class, DelicateCoroutinesApi::class
     )
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -582,8 +582,7 @@ fun SingleLineClass(
                                 key(oneClass.courseName + oneClass.start + oneClass.end + stViewModel.showToast) {
                                     SingleClass2(
                                         singleClass = oneClass,
-                                        perHeight = perHeight,
-                                        mode = mode,
+                                        settings = settings,
                                         conflict = true
                                     ) {
                                         courseClick(it)
@@ -602,9 +601,7 @@ fun SingleLineClass(
                         key(oneClass.courseName + oneClass.start + oneClass.end + stViewModel.showToast) {
                             SingleClass2(
                                 singleClass = oneClass,
-                                perHeight = perHeight,
-                                mode = mode,
-                                bottomRight = settings.showRight
+                                settings = settings
                             ){
                                 courseClick(it)
                             }
@@ -618,22 +615,37 @@ fun SingleLineClass(
     }
 }
 
-
+/** 单个课程格子
+ * @param singleClass 课程
+ * @param perHeight 课程格子高度
+ * @param mode 0-纯色 1-渐变色
+ * @param conflict 是否与其他课程冲突
+ * @param courseAlpha 课程格子透明度
+ * @param bottomRight 是否显示作业本标记
+ * @param borderWidth 边框宽度
+ * @param borderAlpha 边框透明度
+ * @param loadWork 是否加载右下角作业本标记-一般在设置页面关闭，以减轻读取负担
+ * @param courseClick 课程格子单击回调
+ */
 @Composable
 fun SingleClass2(
     singleClass: OneByOneCourseBean,
-    perHeight: Int = 70,
-    mode:Int = 0,
     conflict:Boolean = false,
-    courseAlpha:Double=0.75,
-    bottomRight:Int = 0,
-    borderWidth:Double = 1.05,
-    borderAlpha:Int = 50,
-    courseClick:(oneByOne:OneByOneCourseBean) -> Unit
+    loadWork:Boolean = true,
+    settings: Settings = Settings.getDefaultInstance(),
+    courseClick:(oneByOne:OneByOneCourseBean) -> Unit,
 ) {
 //    val context = LocalContext.current
 //    val activity = (LocalContext.current as? Activity)
 //    val interactionSource = remember { MutableInteractionSource() }
+    val perHeight = settings.coursePerHeight
+    val mode = settings.colorMode
+    val bottomRight = settings.showRight
+    val borderWidth = settings.courseBorderSize
+    val borderAlpha = settings.courseBorderAlpha
+    val courseNameSize = settings.courseNameFontSize
+    val courseTeacherSize = settings.courseTeacherFontSize
+    val courseAlpha = settings.courseCardAlpha
     val height =
         if (!conflict){
             perHeight * (singleClass.end - singleClass.start + 1)
@@ -641,9 +653,10 @@ fun SingleClass2(
             (perHeight * (singleClass.end - singleClass.start + 1) *0.6).toInt()
         }
     val nameList = singleClass.courseName.split("\n")
-    val workNameList = Repository
+    val workNameList =
+        if (loadWork) { Repository
         .loadUnFinishCourseName()
-        .collectAsState(initial = listOf("正在查询"))
+        .collectAsState(initial = listOf("正在查询")) }else{ remember { mutableStateOf(listOf("正在查询")) }}
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -655,7 +668,7 @@ fun SingleClass2(
                 .fillMaxWidth()
                 .height(height.dp)
                 .padding(0.95.dp) // 外边距
-                .alpha(courseAlpha.toFloat()),
+                .alpha(courseAlpha),
 //            elevation = 1.dp, // 设置阴影
             border = BorderStroke(
                 width = borderWidth.dp,
@@ -671,7 +684,7 @@ fun SingleClass2(
                         style = SpanStyle(
                             fontWeight = FontWeight.W600,
                             color = Color.White,
-                            fontSize = 13.sp
+                            fontSize = courseNameSize.sp
                         )
                     ) {
                         append(nameList[0] + "\n" + nameList[1] + "\n\n")
@@ -680,7 +693,7 @@ fun SingleClass2(
                         style = SpanStyle(
                             fontWeight = FontWeight.W600,
                             color = Color.White,
-                            fontSize = 10.sp
+                            fontSize = courseTeacherSize.sp
                         )
                     ) {
                         append(nameList[2])
@@ -695,6 +708,7 @@ fun SingleClass2(
                             )
                         )
                     )
+                    .padding(horizontal = (borderWidth+0.95).dp, vertical = borderWidth.dp)
                     .clickable {
                         //                    showDetailDialog.value = true
                         courseClick(singleClass)

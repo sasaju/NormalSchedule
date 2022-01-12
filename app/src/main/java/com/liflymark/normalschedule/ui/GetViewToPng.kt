@@ -30,6 +30,9 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.LoadingDialog
 import com.liflymark.normalschedule.logic.utils.StringPicker
 import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
+import com.liflymark.normalschedule.ui.score_detail.UiControl
+import com.liflymark.normalschedule.ui.settings.SettingsPreviewAndControl
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.File.separator
@@ -61,8 +64,9 @@ class GetViewToPng : ComponentActivity() {
 //            
 //        }
         setContent { 
-            NormalScheduleTheme {
-                LoadingDialog(showDialog = true, text = "正在请求", onDismissRequest = {  })
+            NorScTheme {
+                UiControl()
+                SettingsPreviewAndControl({})
             }
         }
     }

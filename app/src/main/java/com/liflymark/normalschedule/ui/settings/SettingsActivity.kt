@@ -19,6 +19,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.utils.SingleSelectDialog
@@ -42,19 +43,28 @@ class SettingsActivity : ComponentActivity() {
 fun SettingsAll() {
     NorScTheme {
         UiControl()
-        Scaffold(
-            topBar = {
-                NormalTopBar(label = "设置")
-            },
-            content = {
-                SettingsContent()
-            }
-        )
+        SettingsNavHost()
     }
 }
 
 @Composable
-fun SettingsContent(){
+fun SettingsMainPage(
+    navController: NavController
+){
+    Scaffold(
+        topBar = {
+            NormalTopBar(label = "设置")
+        },
+        content = {
+            SettingsContent(navController = navController)
+        }
+    )
+}
+
+@Composable
+fun SettingsContent(
+    navController: NavController
+){
     val context = LocalContext.current
     var nowColor by remember {
         mutableStateOf("主题")
@@ -153,10 +163,10 @@ fun SettingsContent(){
             showNorSetDialog.value = true
         }
         SettingsItem(
-            title = "课程格子高度",
-            description = "高度：${perHeight}dp"
+            title = "课程格子其他配置",
+            description = "更细致的配置项"
         ) {
-            Toasty.info(context, "暂未开发").show()
+            navController.navigate("courseCardSettings")
         }
         SettingsItem(
             title = "夜间模式显示背景图",

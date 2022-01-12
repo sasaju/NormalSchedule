@@ -19,9 +19,7 @@ import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
 import com.liflymark.schedule.data.Settings
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext
 
 object  Repository {
@@ -547,7 +545,18 @@ object  Repository {
         }
     }
 
-    fun getScheduleSettings() = AccountDataDao.scheduleSettings
+    fun getScheduleSettings():Flow<Settings> {
+        return AccountDataDao.scheduleSettings.map {
+                val new = it.toBuilder()
+                if (new.coursePerHeight==0){ new.coursePerHeight = 70 }
+                if (new.courseNameFontSize==0F) { new.courseNameFontSize=13F }
+                if (new.courseTeacherFontSize==0F){new.courseTeacherFontSize=10F}
+                if (new.courseCardAlpha==0F){new.courseCardAlpha=0.75F}
+                if (new.courseBorderAlpha==0){new.courseBorderAlpha=50}
+                new.build()
+            }
+
+    }
 
     suspend fun updateMode(mode:Int):Int{
         return try {
@@ -571,7 +580,15 @@ object  Repository {
 
     suspend fun updateSettings(setSettings:(settings:Settings)->Settings){
         AccountDataDao.updateSettings {
+            Log.d("Repo","SaveSettings 1")
             setSettings(it)
+        }
+    }
+
+    suspend fun updateSettings(settings: Settings){
+        AccountDataDao.updateSettings {
+            Log.d("Repo","SaveSettings 1")
+            settings
         }
     }
 

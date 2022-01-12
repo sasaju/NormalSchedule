@@ -11,6 +11,7 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.databinding.ActivityImportScoreBinding
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
+import com.liflymark.normalschedule.logic.utils.RomUtil
 import es.dmoral.toasty.Toasty
 
 class ImportScoreActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class ImportScoreActivity : AppCompatActivity() {
         ImmersionBar.with(this)
             .statusBarDarkFont(true)
             .init()
-
+        if (!RomUtil.isVivo){ binding.tvTitle.text = "登陆HBU教务系统" }
         val saved = viewModel.isAccountSaved()
         if (saved) {
             binding.user0.text = SpannableStringBuilder(viewModel.getSavedAccount()["user"])

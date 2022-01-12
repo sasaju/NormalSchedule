@@ -24,7 +24,6 @@
 - [Accompanist](https://github.com/google/accompanist)
 - [MaterialSpinner](https://github.com/jaredrummler/MaterialSpinner)
 - [ImmersionBar](https://github.com/gyf-dev/ImmersionBar)
-- [Glide](https://github.com/bumptech/glide)
 - [MaterialDialog](https://github.com/afollestad/material-dialogs)
 
 ## 上架相关
@@ -32,13 +31,13 @@
 | 应用商店 | 上架情况 | 下载量 | 更新时间 |
 | ------------- | :-----------: |------|--|
 | Google Play  | 未上架  | 0 | 2021年9月3日 |
-| 小米应用商店  | 已上架  | 1321 | 2021年11月21日 |
+| 小米应用商店  | 已上架  | 2114 | 2022年1月12日 |
 | 华为应用商店  | 已上架 | 2561  | 2021年11月21日 |
-| 魅族应用商店  | 未上架  | 0 | 2021年11月21日 |
+| 魅族应用商店  | 已上架  | 0 | 2022年1月12日 |
 | 荣耀应用商店  | 已上架  | 同华为 |2021年11月21日|
 | 一加应用商店  | 已上架  | 同OPPO | 2021年11月21日 |
 | 三星应用商店  | 已上架 | 1 | 2021年11月21日 |
-| OPPO应用商店  | 已上架  | 652 | 2021年11月21日 |
+| OPPO应用商店  | 已上架  | 1135 | 2022年1月12日 |
 | VIVO应用商店  | 未上架  | 0 | 2021年11月21日 |
 | 应用宝 | 已上架 | 119 | 2021年11月21日 |
 
@@ -58,12 +57,14 @@ tips: 酷安上与其他平台包名不同，功能无区别。
 - [ ] 周视图小部件
 - [x] 完整的课表管理功能
 - [x] 空教室查询
-- [ ] 绩点、平时成绩、培养方案查询
+- [x] 平时成绩查询
+- [ ] 绩点、培养方案查询
 - [x] 作业本功能
 - [ ] 完全迁移至[Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [x] 工具箱功能-公告
 - [x] 工具箱功能-校历
-- [ ] 工具箱功能-其他
+- [ ] 工具箱功能-其他 
+- [x] 课程格子自定义样式
 - [ ] 一卡通流水查询~(由于一卡通管理处robot.txt显示禁止抓取，暂不实现该功能)~
 
 ## 项目缘起

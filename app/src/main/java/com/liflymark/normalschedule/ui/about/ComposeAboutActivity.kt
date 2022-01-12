@@ -29,6 +29,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.utils.Dialog
+import com.liflymark.normalschedule.logic.utils.RomUtil
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
@@ -210,7 +211,8 @@ fun Introduce(){
             icon = Icons.Default.Star,
             text = "用户协议及隐私政策"
         ) {
-            activity.openBrowser("https://liflymark.top/privacy/")
+            val url = if(RomUtil.isVivo){"https://liflymark.top/privacy2/"}else{"https://liflymark.top/privacy/"}
+            activity.openBrowser(url)
         }
 //        SingleIconButton(
 //            icon = Icons.Default.Star,

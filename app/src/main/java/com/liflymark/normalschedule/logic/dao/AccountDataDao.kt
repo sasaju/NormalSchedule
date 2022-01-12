@@ -90,6 +90,12 @@ object AccountDataDao {
         context.settingsStore.updateData {
             setSettings(it)
         }
+
+    }
+    suspend fun updateSettings(settings: Settings){
+        context.settingsStore.updateData {
+            settings
+        }
     }
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "accountInfo")

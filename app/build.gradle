@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 15
-        versionName "0.0.18"
+        versionCode 16
+        versionName "0.0.19"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -56,9 +56,9 @@ android {
 //        }
         cool{
             minifyEnabled true
-            applicationIdSuffix ".beta"
-            resValue "string", "app_name", "河大课表Beta"
+            resValue "string", "app_name", "河喵课表"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.nov2
         }
         debug{
             minifyEnabled false

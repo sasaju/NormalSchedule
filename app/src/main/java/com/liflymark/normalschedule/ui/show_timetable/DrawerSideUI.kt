@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsHeight
+import com.liflymark.normalschedule.logic.utils.RomUtil
 import com.liflymark.normalschedule.ui.about.ComposeAboutActivity
 import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
 import com.liflymark.normalschedule.ui.exam_arrange.ExamActivity
@@ -90,7 +91,7 @@ fun DrawerNavHost(drawerState: DrawerState){
         NavButton(
             activity = ToolBoxActivity(),
             drawerState = drawerState,
-            icon = Icons.Filled.WorkOutline, text = "河大工具箱"
+            icon = Icons.Filled.WorkOutline, text = if(RomUtil.isVivo){"工具箱"}else{"河大工具箱"}
         )
 
         Spacer(modifier = Modifier

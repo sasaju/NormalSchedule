@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.liflymark.normalschedule.logic.utils.RomUtil
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import kotlinx.coroutines.launch
@@ -76,8 +77,10 @@ fun FunctionList(navController: NavController){
                 titleIcon = Icons.Default.EmojiSymbols,
                 titleName = "校内生活"
             ) {
-                SingleButton(Icons.Filled.CalendarToday, "校历") {
-                    navController.navigate("schoolCalendar")
+                if(!RomUtil.isVivo) {
+                    SingleButton(Icons.Filled.CalendarToday, "校历") {
+                        navController.navigate("schoolCalendar")
+                    }
                 }
                 SingleButton(Icons.Filled.DirectionsBus, "校车时刻表") {
                     navController.navigate("busTime")

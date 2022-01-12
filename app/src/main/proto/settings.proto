@@ -26,13 +26,13 @@ message Settings {
   string score_detail = 7;
 
   // 课程格子-课程字体大小 默认值0 转换为13sp
-  int32 course_name_font_size = 8;
+  float course_name_font_size = 8;
 
   // 课程格子-老师字体大小 默认值0 转换为10sp
-  int32 course_teacher_font_size = 9;
+  float course_teacher_font_size = 9;
 
   // 课程格子-Border宽度 默认值0 即为0
-  int32 course_border_size = 10;
+  float course_border_size = 10;
 
   // 课程格子-Border颜色 0即为Color.White
   int64 course_border_color = 11;
@@ -42,5 +42,11 @@ message Settings {
 
   // 课程格子-是否显示老师
   bool show_teacher_or_not = 13;
+
+  // 课程格子-透明度 默认值0 转换为0.75
+  float course_card_alpha = 14;
+
+  // 课程格子-border透明度 默认值0 转换为50
+  int32 course_border_alpha = 15;
 
 }

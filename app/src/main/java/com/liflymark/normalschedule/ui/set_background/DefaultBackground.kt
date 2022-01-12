@@ -57,6 +57,11 @@ class DefaultBackground : AppCompatActivity() {
         }
         binding.defaultBackground1.setOnClickListener {
             launch {
+                val lastFile = Repository.loadBackgroundFileName()
+                lastFile?.let {
+                    this@DefaultBackground.deleteFile(it)
+                    Log.d("deletBack",it.toString())
+                }
                 viewModel.userBackgroundUri = "0"
                 viewModel.updateBackground()
                 Toasty.success(this@DefaultBackground, "已切换回默认背景", Toasty.LENGTH_SHORT).show()
@@ -66,7 +71,11 @@ class DefaultBackground : AppCompatActivity() {
 
         binding.imageView4.setOnClickListener {
             launch {
-                viewModel.userBackgroundUri = "0"
+                val lastFile = Repository.loadBackgroundFileName()
+                lastFile?.let {
+                    this@DefaultBackground.deleteFile(it)
+                }
+                    viewModel.userBackgroundUri = "0"
                 viewModel.updateBackground()
                 Toasty.success(this@DefaultBackground, "已切换回默认背景", Toasty.LENGTH_SHORT).show()
             }

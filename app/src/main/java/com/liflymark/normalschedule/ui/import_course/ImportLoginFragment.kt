@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.MainActivity
-import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.databinding.FragmentImportLoginBinding
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
+import com.liflymark.normalschedule.logic.utils.RomUtil
 import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2
@@ -27,17 +28,18 @@ class ImportLoginFragment: Fragment() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(CourseViewModel::class.java) }
     private var _binding: FragmentImportLoginBinding? = null
-    // This property is only valid between onCreateView and
-// onDestroyView.
     private val binding get() = _binding!!
     var userName = ""
     var userPassword = ""
     private var id = ""
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentImportLoginBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
 //        return inflater.inflate(R.layout.fragment_import_login, container, false)
     }
 
@@ -60,6 +62,9 @@ class ImportLoginFragment: Fragment() {
             activity?.finish()
             return
         }
+
+        // 如果是不是VIVO系统更改名称
+        if (!RomUtil.isVivo){ binding.tvTitle.text = "登陆HBU教务系统" }
 
         if (activity is ImportCourseAgain){
             viewModel.accountLiveData.observe(viewLifecycleOwner){
@@ -256,7 +261,7 @@ class ImportLoginFragment: Fragment() {
                     1,
                     1,
                     "111111111111111111111111",
-                    1,
+                    2,
                     "点击右上角导入课程",
                     "",
                     ""
@@ -328,7 +333,31 @@ class ImportLoginFragment: Fragment() {
             Dialog.getContractDialog(
                 requireContext(),
                 yes = {
-                    Toasty.info(requireContext(), "请点击登陆按钮上方的复选框以再次确认").show()
+                    // 检测VIVO 如果是VIVO则直接跳过导入
+                    if (RomUtil.isVivo && activity is MainActivity){
+                        Log.d("ImportLogin", "VIVO手机")
+                        viewModel.saveAccount("visit", "visit")
+                        val allCourseList = listOf(
+                            AllCourse(
+                                "五四路",
+                                1,
+                                1,
+                                "111111111111111111111111",
+                                2,
+                                "点击右上角导入课程",
+                                "",
+                                ""
+                            )
+                        )
+                        val intent = Intent(context, ShowTimetableActivity2::class.java).apply {
+                            putExtra("isSaved", false)
+                            putExtra("courseList", Convert.allCourseToJson(allCourseList))
+                        }
+                        startActivity(intent)
+                        activity?.finish()
+                    } else {
+                        Toasty.info(requireContext(), "请点击登陆按钮上方的复选框以再次确认").show()
+                    }
                 },
                 no = {
                     activity?.finish()

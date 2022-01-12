@@ -11,7 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="hint_password">请输入统一认证密码</string>
     <string name="hint_student_id">请输入学号</string>
-    <string name="text_login_web_title">登陆HBU教务系统</string>
+    <string name="text_login_web_title">登陆教务系统</string>
     <string name="hint_check_code">验证码</string>
     <string name="_0">0</string>
     <string name="title_activity_new">New</string>
