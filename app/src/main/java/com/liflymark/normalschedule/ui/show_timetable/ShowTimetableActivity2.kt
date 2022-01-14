@@ -4,15 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,7 +20,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -108,10 +103,6 @@ class ShowTimetableActivity2 : BaseComment() {
         }
     }
 
-    override fun getResources(): Resources {
-        return super.getResources()
-    }
-
     override fun onResume() {
         super.onResume()
         viewModel.loadAllCourse()
@@ -163,7 +154,7 @@ fun Drawer(
             }
         }
     }
-    LaunchedEffect(drawerState.isClosed){
+    LaunchedEffect(drawerState.isClosed) {
         backCallback.isEnabled = !drawerState.isClosed
     }
     DisposableEffect(backDispatcher) {
@@ -175,9 +166,9 @@ fun Drawer(
             backCallback.remove()
         }
     }
-    
+
     var singleClass by remember {
-           mutableStateOf(getData()[0])
+        mutableStateOf(getData()[0])
     }
     val showDetailDialog = remember { mutableStateOf(false) }
     ClassDetailDialog(openDialog = showDetailDialog, singleClass = singleClass)
@@ -212,18 +203,20 @@ fun Drawer(
                             pagerState,
                             overMod,
                             it,
-                            quickJumpClick = {quickJumpShow.value = !quickJumpShow.value}
+                            quickJumpClick = { quickJumpShow.value = !quickJumpShow.value }
                         )
                     }
                 }
                 if (quickJumpShow.value) {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .horizontalScroll(
-                            rememberScrollState()
-                        )) {
-                        for (week in 0 until allWeek){
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .horizontalScroll(
+                                rememberScrollState()
+                            )
+                    ) {
+                        for (week in 0 until allWeek) {
                             TextButton(
                                 onClick = {
                                     scope.launch {
@@ -232,7 +225,7 @@ fun Drawer(
                                 },
                                 modifier = Modifier.padding(2.dp)
                             ) {
-                                Text("第${week+1}周", color = MaterialTheme.colors.onBackground)
+                                Text("第${week + 1}周", color = MaterialTheme.colors.onBackground)
                             }
                         }
                     }
@@ -249,13 +242,13 @@ fun Drawer(
                         ),
                     ),
                 ) { index ->
-                    val page= (index - initialWeek).floorMod(allWeek)
+                    val page = (index - initialWeek).floorMod(allWeek)
                     settings.value?.let {
                         SingleLineClass(
                             oneWeekClass = courseList,
                             page = page,
                             settings = it
-                        ){ oneBean ->
+                        ) { oneBean ->
                             singleClass = oneBean
                             showDetailDialog.value = true
                         }
@@ -304,7 +297,7 @@ fun BackGroundImage(viewModel: ShowTimetableViewModel) {
                 contentScale = ContentScale.Crop
             )
         }
-    }else{
+    } else {
         Image(
             painter = rememberImagePainter(data = ""),
             contentDescription = null,
@@ -325,7 +318,7 @@ fun ScheduleToolBar(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     settings: Settings,
-    quickJumpClick:() -> Unit = {},
+    quickJumpClick: () -> Unit = {},
     stViewModel: ShowTimetableViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -335,9 +328,9 @@ fun ScheduleToolBar(
     val startSchoolOrNot = stViewModel.startSchool()
     val startHolidayOrNot = stViewModel.startHoliday()
     val iconColor =
-        if (settings.darkShowBack){
+        if (settings.darkShowBack) {
             LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-        }else{
+        } else {
             MaterialTheme.colors.onBackground
         }
     TopAppBar(
@@ -363,8 +356,8 @@ fun ScheduleToolBar(
                 // 开学了，而且页面是当前周 显示“当前周”
                 // 放假了，显示放假
                 if (startSchoolOrNot && !nowWeekOrNot) {
-                Spacer(modifier = Modifier.height(5.dp))
-            }
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
                 Row {
                     Text(text = "第${userNowWeek + 1}周")
                     IconButton(onClick = { quickJumpClick() }, modifier = Modifier.size(30.dp)) {
@@ -427,12 +420,20 @@ fun SingleLineClass(
     page: Int,
     settings: Settings,
     stViewModel: ShowTimetableViewModel = viewModel(),
-    courseClick:(oneByOne:OneByOneCourseBean) -> Unit
+    courseClick: (oneByOne: OneByOneCourseBean) -> Unit
 ) {
     val context = LocalContext.current
-    val perHeight = if (settings.coursePerHeight==0){70}else{settings.coursePerHeight}
+    val perHeight = if (settings.coursePerHeight == 0) {
+        70
+    } else {
+        settings.coursePerHeight
+    }
     val mode = settings.colorMode
-    val iconColor = if (!settings.darkShowBack){ MaterialTheme.colors.onBackground } else{ Color.Black }
+    val iconColor = if (!settings.darkShowBack) {
+        MaterialTheme.colors.onBackground
+    } else {
+        Color.Black
+    }
     val snackbarVisibleState = remember { mutableStateOf(false) }
     val snackbarVisibleShowState = remember { mutableStateOf(true) }
     var snackbarText by remember { mutableStateOf("") }
@@ -444,7 +445,7 @@ fun SingleLineClass(
                     TextButton(onClick = {
                         snackbarVisibleState.value = false
                         snackbarVisibleShowState.value = false
-                        Toasty.error(context,"注意可能存在其他课程冲突,解决冲突后将不再提示！！！").show()
+                        Toasty.error(context, "注意可能存在其他课程冲突,解决冲突后将不再提示！！！").show()
                     }) {
                         Text("关闭提示")
                     }
@@ -602,7 +603,7 @@ fun SingleLineClass(
                             SingleClass2(
                                 singleClass = oneClass,
                                 settings = settings
-                            ){
+                            ) {
                                 courseClick(it)
                             }
                         }
@@ -630,10 +631,10 @@ fun SingleLineClass(
 @Composable
 fun SingleClass2(
     singleClass: OneByOneCourseBean,
-    conflict:Boolean = false,
-    loadWork:Boolean = true,
+    conflict: Boolean = false,
+    loadWork: Boolean = true,
     settings: Settings = Settings.getDefaultInstance(),
-    courseClick:(oneByOne:OneByOneCourseBean) -> Unit,
+    courseClick: (oneByOne: OneByOneCourseBean) -> Unit,
 ) {
 //    val context = LocalContext.current
 //    val activity = (LocalContext.current as? Activity)
@@ -647,22 +648,32 @@ fun SingleClass2(
     val courseTeacherSize = settings.courseTeacherFontSize
     val courseAlpha = settings.courseCardAlpha
     val height =
-        if (!conflict){
+        if (!conflict) {
             perHeight * (singleClass.end - singleClass.start + 1)
-        }else{
-            (perHeight * (singleClass.end - singleClass.start + 1) *0.6).toInt()
+        } else {
+            (perHeight * (singleClass.end - singleClass.start + 1) * 0.6).toInt()
         }
     val nameList = singleClass.courseName.split("\n")
     val workNameList =
-        if (loadWork) { Repository
-        .loadUnFinishCourseName()
-        .collectAsState(initial = listOf("正在查询")) }else{ remember { mutableStateOf(listOf("正在查询")) }}
+        if (loadWork) {
+            Repository
+                .loadUnFinishCourseName()
+                .collectAsState(initial = listOf("正在查询"))
+        } else {
+            remember { mutableStateOf(listOf("正在查询")) }
+        }
+    val cardColor =
+        if (mode==0){
+            listOf(singleClass.twoColorList[0], singleClass.twoColorList[0])
+        } else{
+            listOf(singleClass.twoColorList[1], singleClass.twoColorList[2])
+        }
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(height.dp),
         contentAlignment = Alignment.BottomEnd
-    ){
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -700,15 +711,8 @@ fun SingleClass2(
                     }
                 },
                 modifier = Modifier
-                    .background(
-                        Brush.verticalGradient(
-                            Convert.stringToBrush(
-                                singleClass.color.value,
-                                mode = mode
-                            )
-                        )
-                    )
-                    .padding(horizontal = (borderWidth+0.95).dp, vertical = borderWidth.dp)
+                    .background(Brush.verticalGradient(cardColor))
+                    .padding(horizontal = (borderWidth + 0.95).dp, vertical = borderWidth.dp)
                     .clickable {
                         //                    showDetailDialog.value = true
                         courseClick(singleClass)
@@ -763,7 +767,7 @@ fun saveAllCourse(
                             "部分情况将导致课程冲突，请务必检查！！！如无法操作，请尝试登陆导入"
                 )
             }
-            updateWidget(context=activity2)
+            updateWidget(context = activity2)
         }
     }
 }
@@ -782,7 +786,7 @@ fun DefaultPreview() {
         val height = 70 * (singleClass.end - singleClass.start + 1)
         Box(
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth(0.6f)

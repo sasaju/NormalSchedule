@@ -18,19 +18,35 @@ import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
 import com.liflymark.schedule.data.Settings
+import com.liflymark.schedule.data.twoColorItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext
 
-object  Repository {
+object Repository {
 
     private val dataBase = AppDatabase.getDatabase(NormalScheduleApplication.context)
     private val courseDao = dataBase.courseDao()
     private val backgroundDao = dataBase.backgroundDao()
     private val homeworkDao = dataBase.homeworkDao()
-
+    fun getDefaultString() = listOf(
+        listOf("#12c2e9", "#FFFC354C", "#FF0ABFBC"),
+        listOf("#376B78", "#FFC04848", "#FF480048"),
+        listOf("#f64f59", "#ff5f2c82", "#ff49a09d"),
+        listOf("#CBA689", "#FFDC2424", "#DF5B69BE"),
+        listOf("#ffffbb33", "#ff24C6DC", "#ff514A9D"),
+        listOf("#8202F2", "#ffE55D87", "#ff5FC3E4"),
+        listOf("#F77CC2", "#ff5C258D", "#ff4389A2"),
+        listOf("#4b5cc4", "#ff134E5E", "#ff71B280"),
+        listOf("#426666", "#ff085078", "#ff85D8CE"),
+        listOf("#40de5a", "#ff4776E6", "#ff8E54E9"),
+        listOf("#f0c239", "#ff1D2B64", "#ffF8CDDA"),
+        listOf("#725e82", "#A91A2980", "#ff26D0CE"),
+        listOf("#c32136", "#ffAA076B", "#E692088F"),
+        listOf("#b35c44", "#ffF8CDDA", "#ffE7E9BB"),
+    )
     fun getId() = fire(Dispatchers.IO) {
-        val id =NormalScheduleNetwork.getId()
+        val id = NormalScheduleNetwork.getId()
         if (id.id != "") {
             Result.success(id)
         } else {
@@ -42,12 +58,12 @@ object  Repository {
         try {
             val result = NormalScheduleNetwork.getId()
             emit(result)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             emit(IdResponse(""))
         }
     }
 
-    fun getId3() = fireFlow(Dispatchers.IO){
+    fun getId3() = fireFlow(Dispatchers.IO) {
         Result.success(NormalScheduleNetwork.getId())
     }
 
@@ -55,19 +71,19 @@ object  Repository {
         try {
             val result = NormalScheduleNetwork.getId()
             emit(result)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             emit(IdResponse("love"))
         }
     }
 
     fun cancelAll() = NormalScheduleNetwork.cancelAll()
 
-    fun getCaptcha(sessionId: String) =  liveData(Dispatchers.IO) {
+    fun getCaptcha(sessionId: String) = liveData(Dispatchers.IO) {
         try {
             val img = NormalScheduleNetwork.getCaptcha(sessionId).bytes()
             val imgStream = BitmapFactory.decodeByteArray(img, 0, img.size)
             emit(imgStream)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             emit(null)
         }
     }
@@ -82,58 +98,62 @@ object  Repository {
 //        Result.success(courseResponse)
 //    }
 
-    fun getCourse2(user:String, password:String, yzm:String, headers:String) = liveData(Dispatchers.IO){
-        try {
-            when {
-                user=="123456" -> {
-                    val courseResponse = courseSampleData()
-                    emit(courseResponse)
+    fun getCourse2(user: String, password: String, yzm: String, headers: String) =
+        liveData(Dispatchers.IO) {
+            try {
+                when {
+                    user == "123456" -> {
+                        val courseResponse = courseSampleData()
+                        emit(courseResponse)
+                    }
+                    headers != "" -> {
+                        val courseResponse =
+                            NormalScheduleNetwork.getCourse(user, password, yzm, headers)
+                        Log.d("Repon", "getCourse发生错误")
+                        emit(courseResponse)
+                    }
+                    else -> {
+                        val courseResponse = NormalScheduleNetwork.getCourse(user, password)
+                        emit(courseResponse)
+                    }
                 }
-                headers!="" -> {
-                    val courseResponse = NormalScheduleNetwork.getCourse(user, password, yzm, headers)
-                    Log.d("Repon","getCourse发生错误")
-                    emit(courseResponse)
-                }
-                else -> {
-                    val courseResponse = NormalScheduleNetwork.getCourse(user, password)
-                    emit(courseResponse)
-                }
+            } catch (e: Exception) {
+                Log.d("Repon", e.toString())
+                emit(null)
             }
-        } catch (e: Exception){
-            Log.d("Repon",e.toString())
-            emit(null)
+
         }
 
-    }
-
-    fun getCourse2(user: String, password: String) = liveData(Dispatchers.IO){
+    fun getCourse2(user: String, password: String) = liveData(Dispatchers.IO) {
         try {
-            if (user=="123456"){
+            if (user == "123456") {
                 val courseResponse = courseSampleData()
                 emit(courseResponse)
             } else {
                 val courseResponse = NormalScheduleNetwork.getCourse(user, password)
                 emit(courseResponse)
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             emit(null)
         }
     }
 
-    fun getVisitCourse() = fire(Dispatchers.IO){
+    fun getVisitCourse() = fire(Dispatchers.IO) {
 //        val courseResponse = NormalScheduleNetwork.getVisitCourse()
-        val courseResponse = CourseResponse(listOf(
-            AllCourse(
-                "五四路",
-                4,
-                1,
-                "11111111111111111111111",
-                1,
-                "点击右上角重新导入课程",
-                "",
-                ""
-            )
-        ), status = "ok")
+        val courseResponse = CourseResponse(
+            listOf(
+                AllCourse(
+                    "五四路",
+                    4,
+                    1,
+                    "11111111111111111111111",
+                    1,
+                    "点击右上角重新导入课程",
+                    "",
+                    ""
+                )
+            ), status = "ok"
+        )
         Result.success(courseResponse)
     }
 
@@ -166,8 +186,8 @@ object  Repository {
         )
     }
 
-    fun loadAllCourse2() = liveData(Dispatchers.IO) {
-        emit(Convert.courseBeanToOneByOne2(courseDao.loadAllUnRemoveCourse()))
+    fun loadAllCourse2(colorList: List<List<String>> = getDefaultString()) = liveData(Dispatchers.IO) {
+        emit(Convert.courseBeanToOneByOne2(courseDao.loadAllUnRemoveCourse(), colorList))
     }
 
     fun getDepartmentList() = flow {
@@ -178,32 +198,32 @@ object  Repository {
         emit(DepartmentList("异常", listOf()))
     }.flowOn(Dispatchers.IO)
 
-    fun loadCourseByMajorToAll(department: String, major:String) = flow{
+    fun loadCourseByMajorToAll(department: String, major: String) = flow {
         val result = NormalScheduleNetwork.getCourseByMajor(department, major)
         emit(result)
     }.catch {
         emit(CourseResponse(listOf(), "异常"))
     }
 
-    fun loadCourseByMajor2(department: String, major:String) = flow {
+    fun loadCourseByMajor2(department: String, major: String) = flow {
         val result = NormalScheduleNetwork.getCourseByMajor(department, major)
         val allCourseList = mutableListOf<CourseBean>()
-        if (result.status == "读取正常"){
-            for (i in result.allCourse){
+        if (result.status == "读取正常") {
+            for (i in result.allCourse) {
                 val a = Convert.courseResponseToBean(i)
                 allCourseList.add(a)
             }
         }
-        emit(Convert.courseBeanToOneByOne2(allCourseList))
+        emit(Convert.courseBeanToOneByOne2(allCourseList, getDefaultString()))
     }.catch {
         emit(getNeededClassList(getData()))
     }
 
-    fun deleteCourseByName(courseName:String) = liveData(Dispatchers.IO){
+    fun deleteCourseByName(courseName: String) = liveData(Dispatchers.IO) {
         try {
             courseDao.deleteCourseByName(courseName)
             emit(true)
-        } catch (e:Exception){
+        } catch (e: Exception) {
             emit(false)
         }
     }
@@ -212,15 +232,19 @@ object  Repository {
         val courseBeanList = courseDao.loadCourseByName(courseName)
         emit(courseBeanList.toList())
     }.catch {
-        emit(listOf(
-            CourseBean(
-                campusName="五四路校区",
-                classDay=3,
-                classSessions=9, classWeek="111111111111110000000000", continuingSession=3,
-                courseName=courseName,
-                teacher="发生错误 ",
-                teachingBuildName="发生错误 ",
-                color="#f0c239")
+        emit(
+            listOf(
+                CourseBean(
+                    campusName = "五四路校区",
+                    classDay = 3,
+                    classSessions = 9,
+                    classWeek = "111111111111110000000000",
+                    continuingSession = 3,
+                    courseName = courseName,
+                    teacher = "发生错误 ",
+                    teachingBuildName = "发生错误 ",
+                    color = "#f0c239"
+                )
             )
         )
     }.flowOn(Dispatchers.IO)
@@ -228,26 +252,28 @@ object  Repository {
     suspend fun loadCourseByName(courseName: String) =
         try {
             courseDao.loadCourseByName(courseName)
-        } catch (e:Exception){
-            listOf(CourseBean(
-                campusName="五四路校区",
-                classDay=3,
-                classSessions=9, classWeek="111111111111110000000000",
-                continuingSession=3,
-                courseName="发生错误",
-                teacher="发生错误 ",
-                teachingBuildName="发生错误 ",
-                color="#f0c239")
+        } catch (e: Exception) {
+            listOf(
+                CourseBean(
+                    campusName = "五四路校区",
+                    classDay = 3,
+                    classSessions = 9, classWeek = "111111111111110000000000",
+                    continuingSession = 3,
+                    courseName = "发生错误",
+                    teacher = "发生错误 ",
+                    teachingBuildName = "发生错误 ",
+                    color = "#f0c239"
+                )
             )
         }
 
-    suspend fun deleteCourseByList(courseBeanList: List<CourseBean>){
+    suspend fun deleteCourseByList(courseBeanList: List<CourseBean>) {
         try {
             courseBeanList.forEach {
                 courseDao.deleteCourse(it)
                 Log.d("Repo", it.toString())
             }
-        } catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             Log.d("Repos", e.toString())
         }
 
@@ -259,24 +285,24 @@ object  Repository {
         emit(result[0])
     }
         .catch {
-            emit(CourseBean("",0,0,"011110",0,"异常查询","","",""))
+            emit(CourseBean("", 0, 0, "011110", 0, "异常查询", "", "", ""))
         }
         .flowOn(Dispatchers.IO)
 
-    fun getScore(user: String, password: String, id:String) = liveData(Dispatchers.IO) {
+    fun getScore(user: String, password: String, id: String) = liveData(Dispatchers.IO) {
         try {
-            if (user!="123456") {
+            if (user != "123456") {
                 val scoreResponse = NormalScheduleNetwork.getScore(user, password, id)
                 emit(scoreResponse)
-            } else{
+            } else {
                 val scoreResponse = ScoreResponse(
                     listOf(
                         Grade(
                             "培养方案",
                             listOf(
                                 listOf(
-                                    ThisProjectGrade("实例", "示例课程",90.0,"2021"),
-                                    ThisProjectGrade("实例", "示例课程2",95.0,"2021")
+                                    ThisProjectGrade("实例", "示例课程", 90.0, "2021"),
+                                    ThisProjectGrade("实例", "示例课程2", 95.0, "2021")
                                 )
                             )
                         ),
@@ -285,20 +311,20 @@ object  Repository {
                 )
                 emit(scoreResponse)
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             emit(null)
         }
     }
 
-    fun getScoreDetail2(user: String, password: String, id:String) = fireFlow(Dispatchers.IO) {
-        if (user!="123456") {
+    fun getScoreDetail2(user: String, password: String, id: String) = fireFlow(Dispatchers.IO) {
+        if (user != "123456") {
             val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
             Result.success(scoreDetailResponse)
-        } else{
+        } else {
             val a = ScoreDetail(
                 listOf(
-                    Grades("90","示例课程","培养方案", "90.0","5.0","90","99","20","5","88"),
-                    Grades("92","示例课程2","培养方案", "90.0","4.0","92.2","95","10","10","95")
+                    Grades("90", "示例课程", "培养方案", "90.0", "5.0", "90", "99", "20", "5", "88"),
+                    Grades("92", "示例课程2", "培养方案", "90.0", "4.0", "92.2", "95", "10", "10", "95")
                 ),
                 result = "登陆成功"
             )
@@ -308,8 +334,8 @@ object  Repository {
 
     fun loadAllCourse3(): List<List<OneByOneCourseBean>>? {
         return try {
-            Convert.courseBeanToOneByOne2(courseDao.loadAllCourseAs())
-        } catch (e:Exception){
+            Convert.courseBeanToOneByOne2(courseDao.loadAllCourseAs(), getDefaultString())
+        } catch (e: Exception) {
             null
         }
     }
@@ -318,35 +344,35 @@ object  Repository {
         for (singleCourse in courseList) {
             try {
                 courseDao.insertCourse(Convert.courseResponseToBean(singleCourse))
-            } catch (e:Exception){
+            } catch (e: Exception) {
 
             }
         }
     }
 
-    suspend fun insertCourse(courseBean:CourseBean) {
+    suspend fun insertCourse(courseBean: CourseBean) {
         try {
             courseDao.insertCourse(courseBean)
-        } catch (e:Exception){
+        } catch (e: Exception) {
 
         }
     }
 
-    suspend fun insertCourse(courseBean:List<CourseBean>) {
+    suspend fun insertCourse(courseBean: List<CourseBean>) {
         courseBean.forEach {
             try {
                 Log.d("Repo", courseBean.toString())
                 courseDao.insertCourse(it)
-            } catch (e:Exception){
+            } catch (e: Exception) {
                 courseDao.updateCourse(it)
             }
         }
     }
 
-    suspend fun deleteAllCourseBean2(){
+    suspend fun deleteAllCourseBean2() {
         try {
             courseDao.deleteAllCourseBean()
-        } catch (e:Exception){
+        } catch (e: Exception) {
 //            Result.failure<Exception>(e)
         }
     }
@@ -355,14 +381,15 @@ object  Repository {
     suspend fun updateBackground(background: UserBackgroundBean) {
         return try {
             backgroundDao.insertBackground(background)
-        } catch (e:Exception){
+        } catch (e: Exception) {
             backgroundDao.updateBackground(background)
         }
     }
 
-    fun loadBackground() = liveData(Dispatchers.IO){
+    fun loadBackground() = liveData(Dispatchers.IO) {
         val resources = NormalScheduleApplication.context.resources
-        val resourceId = R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
+        val resourceId =
+            R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
         val uriBeepSound = Uri.Builder()
             .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
             .authority(resources.getResourcePackageName(resourceId))
@@ -371,17 +398,17 @@ object  Repository {
             .build()
         try {
             val a = backgroundDao.loadLastBackground()
-            if (a.userBackground != "0"){
+            if (a.userBackground != "0") {
                 emit(Uri.parse(a.userBackground))
             } else {
                 emit(uriBeepSound)
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             emit(uriBeepSound)
         }
     }
 
-    suspend fun loadBackgroundFileName():String? {
+    suspend fun loadBackgroundFileName(): String? {
         return try {
             val a = backgroundDao.loadLastBackground()
             if (a.userBackground != "0") {
@@ -389,14 +416,14 @@ object  Repository {
             } else {
                 null
             }
-        } catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             null
         }
     }
 
-    fun getSentences(force:Boolean = false) = flow {
+    fun getSentences(force: Boolean = false) = flow {
         try {
-            if (SentenceDao.isSentenceSaved() && !force){
+            if (SentenceDao.isSentenceSaved() && !force) {
                 val resultList = SentenceDao.getSentences()
                 emit(OneSentencesResponse(resultList, "local"))
             } else {
@@ -404,7 +431,7 @@ object  Repository {
                 SentenceDao.saveSentence(result.result)
                 emit(result)
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             emit(null)
         }
     }
@@ -413,34 +440,34 @@ object  Repository {
         try {
             val result = NormalScheduleNetwork.loginToSpace(user, password, id)
             emit(result)
-        } catch (e:Exception){
+        } catch (e: Exception) {
             emit(SpaceLoginResponse("登陆异常"))
         }
     }.flowOn(Dispatchers.IO)
         .catch {
-        emit(SpaceLoginResponse("登陆异常"))
+            emit(SpaceLoginResponse("登陆异常"))
         }
 
     fun getBulletin() =
         flow {
-        val result = NormalScheduleNetwork.getBulletin()
-        emit(result)
+            val result = NormalScheduleNetwork.getBulletin()
+            emit(result)
         }
-        .flowOn(Dispatchers.IO)
-        .catch {
-        val error = Bulletin("admin", "作者服务器炸了，有事烧纸", "????", "作者服务器炸了")
-        emit(DevBoardResponse(listOf(error), status = "error"))
-    }
+            .flowOn(Dispatchers.IO)
+            .catch {
+                val error = Bulletin("admin", "作者服务器炸了，有事烧纸", "????", "作者服务器炸了")
+                emit(DevBoardResponse(listOf(error), status = "error"))
+            }
 
-    fun getSpaceRooms(id: String, roomName:String, searchDate: String) = flow {
+    fun getSpaceRooms(id: String, roomName: String, searchDate: String) = flow {
         val result = NormalScheduleNetwork.getSpaceRooms(id, roomName, searchDate)
         emit(result)
     }.catch {
-        val errorRoom = Room("查询失败","0","00000000000","无")
-        emit(SpaceResponse(roomList = listOf(errorRoom), roomName=roomName))
+        val errorRoom = Room("查询失败", "0", "00000000000", "无")
+        emit(SpaceResponse(roomList = listOf(errorRoom), roomName = roomName))
     }.flowOn(Dispatchers.IO)
 
-    fun getSchoolBusTime(searchType:String) = flow {
+    fun getSchoolBusTime(searchType: String) = flow {
         val result = NormalScheduleNetwork.getSchoolBusTime(searchType = searchType)
         emit(result)
     }.catch {
@@ -454,45 +481,56 @@ object  Repository {
         emit(error)
     }
 
-    suspend fun addHomework(homeworkBean: HomeworkBean):Long{
+    suspend fun addHomework(homeworkBean: HomeworkBean): Long {
         return homeworkDao.insertHomeWork(homeworkBean)
     }
 
-    fun loadHomeworkByName(courseName:String) =
+    fun loadHomeworkByName(courseName: String) =
         flow {
             val result = homeworkDao.loadHomeworkByName(courseName)
             Log.d("Repo", "加载一次")
             emit(result)
         }
-        .flowOn(Dispatchers.IO)
-        .catch {
-            val init = HomeworkBean(id=999, "未查询到", "无", deadLine = 0, finished = false,createDate = 0)
-            emit(listOf(init))
-        }
+            .flowOn(Dispatchers.IO)
+            .catch {
+                val init = HomeworkBean(
+                    id = 999,
+                    "未查询到",
+                    "无",
+                    deadLine = 0,
+                    finished = false,
+                    createDate = 0
+                )
+                emit(listOf(init))
+            }
 
-    fun getNewBeanInit(courseName: String)  = flow {
+    fun getNewBeanInit(courseName: String) = flow {
         val lastId = homeworkDao.getLastId()
         Log.d("Repo", "NewBean加载一次")
         val newId = lastId + 1
-        emit( HomeworkBean(
-            id = newId,
-            courseName = courseName,
-            workContent = "",
-            createDate = GetDataUtil.getDayMillis(0),
-            deadLine = GetDataUtil.getDayMillis(7),
-            finished = false
-        ))
-
-    }
-        .catch {
-            emit( HomeworkBean(
-                id = 0,
+        emit(
+            HomeworkBean(
+                id = newId,
                 courseName = courseName,
                 workContent = "",
                 createDate = GetDataUtil.getDayMillis(0),
                 deadLine = GetDataUtil.getDayMillis(7),
                 finished = false
-            ))
+            )
+        )
+
+    }
+        .catch {
+            emit(
+                HomeworkBean(
+                    id = 0,
+                    courseName = courseName,
+                    workContent = "",
+                    createDate = GetDataUtil.getDayMillis(0),
+                    deadLine = GetDataUtil.getDayMillis(7),
+                    finished = false
+                )
+            )
         }
         .flowOn(Dispatchers.IO)
 
@@ -512,10 +550,10 @@ object  Repository {
             Log.d("Repo", "leadName加载一次")
             val result = homeworkDao.loadHasWorkCourse()
             val result_ = mutableListOf<String>()
-            for (singleName in result){
+            for (singleName in result) {
                 val homeworkList = homeworkDao.loadHomeworkByName(singleName)
                 homeworkList.forEach {
-                    if (!it.finished){
+                    if (!it.finished) {
                         result_.add(it.courseName)
                     }
                 }
@@ -531,63 +569,88 @@ object  Repository {
         return try {
             homeworkDao.deleteHomeworkByName(courseName = courseName)
             "success"
-        }catch (e:Exception){
+        } catch (e: Exception) {
             "error"
         }
     }
 
-    suspend fun deleteHomeworkById(id: Int):String{
+    suspend fun deleteHomeworkById(id: Int): String {
         return try {
             homeworkDao.deleteHomeworkById(id)
             "success"
-        }catch (e:Exception){
+        } catch (e: Exception) {
             "error"
         }
     }
 
-    fun getScheduleSettings():Flow<Settings> {
+    fun getScheduleSettings(): Flow<Settings> {
+        val defaultString = getDefaultString()
         return AccountDataDao.scheduleSettings.map {
-                val new = it.toBuilder()
-                if (new.coursePerHeight==0){ new.coursePerHeight = 70 }
-                if (new.courseNameFontSize==0F) { new.courseNameFontSize=13F }
-                if (new.courseTeacherFontSize==0F){new.courseTeacherFontSize=10F}
-                if (new.courseCardAlpha==0F){new.courseCardAlpha=0.75F}
-                if (new.courseBorderAlpha==0){new.courseBorderAlpha=50}
-                new.build()
+            val new = it.toBuilder()
+            if (new.coursePerHeight == 0) {
+                new.coursePerHeight = 70
             }
+            if (new.courseNameFontSize == 0F) {
+                new.courseNameFontSize = 13F
+            }
+            if (new.courseTeacherFontSize == 0F) {
+                new.courseTeacherFontSize = 10F
+            }
+            if (new.courseCardAlpha == 0F) {
+                new.courseCardAlpha = 0.75F
+            }
+            if (new.courseBorderAlpha == 0) {
+                new.courseBorderAlpha = 50
+            }
+            if (new.colorsList.isEmpty()) {
+                new.addAllColors(colorListSetting(defaultString))
+            }
+            new.build()
+        }
 
     }
 
-    suspend fun updateMode(mode:Int):Int{
+    private fun colorListSetting(colorList: List<List<String>>): List<twoColorItem> {
+        val res = mutableListOf<twoColorItem>()
+        colorList.forEach { twoColor ->
+            val two = twoColorItem.newBuilder().apply {
+                addAllColorItem(twoColor)
+            }.build()
+            res.add(two)
+        }
+        return res.toList()
+    }
+
+    suspend fun updateMode(mode: Int): Int {
         return try {
             AccountDataDao.updateColorMode(mode = mode)
             0
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             1
         }
     }
 
     fun getShowDarkBack() = AccountDataDao.getDarkShowBack()
 
-    suspend fun updateShowDarkBack(show:Boolean):Int{
+    suspend fun updateShowDarkBack(show: Boolean): Int {
         return try {
             AccountDataDao.updateDarkShowBack(show)
             0
-        } catch (e:Exception){
+        } catch (e: Exception) {
             1
         }
     }
 
-    suspend fun updateSettings(setSettings:(settings:Settings)->Settings){
+    suspend fun updateSettings(setSettings: (settings: Settings) -> Settings) {
         AccountDataDao.updateSettings {
-            Log.d("Repo","SaveSettings 1")
+            Log.d("Repo", "SaveSettings 1")
             setSettings(it)
         }
     }
 
-    suspend fun updateSettings(settings: Settings){
+    suspend fun updateSettings(settings: Settings) {
         AccountDataDao.updateSettings {
-            Log.d("Repo","SaveSettings 1")
+            Log.d("Repo", "SaveSettings 1")
             settings
         }
     }
@@ -601,7 +664,7 @@ object  Repository {
 
     suspend fun unRemovedCourseToRemoved(
         courseList: List<String>
-    ){
+    ) {
         courseList.forEach { courseName ->
             val courseBeanList = courseDao.loadCourseByName(courseName)
             courseBeanList.forEach {
@@ -613,7 +676,7 @@ object  Repository {
         }
     }
 
-    suspend fun removedCourseToUnRemoved(){
+    suspend fun removedCourseToUnRemoved() {
         val removedCourseBeanList = courseDao.loadRemovedCourse()
         val removedName = removedCourseBeanList.map { it.courseName }.toSet()
         removedCourseBeanList.forEach {
@@ -651,35 +714,27 @@ object  Repository {
         )
     }
 
-    suspend fun getNewVerison2(versionCode: String) = NormalScheduleNetwork.getNewVersion(versionCode)
+    suspend fun getNewVerison2(versionCode: String) =
+        NormalScheduleNetwork.getNewVersion(versionCode)
 
     fun getScoreDetail() = AccountDataDao.getScoreDetail()
-    fun setScoreDetail(detail:String) = AccountDataDao.updateScoreDetail(detail)
+    fun setScoreDetail(detail: String) = AccountDataDao.updateScoreDetail(detail)
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
-            liveData<Result<T>>(context) {
-                val result = try {
-                    block()
-                } catch (e: Exception) {
-                    Result.failure<T>(e)
-                }
-                emit(result)
-            }
-
-    private fun <T> fire2(context: CoroutineContext, block: suspend () -> T? ) =
-        liveData<T?>(context) {
+        liveData<Result<T>>(context) {
             val result = try {
                 block()
             } catch (e: Exception) {
-                emit(null)
+                Result.failure<T>(e)
             }
+            emit(result)
         }
 
     private fun <T> fireFlow(context: CoroutineContext, block: suspend () -> Result<T>) =
         flow {
             val result = try {
                 block()
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 Result.failure<T>(e)
             }
             emit(result)
@@ -692,10 +747,10 @@ object  Repository {
     fun saveLogin() = AccountDao.saveLogin()
 
     // 0-未读取，1-显示过快速跳转，3-显示过快速跳转，已完成重大Bug检测
-    suspend fun saveUserVersion(version:Int = 1) = AccountDataDao.saveUserVersion(version)
+    suspend fun saveUserVersion(version: Int = 1) = AccountDataDao.saveUserVersion(version)
     fun getNewUserOrNot() = AccountDataDao.getNewUserOrNot()
     fun getUserVersion() = AccountDataDao.getUserVersion()
-    fun courseSampleData() =  CourseResponse(
+    private fun courseSampleData() = CourseResponse(
         listOf(
             AllCourse(
                 "五四路",
@@ -736,7 +791,8 @@ object  Repository {
                 "这是一个示例课程",
                 "张老师",
                 "九教999"
-            ),AllCourse(
+            ),
+            AllCourse(
                 "五四路",
                 2,
                 2,
@@ -755,7 +811,8 @@ object  Repository {
                 "这是一个示例课程",
                 "张老师",
                 "九教999"
-            ),AllCourse(
+            ),
+            AllCourse(
                 "五四路",
                 1,
                 2,

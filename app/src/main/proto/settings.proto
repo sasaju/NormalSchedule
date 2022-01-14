@@ -49,4 +49,11 @@ message Settings {
   // 课程格子-border透明度 默认值0 转换为50
   int32 course_border_alpha = 15;
 
+  // 颜色列表
+  repeated twoColorItem colors= 16;
+}
+
+
+message  twoColorItem{
+  repeated string colorItem = 1;
 }

@@ -1,29 +1,18 @@
 package com.liflymark.normalschedule.logic.utils
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RemoteViews
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.material.Text
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.liflymark.normalschedule.MainActivity
-import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
-
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getInitial
@@ -31,12 +20,11 @@ import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Arrange
 import com.liflymark.normalschedule.logic.model.Grade
 import com.liflymark.normalschedule.logic.model.Grades
-import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.schedule.data.Settings
-import java.lang.Exception
 
 internal object Convert {
-
+    val String.color
+            get() = Color(android.graphics.Color.parseColor(this))
     fun courseResponseToBean(courseResponse: AllCourse): CourseBean {
         val color = stringToColor(courseResponse.courseName)
         return CourseBean(
@@ -48,40 +36,12 @@ internal object Convert {
             courseResponse.courseName,
             courseResponse.teacher,
             courseResponse.teachingBuildName,
-            color
+            color,
+            colorIndex = courseNameToIndex(courseResponse.courseName, colorListLength = 13)
         )
     }
 
-    fun courseBeanToOneByOne(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {
-//        Log.d("Convert0", courseBeanList.toString())
-        val allOneCourseList = mutableListOf<List<OneByOneCourseBean>>()
-        for (i in 0..20) {
-            val oneCourseList = mutableListOf<OneByOneCourseBean>()
-            for (courseBean in courseBeanList) {
-                val name =
-                    courseBean.courseName + "\n" + courseBean.teachingBuildName + "\n" + courseBean.teacher
-                when (courseBean.classWeek[i].toString()) {
-                    "1" -> {
-                        val a = OneByOneCourseBean(
-                            name,
-                            courseBean.classSessions - 1,
-                            courseBean.classSessions + courseBean.continuingSession - 1,
-                            courseBean.classDay - 1,
-                            Color(courseBean.color.toLong())
-                        )
-                        oneCourseList.add(a)
-                    }
-//                    "0" -> oneCourseList.add(OneByOneCourseBean("0",courseBean.classDay, 0, 0))
-//                    else -> oneCourseList.add(OneByOneCourseBean("0",courseBean.classDay, 0, 0))
-                }
-            }
-            allOneCourseList.add(oneCourseList)
-        }
-//        Log.d("Convert3", allOneCourseList.toString())
-        return allOneCourseList
-    }
-
-    fun courseBeanToOneByOne2(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {
+    fun courseBeanToOneByOne2(courseBeanList: List<CourseBean>, colorList:List<List<String>>): List<List<OneByOneCourseBean>> {
         val allWeekList = mutableListOf<MutableList<OneByOneCourseBean>>()
         val maxWeek = courseBeanList.getOrElse(0) { getInitial()[0] }.classWeek.length
         repeat(maxWeek) {
@@ -94,12 +54,38 @@ internal object Convert {
                     courseBean.courseName + "\n" + courseBean.teachingBuildName + "\n" + courseBean.teacher
                 when (courseBean.classWeek[i].toString()) {
                     "1" -> {
+                        // index<0为兼容老版本APP， removed代表是否无视主题色强行应用用户自己设置的颜色
+                        val twoColorList =
+                            when {
+                                courseBean.colorIndex < 0 -> {
+                                    listOf(
+                                        courseBean.color.color,
+                                        stringToBrush(courseBean.color.color.value, 1)[0],
+                                        stringToBrush(courseBean.color.color.value, 1)[0]
+                                    )
+                                }
+                                courseBean.removed -> {
+                                    listOf(
+                                        courseBean.color.color,
+                                        colorList[courseBean.colorIndex][1].color,
+                                        colorList[courseBean.colorIndex][2].color
+                                    )
+                                }
+                                else -> {
+                                    listOf(
+                                        colorList[courseBean.colorIndex][0].color,
+                                        colorList[courseBean.colorIndex][1].color,
+                                        colorList[courseBean.colorIndex][2].color
+                                    )
+                                }
+                            }
                         val a = OneByOneCourseBean(
-                            name,
-                            courseBean.classSessions,
-                            courseBean.classSessions + courseBean.continuingSession - 1,
-                            courseBean.classDay,
-                            Color(colorStringToLong(courseBean.color))
+                            courseName = name,
+                            start = courseBean.classSessions,
+                            end = courseBean.classSessions + courseBean.continuingSession - 1,
+                            whichColumn = courseBean.classDay,
+                            color = courseBean.color.color,
+                            twoColorList = twoColorList
                         )
                         allWeekList[i].add(a)
                     }
@@ -111,9 +97,7 @@ internal object Convert {
         return allWeekList
     }
 
-    fun allCourseToJson(allCourseList: List<AllCourse>): String {
-        return Gson().toJson(allCourseList)
-    }
+    fun allCourseToJson(allCourseList: List<AllCourse>): String =  Gson().toJson(allCourseList)
 
     fun allGradeToJson(allGradeList: List<Grade>): String {
         return Gson().toJson(allGradeList)
@@ -155,12 +139,9 @@ internal object Convert {
         return a
     }
 
-    fun settingsToJson(settings: Settings):String{
-        return Gson().toJson(settings)
-    }
-    private fun string2Unicode(string: String): String {
+    fun string2Unicode(string: String): String {
         val unicode = StringBuffer()
-        for (i in 0 until string.length) {
+        for (i in string.indices) {
             // 取出每一个字符
             val c = string[i]
             // 转换为unicode
@@ -219,6 +200,16 @@ internal object Convert {
         }
     }
 
+    fun courseNameToIndex(name: String, colorListLength:Int):Int{
+        return try {
+            val num = string2Unicode(name).toInt()
+            Log.d("Convert", "$name:${num%colorListLength}, num:$num")
+            num % colorListLength
+        } catch (e: Exception) {
+            0
+        }
+    }
+
     fun stringToBrush(color:ULong, mode:Int=1):List<Color>{
         val colorList = mutableListOf<Color>()
         if (mode == 0){
@@ -248,53 +239,6 @@ internal object Convert {
         return colorList.toList()
     }
 
-    fun StringToListBean(listString:String):List<CourseBean>{
-        val listType = object : TypeToken<List<CourseBean>>() {}.type
-        return Gson().fromJson(listString, listType)
-    }
-
-    fun getViewBitmap(viewGroup: ViewGroup, low: Boolean = false, marginBottom: Int = 0): Bitmap {
-        var h = 0
-        val bitmap: Bitmap
-        // 获取scrollView实际高度,这里很重要
-        for (i in 0 until viewGroup.childCount) {
-            h += viewGroup.getChildAt(i).height + marginBottom
-        }
-        // 创建对应大小的bitmap
-        bitmap = Bitmap.createBitmap(viewGroup.width, h,
-            if (low) Bitmap.Config.ARGB_4444 else Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        viewGroup.draw(canvas)
-        return bitmap
-    }
-
-    fun viewToBitMap(view: View): Bitmap{
-//        view.measure(
-//            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-//            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-//        )
-        val width: Int = 100
-        val height: Int = 200
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight())
-        val bp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bp)
-        view.draw(canvas)
-        canvas.save()
-        return bp
-    }
-
-    @SuppressLint("InflateParams")
-    fun viewTest(): View? {
-        val inflater:LayoutInflater  = LayoutInflater.from(NormalScheduleApplication.context)
-        val view = inflater.inflate(R.layout.appwidget_for_compose, null)
-        val comp = view.findViewById<ComposeView>(R.id.compose_xml)
-        comp.setContent {
-            NorScTheme {
-                Text(text = "Test")
-            }
-        }
-        return view
-    }
 
     fun Long.toColorULong() = (this.toULong() and 0xffffffffUL) shl 32
 

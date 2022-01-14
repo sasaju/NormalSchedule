@@ -26,13 +26,6 @@ class WeekAppWidgetProvider: AppWidgetProvider() {
                 context?.packageName,
                 R.layout.app_widget_week
             )
-            views.setImageViewBitmap(
-                R.id.widget_image,
-                Convert.viewTest()?.let {
-                    Log.d("Week ", "weekapp更新")
-                    Convert.viewToBitMap(it)
-
-                })
             val intent = Intent(context, DayRemoteViewsService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.putExtra("random", randomNumber)

@@ -5,7 +5,16 @@ import androidx.room.ColumnInfo
 import androidx.room.ColumnInfo.INTEGER
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.liflymark.normalschedule.logic.utils.Convert
 
+/** 课程data类
+ * APP中极为关键的一个类
+ * @param campusName 校区
+ * @param color 颜色配置，实例：#ff51555
+ * @param colorIndex 为适配主题色，配置一个数字，数字代表一个colorList中的index
+ * @param removed 代表是否移除主题色的限制，如果为false-0，则使用colorIndex作为颜色依据，如果为true-1，则使用color作为颜色依据  </br>
+ * 不过无论是开发难度和用户操作难度，实现脱离主题配置都十分的不容易，所以暂时放弃。
+ */
 @Keep
 @Entity(primaryKeys = ["courseName", "teacher", "classWeek", "classDay", "classSessions", "continuingSession", "removed"])
 data class CourseBean(
@@ -18,12 +27,9 @@ data class CourseBean(
     var teacher: String,
     var teachingBuildName: String,
     var color: String,
-    @ColumnInfo(defaultValue = "0")
-    var removed: Boolean = false
-) {
-//    @PrimaryKey(autoGenerate = false)
-//    var id = courseName+teacher+classWeek+classDay.toString()+classSessions.toString()+continuingSession.toString()+removed.toString()
-}
+    @ColumnInfo(defaultValue = "-1") var colorIndex: Int = -1,
+    @ColumnInfo(defaultValue = "0") var removed: Boolean = false
+)
 
 fun getInitial(): List<CourseBean> {
     return listOf(CourseBean(

@@ -11,11 +11,12 @@ import com.liflymark.normalschedule.logic.bean.HomeworkBean
 import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
 
 @Database(
-    version = 4,
+    version = 5,
     entities = [CourseBean::class, UserBackgroundBean::class, HomeworkBean::class],
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4, spec = AppDatabase.DeleteId::class),
+        AutoMigration(from = 4, to = 5)
     ]
 )
 abstract class AppDatabase: RoomDatabase() {
@@ -23,8 +24,10 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun backgroundDao(): BackgroundDao
     abstract fun homeworkDao(): HomeworkDao
 
+    // 采用多个键作为主键 故移除id字段
     @DeleteColumn(columnName = "id", tableName = "CourseBean")
     class DeleteId : AutoMigrationSpec { }
+
 
     companion object {
         private val MIGRATION_1_2 = object : Migration(1, 2){

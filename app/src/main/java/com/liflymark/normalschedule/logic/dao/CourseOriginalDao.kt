@@ -24,10 +24,10 @@ interface CourseOriginalDao {
 
     @Update fun updateCourse(newCourse: List<CourseBean>)
 
-    @Query("select * from CourseBean where removed = 0")
+    @Query("select * from CourseBean")
     suspend fun loadAllUnRemoveCourse(): List<CourseBean>
 
-    @Query("select * from CourseBean where removed = 0")
+    @Query("select * from CourseBean")
     fun loadAllCourseAs(): List<CourseBean>
 
     @Query("select * from CourseBean where courseName=:courseName and classDay=:classDay and classSessions=:classSessions and continuingSession=:continuingSession and teachingBuildName=:buildingName and removed = 0" )
@@ -36,16 +36,16 @@ interface CourseOriginalDao {
     @Query("select * from CourseBean where courseName=:courseName and classDay=:classDay and classSessions=:classSessions and continuingSession=:continuingSession and removed = 0" )
     suspend fun loadCourseUnTeacher(courseName: String, classDay:Int, classSessions:Int, continuingSession:Int):List<CourseBean>
 
-    @Query("delete from CourseBean where courseName = :courseName and removed = 0")
+    @Query("delete from CourseBean where courseName = :courseName")
     suspend fun deleteCourseByName(courseName: String)
 
-    @Query("delete from CourseBean where courseName =:courseName and classSessions = :courseStart and classDay = :whichColumn and removed = 0")
+    @Query("delete from CourseBean where courseName =:courseName and classSessions = :courseStart and classDay = :whichColumn")
     suspend fun deleteCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int)
 
-    @Query("select * from CourseBean where courseName = :courseName and removed = 0")
+    @Query("select * from CourseBean where courseName = :courseName")
     suspend fun loadCourseByName(courseName: String): List<CourseBean>
 
-    @Query("select * from CourseBean where courseName =:courseName and classSessions = :courseStart and classDay = :whichColumn and removed = 0")
+    @Query("select * from CourseBean where courseName =:courseName and classSessions = :courseStart and classDay = :whichColumn")
     suspend fun loadCourseByNameAndStart(courseName: String, courseStart: Int, whichColumn: Int): List<CourseBean>
 
     @Query("delete from CourseBean where courseName is not null")
@@ -54,10 +54,10 @@ interface CourseOriginalDao {
     @Query("select distinct courseName from CourseBean")
     suspend fun loadAllCourseName():List<String>
 
-    @Query("select * from CourseBean where removed = 1")
+    @Query("select * from CourseBean")
     suspend fun loadRemovedCourse():List<CourseBean>
 
-    @Query("delete from CourseBean where removed = 1")
+    @Query("delete from CourseBean")
     suspend fun deleteRemovedCourseBean()
 
     @Delete
