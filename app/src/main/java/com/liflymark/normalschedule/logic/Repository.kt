@@ -40,10 +40,26 @@ object Repository {
         listOf("#4b5cc4", "#ff134E5E", "#ff71B280"),
         listOf("#426666", "#ff085078", "#ff85D8CE"),
         listOf("#40de5a", "#ff4776E6", "#ff8E54E9"),
-        listOf("#f0c239", "#ff1D2B64", "#ffF8CDDA"),
+        listOf("#f0c239", "#5B59FF", "#D2934B"),
         listOf("#725e82", "#A91A2980", "#ff26D0CE"),
         listOf("#c32136", "#ffAA076B", "#E692088F"),
-        listOf("#b35c44", "#ffF8CDDA", "#ffE7E9BB"),
+        listOf("#b35c44", "#FFFFA8C3", "#FFDCE083"),
+    )
+    private fun getDefaultStringTwo() = listOf(
+        listOf("#6E3CBC","#30cfd0", "#330867"),
+        listOf("#7267CB","#667eea", "#764ba2"),
+        listOf("#98BAE7","#9890e3", "#b1f4cf"),
+        listOf("#B8E4F0","#2af598", "#009efd"),
+        listOf("#009DAE","#00c6fb", "#005bea"),
+        listOf("#009DAE","#00c6fb", "#005bea"),
+        listOf("#38A3A5","#b721ff", "#21d4fd"),
+        listOf("#57CC99","#0acffe", "#495aff"),
+        listOf("#80ED99","#007adf", "#00ecbc"),
+        listOf("#7FC8A9","#7DE2FC", "#B9B6E5"),
+        listOf("#D5EEBB","#6C44EC", "#3AC1FC"),
+        listOf("#3EDBF0","#5A49F5", "##2C9CA6"),
+        listOf("#93e37d","#7164F5", "#21BEF1"),
+        listOf("#7868E6","#511DDC", "#5AA2FC"),
     )
     fun getId() = fire(Dispatchers.IO) {
         val id = NormalScheduleNetwork.getId()
@@ -607,7 +623,25 @@ object Repository {
             }
             new.build()
         }
+    }
 
+    fun getScheduleSettingsColorList():Flow<List<twoColorItem>>{
+        return AccountDataDao.scheduleSettings.map {
+            val new = it.toBuilder()
+            if (new.colorsList.isEmpty()) {
+                new.addAllColors(colorListSetting(getDefaultString()))
+            }
+            new.colorsList
+        }
+    }
+
+    fun getColorListAsync(): List<twoColorItem> {
+        val settingsList = AccountDataDao.getColorListAsyc()
+        return if (settingsList.isEmpty()) {
+            colorListSetting(getDefaultString())
+        } else {
+            AccountDataDao.getColorListAsyc()
+        }
     }
 
     private fun colorListSetting(colorList: List<List<String>>): List<twoColorItem> {
@@ -619,6 +653,20 @@ object Repository {
             res.add(two)
         }
         return res.toList()
+    }
+
+    fun colorListSettingToStringList(colorList: List<twoColorItem>):List<List<String>>{
+        val res = mutableListOf<List<String>>()
+        colorList.forEach { items ->
+            res.add(items.colorItemList)
+        }
+        return res.toList()
+    }
+
+    fun colorStringListToTwoItems(
+        colorStringList: List<List<String>> = getDefaultString()
+    ): List<twoColorItem> {
+        return colorListSetting(colorStringList)
     }
 
     suspend fun updateMode(mode: Int): Int {

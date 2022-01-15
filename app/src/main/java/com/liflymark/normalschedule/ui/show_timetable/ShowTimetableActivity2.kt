@@ -1,6 +1,7 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle

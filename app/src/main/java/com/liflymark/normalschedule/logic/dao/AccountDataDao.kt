@@ -86,6 +86,12 @@ object AccountDataDao {
         }.first()
     }
 
+    fun getColorListAsyc() = runBlocking {
+        scheduleSettings.map { value: Settings ->
+            value.colorsList
+        }.first()
+    }
+
     suspend fun updateSettings(setSettings:(settings:Settings)->Settings){
         context.settingsStore.updateData {
             setSettings(it)

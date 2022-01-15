@@ -26,13 +26,13 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.logic.utils.Convert.toColorULong
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.whichIs1
 import com.liflymark.normalschedule.logic.utils.SelectSessionDialog
 import com.liflymark.normalschedule.logic.utils.SelectWeekDialog
 import com.liflymark.normalschedule.ui.score_detail.ProgressDialog
 import com.liflymark.normalschedule.ui.theme.NorScTheme
+import com.liflymark.schedule.data.twoColorItem
 import kotlinx.coroutines.launch
 import kotlin.reflect.KMutableProperty1
 
@@ -48,28 +48,18 @@ fun ShowAllCourseToEdit(
     val courseBeanList = remember{ mutableStateListOf<CourseBean>() }
     val progressShow = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    var setColor by rememberSaveable{ mutableStateOf(Convert.stringToColor(courseName)) }
-    val colorList = remember {
-        arrayListOf(
-            "#12c2e9",
-            "#376B78",
-            "#f64f59",
-            "#CBA689",
-            "#ffffbb33",
-            "#8202F2",
-            "#F77CC2",
-            "#4b5cc4",
-            "#426666",
-            "#40de5a",
-            "#f0c239",
-            "#725e82",
-            "#c32136"
-        )
+    var setColorIndex by rememberSaveable{ mutableStateOf(-1) }
+    val colorListSettings = Repository.getScheduleSettingsColorList()
+        .collectAsState(initial = Repository.colorStringListToTwoItems())
+    fun colorListToColors(colorsList:List<twoColorItem>): IntArray {
+        val colorStrings = colorsList.map { it.colorItemList[0] }
+        return colorStrings.map { android.graphics.Color.parseColor(it) }.toIntArray()
     }
-    val colors = colorList.map { Convert.colorStringToInt(it) }.toIntArray()
+    var colors by remember(colorListSettings.value) { mutableStateOf(colorListToColors(colorListSettings.value)) }
+    LaunchedEffect(colorListSettings.value){ colors =  colorListToColors(colorListSettings.value) }
     val colorPickerDialog = remember {
         Dialog.getColorPickerDialog(context, colors = colors) { _, colorInt ->
-            setColor = colorList[colors.indexOf(colorInt)]
+            setColorIndex = colors.indexOf(colorInt)
         }
     }
     fun needAddToStateList(){
@@ -96,7 +86,7 @@ fun ShowAllCourseToEdit(
         Log.d("AddOrEditCourse", "1:"+needAddCourseList.toList().toString())
         deleteCourseList.addAll(courseBeanLoad.map { it.copy() })
         Log.d("Repo", "in AddOrEdit"+deleteCourseList.toString())
-        setColor = if (courseBeanList.getOrNull(0) != null){courseBeanList[0].color}else{""}
+        setColorIndex = if (courseBeanList.getOrNull(0) != null){courseBeanList[0].colorIndex}else{-1}
         progressShow.value = false
     }
     Log.d("AddorEdit",courseBeanList.toString())
@@ -184,7 +174,7 @@ fun ShowAllCourseToEdit(
                             color="#f0c239"
                         )
                     )
-                    if (setColor==""){setColor=Convert.stringToColor(courseName)}
+                    if (setColorIndex==-1){setColorIndex=Convert.courseNameToIndex(courseName,13)}
                     needAddToStateList()
                 }, modifier = textBtMod) {
                     Text(text = "增加时段")
@@ -196,7 +186,7 @@ fun ShowAllCourseToEdit(
                         Log.d("AddOrEditCourse", "delete:"+deleteCourseList.toList().toString())
                         needAddCourseList.map {
                             it.courseName = courseNameState
-                            it.color = if (setColor==""){ Convert.stringToColor(courseNameState) }else{ setColor }
+                            it.colorIndex = if (setColorIndex==-1){ Convert.courseNameToIndex(courseNameState,13) }else{ setColorIndex }
                         }
                         Log.d("AddOrEditCourse", "3:"+needAddCourseList.toList().toString())
                         Repository.insertCourse(needAddCourseList)

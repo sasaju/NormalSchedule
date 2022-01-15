@@ -1,22 +1,14 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
-import android.content.Context
 import android.util.Log
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.*
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
-import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.model.AllCourse
-import com.liflymark.normalschedule.logic.model.OneSentencesResponse
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class ShowTimetableViewModel: ViewModel() {
     private var courseDatabaseLiveData = MutableLiveData(0)
@@ -28,7 +20,10 @@ class ShowTimetableViewModel: ViewModel() {
     val newUserFLow = Repository.getNewUserOrNot()
     val userVersion = Repository.getUserVersion()
     val courseDatabaseLiveDataVal = Transformations.switchMap(courseDatabaseLiveData) {
-        Repository.loadAllCourse2()
+        runBlocking {
+            val colorItems = Repository.getColorListAsync()
+            Repository.loadAllCourse2(colorList = Repository.colorListSettingToStringList(colorItems))
+        }
     }
 
 

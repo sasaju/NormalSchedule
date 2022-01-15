@@ -59,13 +59,13 @@ fun SettingsCardPage(
     val backCallback = remember {
         object : OnBackPressedCallback(!showCloseDialog) {
             override fun handleOnBackPressed() {
-                showCloseDialog = true
+                showCloseDialog = !showCloseDialog
             }
         }
     }
-    LaunchedEffect(showCloseDialog){
-        backCallback.isEnabled = !showCloseDialog
-    }
+//    LaunchedEffect(showCloseDialog){
+//        backCallback.isEnabled = !showCloseDialog
+//    }
     DisposableEffect(backDispatcher) {
         // Add callback to the backDispatcher
         backDispatcher.addCallback(backCallback)

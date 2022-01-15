@@ -10,6 +10,7 @@ import android.widget.RemoteViews
 import androidx.compose.ui.graphics.Color
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.google.protobuf.LazyStringList
 import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
@@ -54,28 +55,28 @@ internal object Convert {
                     courseBean.courseName + "\n" + courseBean.teachingBuildName + "\n" + courseBean.teacher
                 when (courseBean.classWeek[i].toString()) {
                     "1" -> {
-                        // index<0为兼容老版本APP， removed代表是否无视主题色强行应用用户自己设置的颜色
+                        // index<0为兼容老版本APP， removed代表是否无视主题色强行应用用户自己设置的颜色，remove目前只能配置纯色颜色
                         val twoColorList =
                             when {
                                 courseBean.colorIndex < 0 -> {
                                     listOf(
                                         courseBean.color.color,
-                                        stringToBrush(courseBean.color.color.value, 1)[0],
-                                        stringToBrush(courseBean.color.color.value, 1)[0]
+                                        stringToBrush(courseBean.color.color.value, 1).getOrNull(1)?:courseBean.color.color,
+                                        stringToBrush(courseBean.color.color.value, 1).getOrNull(2)?:courseBean.color.color
                                     )
                                 }
                                 courseBean.removed -> {
                                     listOf(
                                         courseBean.color.color,
-                                        colorList[courseBean.colorIndex][1].color,
-                                        colorList[courseBean.colorIndex][2].color
+                                        (colorList[courseBean.colorIndex].getOrNull(1)?:courseBean.color).color,
+                                        (colorList[courseBean.colorIndex].getOrNull(2)?:courseBean.color).color,
                                     )
                                 }
                                 else -> {
                                     listOf(
                                         colorList[courseBean.colorIndex][0].color,
-                                        colorList[courseBean.colorIndex][1].color,
-                                        colorList[courseBean.colorIndex][2].color
+                                        (colorList[courseBean.colorIndex].getOrNull(1)?:courseBean.color).color,
+                                        (colorList[courseBean.colorIndex].getOrNull(2)?:courseBean.color).color,
                                     )
                                 }
                             }
@@ -231,7 +232,8 @@ internal object Convert {
                 0xfff0c239.toColorULong() -> colorList.addAll(listOf(Color(0xff1D2B64), Color(0xffF8CDDA)))
                 0xff725e82.toColorULong() -> colorList.addAll(listOf(Color(0xA91A2980), Color(0xff26D0CE)))
                 0xffc32136.toColorULong() -> colorList.addAll(listOf(Color(0xffAA076B), Color(0xE692088F)))
-                0xffb35c44.toColorULong() -> colorList.addAll(listOf(Color(0xffF8CDDA), Color(0xffE7E9BB)))
+                0xffb35c44.toColorULong() -> colorList.addAll(listOf(Color(0xFFFFA8C3), Color(0xFFDCE083)
+                ))
                 Color.Transparent.value -> colorList.addAll(listOf(Color.Transparent, Color.Transparent))
                 else -> colorList.addAll(listOf(Color(0xffE55D87), Color(0xff5FC3E4)))
             }

@@ -15,4 +15,5 @@ class NormalScheduleApplication : Application() {
         super.onCreate()
         context = applicationContext
     }
+
 }
