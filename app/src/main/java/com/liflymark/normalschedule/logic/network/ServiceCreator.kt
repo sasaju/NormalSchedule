@@ -18,9 +18,9 @@ object ServiceCreator {
 
 
     fun cancelAll(){
-        okHttpClient.dispatcher().cancelAll()
-        Log.d("Service", okHttpClient.dispatcher().maxRequests.toString())
-        Log.d("Service", okHttpClient.dispatcher().maxRequestsPerHost.toString())
+        okHttpClient.dispatcher.cancelAll()
+        Log.d("Service", okHttpClient.dispatcher.maxRequests.toString())
+        Log.d("Service", okHttpClient.dispatcher.maxRequestsPerHost.toString())
     }
 
     private val retrofit = Retrofit.Builder()

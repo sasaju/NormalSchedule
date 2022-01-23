@@ -15,3 +15,4 @@ val SecondaryD = Color(0xff8aacc8)
 
 val onPrimary = Color.White
 val onSecondary = Color(0xFF000000)
+val onSecondaryD = Color(0xFFFFFFFF)

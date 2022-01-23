@@ -417,6 +417,7 @@ object Repository {
             if (a.userBackground != "0") {
                 emit(Uri.parse(a.userBackground))
             } else {
+                Log.d("ShowBackgroudRE", uriBeepSound.toString())
                 emit(uriBeepSound)
             }
         } catch (e: Exception) {

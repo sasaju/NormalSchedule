@@ -240,7 +240,7 @@ fun Introduce(){
             icon = Icons.Default.EmojiNature,
             text = "项目开源"
         ) {
-            activity.openBrowser("https://github.com/sasaju/NormalSchedulePublic")
+            activity.openBrowser("https://github.com/sasaju/NormalSchedule")
         }
         SingleIconButton(
             icon = Icons.Default.Category,

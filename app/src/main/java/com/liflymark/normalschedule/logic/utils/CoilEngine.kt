@@ -8,6 +8,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import coil.ComponentRegistry
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
@@ -154,13 +155,13 @@ class CoilEngine private constructor() : ImageEngine {
         context: Context, url: String,
         imageView: ImageView
     ) {
-        val imageLoader = ImageLoader.Builder(context).componentRegistry {
+        val imageLoader = ImageLoader.Builder(context).components(fun ComponentRegistry.Builder.() {
             if (SDK_INT >= 28) {
-                add(ImageDecoderDecoder(context))
+                this.add(ImageDecoderDecoder.Factory())
             } else {
-                add(GifDecoder())
+                this.add(GifDecoder.Factory())
             }
-        }.build()
+        }).build()
         imageView.loadImage(url, imageLoader)
     }
 

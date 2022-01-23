@@ -1,9 +1,7 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -38,7 +36,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
@@ -286,21 +286,23 @@ fun BackGroundImage(viewModel: ShowTimetableViewModel) {
 //        )
 
         CompositionLocalProvider(LocalImageLoader provides GifLoader(context)) {
-            Image(
-                painter = rememberImagePainter(
-                    data = path.value,
-                    builder = {
-                        this.error(R.drawable.main_background_4)
-                    }
-                ),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            path.value?.let {
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        ImageRequest.Builder(LocalContext.current)
+                            .data(data = it)
+                            .error(R.drawable.main_background_4)
+                            .build()
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
     } else {
         Image(
-            painter = rememberImagePainter(data = ""),
+            painter = rememberAsyncImagePainter(model = ""),
             contentDescription = null,
             modifier = Modifier
                 .background(Color(1, 86, 127))
@@ -552,7 +554,7 @@ fun SingleLineClass(
                 val nowJieShu = IntArray(12) { it + 1 }.toMutableList()
                 Column(Modifier.weight(1F, true)) {
                     for (oneClass in oneDayClass) {
-                        val spacerHeight = (oneClass.start - nowJieShu[0]) * perHeight
+                        val spacerHeight = (oneClass.start - nowJieShu.getOrElse(0){1}) * perHeight
 
                         if (spacerHeight < 0) {
                             val nowClassAllName = oneClass.courseName.split("\n")
@@ -569,8 +571,6 @@ fun SingleLineClass(
                                     oneClass.end + 1 - oneClass.start,
                                     nowClassBuild
                                 )
-//                                Toasty.info(context, "检测到《${nowClassAllName[0]}》存在多位老师，已合并。重启生效")
-//                                    .show()
                                 snackbarText = "检测到《${nowClassAllName[0]}》存在多位老师，已合并。重启生效"
                                 snackbarVisibleState.value = true
                                 continue

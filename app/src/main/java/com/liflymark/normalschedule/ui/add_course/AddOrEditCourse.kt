@@ -107,7 +107,7 @@ fun ShowAllCourseToEdit(
             }
         )
         Spacer(modifier = Modifier.height(3.dp))
-        Surface( color = Color(0xFFB9EEFF), shape = MaterialTheme.shapes.medium ) {
+        Surface( color = MaterialTheme.colors.secondary, shape = MaterialTheme.shapes.medium ) {
             ClassLine(icon = Icons.Filled.ColorLens, content = "点击选择颜色"){
                 colorPickerDialog.show()
             }
@@ -288,7 +288,7 @@ fun ShowTimePart(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        backgroundColor = Color(0xFFB9EEFF)
+        backgroundColor = MaterialTheme.colors.secondary
     ) {
         Column(
             modifier = Modifier
@@ -397,7 +397,7 @@ fun CourseNameShow(
             .fillMaxWidth()
         ,
         shape = MaterialTheme.shapes.medium,
-        backgroundColor = Color(0xFFB9EEFF)
+        backgroundColor = MaterialTheme.colors.secondary
     ) {
         TransparentTextFiled(
             value = courseName,

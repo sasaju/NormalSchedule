@@ -383,14 +383,14 @@ fun SelectSessionDialog(
             DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = false)
         ) {
             Surface(
-                shape = MaterialTheme.shapes.medium
+                shape = MaterialTheme.shapes.medium,
+                color = MaterialTheme.colors.background
             ) {
                 Column(
                     modifier = Modifier
                         .wrapContentHeight()
                         .width(300.dp)
-                        .verticalScroll(rememberScrollState())
-                        .background(Color.White),
+                        .verticalScroll(rememberScrollState()),
                 ){
                     Text(text = "  \n   选择周数 \n", fontSize = 19.sp)
                     SelectSessionContent(initialWeek, initialStart, initialEnd){week,start,end ->

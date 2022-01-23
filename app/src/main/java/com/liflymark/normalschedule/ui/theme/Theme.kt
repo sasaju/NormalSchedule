@@ -11,9 +11,10 @@ import com.liflymark.test.ui.theme.Typography
 private val DarkColorPalette = darkColors(
     primary = PrimaryD,
     primaryVariant = Color(0xFF6E92FF),
-    secondary = Secondary,
-    onSecondary = onSecondary,
+    secondary = SecondaryD,
+    onSecondary = onSecondaryD,
     onPrimary = onPrimary,
+    background = Color.Black
 )
 
 private val LightColorPalette = lightColors(
@@ -22,6 +23,7 @@ private val LightColorPalette = lightColors(
     secondary = Secondary,
     onSecondary = onSecondary,
     onPrimary = onPrimary,
+    background = Color.White
 )
 
 @Composable

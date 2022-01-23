@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 17
-        versionName "0.0.20"
+        versionCode 18
+        versionName "0.0.21"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -32,7 +32,7 @@ android {
         viewBinding true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion = "1.1.0-beta03"
         kotlinCompilerVersion kotlin_version
     }
     signingConfigs {
@@ -118,10 +118,10 @@ android {
 
 dependencies {
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.7.0'
+//    implementation 'androidx.core:core-ktx:1.7.0'
 
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 //    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
 //    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
@@ -133,14 +133,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 //    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
-    implementation 'androidx.room:room-ktx:2.4.0'
-    implementation 'androidx.room:room-runtime:2.4.0'
+    implementation 'androidx.room:room-ktx:2.4.1'
+    implementation 'androidx.room:room-runtime:2.4.1'
 //    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    ksp "androidx.room:room-compiler:2.4.0"
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    ksp "androidx.room:room-compiler:2.4.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
 //    implementation "com.xwray:groupie:2.8.0"
@@ -189,8 +189,9 @@ dependencies {
     // If using insets-ui
     implementation "com.google.accompanist:accompanist-insets-ui:$accompanist_version"
 //    implementation "com.google.accompanist:accompanist-glide:$accompanist_version"
-    implementation "io.coil-kt:coil-compose:1.3.2"
-    implementation "io.coil-kt:coil-gif:1.3.2"
+
+    implementation ("io.coil-kt:coil-compose:2.0.0-alpha06")
+    implementation ("io.coil-kt:coil-gif:2.0.0-alpha06")
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
@@ -200,13 +201,13 @@ dependencies {
     implementation "com.google.protobuf:protobuf-javalite:3.10.0"
 //    implementation 'com.jaredrummler:colorpicker:1.1.0'
     implementation "com.google.code.gson:gson:2.8.8"
-//    implementation "androidx.glance:glance-appwidget:1.0.0-alpha01"
 //    implementation project(":IcyTimeTable")
 //    debugImplementation 'com.glance.guolindev:glance:1.0.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 //    implementation "com.github.skydoves:colorpickerpreference:2.0.6"
     implementation 'com.afollestad.material-dialogs:color:3.2.1'
     implementation "com.airbnb.android:lottie-compose:4.2.2"
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
     implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
+    implementation ("androidx.glance:glance-appwidget:1.0.0-alpha01")
 }
