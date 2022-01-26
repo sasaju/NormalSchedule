@@ -33,32 +33,40 @@ import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
-class WeekAppwidgetAppwidget():GlanceAppWidget() {
+class WeekAppwidgetAppwidget() : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Single
+
     @Composable
     override fun Content() {
         val perHeight = 50
         val allCourse = Repository.loadAllCourse3()
         val nowWeekNum = GetDataUtil.whichWeekNow() + 1
-        val thisWeekCourse=  allCourse?.get(nowWeekNum)
-//        val drawable = GradientDrawable().apply {
-//            shape=GradientDrawable.RECTANGLE
-//            cornerRadius = 18f
-//            colors = intArrayOf(android.graphics.Color.WHITE,android.graphics.Color.WHITE)
-//        }.toBitmap(width = size.width.value.toInt(), height = size.width.value.toInt())
+        val thisWeekCourse = allCourse?.get(nowWeekNum)
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
                 .appWidgetBackground()
                 .background(ImageProvider(R.drawable.appwidget_week_background))
-        ){
+        ) {
+            Row(
+                modifier = GlanceModifier
+                    .padding(10.dp)
+                    .clickable(actionRunCallback<UpdateAllAction>()),
+            ) {
+                Spacer(modifier = GlanceModifier.width(10.dp))
+                Text(
+                    text = "第 $nowWeekNum 周",
+                    style = TextStyle(fontSize = 18.sp),
+                    modifier = GlanceModifier.defaultWeight()
+                )
+            }
             Row(
                 modifier = GlanceModifier.fillMaxWidth()
             ) {
                 Spacer(modifier = GlanceModifier.width(20.dp))
-                repeat(7){
+                repeat(7) {
                     Text(
-                        text = "${it+1}",
+                        text = "${it + 1}",
                         modifier = GlanceModifier.defaultWeight(),
                         style = TextStyle(textAlign = TextAlign.Center)
                     )
@@ -75,15 +83,20 @@ class WeekAppwidgetAppwidget():GlanceAppWidget() {
                     ) {
                         TimeColumn(perHeight = perHeight)
                         repeat(7) { index ->
-                            val nowJieShu = IntArray(12){ it+1 }.toMutableList()
-                            val thisDayCourse = thisWeekCourse?.filter { it.whichColumn == index+1 }?.sortedBy { it.start }
+                            val nowJieShu = IntArray(12) { it + 1 }.toMutableList()
+                            val thisDayCourse =
+                                thisWeekCourse?.filter { it.whichColumn == index + 1 }
+                                    ?.sortedBy { it.start }
                             Column(modifier = GlanceModifier.defaultWeight()) {
                                 thisDayCourse?.let { thisDayCourses ->
-                                    for (singleCourse in thisDayCourses){
-                                        val spacerHeight = perHeight * (singleCourse.start-nowJieShu.getOrElse(0){1})
-                                        if (spacerHeight>0){Spacer(modifier = GlanceModifier.height(spacerHeight.dp))}
+                                    for (singleCourse in thisDayCourses) {
+                                        val spacerHeight =
+                                            perHeight * (singleCourse.start - nowJieShu.getOrElse(0) { 1 })
+                                        if (spacerHeight > 0) {
+                                            Spacer(modifier = GlanceModifier.height(spacerHeight.dp))
+                                        }
                                         SingleClass(singleClass = singleCourse)
-                                        nowJieShu -= IntArray(singleCourse.end){it+1}.toMutableList()
+                                        nowJieShu -= IntArray(singleCourse.end) { it + 1 }.toMutableList()
                                     }
                                 }
                             }
@@ -96,7 +109,7 @@ class WeekAppwidgetAppwidget():GlanceAppWidget() {
     }
 }
 
-class UpdateAllAction():ActionCallback{
+class UpdateAllAction() : ActionCallback {
     override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         WeekAppwidgetAppwidget().update(context, glanceId)
     }
@@ -104,7 +117,7 @@ class UpdateAllAction():ActionCallback{
 
 // 使用repeat会导致glance莫名无法加载暂时使用写死的，以后再试试for循环
 @Composable
-fun RowScope.TimeColumn(perHeight: Int){
+fun RowScope.TimeColumn(perHeight: Int) {
     Column(modifier = GlanceModifier.width(20.dp)) {
         Text(
             text = "1",
@@ -191,22 +204,21 @@ fun RowScope.TimeColumn(perHeight: Int){
 
 @Composable
 fun SingleClass(
-    singleClass:OneByOneCourseBean,
-    perHeight:Int = 50,
-    courseNameSize:Int = 17,
+    singleClass: OneByOneCourseBean,
+    perHeight: Int = 50,
+    courseNameSize: Int = 17,
 ) {
     val courseNameList = singleClass.courseName.split("\n")
-    val courseName = courseNameList.getOrElse(0){"空名称"}
-    val courseBuild = courseNameList.getOrElse(1){""}
-    val courseTeacher = courseNameList.getOrElse(2){""}
-    val height = perHeight*(singleClass.end - singleClass.start + 1)
+    val courseName = courseNameList.getOrElse(0) { "空名称" }
+    val courseBuild = courseNameList.getOrElse(1) { "" }
+    val courseTeacher = courseNameList.getOrElse(2) { "" }
+    val height = perHeight * (singleClass.end - singleClass.start + 1)
     Box(
         modifier = GlanceModifier
             .fillMaxWidth()
             .height(height.dp)
             .padding(0.95.dp)
-            .clickable(actionStartActivity<MainActivity>())
-        ,
+            .clickable(actionStartActivity<MainActivity>()),
     ) {
         Text(
             modifier = GlanceModifier
@@ -214,8 +226,12 @@ fun SingleClass(
                 .background(singleClass.twoColorList[0])
                 .fillMaxSize()
                 .padding(horizontal = 0.5.dp),
-            text = courseName+"\n"+courseBuild,
-            style = TextStyle(fontSize = 13.sp, textAlign = TextAlign.Center, color = ColorProvider(Color.White)),
+            text = courseName + "\n" + courseBuild,
+            style = TextStyle(
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center,
+                color = ColorProvider(Color.White)
+            ),
         )
     }
 }

@@ -118,22 +118,25 @@ fun AboutPage(){
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
         ) {
-            TextButton(onClick = { dialog.show() }) {
-                Text("隐私政策")
-            }
-            Spacer(
-                modifier = Modifier
-                    .width(10.dp)
-                    .padding(horizontal = 4.25.dp, vertical = 8.dp)
-                    .background(Color.Gray)
-                    .height(15.dp)
-            )
-            TextButton(onClick = { userDialog.show() }) {
-                Text(text = "用户协议")
+            Row(
+                modifier = Modifier.fillMaxWidth().wrapContentWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(onClick = { dialog.show() }) {
+                    Text("隐私政策")
+                }
+                Spacer(
+                    modifier = Modifier
+                        .width(10.dp)
+                        .padding(horizontal = 4.25.dp, vertical = 8.dp)
+                        .background(Color.Gray)
+                        .height(15.dp)
+                )
+                TextButton(onClick = { userDialog.show() }) {
+                    Text(text = "用户协议")
+                }
             }
         }
-
-
     }
 }
 

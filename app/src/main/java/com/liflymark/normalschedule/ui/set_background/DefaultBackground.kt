@@ -75,7 +75,7 @@ class DefaultBackground : AppCompatActivity() {
                 lastFile?.let {
                     this@DefaultBackground.deleteFile(it)
                 }
-                    viewModel.userBackgroundUri = "0"
+                viewModel.userBackgroundUri = "0"
                 viewModel.updateBackground()
                 Toasty.success(this@DefaultBackground, "已切换回默认背景", Toasty.LENGTH_SHORT).show()
             }

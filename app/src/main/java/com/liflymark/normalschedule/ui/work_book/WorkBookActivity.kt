@@ -16,8 +16,8 @@ import com.liflymark.normalschedule.ui.theme.NorScTheme
 
 class WorkBookActivity : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(WorkBookViewModel::class.java) }
-    @ExperimentalMaterialApi
-    @ExperimentalPagerApi
+
+    @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val courseName = intent.getStringExtra("courseName")?.replace("?", "")?.replace("/", "")

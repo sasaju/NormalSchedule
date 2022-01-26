@@ -210,50 +210,6 @@ fun SelectDeadLine(
     )
 }
 
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
-@Composable
-fun ShowDeadLine(
-    modifier: Modifier = Modifier,
-    deadMillis: Long,
-    addMillis: (millis: Long) -> Unit
-) {
-//    val stringList = listOf("明天","一周后", "两周后")
-//    val pagerState = rememberPagerState(
-//        pageCount = stringList.size,
-//        initialPage = 1,
-//        initialOffscreenLimit = stringList.size
-//    )
-//    StringPicker(
-//        modifier = modifier,
-//        strList = stringList,
-//        pagerState = pagerState,
-//        pageChange = {
-//            val addDay = when (it) {
-//                0 -> 7
-//                1 -> 1
-//                2 -> 14
-//                else -> 0
-//            }
-//            addMillis(GetDataUtil.getDayMillis(addDay))
-//        }
-//    )
-    val nowString = GetDataUtil.getDateStrByMillis(deadMillis)
-    var newDeadLine by remember {
-        mutableStateOf(nowString)
-    }
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ){
-        TextButton(onClick = {
-
-        }) {
-            Text(text = newDeadLine, style = MaterialTheme.typography.h6)
-        }
-    }
-}
-
 @Composable
 fun EditTextFiled(
     valueInit: String,

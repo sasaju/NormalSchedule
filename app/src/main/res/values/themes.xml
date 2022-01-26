@@ -34,8 +34,8 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="AppWidgetDay" >
-<!--        <item name="backgroundRadius">@dimen/widget_parent_radius_dimen</item>-->
+    <style name="AppWidgetDay">
+        <!--        <item name="backgroundRadius">@dimen/widget_parent_radius_dimen</item>-->
         <item name="android:padding">@dimen/widget_parent_padding</item>
     </style>
 

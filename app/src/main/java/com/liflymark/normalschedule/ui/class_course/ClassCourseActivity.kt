@@ -46,7 +46,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 class ClassCourseActivity : ComponentActivity() {
     private val viewModel by lazy { ViewModelProvider(this).get(ClassCourseViewModel::class.java) }
-    @ExperimentalPagerApi
+
+    @OptIn(ExperimentalPagerApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val allowImport = intent.getBooleanExtra("allowImport", false)
