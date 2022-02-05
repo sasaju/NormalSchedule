@@ -111,7 +111,7 @@ fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
             "裕华路校区" -> roomList.addAll(listOf("综合楼", "新楼"))
         }
     }
-    Log.d("SHowSPace","重组一次")
+
     Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
 
         // 选择校区

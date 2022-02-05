@@ -31,9 +31,9 @@ object AccountDao {
         }
     }
 
-    fun getSavedAccount(): Map<String, String?> {
-        val user = normalSharePreferences().getString("userYes", "")
-        val password =  pwSharedPreferences().getString("passwordEncrypt", "")
+    fun getSavedAccount(): Map<String, String> {
+        val user = normalSharePreferences().getString("userYes", "")!!
+        val password =  pwSharedPreferences().getString("passwordEncrypt", "")!!
         return mapOf("user" to user, "password" to password)
     }
 

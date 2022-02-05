@@ -15,10 +15,6 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.coroutineScope
@@ -38,22 +34,25 @@ import java.io.File.separator
 import java.io.FileOutputStream
 import java.io.OutputStream
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.view.WindowCompat
+import com.google.accompanist.insets.navigationBarsHeight
+import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.normalschedule.ui.sign_in_compose.SignUIAll
 
 class GetViewToPng : ComponentActivity() {
     @OptIn(ExperimentalPermissionsApi::class)
@@ -78,38 +77,18 @@ class GetViewToPng : ComponentActivity() {
 //        lifecycle.coroutineScope.launch {
 //            
 //        }
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent { 
             NorScTheme {
                 UiControl()
-                val scaffoldState = rememberScaffoldState()
-                val multiplePermissionsState = rememberMultiplePermissionsState(
-                    listOf(
-                        android.Manifest.permission.READ_CALENDAR,
-                        android.Manifest.permission.WRITE_CALENDAR,
-                    )
-                )
+                val state = rememberScaffoldState()
                 Scaffold(
-                    scaffoldState = scaffoldState,
+                    scaffoldState = state,
                     content = {
-                        RequestGrant(
-                            multiplePermissionsState,
-                            navigateToSettingsScreen = {
-                                startActivity(
-                                    Intent(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                        Uri.fromParts("package", packageName, null)
-                                    )
-                                )
-                            },
-                            scaffoldState = scaffoldState,
-                            hadShowedGrant = {
-                                Text(text = "全部权限已授予")
-                            }
-                        )
+                        SignUIAll(state){_,_ ->}
                     },
-                    floatingActionButton = {
-                        ExtendedFloatingActionButton(text = { Text(text = "嘿嘿") }, onClick = { /*TODO*/ }, icon={Icon(
-                            Icons.Default.Bolt, "")})
+                    topBar = {
+                        NormalTopBar(label = "登录")
                     }
                 )
 

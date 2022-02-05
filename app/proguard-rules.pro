@@ -36,3 +36,4 @@
 -keepclassmembers class * extends androidx.datastore.preferences.protobuf.GeneratedMessageLite {
     <fields>;
 }
+#-keep class com.liflymark.pushall.MiPushReceiver {*;}

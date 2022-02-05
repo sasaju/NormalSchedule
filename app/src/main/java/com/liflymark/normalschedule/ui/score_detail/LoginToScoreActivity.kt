@@ -2,27 +2,18 @@ package com.liflymark.normalschedule.ui.score_detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,6 +21,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.normalschedule.ui.sign_in_compose.SignUIAll
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
@@ -42,15 +34,132 @@ class LoginToScoreActivity : ComponentActivity() {
         setContent {
             UiControl()
             NorScTheme {
+                val state = rememberScaffoldState()
                 Scaffold(
+                    scaffoldState = state,
                     topBar = {
                         NormalTopBar(label = "成绩明细")
                     },
                     content = {
-                        Input(viewModel)
+                        LoginToScoreDetail(state = state)
                     }
                 )
             }
+        }
+    }
+}
+@Composable
+fun LoginToScoreDetail(
+    state: ScaffoldState
+) {
+    val focusManager = LocalFocusManager.current
+    val activity = LocalContext.current as LoginToScoreActivity
+    val loginScoreViewModel: LoginToScoreViewModel = viewModel()
+    var loginText by rememberSaveable { mutableStateOf("正在加载...") }
+    var loginEnable by rememberSaveable { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    val scoreResult = loginScoreViewModel.scoreDetailState.observeAsState()
+    LaunchedEffect(scoreResult.value){
+        if (scoreResult.value?.result == "登陆成功" && scoreResult.value!=null) {
+            val gradeList = scoreResult.value!!.grade_list
+            val intent = Intent(activity, ShowDetailScoreActivity::class.java).apply {
+                putExtra("detail_list", Convert.detailGradeToJson(gradeList))
+            }
+            loginText = "登录"
+            activity.startActivity(intent)
+            activity.finish()
+        } else {
+            loginText = "登录"
+            loginEnable = true
+            scoreResult.value?.result?.let { state.snackbarHostState.showSnackbar(it) }
+        }
+    }
+    SignUIAll(
+        scaffoldState = state,
+        onLove = {
+            loginText = "连接异常"
+        },
+        onSuccess = {
+            loginScoreViewModel.ids = it
+            loginText = "登录"
+            loginEnable = true
+        },
+        loginButton = { user, password ->
+            Button(
+                enabled = loginEnable,
+                onClick =
+                {
+                    focusManager.clearFocus()
+                    val result = checkInputAndShow(
+                        userName =  user,
+                        userPassword = password,
+                        viewModel = loginScoreViewModel,
+                        buttonText = loginText
+                    )
+                    scope.launch {
+                        if (result != null) {
+                            state.snackbarHostState.showSnackbar(result)
+                        }else{
+                            loginText = "正在登录..."
+                            loginEnable = false
+                        }
+                    }
+                },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth(0.8f)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    loginText.split("").forEach {
+                        Text(text = it, style = MaterialTheme.typography.h6, maxLines = 1)
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            OutlinedButton(
+                onClick = {
+                    val detail = Repository.getScoreDetail()
+                    if (detail == ""){
+                        Toasty.info(activity, "当前没有缓存数据").show()
+                    } else {
+                        val intent = Intent(activity, ShowDetailScoreActivity::class.java).apply {
+                            putExtra("detail_list", detail)
+                        }
+                        Repository.cancelAll()
+                        activity.startActivity(intent)
+                        activity.finish()
+                    }
+                },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth(0.8f)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(0.8f),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    "查看缓存数据".split("").forEach {
+                        Text(text = it, style = MaterialTheme.typography.h6, maxLines = 1)
+                    }
+                }
+            }
+        }
+    )
+}
+
+fun checkInputAndShow(
+    userName: String, userPassword: String,
+    viewModel: LoginToScoreViewModel,
+    buttonText:String,
+):String? {
+    return when {
+        buttonText != "登录" || viewModel.ids=="" -> { buttonText }
+        userName == "" -> { "请输入学号" }
+        userPassword == "" -> { "请输入密码" }
+        else -> {
+            viewModel.putValue(userName, userPassword)
+            null
         }
     }
 }
@@ -72,174 +181,39 @@ fun UiControl(){
 }
 
 
-@Composable
-fun Input(loginToScoreViewModel: LoginToScoreViewModel = viewModel()) {
-    var user by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    val openWaitDialog = remember {
-        mutableStateOf(false)
-    }
-    val activity = (LocalContext.current as? LoginToScoreActivity)
-    var getIdOrNot by rememberSaveable { mutableStateOf(false) }
-    WaitDialog(openDialog = openWaitDialog)
-    LaunchedEffect(true){
-        if (loginToScoreViewModel.isAccountSaved()){
-            user = loginToScoreViewModel.getSavedAccount()["user"].toString()
-            password = loginToScoreViewModel.getSavedAccount()["password"].toString()
-        }
-        loginToScoreViewModel.getId()
-        if (activity != null && !getIdOrNot) {
-            refreshId(activity = activity, viewModel = loginToScoreViewModel, openDialog = openWaitDialog){
-                getIdOrNot = true
-            }
-        } else {
-            loginToScoreViewModel.id = ""
-        }
-    }
-//    Image(
-//        painter = painterResource(id = R.drawable.main_background_4),
-//        contentDescription = null,
-//        modifier = Modifier.fillMaxSize(),
-//        contentScale = ContentScale.FillBounds
-//    )
-    Canvas(modifier = Modifier.fillMaxSize()) {
-        val canvasWidth = size.width
-        val canvasHeight = size.height
-        val lightBlue = Color(0x652196F3)
-        drawPath(
-            path = starPath(canvasWidth/2,canvasHeight/2),
-            color = lightBlue,
-//            style = Stroke(width = 4F)
-        )
-    }
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
-        Spacer(modifier = Modifier.height(40.dp))
-        Card(modifier = Modifier
-            .wrapContentHeight()
-            .fillMaxWidth(0.95f)
-            .alpha(0.8f)
-            .padding(5.dp),elevation = 5.dp, shape =  RoundedCornerShape(10.dp)
-        ) {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                OutlinedTextField(
-                    value = user,
-                    onValueChange = { user = it },
-                    label = { Text("请输入学号") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth(0.95f)
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text("请输入统一认证密码") },
-                    visualTransformation = PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    modifier = Modifier.fillMaxWidth(0.95f)
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(modifier = Modifier.fillMaxWidth(0.95f)) {
-                    Checkbox(checked = true, onCheckedChange = null)
-                    Text(text = "记住密码")
-                }
-
-                Spacer(modifier = Modifier.height(30.dp))
-                Button(onClick = {
-                    checkInputAndShow(activity!!,user, password, loginToScoreViewModel,
-                        openWaitDialog, loginToScoreViewModel.id)
-                    openWaitDialog.value = true
-                }) {
-                    Text(text = "登陆并查看成绩")
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(onClick = {
-                    openWaitDialog.value = true
-                    val detail = Repository.getScoreDetail()
-                    if (detail == ""){
-                        Toasty.info(activity!!, "当前没有缓存数据").show()
-                        openWaitDialog.value = false
-                    } else {
-                        val intent = Intent(activity, ShowDetailScoreActivity::class.java).apply {
-                            putExtra("detail_list", detail)
-                        }
-                        activity?.startActivity(intent)
-                        activity?.finish()
-                    }
-                }) {
-                    Text(text = "查看离线数据")
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-            }
-        }
-    }
-}
-
-
-fun checkInputAndShow(
-    activity: LoginToScoreActivity,
-    userName:String, userPassword: String,
-    viewModel: LoginToScoreViewModel,
-    openWaitDialog: MutableState<Boolean>,
-    ids: String
-){
-    when {
-        ids == "" -> {
-            Toasty.info(activity, "访问服务器异常，请重试", Toasty.LENGTH_SHORT).show()
-            openWaitDialog.value = false
-        }
-        userName == "" -> {
-            Toasty.info(activity, "请输入学号", Toasty.LENGTH_SHORT).show()
-            openWaitDialog.value = false
-        }
-        userPassword == "" -> {
-            Toasty.info(activity, "请输入密码", Toasty.LENGTH_SHORT).show()
-            openWaitDialog.value = false
-        }
-        else -> {
-            viewModel.putValue(userName, userPassword, ids)
-        }
-    }
-}
-
-fun refreshId(activity: LoginToScoreActivity,viewModel: LoginToScoreViewModel, openDialog: MutableState<Boolean>, success:() -> Unit = {}){
-    viewModel.idLiveData.observe(activity) {
-        if (it.isSuccess) {
-            viewModel.id = it.getOrNull()?.id ?: ""
-            success()
-            Toasty.success(activity, "访问服务器成功").show()
-        }
-    }
-    viewModel.getId()
-    viewModel.scoreDetailState.observe(activity) {
-        Log.d("Log", "内容更新")
-        if (it.isSuccess) {
-            val result = it.getOrNull()
-            if (result != null) {
-                if (result.result == "登陆成功") {
-                    val gradeList = result.grade_list
-                    val intent = Intent(activity, ShowDetailScoreActivity::class.java).apply {
-                        putExtra("detail_list", Convert.detailGradeToJson(gradeList))
-                    }
-                    activity.startActivity(intent)
-                    activity.finish()
-                } else {
-                    Toasty.error(activity, result.result).show()
-                }
-            } else {
-                Toasty.error(activity, "访问失败，访问结果为null").show()
-            }
-        } else {
-            Toasty.error(activity, "访问失败，访问未成功").show()
-        }
-        openDialog.value = false
-    }
-}
+//fun refreshId(activity: LoginToScoreActivity,viewModel: LoginToScoreViewModel, openDialog: MutableState<Boolean>, success:() -> Unit = {}){
+//    viewModel.idLiveData.observe(activity) {
+//        if (it.isSuccess) {
+//            viewModel.ids = it.getOrNull()?.id ?: ""
+//            success()
+//            Toasty.success(activity, "访问服务器成功").show()
+//        }
+//    }
+//    viewModel.getId()
+//    viewModel.scoreDetailState.observe(activity) {
+//        Log.d("Log", "内容更新")
+//        if (it.isSuccess) {
+//            val result = it.getOrNull()
+//            if (result != null) {
+//                if (result.result == "登陆成功") {
+//                    val gradeList = result.grade_list
+//                    val intent = Intent(activity, ShowDetailScoreActivity::class.java).apply {
+//                        putExtra("detail_list", Convert.detailGradeToJson(gradeList))
+//                    }
+//                    activity.startActivity(intent)
+//                    activity.finish()
+//                } else {
+//                    Toasty.error(activity, result.result).show()
+//                }
+//            } else {
+//                Toasty.error(activity, "访问失败，访问结果为null").show()
+//            }
+//        } else {
+//            Toasty.error(activity, "访问失败，访问未成功").show()
+//        }
+//        openDialog.value = false
+//    }
+//}
 
 //@Preview(showBackground = true)
 //@Composable

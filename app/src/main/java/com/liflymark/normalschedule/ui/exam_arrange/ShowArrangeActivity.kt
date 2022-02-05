@@ -34,7 +34,6 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.liflymark.normalschedule.logic.model.Arrange
 import com.liflymark.normalschedule.logic.utils.CalendarUtil
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.ui.exam_arrange.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.normalschedule.ui.tool_box.BoardCard
@@ -96,7 +95,7 @@ fun ShowArrangePage(allExamArrangeList:List<Arrange>){
             }
         },
         floatingActionButton = {
-            if (showFloat) {
+            if (true) {
                 ExtendedFloatingActionButton(
                     text = { Text(text = "导入日历日程") },
                     onClick = {
@@ -243,18 +242,5 @@ fun ExamArrangeCard(
             Text(text = examArrange.examIdCard, style = MaterialTheme.typography.subtitle1)
             Spacer(modifier = Modifier.height(3.dp))
         }
-    }
-}
-
-@Composable
-fun Greeting2(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview5() {
-    NormalScheduleTheme {
-        Greeting2("Android")
     }
 }

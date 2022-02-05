@@ -771,7 +771,6 @@ fun SingleSelectDialog(
             onDismissRequest = { showDialog.value = false },
 
             confirmButton = {
-
                     TextButton(onClick = {
                         result(selectList[selectNum])
                         showDialog.value = false
@@ -811,7 +810,7 @@ fun RadioTextButton(
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
-            modifier = Modifier.padding(15.dp),
+//            modifier = Modifier.padding(15.dp),
             selected = selected,
             onClick = { onClick() }
         )

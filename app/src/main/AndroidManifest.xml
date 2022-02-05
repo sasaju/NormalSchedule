@@ -32,6 +32,7 @@
             android:name=".ui.exam_arrange.ShowArrangeActivity"
             android:exported="true"
             android:label="@string/title_activity_show_arrange"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.exam_arrange.ExamActivity"

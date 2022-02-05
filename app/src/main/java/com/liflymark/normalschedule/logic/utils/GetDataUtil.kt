@@ -2,7 +2,6 @@ package com.liflymark.normalschedule.logic.utils
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.liflymark.normalschedule.ui.exam_arrange.Greeting
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime

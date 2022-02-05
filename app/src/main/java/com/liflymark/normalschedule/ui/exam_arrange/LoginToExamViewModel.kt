@@ -1,46 +1,30 @@
 package com.liflymark.normalschedule.ui.exam_arrange
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.utils.CalendarUtil
 
 class LoginToExamViewModel:ViewModel() {
-    var id = ""
+    var ids = ""
     private var user = ""
     private var password = ""
-    private var getIdOrNotLiveData = MutableLiveData(0)
-    private var formMapLiveData = MutableLiveData<Map<String, String>>()
+    private var num = 0
+    private var formMapLiveData = MutableLiveData<Int>()
 
-    val scoreDetailState = Transformations.switchMap(formMapLiveData){
-        Repository. getExamArrange(it["user"]!!, it["password"]!!, it["id"]!!).asLiveData()
+    val arrangeLiveData = Transformations.switchMap(formMapLiveData){ nums ->
+        Repository. getExamArrange(user, password, ids).asLiveData().map {
+            if (it.result!="登陆成功"){it.result += nums}
+            it
+        }
     }
 
-    val idLiveData = Transformations.switchMap(getIdOrNotLiveData) {
-        Repository.getId3().asLiveData()
-    }
-//    val scoreLiveData = Transformations.switchMap(formMapLiveData) { _ ->
-//        Repository.getScore(user, password, id)
-//    }
-
-    fun getId() {
-        getIdOrNotLiveData.value = getIdOrNotLiveData.value?.plus(1)
-        Log.d("LoginViewModel", "getID")
-    }
-
-
-    fun putValue(user: String, password: String,id: String) {
+    fun putValue(user: String, password: String) {
         this.user = user
         this.password = password
-        this.id = id
-        Log.d("LoginViewModel", "putValue运行")
-        formMapLiveData.value = mapOf("user" to user, "password" to password, "id" to id)
+        this.num += 1
+        formMapLiveData.value = num
     }
 
-
-    fun saveAccount(user: String, password: String) = Repository.saveAccount(user, password)
-    fun getSavedAccount() = Repository.getSavedAccount()
-    fun isAccountSaved() = Repository.isAccountSaved()
+    fun saveAccount() = Repository.saveAccount(this.user, this.password)
 }

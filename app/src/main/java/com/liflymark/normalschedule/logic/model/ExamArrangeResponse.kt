@@ -5,7 +5,7 @@ import androidx.annotation.Keep
 @Keep
 data class ExamArrangeResponse(
     val arrange_list: List<Arrange>,
-    val result: String
+    var result: String
 )
 
 @Keep

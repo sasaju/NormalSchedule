@@ -4,5 +4,5 @@ import androidx.annotation.Keep
 
 @Keep
 data class SpaceLoginResponse(
-    val result: String
+    var result: String
 )

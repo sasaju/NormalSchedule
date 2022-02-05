@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
@@ -19,8 +20,10 @@ import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
 import com.liflymark.schedule.data.Settings
 import com.liflymark.schedule.data.twoColorItem
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 object Repository {
@@ -89,6 +92,22 @@ object Repository {
             emit(result)
         } catch (e: Exception) {
             emit(IdResponse("love"))
+        }
+    }
+
+    fun getId5() = flow {
+        val result = NormalScheduleNetwork.getId()
+        emit(result)
+    }.catch {
+        emit(IdResponse("love"))
+    }
+
+    suspend fun getId6():IdResponse{
+        Log.d("Repo", "GetID6")
+        return try {
+            NormalScheduleNetwork.getId()
+        } catch (e:Exception){
+            IdResponse("love")
         }
     }
 
@@ -346,6 +365,30 @@ object Repository {
             )
             Result.success(a)
         }
+    }
+    fun getScoreDetail(user: String, password: String, id: String) = flow {
+        if (user != "123456") {
+            val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
+            emit(scoreDetailResponse)
+        } else {
+            val a = ScoreDetail(
+                listOf(
+                    Grades("90", "示例课程", "培养方案", "90.0", "5.0", "90", "99", "20", "5", "88"),
+                    Grades("92", "示例课程2", "培养方案", "90.0", "4.0", "92.2", "95", "10", "10", "95")
+                ),
+                result = "登陆成功"
+            )
+            emit(a)
+        }
+    }.catch {
+        val a = ScoreDetail(
+            listOf(
+                Grades("90", "示例课程", "培养方案", "90.0", "5.0", "90", "99", "20", "5", "88"),
+                Grades("92", "示例课程2", "培养方案", "90.0", "4.0", "92.2", "95", "10", "10", "95")
+            ),
+            result = "登陆异常"
+        )
+        emit(a)
     }
 
     fun loadAllCourse3(): List<List<OneByOneCourseBean>>? {
@@ -739,7 +782,7 @@ object Repository {
 
     fun getExamArrange(user: String, password: String, id: String) = flow {
         val res = NormalScheduleNetwork.getExamArrange(user, password, id)
-        Log.d("Repo", res.toString())
+        Log.d("RepoExam", res.toString())
         emit(res)
     }
         .catch {

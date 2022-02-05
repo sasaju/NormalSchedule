@@ -5,7 +5,7 @@ import androidx.annotation.Keep
 @Keep
 data class ScoreDetail(
     val grade_list: List<Grades>,
-    val result: String
+    var result: String
 )
 
 @Keep
