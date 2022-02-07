@@ -93,6 +93,7 @@ fun LoginToSpace(
         scaffoldState = state,
         onLove = {
             loginText = "连接异常"
+            loginEnable = false
             val intent = Intent(activity, ShowSpaceActivity::class.java).apply {
                 putExtra("ids", "love")
             }
@@ -107,7 +108,7 @@ fun LoginToSpace(
         },
         loginButton = { user, password ->
             Button(
-                enabled = true,
+                enabled = loginEnable,
                 onClick =
                 {
                     val result = checkInputAndShow(

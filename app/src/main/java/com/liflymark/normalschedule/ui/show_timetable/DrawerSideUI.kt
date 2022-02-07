@@ -34,7 +34,7 @@ import com.liflymark.normalschedule.ui.exam_arrange.ExamActivity
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
 import com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity
 import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
-import com.liflymark.normalschedule.ui.set_background.DefaultBackground
+import com.liflymark.normalschedule.ui.set_background.SetBackground
 import com.liflymark.normalschedule.ui.settings.SettingsActivity
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.normalschedule.ui.tool_box.ToolBoxActivity
@@ -48,7 +48,7 @@ fun DrawerNavHost(drawerState: DrawerState){
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         OneSentence()
 
-        NavButton(DefaultBackground(), drawerState,
+        NavButton(SetBackground(), drawerState,
             Icons.Filled.Wallpaper, "更换背景")
         NavButton(WorkBookActivity(), drawerState,
             Icons.Filled.MenuBook, "作业本")

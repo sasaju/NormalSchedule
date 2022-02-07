@@ -5,24 +5,23 @@ import androidx.room.*
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.liflymark.normalschedule.logic.bean.CourseBean
-import com.liflymark.normalschedule.logic.bean.ExamArrangeBean
-import com.liflymark.normalschedule.logic.bean.HomeworkBean
-import com.liflymark.normalschedule.logic.bean.UserBackgroundBean
+import com.liflymark.normalschedule.logic.bean.*
 
 @Database(
-    version = 5,
-    entities = [CourseBean::class, UserBackgroundBean::class, HomeworkBean::class],
+    version = 6,
+    entities = [CourseBean::class, UserBackgroundBean::class, HomeworkBean::class, Bulletin2::class],
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4, spec = AppDatabase.DeleteId::class),
-        AutoMigration(from = 4, to = 5)
+        AutoMigration(from = 4, to = 5),
+        AutoMigration(from = 5, to = 6)// 创建Bulletin2表
     ]
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun courseDao(): CourseOriginalDao
     abstract fun backgroundDao(): BackgroundDao
     abstract fun homeworkDao(): HomeworkDao
+    abstract fun StartBulletinDao(): StartBulletinDao
 
     // 采用多个键作为主键 故移除id字段
     @DeleteColumn(columnName = "id", tableName = "CourseBean")

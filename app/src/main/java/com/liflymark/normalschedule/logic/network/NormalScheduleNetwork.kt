@@ -66,6 +66,7 @@ object NormalScheduleNetwork {
     suspend fun getNewVersion(versionCode:String) =
         CheckUpdateService.getNewVersion(versionCode).await()
 
+    suspend fun getStartBulletin(id:Int) = DevService.getStartBulletin(id).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

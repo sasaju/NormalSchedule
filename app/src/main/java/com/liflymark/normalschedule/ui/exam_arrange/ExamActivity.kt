@@ -95,7 +95,8 @@ fun LoginToExam(
     SignUIAll(
         scaffoldState = state,
         onLove = {
-                 loginText = "连接异常"
+            loginText = "连接异常"
+            loginEnable = false
         },
         onSuccess = {
             loginExamViewModel.ids = it

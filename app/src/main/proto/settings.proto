@@ -51,6 +51,9 @@ message Settings {
 
   // 颜色列表
   repeated twoColorItem colors= 16;
+
+  // 获取开屏公告的日期
+  string last_update = 17;
 }
 
 

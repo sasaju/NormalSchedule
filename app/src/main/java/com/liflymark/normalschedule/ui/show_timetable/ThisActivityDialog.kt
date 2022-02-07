@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,8 +21,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.bean.Bulletin2
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.utils.Dialog
@@ -210,4 +213,78 @@ fun DeleteCourseDialog(deleteDialogOpen:MutableState<Boolean>,singleClass: OneBy
             }
         )
     }
+}
+
+@Composable
+fun StartBulletinDialog(
+    onDismiss:() -> Unit,
+    bulletin2: Bulletin2
+){
+    val context = LocalContext.current
+    AlertDialog(
+        onDismissRequest = {
+            onDismiss()
+        },
+        properties = DialogProperties(dismissOnBackPress = !bulletin2.force_update, dismissOnClickOutside = !bulletin2.force_update),
+        title = {
+            Row {
+               Text(text = bulletin2.title, style = MaterialTheme.typography.h6)
+            }
+        },
+        text = {
+            Text(text = bulletin2.content, style = MaterialTheme.typography.body1)
+        },
+        confirmButton = {
+            Row {
+                if (bulletin2.update_url!="null") {
+                    TextButton(onClick = {
+                        try {
+                            val newUrl = bulletin2.update_url
+                            val uri = Uri.parse(newUrl)
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            context.startActivity(intent)
+                            onDismiss()
+                        }catch (e:Exception){
+                            onDismiss()
+                        }
+                    }) {
+                        Text(text = "升级")
+                    }
+                }
+                if (!bulletin2.force_update){
+                    TextButton(onClick = {
+                        onDismiss()
+                    }) {
+                        Text(text = "知道了")
+                    }
+                }
+                if (bulletin2.update_url=="null" && bulletin2.force_update){
+                    TextButton(onClick = {
+                        onDismiss()
+                    }) {
+                        Text(text = "知道了")
+                    }
+                }
+            }
+        },
+        dismissButton = {
+            if (bulletin2.show_group){
+                TextButton(onClick = {
+                    val key = "IQn1Mh09oCQwvfVXljBPgCkkg8SPfjZP"
+                    val intent = Intent()
+                    intent.data = Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$key")
+                    // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
+                    // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    try {
+                        context.startActivity(intent)
+                    } catch (e: Exception){
+                        Toasty.error(context, "未安装QQ").show()
+                    }
+                    if (!bulletin2.force_update){ onDismiss() }
+                }) {
+                    Text(text = "加入反馈群")
+                }
+            }
+        }
+    )
 }

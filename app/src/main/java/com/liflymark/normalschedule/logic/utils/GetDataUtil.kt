@@ -21,6 +21,12 @@ internal object GetDataUtil {
     }
 
     @SuppressLint("SimpleDateFormat")
+    fun thisStringIsToday(dateString: String):Boolean {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val today = sdf.format(Date())
+        return today == dateString
+    }
+    @SuppressLint("SimpleDateFormat")
     fun getNowMonth(whichColumn:Int, whichWeek:Int): String {
         val sdf = SimpleDateFormat("MM月dd日")
         val column = when(whichColumn){
@@ -69,6 +75,11 @@ internal object GetDataUtil {
         return sdf.format(date.time)
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun getTodayDateString():String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        return sdf.format(Date())
+    }
     /**
      * 计算几天之后的日期并转换为毫秒
      */

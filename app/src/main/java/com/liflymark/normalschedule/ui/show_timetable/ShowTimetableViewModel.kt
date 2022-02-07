@@ -1,8 +1,10 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.bean.Bulletin2
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.utils.Convert
@@ -39,6 +41,15 @@ class ShowTimetableViewModel: ViewModel() {
     }
 
     val settingsLiveData = Repository.getScheduleSettings().asLiveData()
+
+    val showStartBulletin2 = mutableStateOf<Bulletin2?>(null)
+
+    init {
+        viewModelScope.launch {
+            showStartBulletin2.value = Repository.getNewStartBulletin2()
+        }
+    }
+
 
     fun loadAllCourse() {
         courseDatabaseLiveData.value = courseDatabaseLiveData.value?.plus(1)
@@ -106,46 +117,6 @@ class ShowTimetableViewModel: ViewModel() {
         }
     }
 
-    fun mergeClass(className: String,
-                   classDay: Int,
-                   classSessions: Int,
-                   continuingSession: Int){
-        viewModelScope.launch {
-            var classWeekResult = Integer.parseInt("000000000000000000000000", 2)
-            var teacher = ""
-            val classList = Repository.loadCourseUnTeacher(className, classDay, classSessions, continuingSession)
-            for (singleBean in classList){
-                val singleBeanWeek = Integer.parseInt(singleBean.classWeek,2)
-                classWeekResult = singleBeanWeek or classWeekResult
-                teacher += "${singleBean.teacher} "
-            }
-
-            var classWeekResultStr = Integer.toBinaryString(classWeekResult)
-            val length = classWeekResultStr.length
-            if (classWeekResultStr.length < 24){
-                repeat(24-length){
-                    classWeekResultStr = "0$classWeekResultStr"
-                }
-            }
-            val newBean = CourseBean(
-                campusName = "河北大学",
-                classDay = classDay,
-                classSessions = classSessions,
-                classWeek = classWeekResultStr,
-                continuingSession = continuingSession,
-                courseName = className,
-                teacher = teacher,
-                teachingBuildName = "多个教室",
-                color = Convert.stringToColor(className)
-            )
-            if (Integer.parseInt("000000000000000000000000", 2)!=classWeekResult) {
-                Repository.insertCourse(newBean)
-                Repository.deleteCourseByList(classList)
-//                loadAllCourse()
-            }
-        }
-    }
-
     fun fetchSentence(force:Boolean = false) {
         _sentenceLiveDate.value = force
     }
@@ -167,53 +138,4 @@ class ShowTimetableViewModel: ViewModel() {
         return GetDataUtil.whichWeekNow() > 19
     }
 
-    private fun String.whichIs1(): List<Int>{
-        val oneList = mutableListOf<Int>()
-        for (i in this.indices){
-            when(this[i].toString()){
-                "1" -> oneList.add(i+1)
-                else -> Log.d("Dialog", "异常")
-            }
-        }
-        return oneList
-    }
-
-    private fun getWeekNumFormat(oneList: List<Int>): String {
-        var courseTimeFormat = "第"
-        var type = 0
-        for (i in oneList.indices-1){
-            if (i == 0){
-                continue
-            }
-            type = if (oneList[i+1]-oneList[i] == 1 && oneList[i]-oneList[i-1] == 1) {
-                // 连续
-                0
-            } else if (oneList[i+1]-oneList[i] == 2 && oneList[i]-oneList[i-1] == 2){
-                // 单周或双周
-                1
-            } else {
-                // 未知
-                2
-            }
-        }
-        when (type){
-            0 ->{
-                courseTimeFormat += " ${oneList.first() - oneList.last()} 周"
-            }
-            1 ->{
-                courseTimeFormat += if (oneList.first() % 2 == 1) {
-                    "${oneList.first() - oneList.last()} 单周"
-                } else {
-                    "${oneList.first() - oneList.last()} 双周"
-                }
-            }
-            2 ->{
-                for (i in oneList){
-                    courseTimeFormat += "$i,"
-                }
-                courseTimeFormat += "周"
-            }
-        }
-        return courseTimeFormat
-    }
 }

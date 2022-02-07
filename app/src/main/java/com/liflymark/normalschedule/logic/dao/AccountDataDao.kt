@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.NormalScheduleApplication.Companion.context
 import com.liflymark.schedule.data.Settings
+import com.liflymark.schedule.data.twoColorItem
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -86,10 +87,27 @@ object AccountDataDao {
         }.first()
     }
 
-    fun getColorListAsyc() = runBlocking {
+    fun getColorListAsyc(): MutableList<twoColorItem> = runBlocking {
         scheduleSettings.map { value: Settings ->
             value.colorsList
         }.first()
+    }
+
+    suspend fun getLastUpdate():String {
+        val res = scheduleSettings.map { it.lastUpdate }.first()
+        return if (res==""){
+            "2000-01-01"
+        }else{
+            res
+        }
+    }
+
+    suspend fun setLastUpdate(last:String) {
+        context.settingsStore.updateData {
+            it.toBuilder()
+                .setLastUpdate(last)
+                .build()
+        }
     }
 
     suspend fun updateSettings(setSettings:(settings:Settings)->Settings){

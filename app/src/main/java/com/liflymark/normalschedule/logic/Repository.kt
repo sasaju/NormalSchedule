@@ -32,6 +32,7 @@ object Repository {
     private val courseDao = dataBase.courseDao()
     private val backgroundDao = dataBase.backgroundDao()
     private val homeworkDao = dataBase.homeworkDao()
+    private val startBulletinBean = dataBase.StartBulletinDao()
     fun getDefaultString() = listOf(
         listOf("#12c2e9", "#FFFC354C", "#FF0ABFBC"),
         listOf("#376B78", "#FFC04848", "#FF480048"),
@@ -468,6 +469,29 @@ object Repository {
         }
     }
 
+    suspend fun loadBackground2():Uri {
+        val resources = NormalScheduleApplication.context.resources
+        val resourceId =
+            R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
+        val uriBeepSound = Uri.Builder()
+            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+            .authority(resources.getResourcePackageName(resourceId))
+            .appendPath(resources.getResourceTypeName(resourceId))
+            .appendPath(resources.getResourceEntryName(resourceId))
+            .build()
+        try {
+            val a = backgroundDao.loadLastBackground()
+            if (a.userBackground != "0") {
+                return Uri.parse(a.userBackground)
+            } else {
+                Log.d("ShowBackgroudRE", uriBeepSound.toString())
+                return uriBeepSound
+            }
+        } catch (e: Exception) {
+            return uriBeepSound
+        }
+    }
+
     suspend fun loadBackgroundFileName(): String? {
         return try {
             val a = backgroundDao.loadLastBackground()
@@ -809,6 +833,33 @@ object Repository {
     suspend fun getNewVerison2(versionCode: String) =
         NormalScheduleNetwork.getNewVersion(versionCode)
 
+    // 只要本地没有存储公告每次打开都会请求，存储公告以后每天访问一遍公告
+    suspend fun getNewStartBulletin2(): Bulletin2? {
+        try{
+            val lastBulletin2 = startBulletinBean.getLastBulletin2()
+            val lastId = (lastBulletin2?.id) ?: 0
+            val lastUpdate = AccountDataDao.getLastUpdate()
+            return if (lastBulletin2 == null || !GetDataUtil.thisStringIsToday(lastUpdate)) {
+                val res = NormalScheduleNetwork.getStartBulletin(lastId)
+                AccountDataDao.setLastUpdate(GetDataUtil.getTodayDateString())
+                Log.d("getNewStart", "访问一次")
+                if (res.bulletin_list.isEmpty()) {
+                    null
+                } else {
+                    startBulletinBean.insertStartBulletin(res.bulletin_list)
+                    res.bulletin_list.last()
+                }
+            } else {
+                Log.d("getNewStart", "today have visited")
+                null
+            }
+        }catch (e:Exception){
+            return null
+        }
+    }
+
+
+
     fun getScoreDetail() = AccountDataDao.getScoreDetail()
     fun setScoreDetail(detail: String) = AccountDataDao.updateScoreDetail(detail)
 
@@ -832,13 +883,14 @@ object Repository {
             emit(result)
         }.flowOn(context)
 
+
     fun saveAccount(user: String, password: String) = AccountDao.saveAccount(user, password)
     fun getSavedAccount() = AccountDao.getSavedAccount()
     fun isAccountSaved() = AccountDao.isAccountSaved()
     fun importAgain() = AccountDao.importedAgain()
     fun saveLogin() = AccountDao.saveLogin()
 
-    // 0-未读取，1-显示过快速跳转，3-显示过快速跳转，已完成重大Bug检测
+    // 0-未读取，1-已经显示快速跳转，3-已经显示过快速跳转，已完成重大Bug检测
     suspend fun saveUserVersion(version: Int = 1) = AccountDataDao.saveUserVersion(version)
     fun getNewUserOrNot() = AccountDataDao.getNewUserOrNot()
     fun getUserVersion() = AccountDataDao.getUserVersion()

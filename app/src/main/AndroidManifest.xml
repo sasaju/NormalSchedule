@@ -102,11 +102,6 @@
             android:exported="true" />
         <activity android:name=".ui.import_again.ImportCourseAgain" />
         <activity
-            android:name=".ui.set_background.DefaultBackground"
-            android:label="选择背景"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-        <activity
             android:name=".ui.import_show_score.ShowScoreActivity"
             android:label="成绩单"
             android:parentActivityName=".MainActivity"

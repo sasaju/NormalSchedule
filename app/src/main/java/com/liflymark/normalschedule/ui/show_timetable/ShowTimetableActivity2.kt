@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -72,7 +73,8 @@ class ShowTimetableActivity2 : BaseComment() {
     @OptIn(
         ExperimentalAnimationApi::class,
         ExperimentalMaterialApi::class,
-        ExperimentalPagerApi::class, DelicateCoroutinesApi::class
+        ExperimentalPagerApi::class,
+        DelicateCoroutinesApi::class
     )
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -130,6 +132,7 @@ fun Drawer(
     val newUserOrNot =
         viewModel.newUserFLow.collectAsState(initial = false)
     val quickJumpShow = remember { mutableStateOf(false) }
+    val startBulletin = remember { viewModel.showStartBulletin2 }
 
     // 修复一次bug
 //    LaunchedEffect(newUserVersion.value){
@@ -165,6 +168,18 @@ fun Drawer(
         // When the effect leaves the Composition, remove the callback
         onDispose {
             backCallback.remove()
+        }
+    }
+
+    var showStartBulletin2 by rememberSaveable { mutableStateOf(true) }
+    startBulletin.value?.let {
+        if (showStartBulletin2 && !newUserOrNot.value){
+            StartBulletinDialog(
+                onDismiss = {
+                    showStartBulletin2 = false
+                },
+                bulletin2 = it
+            )
         }
     }
 
