@@ -2,37 +2,25 @@ package com.liflymark.normalschedule.ui.login_space_room
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.logic.Repository
-import com.liflymark.normalschedule.logic.utils.LoadingDialogBottom
-import com.liflymark.normalschedule.ui.class_course.ui.theme.NormalScheduleTheme
 import com.liflymark.normalschedule.ui.score_detail.*
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.sign_in_compose.SignUIAll
 import com.liflymark.normalschedule.ui.theme.NorScTheme
-import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
 
 class LoginSpaceActivity : ComponentActivity() {

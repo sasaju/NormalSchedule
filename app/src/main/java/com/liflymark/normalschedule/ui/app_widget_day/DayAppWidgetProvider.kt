@@ -28,7 +28,7 @@ class DayAppWidgetProvider: AppWidgetProvider() {
             val randomNumber=(Math.random()*100).toInt()
             val pendingIntent: PendingIntent = Intent(context, MainActivity::class.java)
                 .let { intent ->
-                    PendingIntent.getActivity(context, 0, intent, 0)
+                    PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
                 }
 
             // Get the layout for the App Widget and attach an on-click listener
@@ -53,7 +53,7 @@ class DayAppWidgetProvider: AppWidgetProvider() {
 
             views.setEmptyView(R.id.course_day_list, R.layout.app_widget_none_data)
             val miuiIntent = Intent(context, MainActivity::class.java)
-            val pendingIntent1 = PendingIntent.getActivity(context, 0, miuiIntent, 0)
+            val pendingIntent1 = PendingIntent.getActivity(context, 0, miuiIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             views.setPendingIntentTemplate(R.id.course_day_list, pendingIntent1)
 //            val intentSync = Intent(context, DayAppWidgetProvider::class.java)
 //            intentSync.action =

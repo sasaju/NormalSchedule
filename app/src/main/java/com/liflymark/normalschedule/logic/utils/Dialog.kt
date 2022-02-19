@@ -2,7 +2,6 @@ package com.liflymark.normalschedule.logic.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.DialogInterface
 import android.util.Log
 import android.widget.TextView
 import androidx.compose.foundation.background
@@ -18,32 +17,21 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.lifecycle.AndroidViewModel
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.airbnb.lottie.compose.*
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
-import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
 import kotlinx.coroutines.launch
 import java.util.*
-
-
-class test:AndroidViewModel(NormalScheduleApplication()){
-
-}
 
 object Dialog {
     fun getContractDialog(
@@ -72,9 +60,9 @@ object Dialog {
                         "4.本隐私政策的更改 \n" +
                         "(a)如果决定更改隐私政策，我们会在本政策中、网站中以及我们认为适当的位置发布这些更改，以便您了解我们如何收集、使用您的个人信息，哪些人可以访问这些信息，以及在什么情况下我们会透露这些信息。 \n" +
                         "(b)本人保留随时修改本政策的权利，因此请经常查看。\n\n" +
-                        "\nAPP运营者信息：李飞； 办公地址：河北省沧州市献县商业局小区；用户隐私信息保护负责人电话：15511777580\n" +
-                        "开发者名称：考试不挂科（献县）科技发展技术服务中心\n" +
-                                "著作权归APP运营者所有。")
+                        "5.APP运营方信息\n"+
+                        "运营者姓名：李飞；\n 邮箱：1289142675@qq.com\n办公地址：河北省沧州市献县商业局小区；\n\n用户隐私信息保护负责人电话：15511777580\n开发者名称：考试不挂科（献县）科技发展技术服务中心"+
+                                "\n著作权归APP运营者所有。")
                 .positiveButton(text = "已阅读并同意"){ yes() }
                 .negativeButton(text = "拒绝并停止使用"){ no() }
         return dialog
@@ -815,99 +803,6 @@ fun RadioTextButton(
             onClick = { onClick() }
         )
         Text(text = text, style = MaterialTheme.typography.body1)
-    }
-}
-
-@Composable
-fun LoadingDialogBottom(
-    showDialog:Boolean,
-    text: String?,
-    onDismissRequest:()->Unit,
-    properties:DialogProperties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false),
-    bottomContent:@Composable () -> Unit
-){
-    if (showDialog){
-        CornerDialog(
-            properties = properties,
-            onDismissRequest = {
-                onDismissRequest()
-            }
-        ) {
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadding))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .padding(5.dp)
-                        .wrapContentHeight(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    LottieAnimation(
-                        composition,
-                        iterations = LottieConstants.IterateForever,
-                        modifier = Modifier.size(60.dp)
-                    )
-
-                    if (text!=null && text!=""){
-                        Spacer(modifier = Modifier.width(5.dp))
-                        Text(
-                            text = text,
-                            color = Color.Gray,
-                            fontSize = 15.sp
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                    }
-                }
-                bottomContent()
-            }
-        }
-    }
-}
-
-@Composable
-fun LoadingDialog(
-    showDialog:Boolean,
-    text: String?,
-    onDismissRequest:()->Unit,
-    properties:DialogProperties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = false),
-){
-    if (showDialog){
-        CornerDialog(
-            properties = properties,
-            onDismissRequest = {
-                onDismissRequest()
-            }
-        ) {
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadding))
-
-            Row(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .padding(5.dp)
-                    .wrapContentHeight(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                LottieAnimation(
-                    composition,
-                    iterations = LottieConstants.IterateForever,
-                    modifier = Modifier.size(60.dp)
-                )
-
-                if (text!=null && text!=""){
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Text(
-                        text = text,
-                        color = Color.Gray,
-                        fontSize = 15.sp
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                }
-            }
-        }
     }
 }
 

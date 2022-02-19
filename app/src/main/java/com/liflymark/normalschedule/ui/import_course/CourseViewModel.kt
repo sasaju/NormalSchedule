@@ -16,7 +16,7 @@ class CourseViewModel: ViewModel() {
     private var formMapNewLiveData = MutableLiveData<String>()
     private var formVisitLiveData = MutableLiveData<String>()
     private var getIdOrNotLiveData = MutableLiveData<Int>()
-    private var getImageTimesLiveData = MutableLiveData(0)
+    private var getImageTimesLiveData = MutableLiveData<Int>()
     private var courseListLiveData = MutableLiveData<List<AllCourse>>()
     private var deleteCourseBean = MutableLiveData<Int>()
 //    private var courseDatabaseLiveData = MutableLiveData(0)
@@ -54,11 +54,9 @@ class CourseViewModel: ViewModel() {
     }
 
     fun getImage(id: String) {
-        val temp = getIdOrNotLiveData.value?.toInt()
+        val temp = getIdOrNotLiveData.value?:0
         this.id = id
-        if (temp != null) {
-            getImageTimesLiveData.value = temp + 1
-        }
+        getImageTimesLiveData.value = temp + 1
     }
 
     fun putValue(user: String, password: String, yzm: String, id: String) {

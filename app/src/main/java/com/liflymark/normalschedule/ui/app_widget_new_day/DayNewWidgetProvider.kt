@@ -50,7 +50,7 @@ class DayNewWidgetProvider: AppWidgetProvider() {
             val miuiIntent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             }
-            val pendingIntent = PendingIntent.getActivity(context, 0, miuiIntent, 0)
+            val pendingIntent = PendingIntent.getActivity(context, 0, miuiIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             views.setPendingIntentTemplate(R.id.new_appwidget_list, pendingIntent)
             val intentSync = Intent(context, this::class.java)
             intentSync.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE //You need to specify the action for the intent. Right now that intent is doing nothing for there is no action to be broadcasted.
@@ -59,7 +59,7 @@ class DayNewWidgetProvider: AppWidgetProvider() {
                 context,
                 0,
                 intentSync,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             ) //You need to specify a proper flag for the intent. Or else the intent will become deleted.
 
             views.setOnClickPendingIntent(R.id.date_text, pendingSync)

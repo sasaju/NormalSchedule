@@ -5,27 +5,36 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gyf.immersionbar.ImmersionBar
 import com.liflymark.normalschedule.R
-import com.liflymark.normalschedule.databinding.ActivityGitListBinding
 import com.liflymark.normalschedule.logic.model.GitProject
+import com.liflymark.normalschedule.ui.score_detail.UiControl
+import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
+import com.liflymark.normalschedule.ui.theme.NorScTheme
 
-class GitListActivity : AppCompatActivity() {
+class GitListActivity : ComponentActivity() {
 
     private val gitProjectList = ArrayList<GitProject>()
-    private lateinit var binding: ActivityGitListBinding
+//    private lateinit var binding: ActivityGitListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGitListBinding.inflate(layoutInflater)
-        ImmersionBar.with(this).init()
-        initList()
-        val layoutManager = LinearLayoutManager(this)
-        binding.gitList.layoutManager = layoutManager
-        val adapter = GitListAdapter(this,gitProjectList)
-        binding.gitList.adapter = adapter
-        setContentView(binding.root)
+        setContent {
+            NorScTheme {
+                ProjectListAll()
+            }
+        }
+//        binding = ActivityGitListBinding.inflate(layoutInflater)
+//        ImmersionBar.with(this).init()
+//        initList()
+//        val layoutManager = LinearLayoutManager(this)
+//        binding.gitList.layoutManager = layoutManager
+//        val adapter = GitListAdapter(this,gitProjectList)
+//        binding.gitList.adapter = adapter
+//        setContentView(binding.root)
 
 
     }

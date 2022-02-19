@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 20
-        versionName "0.0.23"
+        versionCode 22
+        versionName "0.1.22"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -118,8 +118,8 @@ android {
 dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -127,7 +127,7 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.4.1'
     implementation 'androidx.room:room-runtime:2.4.1'
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     ksp "androidx.room:room-compiler:2.4.1"
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
@@ -156,7 +156,7 @@ dependencies {
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.4.0'
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 //    implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
@@ -170,8 +170,8 @@ dependencies {
     implementation "com.google.accompanist:accompanist-insets-ui:$accompanist_version"
 //    implementation "com.google.accompanist:accompanist-glide:$accompanist_version"
 
-    implementation ("io.coil-kt:coil-compose:2.0.0-alpha06")
-    implementation ("io.coil-kt:coil-gif:2.0.0-alpha06")
+    implementation ("io.coil-kt:coil-compose:2.0.0-alpha08")
+    implementation ("io.coil-kt:coil-gif:2.0.0-alpha08")
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
@@ -186,7 +186,6 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 //    implementation "com.github.skydoves:colorpickerpreference:2.0.6"
     implementation 'com.afollestad.material-dialogs:color:3.2.1'
-    implementation "com.airbnb.android:lottie-compose:4.2.2"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
     implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
     implementation ("androidx.glance:glance-appwidget:1.0.0-alpha02")
