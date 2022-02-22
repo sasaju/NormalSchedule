@@ -15,8 +15,13 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +35,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.liflymark.normalschedule.R
+import com.liflymark.normalschedule.logic.utils.text_field.BackgroundTransparentTextFiled
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -803,6 +809,53 @@ fun RadioTextButton(
             onClick = { onClick() }
         )
         Text(text = text, style = MaterialTheme.typography.body1)
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun TextFieldDialog(
+    value:String,
+    placeHolder:String,
+    onDismissRequest:()->Unit,
+    onClick: (res:String) -> Unit,
+    properties:DialogProperties = DialogProperties(dismissOnClickOutside = false),
+    shapes: CornerBasedShape = MaterialTheme.shapes.medium,
+){
+    var text by rememberSaveable{ mutableStateOf(value) }
+    val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    LaunchedEffect(Unit){
+        focusRequester.requestFocus()
+        keyboardController?.show()
+    }
+    CornerDialog(
+        onDismissRequest = onDismissRequest,
+        properties = properties,
+        shapes = shapes,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .padding(5.dp)
+        ) {
+            Spacer(modifier = Modifier.height(10.dp))
+            BackgroundTransparentTextFiled(
+                value = text,
+                onValueChange = { text = it },
+                placeHolder = placeHolder,
+                modifier = Modifier.focusRequester(focusRequester)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            TextButton(
+                onClick = {
+                    onClick(text)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "确定")
+            }
+        }
     }
 }
 

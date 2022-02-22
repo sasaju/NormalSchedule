@@ -11,6 +11,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.Group
+import androidx.compose.material.icons.outlined.Room
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,33 +24,40 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
+import com.liflymark.normalschedule.logic.utils.*
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.Dialog.whichIs1
-import com.liflymark.normalschedule.logic.utils.SelectSessionDialog
-import com.liflymark.normalschedule.logic.utils.SelectWeekDialog
 import com.liflymark.normalschedule.ui.score_detail.ProgressDialog
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.schedule.data.twoColorItem
 import kotlinx.coroutines.launch
 import kotlin.reflect.KMutableProperty1
 
+class ViewFactory(private val courseName: String):ViewModelProvider.Factory{
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return AddOrEditCourseViewModel(courseName) as T
+    }
+}
+
 
 @Composable
 fun ShowAllCourseToEdit(
-    courseName:String
+    courseName:String,
+    addOrEditCourseViewModel: AddOrEditCourseViewModel = viewModel(factory = ViewFactory(courseName = courseName))
 ){
     val context = LocalContext.current as Activity
+    val courseBeanListState = remember { addOrEditCourseViewModel.courseListState }
     var courseNameState by rememberSaveable { mutableStateOf(courseName) }
-    val deleteCourseList = remember{ mutableListOf<CourseBean>() }
-    val needAddCourseList = remember{ mutableStateListOf<CourseBean>() }
-    val courseBeanList = remember{ mutableStateListOf<CourseBean>() }
     val progressShow = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    var setColorIndex by rememberSaveable{ mutableStateOf(-1) }
+    var setColorIndex by remember{ addOrEditCourseViewModel.courseColorIndex }
     val colorListSettings = Repository.getScheduleSettingsColorList()
         .collectAsState(initial = Repository.colorStringListToTwoItems())
     fun colorListToColors(colorsList:List<twoColorItem>): IntArray {
@@ -62,34 +71,12 @@ fun ShowAllCourseToEdit(
             setColorIndex = colors.indexOf(colorInt)
         }
     }
-    fun needAddToStateList(){
-        courseBeanList.clear()
-        courseBeanList.addAll(needAddCourseList)
-    }
-
-    fun sideAddToState(index:Int,courseBean:CourseBean){
-        courseBeanList[index].apply {
-            classWeek=courseBean.classWeek
-            classDay=courseBean.classDay
-            classSessions = courseBean.classSessions
-            continuingSession = courseBean.continuingSession
-            teacher = courseBean.teacher
-            teachingBuildName = courseBean.teachingBuildName
-        }
-    }
 
     LaunchedEffect(true){
         progressShow.value = true
-        val courseBeanLoad = Repository.loadCourseByName(courseName)
-        courseBeanList.addAll(courseBeanLoad.map { it.copy() })
-        needAddCourseList.addAll(courseBeanLoad.map{ it.copy()} )
-        Log.d("AddOrEditCourse", "1:"+needAddCourseList.toList().toString())
-        deleteCourseList.addAll(courseBeanLoad.map { it.copy() })
-        Log.d("Repo", "in AddOrEdit"+deleteCourseList.toString())
-        setColorIndex = if (courseBeanList.getOrNull(0) != null){courseBeanList[0].colorIndex}else{-1}
+
         progressShow.value = false
     }
-    Log.d("AddorEdit",courseBeanList.toString())
     // 加载条
     ProgressDialog(openDialog = progressShow, label = "正在保存", dismissOnClickOutside = false)
     Column(
@@ -117,7 +104,7 @@ fun ShowAllCourseToEdit(
 //            needAddToStateList()
 //        }
         // 课程时间段显示
-        courseBeanList.forEachIndexed { index,courseBean ->
+        courseBeanListState.forEachIndexed { index,courseBean ->
             Log.d("AddorEdit", "ShowAll重组一次")
 //            sideAddToState()
             key(
@@ -128,16 +115,12 @@ fun ShowAllCourseToEdit(
                 ShowTimePart(
                     courseBean =courseBean,
                     onValueChange = {
-                        needAddCourseList[index] = it
-                        sideAddToState(index, it)
+                        courseBeanListState[index] = it
+                        Log.d("AddOrEdit", "ShowTiemPart：${it}")
                                     },
                     deleteClick = {
-                        needAddCourseList.remove(it)
-                        needAddToStateList()
+                        courseBeanListState.remove(it)
                     },
-                    forReCompose = {
-                        needAddToStateList()
-                    }
                 )
             }
         }
@@ -153,15 +136,14 @@ fun ShowAllCourseToEdit(
             ) {
                 val textBtMod = Modifier.weight(1f)
                 TextButton(onClick = {
-                    if (!needAddCourseList.isEmpty()){
-                        needAddCourseList.removeLast()
-                        needAddToStateList()
+                    if (!courseBeanListState.isEmpty()){
+                        courseBeanListState.removeLast()
                     }
                 }, modifier = textBtMod) {
                     Text(text = "删除末尾时段")
                 }
                 TextButton(onClick = {
-                    needAddCourseList.add(
+                    courseBeanListState.add(
                         CourseBean(
                             campusName="五四路校区",
                             classDay=3,
@@ -175,21 +157,13 @@ fun ShowAllCourseToEdit(
                         )
                     )
                     if (setColorIndex==-1){setColorIndex=Convert.courseNameToIndex(courseName,13)}
-                    needAddToStateList()
                 }, modifier = textBtMod) {
                     Text(text = "增加时段")
                 }
                 TextButton(onClick = {
                     scope.launch {
                         progressShow.value = true
-                        Repository.deleteCourseByList(deleteCourseList)
-                        Log.d("AddOrEditCourse", "delete:"+deleteCourseList.toList().toString())
-                        needAddCourseList.map {
-                            it.courseName = courseNameState
-                            it.colorIndex = if (setColorIndex==-1){ Convert.courseNameToIndex(courseNameState,13) }else{ setColorIndex }
-                        }
-                        Log.d("AddOrEditCourse", "3:"+needAddCourseList.toList().toString())
-                        Repository.insertCourse(needAddCourseList)
+                        addOrEditCourseViewModel.saveChange(courseNameState, setColorIndex)
                         updateWidget(context = context)
                         progressShow.value = false
                         context.finish()
@@ -208,19 +182,17 @@ fun ShowAllCourseToEdit(
 fun ShowTimePart(
     courseBean:CourseBean,
     onValueChange: (CourseBean) -> Unit,
-    forReCompose:() -> Unit,
     deleteClick: (courseBean: CourseBean) -> Unit
 ){
-    val (courseBeanState, setCourseBean) = remember { mutableStateOf(courseBean) }
-    val oneList = courseBeanState.classWeek.whichIs1()
+    val oneList = courseBean.classWeek.whichIs1()
     var courseStartToEnd by
         remember {
-            mutableStateOf("    第${courseBeanState.classSessions} - ${courseBeanState.classSessions + courseBeanState.continuingSession - 1}节")
+            mutableStateOf("    第${courseBean.classSessions} - ${courseBean.classSessions + courseBean.continuingSession - 1}节")
         }
     var courseTime by remember { mutableStateOf(Dialog.getWeekNumFormat(oneList)) }
     var weekNum by remember{
         mutableStateOf(
-            when (courseBeanState.classDay) {
+            when (courseBean.classDay) {
                 1 -> "周一$courseStartToEnd"
                 2 -> "周二$courseStartToEnd"
                 3 -> "周三$courseStartToEnd"
@@ -232,33 +204,36 @@ fun ShowTimePart(
             }
         )
     }
-    var courseTeacher by rememberSaveable { mutableStateOf(courseBean.teacher) }
-    var courseRoom by rememberSaveable { mutableStateOf(courseBean.teachingBuildName) }
-    LaunchedEffect(courseBeanState){
-        onValueChange(courseBeanState)
-    }
     Log.d("AddOrEditCOurse","ShowTImePart重组")
     val showSelectWeekDialog = rememberSaveable { mutableStateOf(false) }
     val showSessionWeekDialog = rememberSaveable { mutableStateOf(false) }
+    val showTeacherTextDialog = rememberSaveable { mutableStateOf(false) }
+    val showBuildTextDialog = rememberSaveable { mutableStateOf(false) }
 
     fun <T> onChange(field: KMutableProperty1<CourseBean, T>, value: T){
         val next = courseBean.copy()
         field.set(next, value)
-        setCourseBean(next)
+        onValueChange(next)
+    }
+    fun <T> onChange(fields: List<KMutableProperty1<CourseBean, T>>, values: List<T>){
+        val next = courseBean.copy()
+        fields.forEachIndexed { index, it ->
+            it.set(next, values[index])
+        }
+        onValueChange(next)
     }
     SelectWeekDialog(
         showDialog = showSelectWeekDialog,
-        initialR = courseBeanState.classWeek
+        initialR = courseBean.classWeek
     ) {
         courseTime = Dialog.getWeekNumFormat(it.whichIs1())
         onChange(CourseBean::classWeek, it)
-        forReCompose()
     }
     SelectSessionDialog(
         showDialog = showSessionWeekDialog,
-        initialWeek = courseBeanState.classDay - 1,
-        initialStart = courseBeanState.classSessions - 1,
-        initialEnd = courseBeanState.classSessions + courseBeanState.continuingSession - 2
+        initialWeek = courseBean.classDay - 1,
+        initialStart = courseBean.classSessions - 1,
+        initialEnd = courseBean.classSessions + courseBean.continuingSession - 2
     ) { week, start, end ->
         val classWeek = week + 1
         val classSessions = start + 1
@@ -267,10 +242,10 @@ fun ShowTimePart(
 //        Log.d("addOrEdit", classWeek.toString())
 //        onChange(CourseBean::classDay,classWeek)
 //        onChange(CourseBean::classSessions, classSessions)
-        courseBeanState.classDay = classWeek
-        courseBeanState.classSessions = classSessions
-        courseBeanState.continuingSession = continueSession
-        courseStartToEnd = "    第${courseBeanState.classSessions} - ${courseBeanState.classSessions + courseBeanState.continuingSession - 1}节"
+        courseBean.classDay = classWeek
+        courseBean.classSessions = classSessions
+        courseBean.continuingSession = continueSession
+        courseStartToEnd = "    第${courseBean.classSessions} - ${courseBean.classSessions + courseBean.continuingSession - 1}节"
         weekNum = when (classWeek) {
             1 -> "周一$courseStartToEnd"
             2 -> "周二$courseStartToEnd"
@@ -281,8 +256,31 @@ fun ShowTimePart(
             7 -> "周日$courseStartToEnd"
             else -> "错误"
         }
-        onChange(CourseBean::continuingSession, continueSession)
-        forReCompose()
+        onChange(listOf(CourseBean::continuingSession, CourseBean::classDay, CourseBean::classSessions),
+                    listOf(continueSession, classWeek, classSessions))
+    }
+    if (showTeacherTextDialog.value) {
+        TextFieldDialog(
+            value = courseBean.teacher,
+            placeHolder = "输入教师名称",
+            onDismissRequest = { showTeacherTextDialog.value = false },
+            onClick = {
+                onChange(CourseBean::teacher, it)
+                showTeacherTextDialog.value = false
+            }
+        )
+    }
+
+    if (showBuildTextDialog.value){
+        TextFieldDialog(
+            value = courseBean.teachingBuildName,
+            placeHolder = "请输入上课地点",
+            onDismissRequest = { showBuildTextDialog.value = false },
+            onClick = {
+                onChange(CourseBean::teachingBuildName, it)
+                showBuildTextDialog.value = false
+            }
+        )
     }
     Card(
         modifier = Modifier
@@ -319,54 +317,22 @@ fun ShowTimePart(
             ) {
                 showSessionWeekDialog.value = true
             }
-            TeacherOrBuildTextField(
-                onValueChange =
-                {
-                    courseTeacher = it
-                    onChange(CourseBean::teacher, courseTeacher)
-                },
-                value = courseTeacher,
-                placeHolder = "点击此处输入任课老师",
-                modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth()
-                ,
-                leadingIcon = Icons.Filled.Group
-            )
-            TeacherOrBuildTextField(
-                onValueChange =
-                {
-                    courseRoom = it
-                    onChange(CourseBean::teachingBuildName, courseRoom)
-                },
-                value = courseRoom,
-                placeHolder = "点击此处输入教室",
-                leadingIcon = Icons.Filled.Room,
-                modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth()
-            )
+            ClassLine(
+                icon = Icons.Outlined.Group,
+                content = courseBean.teacher.emptyTo("教师名未填-可不填")
+            ) {
+                showTeacherTextDialog.value = true
+            }
+            ClassLine(
+                icon = Icons.Outlined.Room,
+                content = courseBean.teachingBuildName.emptyTo("上课地未填-可不填")
+            ) {
+                showBuildTextDialog.value = true
+            }
         }
     }
 }
-
-@Composable
-fun TeacherOrBuildTextField(
-    modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit,
-    value: String,
-    placeHolder: String,
-    leadingIcon: ImageVector
-){
-    TransparentTextFiled(
-        value = value,
-        onValueChange = { onValueChange(it) },
-        placeHolder = placeHolder,
-        modifier = modifier,
-        leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = null) }
-    )
-}
-
+private fun String.emptyTo(targetString:String) = if (this==""){ targetString }else{ this }
 @Composable
 fun ClassLine(icon: ImageVector, content: String, onClick: () -> Unit = {}) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier

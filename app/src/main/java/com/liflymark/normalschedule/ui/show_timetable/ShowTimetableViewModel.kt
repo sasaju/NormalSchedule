@@ -1,7 +1,10 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.lifecycle.*
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.Bulletin2
@@ -9,6 +12,7 @@ import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
+import com.liflymark.normalschedule.logic.utils.LayoutCoordinatesAndDescription
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -17,6 +21,10 @@ class ShowTimetableViewModel: ViewModel() {
     private var backgroundId = MutableLiveData(0)
     private var needDeleteCourseNameLiveData = MutableLiveData<String>()
     private var _sentenceLiveDate = MutableLiveData<Boolean>(false)
+
+    val layoutList = mutableStateListOf<LayoutCoordinatesAndDescription>()
+    val showUserGuide = mutableStateOf<Boolean>(false)
+
     var showToast = 0
 
     val newUserFLow = Repository.getNewUserOrNot()
@@ -136,6 +144,34 @@ class ShowTimetableViewModel: ViewModel() {
 
     fun startHoliday(): Boolean{
         return GetDataUtil.whichWeekNow() > 19
+    }
+
+    fun putPosition(
+        index:Int,
+        layout:LayoutCoordinates,
+        description:String
+    ){
+        val hadIndex = layoutList.map { it.index }
+        if (index in hadIndex){ return }
+        layoutList.add(
+            LayoutCoordinatesAndDescription(
+                index = index,
+                layout = layout,
+                description = description
+            )
+        )
+    }
+
+    // size=4 为需要提示的个数，防止页面没有渲染完毕就显示
+    fun checkShowUserGuide(){
+        Log.d("ShowViewmodel", "layout"+layoutList.size.toString())
+        if (layoutList.size==4){
+            viewModelScope.launch {
+                if (Repository.getUserVersionS() < 4) {
+                    showUserGuide.value = true
+                }
+            }
+        }
     }
 
 }

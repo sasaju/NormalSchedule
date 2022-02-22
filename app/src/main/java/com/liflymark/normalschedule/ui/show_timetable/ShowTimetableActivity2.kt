@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -49,10 +50,8 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
+import com.liflymark.normalschedule.logic.utils.*
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.logic.utils.Dialog
-import com.liflymark.normalschedule.logic.utils.GifLoader
-import com.liflymark.normalschedule.logic.utils.TutorialOverlay
 import com.liflymark.normalschedule.ui.abase.BaseComment
 import com.liflymark.normalschedule.ui.add_course.AddCourseComposeActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
@@ -134,6 +133,8 @@ fun Drawer(
     val quickJumpShow = remember { mutableStateOf(false) }
     val startBulletin = remember { viewModel.showStartBulletin2 }
 
+    val showNewUserOrNot = remember { viewModel.showUserGuide }
+
     // 修复一次bug
 //    LaunchedEffect(newUserVersion.value){
 //        val allCourse = Repository.loadAllCourseNameNoFlow().toSet()
@@ -147,6 +148,10 @@ fun Drawer(
 //            activity.finish()
 //        }
 //    }
+    LaunchedEffect(Unit){
+        viewModel.checkShowUserGuide()
+    }
+
     // 拦截返回键请求
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
     val backCallback = remember {
@@ -206,22 +211,16 @@ fun Drawer(
                 val pagerState = rememberPagerState(initialPage = userNowWeek)
                 statusSpacer()
 
-                TutorialOverlay(
-                    rememberCoroutineScope(),
-                    "点击此处快速跳转当前周",
-                    newUserOrNot.value
-                ) { overMod ->
-                    settings.value?.let {
-                        ScheduleToolBar(
-                            scope,
-                            drawerState,
-                            userNowWeek,
-                            pagerState,
-                            overMod,
-                            it,
-                            quickJumpClick = { quickJumpShow.value = !quickJumpShow.value }
-                        )
-                    }
+                settings.value?.let {
+                    ScheduleToolBar(
+                        scope,
+                        drawerState,
+                        userNowWeek,
+                        pagerState,
+                        Modifier,
+                        it,
+                        quickJumpClick = { quickJumpShow.value = !quickJumpShow.value }
+                    )
                 }
                 if (quickJumpShow.value) {
                     Row(
@@ -274,6 +273,13 @@ fun Drawer(
                 LaunchedEffect(pagerState) {
                     snapshotFlow { pagerState.currentPage }.collectLatest { page ->
                         userNowWeek = page.floorMod(allWeek)
+                    }
+                }
+            }
+            if (showNewUserOrNot.value){
+                ShowBox(positions = viewModel.layoutList) {
+                    scope.launch {
+                        Repository.saveUserVersion(4)
                     }
                 }
             }
@@ -368,6 +374,13 @@ fun ScheduleToolBar(
                             )
                         }
                     }
+                    .onGloballyPositioned {
+                        stViewModel.putPosition(
+                            index = 0,
+                            layout = it,
+                            description = "点击此\n快速跳转当前周"
+                        )
+                    }
                     .fillMaxHeight(0.9F)
             ) {
                 // 开学了，当前页面不是当前周加一个5dp的空行
@@ -403,28 +416,55 @@ fun ScheduleToolBar(
                         drawerState.open()
                     }
                 },
+                modifier = Modifier
+                    .onGloballyPositioned {
+                        stViewModel.putPosition(
+                            index = 1,
+                            layout = it,
+                            description = "点击此\n可使用成绩查询等功能"
+                        )
+                    }
             ) {
                 Icon(Icons.Filled.Menu, null, tint = iconColor)
             }
         },
         actions = {
-            IconButton(onClick = {
-                val intent = Intent(context, AddCourseComposeActivity()::class.java)
-                context.startActivity(intent)
-            }) {
+            IconButton(
+                onClick = {
+                    val intent = Intent(context, AddCourseComposeActivity()::class.java)
+                    context.startActivity(intent)
+                },
+                modifier = Modifier
+                    .onGloballyPositioned {
+                        stViewModel.putPosition(
+                            index = 2,
+                            layout = it,
+                            description = "点击此\n单独添加课程"
+                        )
+                    }
+            ) {
                 Icon(Icons.Filled.Add, "添加课程", tint = iconColor)
             }
-            IconButton(onClick = {
-                val dialog = activity?.let { Dialog.getImportAgain(it) }
-                dialog?.show()
-                dialog?.positiveButton {
-                    val intent = Intent(context, ImportCourseAgain::class.java)
-                    activity.startActivity(intent)
-                    Repository.importAgain()
-                    activity.finish()
-                }
-
-            }) {
+            IconButton(
+                onClick = {
+                    val dialog = activity?.let { Dialog.getImportAgain(it) }
+                    dialog?.show()
+                    dialog?.positiveButton {
+                        val intent = Intent(context, ImportCourseAgain::class.java)
+                        activity.startActivity(intent)
+                        Repository.importAgain()
+                        activity.finish()
+                    }
+                },
+                modifier = Modifier
+                    .onGloballyPositioned {
+                        stViewModel.putPosition(
+                            index = 3,
+                            layout = it,
+                            description = "点击此\n可重新导入课程"
+                        )
+                    }
+            ) {
                 Icon(Icons.Filled.GetApp, "导入课程", tint = iconColor)
             }
         },

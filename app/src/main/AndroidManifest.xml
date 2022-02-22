@@ -173,7 +173,7 @@
                 android:resource="@xml/miui_appwidget_day_info" />
         </receiver>
         <receiver
-            android:name=".ui.app_widget_new_day.DayNewWidgetProvider"
+            android:name=".ui.app_widget_new_day.DayNewWidgetReceiver"
             android:exported="false"
             android:label="日视图-新">
             <intent-filter>

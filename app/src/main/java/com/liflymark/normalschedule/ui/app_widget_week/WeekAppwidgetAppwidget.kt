@@ -1,15 +1,11 @@
 package com.liflymark.normalschedule.ui.app_widget_week
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.drawable.toBitmap
 import androidx.glance.*
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.actionStartActivity
@@ -30,7 +26,6 @@ import com.liflymark.normalschedule.MainActivity
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
-import com.liflymark.normalschedule.logic.bean.getData
 import com.liflymark.normalschedule.logic.utils.GetDataUtil
 
 class WeekAppwidgetAppwidget() : GlanceAppWidget() {
@@ -41,7 +36,8 @@ class WeekAppwidgetAppwidget() : GlanceAppWidget() {
         val perHeight = 50
         val allCourse = Repository.loadAllCourse3()
         val nowWeekNum = GetDataUtil.whichWeekNow() + 1
-        val thisWeekCourse = allCourse?.get(nowWeekNum)
+        val thisWeekCourse = allCourse?.getOrElse(nowWeekNum-1){ listOf() }
+        Log.d("WeekDayApp",thisWeekCourse.toString())
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
@@ -87,6 +83,7 @@ class WeekAppwidgetAppwidget() : GlanceAppWidget() {
                             val thisDayCourse =
                                 thisWeekCourse?.filter { it.whichColumn == index + 1 }
                                     ?.sortedBy { it.start }
+                            Log.d("Appweek", thisDayCourse.toString())
                             Column(modifier = GlanceModifier.defaultWeight()) {
                                 thisDayCourse?.let { thisDayCourses ->
                                     for (singleCourse in thisDayCourses) {
@@ -101,7 +98,6 @@ class WeekAppwidgetAppwidget() : GlanceAppWidget() {
                                 }
                             }
                         }
-
                     }
                 }
             }
@@ -117,7 +113,7 @@ class UpdateAllAction() : ActionCallback {
 
 // 使用repeat会导致glance莫名无法加载暂时使用写死的，以后再试试for循环
 @Composable
-fun RowScope.TimeColumn(perHeight: Int) {
+fun TimeColumn(perHeight: Int) {
     Column(modifier = GlanceModifier.width(20.dp)) {
         Text(
             text = "1",

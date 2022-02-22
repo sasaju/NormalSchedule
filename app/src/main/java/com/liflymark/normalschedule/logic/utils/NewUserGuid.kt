@@ -7,31 +7,142 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathOperation
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.toSize
+import androidx.compose.ui.unit.*
 import com.liflymark.normalschedule.logic.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+data class LayoutCoordinatesAndDescription(
+    val index:Int,
+    val layout:LayoutCoordinates,
+    val description: String
+)
+@Composable
+fun ShowBox(
+    positions: List<LayoutCoordinatesAndDescription>,
+    onFinished: () -> Unit
+) {
+    if (positions.isEmpty()) {
+        return
+    }
+    val position = positions.sortedBy { it.index }
+    var index by rememberSaveable { mutableStateOf(0) }
+
+    var show by rememberSaveable { mutableStateOf(true) }
+
+    val nowLayoutCoordinates = remember(index) { derivedStateOf { position[index] } }
+    val layoutAndDes = nowLayoutCoordinates.value
+    val x = layoutAndDes.layout.positionInRoot().x
+    val y = layoutAndDes.layout.positionInRoot().y
+    val width = layoutAndDes.layout.size.width.toFloat()
+    val height = layoutAndDes.layout.size.height.toFloat()
+
+    if (show) {
+        BoxWithConstraints(
+            Modifier
+                .fillMaxSize()
+                .drawBehind {
+                    val circlePath = Path().apply {
+                        addOval(Rect(offset = Offset(x, y), Size(width+10F, height+10F)))
+                    }
+                    clipPath(circlePath, clipOp = ClipOp.Difference) {
+                        drawRect(SolidColor(Color.Black.copy(alpha = 0.8f)))
+                    }
+                }
+//                .clickable(
+//                    interactionSource = remember { MutableInteractionSource() },
+//                    indication = null,
+//                    enabled = false
+//                ) {
+//                    if (index + 1 < positions.size) {
+//                        index += 1
+//                    } else {
+//                        show = false
+//                        onFinished()
+//                    }
+//                }
+            ,
+            contentAlignment = Alignment.TopStart
+        ) {
+            val xDp = with(LocalDensity.current) { (x + width / 2).toDp() }
+            val yDp = with(LocalDensity.current) { (y + height).toDp() }
+            val singleCardWidth = 160.dp
+            fun setFitDp(nowDp:Dp, max:Dp):Dp{
+                return when{
+                    nowDp.value<0F -> {
+                        10.dp
+                    }
+                    nowDp.value>max.value -> {
+                        max-10.dp
+                    }
+                    else -> {
+                        nowDp
+                    }
+                }
+            }
+            Card(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .width(singleCardWidth)
+                    .offset(setFitDp(xDp - singleCardWidth/2, maxWidth-singleCardWidth), setFitDp(yDp + 10.dp, maxHeight)),
+                shape = RoundedCornerShape(18.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                        .wrapContentHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text=layoutAndDes.description,
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.onBackground,
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Divider()
+                    TextButton(
+                        onClick = {
+                            Log.d("NewUserGuide", "index：$index")
+                            if (index + 1 < positions.size) {
+                                index += 1
+                            } else {
+                                show = false
+                                onFinished()
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = "知道了")
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 
 private val HighlightExtraRadius = 8.dp

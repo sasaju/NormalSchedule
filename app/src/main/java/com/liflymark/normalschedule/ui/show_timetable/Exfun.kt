@@ -14,6 +14,7 @@ import com.liflymark.normalschedule.ui.app_widget_miui.DayNewWidgetProvider
 import java.util.*
 
 
+
 fun getNeededClassList(originData: List<OneByOneCourseBean>): List<List<OneByOneCourseBean>>{
     val res = mutableListOf<MutableList<OneByOneCourseBean>>()
     repeat(7){

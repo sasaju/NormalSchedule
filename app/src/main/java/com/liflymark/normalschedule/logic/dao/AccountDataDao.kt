@@ -13,6 +13,7 @@ import com.liflymark.schedule.data.Settings
 import com.liflymark.schedule.data.twoColorItem
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
@@ -31,6 +32,12 @@ object AccountDataDao {
             .map { preferences ->
                 preferences[intPreferencesKey("userVersion")]
             }
+    }
+
+    suspend fun getUserVersionS(): Int {
+        val context = NormalScheduleApplication.context
+        return context.dataStore.data
+            .map { it[intPreferencesKey("userVersion")] }.first()?:0
     }
 
     suspend fun saveUserVersion(version:Int = 1){

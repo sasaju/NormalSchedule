@@ -890,10 +890,11 @@ object Repository {
     fun importAgain() = AccountDao.importedAgain()
     fun saveLogin() = AccountDao.saveLogin()
 
-    // 0-未读取，1-已经显示快速跳转，3-已经显示过快速跳转，已完成重大Bug检测
+    // 0-未读取，1-已经显示快速跳转，3-已经显示过快速跳转，已完成重大Bug检测, 4-已完成新的新手引导
     suspend fun saveUserVersion(version: Int = 1) = AccountDataDao.saveUserVersion(version)
     fun getNewUserOrNot() = AccountDataDao.getNewUserOrNot()
     fun getUserVersion() = AccountDataDao.getUserVersion()
+    suspend fun getUserVersionS() = AccountDataDao.getUserVersionS()
     private fun courseSampleData() = CourseResponse(
         listOf(
             AllCourse(
