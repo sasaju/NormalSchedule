@@ -52,6 +52,10 @@ fun ShowBox(
 
     val nowLayoutCoordinates = remember(index) { derivedStateOf { position[index] } }
     val layoutAndDes = nowLayoutCoordinates.value
+    if (!layoutAndDes.layout.isAttached){
+        Log.d("NewUserGuide", "检测到Unattached")
+        return
+    }
     val x = layoutAndDes.layout.positionInRoot().x
     val y = layoutAndDes.layout.positionInRoot().y
     val width = layoutAndDes.layout.size.width.toFloat()

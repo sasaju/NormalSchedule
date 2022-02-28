@@ -88,7 +88,7 @@ fun ShowArrangePage(allExamArrangeList:List<Arrange>){
                     hadShowedGrant = {
                         scaffoldState.snackbarHostState.showSnackbar("正在保存，请不要重复点击，请保持页面开启")
                         CalendarUtil.addExamArrange(context, allExamArrangeList)
-                        scaffoldState.snackbarHostState.showSnackbar("保存完毕")
+                        scaffoldState.snackbarHostState.showSnackbar("保存完毕，日历会提前七天提醒，也可以进入日历自行修改天数", duration = SnackbarDuration.Long)
                         requestGrant = false
                     }
                 )

@@ -23,15 +23,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
+import com.godaddy.android.colorpicker.ClassicColorPicker
+import com.godaddy.android.colorpicker.HsvColor
+import com.godaddy.android.colorpicker.toColorInt
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
+import com.liflymark.normalschedule.logic.utils.Convert.color
+import com.liflymark.normalschedule.logic.utils.CornerDialog
 import com.liflymark.normalschedule.logic.utils.GifLoader
 import com.liflymark.normalschedule.ui.show_timetable.SingleClass2
 import com.liflymark.normalschedule.ui.show_timetable.getEndTime
@@ -179,6 +187,7 @@ fun SetCardControl(
     onValueChangeFinish: (settings: Settings) -> Unit
 ) {
     var settingsState by remember { mutableStateOf(settings) }
+    var showColorPicker by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
@@ -193,6 +202,8 @@ fun SetCardControl(
                 courseCardAlpha = 0.75F
                 courseBorderSize = 0F
                 courseBorderAlpha = 50
+                courseCardRadius = 4F
+                timetableIconColor = 0xFF000000.toInt()
             }
             settingsState = newSettingsBuilder.build()
             onValueChange(newSettingsBuilder.build())
@@ -316,7 +327,7 @@ fun SetCardControl(
             {
                 val newSettings = settingsState
                     .toBuilder()
-                    .setCourseBorderSize(settingsState.courseBorderSize.roundToInt() - 0.01F)
+                    .setCourseBorderSize(settingsState.courseBorderSize - 0.01F)
                     .build()
                 settingsState = newSettings
                 onValueChange(newSettings)
@@ -379,6 +390,139 @@ fun SetCardControl(
             contentTitle = "边框透明度",
             contentDescription = "当前${settingsState.courseBorderAlpha}%, 默认：50%",
         )
+        // 课程边框圆角
+        SettingSliderItem(
+            valueRange = 0F..20F,
+            value = settingsState.courseCardRadius,
+            startClick =
+            {
+                val newSettings = settingsState
+                    .toBuilder()
+                    .setCourseCardRadius(settingsState.courseCardRadius - 0.1F)
+                    .build()
+                settingsState = newSettings
+                onValueChange(newSettings)
+            },
+            endClick =
+            {
+                val newSettings = settingsState
+                    .toBuilder()
+                    .setCourseCardRadius(settingsState.courseCardRadius + 0.1F)
+                    .build()
+                settingsState = newSettings
+                onValueChange(newSettings)
+            },
+            onValueChange =
+            {
+                val newSettings = settingsState
+                    .toBuilder()
+                    .setCourseCardRadius(it)
+                    .build()
+                settingsState = newSettings
+                onValueChange(newSettings)
+            },
+            onValueChangeFinish = { onValueChangeFinish(settingsState) },
+            contentTitle = "课程格子圆角大小",
+            contentDescription = "当前${(settingsState.courseCardRadius*100).roundToInt()/100.0}dp, 默认：4dp",
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(90.dp)
+                .clickable {
+                    showColorPicker = true
+                }
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+            ,
+            verticalArrangement = Arrangement.SpaceAround,
+        ) {
+            Text(text = "配置时间表文字颜色",style = MaterialTheme.typography.subtitle2)
+            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(
+                modifier = Modifier
+                    .width(40.dp)
+                    .height(20.dp)
+                    .background(Color(settingsState.timetableIconColor))
+            )
+        }
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .background(MaterialTheme.colors.secondary)
+                .fillMaxWidth()
+        )
+    }
+
+    if(showColorPicker){
+        ColorPickerDialog(
+            initColor = Color(settings.timetableIconColor),
+            onDismissRequest = {
+                showColorPicker = false
+            },
+            onRes = {
+                val newSettings = settingsState
+                    .toBuilder()
+                    .setTimetableIconColor(it.toColorInt())
+                    .build()
+                settingsState = newSettings
+                onValueChange(newSettings)
+                showColorPicker = false
+            }
+        )
+        Color.Black
+    }
+
+}
+
+/**
+ * 颜色选择Dialog
+ */
+@Composable
+fun ColorPickerDialog(
+    initColor: Color=Color.Black,
+    onDismissRequest: () -> Unit,
+    onRes:(hsv:HsvColor) -> Unit
+){
+    val hsv = rememberSaveable(stateSaver = HsvColor.Saver) { mutableStateOf(HsvColor.from(initColor)) }
+    CornerDialog(
+        onDismissRequest = { onDismissRequest() },
+        properties = DialogProperties(dismissOnClickOutside = false, dismissOnBackPress = true)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            ClassicColorPicker(
+                color = initColor,
+                onColorChanged = { hsv.value = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(240.dp)
+                    .padding(10.dp)
+            )
+            Spacer(
+                modifier = Modifier
+                    .width(40.dp)
+                    .height(20.dp)
+                    .background(hsv.value.toColor())
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TextButton(
+                    onClick = { onDismissRequest() },
+                    modifier = Modifier.weight(1F)
+                ) {
+                    Text("取消")
+                }
+                TextButton(
+                    onClick = { onRes(hsv.value) },
+                    modifier = Modifier.weight(1F)
+                ) {
+                    Text("确定")
+                }
+            }
+        }
     }
 }
 
@@ -515,11 +659,7 @@ fun ShowPreView(
     modifier: Modifier = Modifier,
     settings: Settings
 ) {
-    val iconColor = if (!settings.darkShowBack) {
-        MaterialTheme.colors.onBackground
-    } else {
-        Color.Black
-    }
+    val iconColor = Color(settings.timetableIconColor)
     Row(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
@@ -570,6 +710,7 @@ fun ShowPreView(
                     2,
                     1,
                     Color(0xfff64f59),
+                    listOf("#ffffbb33", "#ff24C6DC", "#ff514A9D").map{ it.color }
                 ),
                 courseClick = {},
                 settings = settings,
@@ -588,11 +729,14 @@ fun BackgroundImage() {
     if (!isSystemInDarkTheme() || showDarkBack.value) {
         CompositionLocalProvider(LocalImageLoader provides GifLoader(context)) {
             Image(
-                painter = rememberImagePainter(
-                    data = path.value?:R.drawable.main_background_4,
-                    builder = {
-                        this.error(R.drawable.main_background_4)
-                    }
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = path.value?:R.drawable.main_background_4)
+                        .apply(
+                            block = fun ImageRequest.Builder.() {
+                                error(R.drawable.main_background_4)
+                            }
+                        ).build()
                 ),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
@@ -601,7 +745,7 @@ fun BackgroundImage() {
         }
     } else {
         Image(
-            painter = rememberImagePainter(data = ""),
+            painter = rememberAsyncImagePainter(model = ""),
             contentDescription = null,
             modifier = Modifier
                 .background(Color(1, 86, 127))

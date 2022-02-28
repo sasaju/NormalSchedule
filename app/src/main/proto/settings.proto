@@ -13,10 +13,10 @@ message Settings {
   // 在夜间模式是否显示背景
   bool dark_show_back = 3;
 
-  // 时间列颜色 默认黑色
+  // 时间列颜色 默认黑色-暂时弃用
   int64 time_line_color = 4;
 
-  // 星期行颜色 默认黑色
+  // 星期行颜色 默认黑色-暂时弃用
   int64  week_row_color = 5;
 
   // 显示右下角作业本 0-不显示 1-样式1
@@ -54,6 +54,12 @@ message Settings {
 
   // 获取开屏公告的日期
   string last_update = 17;
+
+  // 课程格子-圆角半径Dp.value,默认值4F
+  float course_card_radius = 18;
+
+  // 课程表-时间列等颜色
+  sfixed32 timetable_icon_color = 19;
 }
 
 

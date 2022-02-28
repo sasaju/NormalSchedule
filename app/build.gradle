@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 23
-        versionName "0.1.1"
+        versionCode 25
+        versionName "0.1.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -186,6 +186,7 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 //    implementation "com.github.skydoves:colorpickerpreference:2.0.6"
     implementation 'com.afollestad.material-dialogs:color:3.2.1'
+    implementation 'com.godaddy.android.colorpicker:compose-color-picker-android:0.4.2'
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
     implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
     implementation ("androidx.glance:glance-appwidget:1.0.0-alpha02")

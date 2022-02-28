@@ -1,5 +1,6 @@
 package com.liflymark.normalschedule.ui.settings
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -7,6 +8,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -50,7 +53,7 @@ fun SettingsAll() {
 @Composable
 fun SettingsMainPage(
     navController: NavController
-){
+) {
     Scaffold(
         topBar = {
             NormalTopBar(label = "设置")
@@ -64,32 +67,45 @@ fun SettingsMainPage(
 @Composable
 fun SettingsContent(
     navController: NavController
-){
+) {
     val context = LocalContext.current
     var nowColor by remember {
         mutableStateOf("主题")
     }
     val settings = Repository.getScheduleSettings().collectAsState(
-        initial = Settings.getDefaultInstance())
+        initial = Settings.getDefaultInstance()
+    )
     var perHeight by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
     var showDarkBack by remember { mutableStateOf(settings.value.darkShowBack) }
     var showHomeWorkIcon by remember { mutableStateOf("") }
 
-    LaunchedEffect(settings.value){
+    LaunchedEffect(settings.value) {
         nowColor =
-            if (settings.value.colorMode == 0){ "纯色主题" } else { "渐变色主题" }
+            if (settings.value.colorMode == 0) {
+                "纯色主题"
+            } else {
+                "渐变色主题"
+            }
         perHeight =
-            if (settings.value.coursePerHeight==0){ 70 } else{ settings.value.coursePerHeight }
+            if (settings.value.coursePerHeight == 0) {
+                70
+            } else {
+                settings.value.coursePerHeight
+            }
         showDarkBack = settings.value.darkShowBack
-        showHomeWorkIcon = if(settings.value.showRight!=0){"显示标识"}else{"不显示标识"}
+        showHomeWorkIcon = if (settings.value.showRight != 0) {
+            "显示标识"
+        } else {
+            "不显示标识"
+        }
     }
 
     val showNorSetDialog = remember { mutableStateOf(false) }
     var selectInit by remember { mutableStateOf(0) }
     var selectList by remember { mutableStateOf(listOf("")) }
     var dialogResult by remember { mutableStateOf("") }
-    if (showNorSetDialog.value){
+    if (showNorSetDialog.value) {
         SingleSelectDialog(
             modifier = Modifier.fillMaxWidth(),
             showDialog = showNorSetDialog,
@@ -101,21 +117,21 @@ fun SettingsContent(
         )
     }
 
-    LaunchedEffect(dialogResult){
-        when(dialogResult){
-            "渐变色主题" ->{
+    LaunchedEffect(dialogResult) {
+        when (dialogResult) {
+            "渐变色主题" -> {
                 scope.launch {
                     Repository.updateMode(1)
                     nowColor = "渐变色主题"
                 }
             }
-            "纯色主题" ->{
-            scope.launch {
+            "纯色主题" -> {
+                scope.launch {
                     Repository.updateMode(0)
                     nowColor = "纯色主题"
                 }
             }
-            "显示"->{
+            "显示" -> {
                 scope.launch {
                     Repository.updateShowDarkBack(true)
                     showDarkBack = true
@@ -150,54 +166,83 @@ fun SettingsContent(
             else -> {}
         }
     }
-
-    SettingsPart(
-        label = "常规"
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
-        SettingsItem(
-            title = "课程格子主题",
-            description = nowColor
+        SettingsPart(
+            label = "常规"
         ) {
-            selectInit = if (nowColor == "纯色主题"){0}else{1}
-            selectList = listOf("纯色主题", "渐变色主题")
-            showNorSetDialog.value = true
+            SettingsItem(
+                title = "课程格子主题",
+                description = nowColor
+            ) {
+                selectInit = if (nowColor == "纯色主题") {
+                    0
+                } else {
+                    1
+                }
+                selectList = listOf("纯色主题", "渐变色主题")
+                showNorSetDialog.value = true
+            }
+            SettingsItem(
+                title = "课程格子及其他外观配置",
+                description = "更细致的配置项"
+            ) {
+                navController.navigate("courseCardSettings")
+            }
+            SettingsItem(
+                title = "夜间模式显示背景图",
+                description = if (showDarkBack) {
+                    "显示"
+                } else {
+                    "不显示"
+                }
+            ) {
+                selectInit = if (showDarkBack) (0) else {
+                    1
+                }
+                selectList = listOf("显示", "不显示")
+                showNorSetDialog.value = true
+            }
+            SettingsItem(
+                title = "有作业时右下角显示标识",
+                description = showHomeWorkIcon
+            ) {
+                selectInit = if (showDarkBack) (0) else {
+                    1
+                }
+                selectList = listOf("显示标识", "不显示标识")
+                showNorSetDialog.value = true
+            }
+            //        SettingsItem(
+            //            title = "时间列字体颜色",
+            //            description = "暂时只支持黑白色设置"
+            //        ) {
+            //
+            //        }
         }
-        SettingsItem(
-            title = "课程格子其他配置",
-            description = "更细致的配置项"
-        ) {
-            navController.navigate("courseCardSettings")
+        Spacer(modifier = Modifier.height(10.dp))
+        SettingsPart(label = "帮助") {
+            SettingsItem(title = "重新查看帮助", description = "重新打开时，将在主界面重新查看帮助") {
+                scope.launch {
+                    Repository.saveUserVersion(3)
+                    (context as Activity).finish()
+                }
+            }
+            SettingsItem(title = "加入反馈群", description = "欢迎加入反馈群") {
+                Repository.joinQQGroup(context)
+            }
         }
-        SettingsItem(
-            title = "夜间模式显示背景图",
-            description = if(showDarkBack){"显示"}else{"不显示"}
-        ) {
-            selectInit = if (showDarkBack)(0)else{1}
-            selectList = listOf("显示", "不显示")
-            showNorSetDialog.value = true
-        }
-        SettingsItem(
-            title = "有作业时右下角显示标识",
-            description = showHomeWorkIcon
-        ) {
-            selectInit = if (showDarkBack)(0)else{1}
-            selectList = listOf("显示标识", "不显示标识")
-            showNorSetDialog.value = true
-        }
-//        SettingsItem(
-//            title = "时间列字体颜色",
-//            description = "暂时只支持黑白色设置"
-//        ) {
-//
-//        }
     }
 }
 
 @Composable
 fun SettingsPart(
-    label:String,
-    content:@Composable () -> Unit
-){
+    label: String,
+    content: @Composable () -> Unit
+) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -208,8 +253,8 @@ fun SettingsPart(
             )
     ) {
         Text(
-            text = label, 
-            style = MaterialTheme.typography.body1, 
+            text = label,
+            style = MaterialTheme.typography.body1,
             color = Color.Gray,
             modifier = Modifier
                 .padding(
@@ -225,10 +270,10 @@ fun SettingsPart(
 
 @Composable
 fun SettingsItem(
-    title:String,
-    description:String,
-    onCLick:() -> Unit
-){
+    title: String,
+    description: String,
+    onCLick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -241,12 +286,13 @@ fun SettingsItem(
     ) {
         Text(
             buildAnnotatedString {
-                withStyle(style =
+                withStyle(
+                    style =
                     SpanStyle(
                         fontSize = MaterialTheme.typography.body1.fontSize,
                         color = Color.Black
                     )
-                ){
+                ) {
                     append(title)
                 }
                 withStyle(
@@ -254,7 +300,7 @@ fun SettingsItem(
                         fontSize = MaterialTheme.typography.body1.fontSize,
                         color = Color.Gray
                     )
-                ){
+                ) {
                     append("\n$description")
                 }
             }

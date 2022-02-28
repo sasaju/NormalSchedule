@@ -39,7 +39,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.LocalImageLoader
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -109,6 +108,11 @@ class ShowTimetableActivity2 : BaseComment() {
         super.onResume()
         viewModel.loadAllCourse()
         viewModel.setBackground()
+    }
+
+    override fun onStop() {
+        viewModel.shouldSaved = false
+        super.onStop()
     }
 }
 
@@ -280,6 +284,7 @@ fun Drawer(
                 ShowBox(positions = viewModel.layoutList) {
                     scope.launch {
                         Repository.saveUserVersion(4)
+                        showNewUserOrNot.value = false
                     }
                 }
             }
@@ -351,12 +356,11 @@ fun ScheduleToolBar(
     val nowWeekOrNot = (pagerState.currentPage == nowWeek)
     val startSchoolOrNot = stViewModel.startSchool()
     val startHolidayOrNot = stViewModel.startHoliday()
-    val iconColor =
-        if (settings.darkShowBack) {
-            LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-        } else {
-            MaterialTheme.colors.onBackground
-        }
+    val iconColor = if (!settings.darkShowBack && isSystemInDarkTheme()) {
+        Color.White
+    } else {
+        Color(settings.timetableIconColor)
+    }
     TopAppBar(
         backgroundColor = Color.Transparent,
         elevation = 0.dp,
@@ -390,13 +394,13 @@ fun ScheduleToolBar(
                     Spacer(modifier = Modifier.height(5.dp))
                 }
                 Row {
-                    Text(text = "第${userNowWeek + 1}周")
+                    Text(text = "第${userNowWeek + 1}周", color=iconColor)
                     IconButton(onClick = { quickJumpClick() }, modifier = Modifier.size(30.dp)) {
-                        Icon(Icons.Default.ExpandMore, null)
+                        Icon(Icons.Default.ExpandMore, null, tint = iconColor)
                     }
                 }
                 if (nowWeekOrNot && startSchoolOrNot) {
-                    Text(text = "当前周", fontSize = 15.sp)
+                    Text(text = "当前周", fontSize = 15.sp, color=iconColor)
                 } else if (!startSchoolOrNot) {
                     Text(
                         text = "距离开课${-stViewModel.startSchoolDay()}天",
@@ -405,7 +409,7 @@ fun ScheduleToolBar(
                     )
                 }
                 if (stViewModel.startHoliday()) {
-                    Text(text = "放假了，联系开发者更新", fontSize = 15.sp, color = Color.Gray)
+                    Text(text = "放假了，联系开发者更新", fontSize = 13.sp, color = Color.Gray)
                 }
             }
         },
@@ -486,11 +490,10 @@ fun SingleLineClass(
     } else {
         settings.coursePerHeight
     }
-    val mode = settings.colorMode
-    val iconColor = if (!settings.darkShowBack) {
-        MaterialTheme.colors.onBackground
+    val iconColor = if (!settings.darkShowBack && isSystemInDarkTheme()) {
+        Color.White
     } else {
-        Color.Black
+        Color(settings.timetableIconColor)
     }
     val snackbarVisibleState = remember { mutableStateOf(false) }
     val snackbarVisibleShowState = remember { mutableStateOf(true) }
@@ -524,7 +527,8 @@ fun SingleLineClass(
                 Text(
                     text = "${getDayOfDate(0, page)}\n月",
                     modifier = Modifier.fillMaxWidth(),
-                    fontSize = 10.sp, textAlign = TextAlign.Center
+                    fontSize = 10.sp, textAlign = TextAlign.Center,
+                    color = iconColor
                 )
             }
 
@@ -543,7 +547,8 @@ fun SingleLineClass(
                             modifier = Modifier.background(Color.Transparent),
                             fontSize = 11.sp,
                             lineHeight = 10.sp,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = iconColor
                         )
                     } else {
                         Text(
@@ -703,6 +708,7 @@ fun SingleClass2(
     val courseNameSize = settings.courseNameFontSize
     val courseTeacherSize = settings.courseTeacherFontSize
     val courseAlpha = settings.courseCardAlpha
+    val courseRadius = settings.courseCardRadius
     val height =
         if (!conflict) {
             perHeight * (singleClass.end - singleClass.start + 1)
@@ -740,7 +746,8 @@ fun SingleClass2(
             border = BorderStroke(
                 width = borderWidth.dp,
                 color = Color(red = 255, green = 255, blue = 255, alpha = borderAlpha)
-            )
+            ),
+            shape = RoundedCornerShape(courseRadius.dp)
         ) {
 
             //        val showDetailDialog = remember { mutableStateOf(false) }
@@ -768,7 +775,10 @@ fun SingleClass2(
                 },
                 modifier = Modifier
                     .background(Brush.verticalGradient(cardColor))
-                    .padding(horizontal = (borderWidth + 0.95).dp, vertical = borderWidth.dp)
+                    .padding(
+                        horizontal = (borderWidth + 0.95).dp,
+                        vertical = (borderWidth + courseRadius / 4.5).dp
+                    )
                     .clickable {
                         //                    showDetailDialog.value = true
                         courseClick(singleClass)
@@ -808,7 +818,7 @@ fun saveAllCourse(
         .positiveButton(text = "知道了")
 
     GlobalScope.launch {
-        if (!intent.getBooleanExtra("isSaved", false)) {
+        if (!intent.getBooleanExtra("isSaved", true) && viewModel.shouldSaved) {
             activity2.runOnUiThread {
                 dialog.show()
             }

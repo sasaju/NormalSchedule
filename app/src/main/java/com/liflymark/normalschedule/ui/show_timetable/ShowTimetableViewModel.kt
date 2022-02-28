@@ -22,6 +22,8 @@ class ShowTimetableViewModel: ViewModel() {
     private var needDeleteCourseNameLiveData = MutableLiveData<String>()
     private var _sentenceLiveDate = MutableLiveData<Boolean>(false)
 
+    var shouldSaved = true
+
     val layoutList = mutableStateListOf<LayoutCoordinatesAndDescription>()
     val showUserGuide = mutableStateOf<Boolean>(false)
 
