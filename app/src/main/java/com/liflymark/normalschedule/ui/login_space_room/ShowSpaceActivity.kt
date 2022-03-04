@@ -70,7 +70,7 @@ fun SayHowToUse(){
 @Composable
 fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
     val activity = LocalContext.current as ShowSpaceActivity
-    val roomListOf = listOf("六教", "七教","八教", "九教", "A1", "A2","A3", "A4","综合楼", "新楼")
+    val roomListOf = listOf("六教", "七教","八教", "九教", "A1", "A2","A3", "A4","A6","综合楼", "新楼")
     if (ids == null){
         Toasty.error(activity, "缺少参数").show()
         activity.finish()
@@ -107,7 +107,7 @@ fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
         roomList.clear()
         when(schoolName.value){
             "五四路校区" -> roomList.addAll(listOf("六教", "七教","八教", "九教"))
-            "七一路校区" -> roomList.addAll(listOf("A1", "A2","A3", "A4"))
+            "七一路校区" -> roomList.addAll(listOf("A1", "A2","A3", "A4","A6"))
             "裕华路校区" -> roomList.addAll(listOf("综合楼", "新楼"))
         }
     }

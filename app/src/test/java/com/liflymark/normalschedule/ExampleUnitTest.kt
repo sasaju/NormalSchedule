@@ -1,7 +1,6 @@
 package com.liflymark.normalschedule
 
 import com.liflymark.normalschedule.logic.utils.Convert
-import com.liflymark.normalschedule.logic.utils.test
 import org.junit.Test
 
 import org.junit.Assert.*

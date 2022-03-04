@@ -1,6 +1,5 @@
 package com.liflymark.normalschedule.ui.sign_in_compose
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -30,19 +28,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import coil.size.Scale
-import coil.transform.CircleCropTransformation
-import com.google.accompanist.insets.statusBarsHeight
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.utils.coil.transform.BlurTransformation
-
 
 
 @Composable
@@ -173,11 +165,12 @@ fun SignUIAll(
             }
         }
     }
-
 }
 
 @Composable
 fun LoginAccountPassword(
+    forGraduate:String="",
+    readOnly: Boolean = false,
     loginButton:@Composable ((user:String, password:String) -> Unit)?,
 ){
     val viewModel:SignUIViewModel = viewModel()
@@ -196,7 +189,7 @@ fun LoginAccountPassword(
         modifier = Modifier.fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.height(30.dp))
-        Text(text = "登录URP教务系统", style = MaterialTheme.typography.h5)
+        Text(text = "登录URP教务系统$forGraduate", style = MaterialTheme.typography.h5)
         Spacer(modifier = Modifier.height(20.dp))
         LoginTextFiled(
             onValueChange = {user = it}, 
@@ -204,7 +197,8 @@ fun LoginAccountPassword(
             label = { Text("请输入学号") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth(0.95f),
-            leadingIcon = {Icon(imageVector = Icons.Default.Person, contentDescription = "学号")}
+            leadingIcon = {Icon(imageVector = Icons.Default.Person, contentDescription = "学号")},
+            readOnly = readOnly
         )
         Spacer(modifier = Modifier.height(20.dp))
         LoginTextFiled(
@@ -222,7 +216,8 @@ fun LoginAccountPassword(
                 }) {
                     Icon(imageVector = visualIcon, contentDescription = "查看")
                 }
-            }
+            },
+            readOnly = readOnly
         )
         if (loginButton != null) {
             Spacer(modifier = Modifier.height(40.dp))
@@ -242,7 +237,8 @@ fun LoginTextFiled(
     label: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    readOnly:Boolean = false
 ){
     TextField(
         value = value,
@@ -257,6 +253,7 @@ fun LoginTextFiled(
             backgroundColor = Color.Transparent,
         ),
         keyboardOptions = keyboardOptions,
-        visualTransformation = visualTransformation
+        visualTransformation = visualTransformation,
+        readOnly = readOnly
     )
 }

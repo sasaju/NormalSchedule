@@ -21,6 +21,11 @@
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
         <activity
+            android:name=".ui.graduate_import.GraduateImportActivity"
+            android:exported="false"
+            android:label="@string/title_activity_graduate_import"
+            android:theme="@style/Theme.NormalSchedule" />
+        <activity
             android:name=".ui.set_background.SetBackground"
             android:exported="false"
             android:label="@string/title_activity_set_background"
@@ -35,8 +40,8 @@
             android:name=".ui.exam_arrange.ShowArrangeActivity"
             android:exported="true"
             android:label="@string/title_activity_show_arrange"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+            android:theme="@style/Theme.NormalSchedule.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.exam_arrange.ExamActivity"
             android:exported="true"
@@ -184,7 +189,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_new_day_info" />
         </receiver>
-
         <receiver
             android:name=".ui.app_widget_week.WeekAppwidgetReceiver"
             android:enabled="@bool/glance_appwidget_available"

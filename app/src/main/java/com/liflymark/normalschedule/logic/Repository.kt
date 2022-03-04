@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.logic
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
@@ -27,6 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 object Repository {
@@ -867,6 +869,54 @@ object Repository {
         }
     }
 
+
+    // 研究生导入
+    fun loginWebVPN(user: String,password: String) = flow {
+        val res = NormalScheduleNetwork.loginWebVPN(user, password)
+        emit(res)
+    }
+        .flowOn(Dispatchers.IO)
+        .catch {
+            emit(
+                GraduateWeb(
+                    cookies = "",
+                    result = "访问异常"
+                )
+            )
+        }
+
+    fun loginURP(
+        user: String,
+        password: String,
+        yzm: String,
+        cookies:String
+    ) = flow {
+        val res = NormalScheduleNetwork.loginURP(user, password, yzm, cookies)
+        emit(res)
+    }
+        .flowOn(Dispatchers.IO)
+        .catch {
+            GraduateResponse(
+                allCourse = listOf(),
+                result = "访问异常",
+                status = "no"
+            )
+        }
+
+    fun getGraduateCaptcha(cookies: String) = flow {
+        val img = NormalScheduleNetwork.getGraduateCaptcha(cookies = cookies).bytes()
+        val imgStream = BitmapFactory.decodeByteArray(img, 0, img.size)
+        emit(imgStream)
+    }.catch {
+        emit(null)
+    }
+        .flowOn(Dispatchers.IO)
+
+//    suspend fun getGraduateCaptcha2(cookies: String):Bitmap = withContext(Dispatchers.IO) {
+//        val img = NormalScheduleNetwork.getGraduateCaptcha(cookies = cookies).bytes()
+//        val imgStream = BitmapFactory.decodeByteArray(img, 0, img.size)
+//        imgStream
+//    }
 
 
     fun getScoreDetail() = AccountDataDao.getScoreDetail()

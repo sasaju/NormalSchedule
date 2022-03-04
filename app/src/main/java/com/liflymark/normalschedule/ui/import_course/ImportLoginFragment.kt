@@ -20,6 +20,7 @@ import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.logic.utils.Dialog
 import com.liflymark.normalschedule.logic.utils.RomUtil
 import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
+import com.liflymark.normalschedule.ui.graduate_import.GraduateImportActivity
 import com.liflymark.normalschedule.ui.import_again.ImportCourseAgain
 import com.liflymark.normalschedule.ui.show_timetable.ShowTimetableActivity2
 import es.dmoral.toasty.Toasty
@@ -326,6 +327,17 @@ class ImportLoginFragment: Fragment() {
                     viewModel.putValue(userName, userPassword)
                 }
                 else -> viewModel.putValue(userName, userPassword, yzm, id)
+            }
+        }
+
+        binding.btnSignByGraduate.setOnClickListener {
+            if (binding.agreeOrNot.isChecked){
+                val intent = Intent(context, GraduateImportActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }else{
+                context?.let { it1 -> Toasty.warning(it1, "您未同意用户协议", Toasty.LENGTH_SHORT).show() }
+                waitDialog?.dismiss()
             }
         }
 

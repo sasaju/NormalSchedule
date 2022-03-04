@@ -13,7 +13,7 @@ interface DevBoardService {
     @GET("bulletin/")
     fun getBulletin(): Call<DevBoardResponse>
 
-    @GET("bulletin/start")
+    @GET("bulletin/start/")
     fun getStartBulletin(@Query("id") id:Int):Call<StartBulletinBean>
 
     @GET("tool/schoolbus/{type}")

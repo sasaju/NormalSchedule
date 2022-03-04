@@ -66,6 +66,18 @@ object NormalScheduleNetwork {
     suspend fun getNewVersion(versionCode:String) =
         CheckUpdateService.getNewVersion(versionCode).await()
 
+    suspend fun loginWebVPN(user: String,password: String) =
+        CourseService.loginWebVPN(user, password).await()
+
+    suspend fun loginURP(
+        user: String,
+        password: String,
+        yzm: String,
+        cookies:String
+    ) = CourseService.loginURP(user, password, yzm, cookies).await()
+
+    suspend fun getGraduateCaptcha(cookies: String) = CourseService.getGraduateCaptcha(cookies).await()
+
     suspend fun getStartBulletin(id:Int) = DevService.getStartBulletin(id).await()
 
     private suspend fun <T> Call<T>.await(): T {
