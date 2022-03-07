@@ -261,7 +261,7 @@ fun Drawer(
                         ),
                     ),
                 ) { index ->
-                    val page = (index - initialWeek).floorMod(allWeek)
+                    val page = index
                     settings.value?.let {
                         SingleLineClass(
                             oneWeekClass = courseList,

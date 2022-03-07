@@ -213,6 +213,7 @@ fun SignUIAll(
                         }
                         Button(
                             onClick = {
+                                focusManager.clearFocus()
                                 buttonEnable = false
                                 buttonText = "登录中..."
                                 scope.launch{
