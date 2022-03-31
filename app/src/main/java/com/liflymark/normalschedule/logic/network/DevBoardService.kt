@@ -14,7 +14,7 @@ interface DevBoardService {
     fun getBulletin(): Call<DevBoardResponse>
 
     @GET("bulletin/start/")
-    fun getStartBulletin(@Query("id") id:Int):Call<StartBulletinBean>
+    fun getStartBulletin(@Query("id") id:Int, @Query("version") versionCode:Int):Call<StartBulletinBean>
 
     @GET("tool/schoolbus/{type}")
     fun getSchoolBusTime(@Path("type")searchType: String): Call<SchoolBusResponse>

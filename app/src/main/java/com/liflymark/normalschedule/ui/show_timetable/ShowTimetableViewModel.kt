@@ -1,11 +1,13 @@
 package com.liflymark.normalschedule.ui.show_timetable
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.lifecycle.*
+import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.Bulletin2
 import com.liflymark.normalschedule.logic.bean.CourseBean
@@ -15,6 +17,7 @@ import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.logic.utils.LayoutCoordinatesAndDescription
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+
 
 class ShowTimetableViewModel: ViewModel() {
     private var courseDatabaseLiveData = MutableLiveData(0)
@@ -56,7 +59,15 @@ class ShowTimetableViewModel: ViewModel() {
 
     init {
         viewModelScope.launch {
-            showStartBulletin2.value = Repository.getNewStartBulletin2()
+            val pm: PackageManager = NormalScheduleApplication.context.packageManager
+            val packageName = NormalScheduleApplication.context.packageName
+            val pi = pm.getPackageInfo(packageName, 0)
+            val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                pi.longVersionCode
+            } else {
+                pi.versionCode
+            }.toInt()
+            showStartBulletin2.value = Repository.getNewStartBulletin2(versionCode)
         }
     }
 
@@ -145,7 +156,7 @@ class ShowTimetableViewModel: ViewModel() {
     }
 
     fun startHoliday(): Boolean{
-        return GetDataUtil.whichWeekNow() > 19
+        return GetDataUtil.whichWeekNow() >= 19
     }
 
     fun putPosition(

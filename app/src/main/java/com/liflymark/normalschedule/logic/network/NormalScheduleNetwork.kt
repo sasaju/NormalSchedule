@@ -78,7 +78,7 @@ object NormalScheduleNetwork {
 
     suspend fun getGraduateCaptcha(cookies: String) = CourseService.getGraduateCaptcha(cookies).await()
 
-    suspend fun getStartBulletin(id:Int) = DevService.getStartBulletin(id).await()
+    suspend fun getStartBulletin(id:Int, versionCode: Int) = DevService.getStartBulletin(id, versionCode).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

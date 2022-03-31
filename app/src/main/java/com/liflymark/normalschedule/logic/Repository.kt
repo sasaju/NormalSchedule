@@ -845,16 +845,18 @@ object Repository {
         NormalScheduleNetwork.getNewVersion(versionCode)
 
     // 只要本地没有存储公告每次打开都会请求，存储公告以后每天访问一遍公告
-    suspend fun getNewStartBulletin2(): Bulletin2? {
+    suspend fun getNewStartBulletin2(versionCode: Int): Bulletin2? {
         try{
             val lastBulletin2 = startBulletinBean.getLastBulletin2()
             val lastId = (lastBulletin2?.id) ?: 0
             val lastUpdate = AccountDataDao.getLastUpdate()
             return if (lastBulletin2 == null || !GetDataUtil.thisStringIsToday(lastUpdate)) {
-                val res = NormalScheduleNetwork.getStartBulletin(lastId)
+                val res = NormalScheduleNetwork.getStartBulletin(lastId,versionCode)
                 AccountDataDao.setLastUpdate(GetDataUtil.getTodayDateString())
                 Log.d("getNewStart", "访问一次")
                 if (res.bulletin_list.isEmpty()) {
+                    // 如果今天没有公告就更新一次每日一句
+                    getSentences(true).last()
                     null
                 } else {
                     startBulletinBean.insertStartBulletin(res.bulletin_list)

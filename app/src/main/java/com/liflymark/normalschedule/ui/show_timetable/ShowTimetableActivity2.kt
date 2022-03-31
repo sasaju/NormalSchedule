@@ -251,6 +251,7 @@ fun Drawer(
                 }
 
                 // 鉴于Pager-0.19.0改版后Pager实现循环的复杂度，暂不实现循环
+                // 如果需要更改最大周，同时需要修改InitialWeek的判断条件
                 HorizontalPager(
                     state = pagerState,
                     count = allWeek,

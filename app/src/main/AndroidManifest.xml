@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NormalSchedule"
         tools:targetApi="n">
+        <meta-data
+            android:name="miuiWidgetVersion"
+            android:value="1" />
         <activity
             android:name=".ui.graduate_import.GraduateImportActivity"
             android:exported="false"
