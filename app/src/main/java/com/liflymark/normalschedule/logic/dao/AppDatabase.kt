@@ -8,13 +8,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.liflymark.normalschedule.logic.bean.*
 
 @Database(
-    version = 6,
+    version = 7,
     entities = [CourseBean::class, UserBackgroundBean::class, HomeworkBean::class, Bulletin2::class],
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4, spec = AppDatabase.DeleteId::class),
         AutoMigration(from = 4, to = 5),
-        AutoMigration(from = 5, to = 6)// 创建Bulletin2表
+        AutoMigration(from = 5, to = 6),// 创建Bulletin2表
+        AutoMigration(from = 6, to = 7)// 增加课序号字段
     ]
 )
 abstract class AppDatabase: RoomDatabase() {

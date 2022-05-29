@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.sin
 
 object Repository {
 
@@ -54,22 +55,24 @@ object Repository {
         listOf("#c32136", "#ffAA076B", "#E692088F"),
         listOf("#b35c44", "#FFFFA8C3", "#FFDCE083"),
     )
+
     private fun getDefaultStringTwo() = listOf(
-        listOf("#6E3CBC","#30cfd0", "#330867"),
-        listOf("#7267CB","#667eea", "#764ba2"),
-        listOf("#98BAE7","#9890e3", "#b1f4cf"),
-        listOf("#B8E4F0","#2af598", "#009efd"),
-        listOf("#009DAE","#00c6fb", "#005bea"),
-        listOf("#009DAE","#00c6fb", "#005bea"),
-        listOf("#38A3A5","#b721ff", "#21d4fd"),
-        listOf("#57CC99","#0acffe", "#495aff"),
-        listOf("#80ED99","#007adf", "#00ecbc"),
-        listOf("#7FC8A9","#7DE2FC", "#B9B6E5"),
-        listOf("#D5EEBB","#6C44EC", "#3AC1FC"),
-        listOf("#3EDBF0","#5A49F5", "##2C9CA6"),
-        listOf("#93e37d","#7164F5", "#21BEF1"),
-        listOf("#7868E6","#511DDC", "#5AA2FC"),
+        listOf("#6E3CBC", "#30cfd0", "#330867"),
+        listOf("#7267CB", "#667eea", "#764ba2"),
+        listOf("#98BAE7", "#9890e3", "#b1f4cf"),
+        listOf("#B8E4F0", "#2af598", "#009efd"),
+        listOf("#009DAE", "#00c6fb", "#005bea"),
+        listOf("#009DAE", "#00c6fb", "#005bea"),
+        listOf("#38A3A5", "#b721ff", "#21d4fd"),
+        listOf("#57CC99", "#0acffe", "#495aff"),
+        listOf("#80ED99", "#007adf", "#00ecbc"),
+        listOf("#7FC8A9", "#7DE2FC", "#B9B6E5"),
+        listOf("#D5EEBB", "#6C44EC", "#3AC1FC"),
+        listOf("#3EDBF0", "#5A49F5", "##2C9CA6"),
+        listOf("#93e37d", "#7164F5", "#21BEF1"),
+        listOf("#7868E6", "#511DDC", "#5AA2FC"),
     )
+
     fun getId() = fire(Dispatchers.IO) {
         val id = NormalScheduleNetwork.getId()
         if (id.id != "") {
@@ -108,11 +111,11 @@ object Repository {
         emit(IdResponse("love"))
     }
 
-    suspend fun getId6():IdResponse{
+    suspend fun getId6(): IdResponse {
         Log.d("Repo", "GetID6")
         return try {
             NormalScheduleNetwork.getId()
-        } catch (e:Exception){
+        } catch (e: Exception) {
             IdResponse("love")
         }
     }
@@ -150,7 +153,7 @@ object Repository {
                     headers != "" -> {
                         val courseResponse =
                             NormalScheduleNetwork.getCourse(user, password, yzm, headers)
-                        Log.d("Repon", "getCourse发生错误")
+//                        Log.d("Repon", "getCourse发生错误")
                         emit(courseResponse)
                     }
                     else -> {
@@ -227,9 +230,10 @@ object Repository {
         )
     }
 
-    fun loadAllCourse2(colorList: List<List<String>> = getDefaultString()) = liveData(Dispatchers.IO) {
-        emit(Convert.courseBeanToOneByOne2(courseDao.loadAllUnRemoveCourse(), colorList))
-    }
+    fun loadAllCourse2(colorList: List<List<String>> = getDefaultString()) =
+        liveData(Dispatchers.IO) {
+            emit(Convert.courseBeanToOneByOne2(courseDao.loadAllUnRemoveCourse(), colorList))
+        }
 
     fun getDepartmentList() = flow {
         Log.d("Repo", "getDeprat执行")
@@ -372,6 +376,7 @@ object Repository {
             Result.success(a)
         }
     }
+
     fun getScoreDetail(user: String, password: String, id: String) = flow {
         if (user != "123456") {
             val scoreDetailResponse = NormalScheduleNetwork.getScoreDetail(user, password, id)
@@ -474,7 +479,7 @@ object Repository {
         }
     }
 
-    suspend fun loadBackground2():Uri {
+    suspend fun loadBackground2(): Uri {
         val resources = NormalScheduleApplication.context.resources
         val resourceId =
             R.drawable.main_background_4 // r.mipmap.yourmipmap; R.drawable.yourdrawable
@@ -694,17 +699,17 @@ object Repository {
             if (new.colorsList.isEmpty()) {
                 new.addAllColors(colorListSetting(defaultString))
             }
-            if (new.courseCardRadius==0F){
-                new.courseCardRadius=4F
+            if (new.courseCardRadius == 0F) {
+                new.courseCardRadius = 4F
             }
-            if(new.timetableIconColor==0){
-                new.timetableIconColor= 0xFF000000.toInt()
+            if (new.timetableIconColor == 0) {
+                new.timetableIconColor = 0xFF000000.toInt()
             }
             new.build()
         }
     }
 
-    fun getScheduleSettingsColorList():Flow<List<twoColorItem>>{
+    fun getScheduleSettingsColorList(): Flow<List<twoColorItem>> {
         return AccountDataDao.scheduleSettings.map {
             val new = it.toBuilder()
             if (new.colorsList.isEmpty()) {
@@ -734,7 +739,7 @@ object Repository {
         return res.toList()
     }
 
-    fun colorListSettingToStringList(colorList: List<twoColorItem>):List<List<String>>{
+    fun colorListSettingToStringList(colorList: List<twoColorItem>): List<List<String>> {
         val res = mutableListOf<List<String>>()
         colorList.forEach { items ->
             res.add(items.colorItemList)
@@ -846,12 +851,12 @@ object Repository {
 
     // 只要本地没有存储公告每次打开都会请求，存储公告以后每天访问一遍公告
     suspend fun getNewStartBulletin2(versionCode: Int): Bulletin2? {
-        try{
+        try {
             val lastBulletin2 = startBulletinBean.getLastBulletin2()
             val lastId = (lastBulletin2?.id) ?: 0
             val lastUpdate = AccountDataDao.getLastUpdate()
             return if (lastBulletin2 == null || !GetDataUtil.thisStringIsToday(lastUpdate)) {
-                val res = NormalScheduleNetwork.getStartBulletin(lastId,versionCode)
+                val res = NormalScheduleNetwork.getStartBulletin(lastId, versionCode)
                 AccountDataDao.setLastUpdate(GetDataUtil.getTodayDateString())
                 Log.d("getNewStart", "访问一次")
                 if (res.bulletin_list.isEmpty()) {
@@ -866,14 +871,14 @@ object Repository {
                 Log.d("getNewStart", "today have visited")
                 null
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             return null
         }
     }
 
 
     // 研究生导入
-    fun loginWebVPN(user: String,password: String) = flow {
+    fun loginWebVPN(user: String, password: String) = flow {
         val res = NormalScheduleNetwork.loginWebVPN(user, password)
         emit(res)
     }
@@ -891,7 +896,7 @@ object Repository {
         user: String,
         password: String,
         yzm: String,
-        cookies:String
+        cookies: String
     ) = flow {
         val res = NormalScheduleNetwork.loginURP(user, password, yzm, cookies)
         emit(res)
@@ -923,6 +928,53 @@ object Repository {
 
     fun getScoreDetail() = AccountDataDao.getScoreDetail()
     fun setScoreDetail(detail: String) = AccountDataDao.updateScoreDetail(detail)
+
+    /**用于河大春学期17周调课事项
+     * 第7周周六（4月16日）补第17周周一（6月20日）课程。
+     * 第8周周六（4月23日）补第17周周二（6月21日）课程。
+     * 第9周周六（4月30日）补第17周周三（6月22日）课程。
+     * 第10周周六（5月7日）补第17周周四（6月23日）课程。
+     * 第11周周六（5月14日）补第17周周五（6月24日）课程。
+     * 第12周周六（5月21日）补第17周周日（6月26日）课程。
+     */
+    suspend fun autoChangeCourseBean():Boolean {
+        try{
+            val allCourse = courseDao.loadAllUnRemoveCourse()
+            val changeMap = mapOf(
+                1 to 7,
+                2 to 8,
+                3 to 9,
+                4 to 10,
+                5 to 11,
+                7 to 12,
+            )
+            for (singleCourse in allCourse) {
+                if (singleCourse.classWeek.substring(
+                        16,
+                        17
+                    ) == "1" && singleCourse.classDay in changeMap.keys
+                ) {
+                    val newCourse = singleCourse.copy(
+                        classWeek = changeMap[singleCourse.classDay]!!.toClassWeek(),
+                        courseName = singleCourse.courseName + "[调]",
+                    )
+                    courseDao.insertCourse(newCourse)
+                }
+            }
+            return true
+        } catch (e:Exception){
+            return false
+        }
+    }
+
+//    suspend fun deleteAdjustClass() = courseDao.deleteCourseByAdjust()
+
+
+    private fun Int.toClassWeek() : String {
+        val initStr = Array(24) { 0 }.map { "0" }.toMutableList()
+        initStr[this-1] = "1"
+        return initStr.joinToString()
+    }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData<Result<T>>(context) {
@@ -957,18 +1009,20 @@ object Repository {
     fun getUserVersion() = AccountDataDao.getUserVersion()
     suspend fun getUserVersionS() = AccountDataDao.getUserVersionS()
 
-    fun joinQQGroup(context:Context){
+    fun joinQQGroup(context: Context) {
         val key = "IQn1Mh09oCQwvfVXljBPgCkkg8SPfjZP"
         val intent = Intent()
-        intent.data = Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$key")
+        intent.data =
+            Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$key")
         // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         try {
             context.startActivity(intent)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Toasty.error(context, "未安装QQ").show()
         }
     }
+
     private fun courseSampleData() = CourseResponse(
         listOf(
             AllCourse(

@@ -2,11 +2,13 @@ package com.liflymark.normalschedule.ui.show_timetable
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BookmarkAdd
@@ -17,11 +19,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.Bulletin2
@@ -151,6 +157,9 @@ fun CourseDiaContent(courseBean: CourseBean){
         ClassLine(icon =  Icons.Outlined.WatchLater , content = weekNum)
         ClassLine(icon = Icons.Outlined.Group, content = courseTeacher)
         ClassLine(icon = Icons.Outlined.Room, content = courseRoom)
+        if(courseBean.courseNumber==""){
+            ClassLine(icon = Icons.Outlined.Label, content = courseBean.courseNumber) {}
+        }
     }
 }
 
@@ -164,7 +173,32 @@ fun ClassLine(icon: ImageVector, content: String){
             .width(32.dp)
             .height(32.dp))
         Spacer(modifier = Modifier.width(25.dp))
-        Text(text = content, modifier = Modifier.fillMaxWidth(),maxLines = 2, fontSize = 15.sp)
+        SelectionContainer {
+            Text(text = content, modifier = Modifier.fillMaxWidth(),maxLines = 2, fontSize = 15.sp)
+        }
+    }
+}
+
+@Composable
+fun ClassLine(icon: ImageVector, content: String, onClick:() -> Unit){
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val context = LocalContext.current
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+        .fillMaxWidth()
+        .height(50.dp)
+        .clickable {
+            clipboardManager.setText(AnnotatedString(content))
+            Toasty.success(context, "已复制到剪贴板").show()
+            onClick()
+        }
+    ) {
+        Icon(imageVector = icon, contentDescription = null, modifier = Modifier
+            .width(32.dp)
+            .height(32.dp))
+        Spacer(modifier = Modifier.width(25.dp))
+        SelectionContainer {
+            Text(text = content, modifier = Modifier.fillMaxWidth(),maxLines = 2, fontSize = 15.sp)
+        }
     }
 }
 

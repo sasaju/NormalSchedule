@@ -22,5 +22,6 @@ data class AllCourse(
         val continuingSession: Int,
         val courseName: String,
         val teacher: String,
-        val teachingBuildName: String
+        val teachingBuildName: String,
+        val coureNumber:String = ""
 )

@@ -38,6 +38,7 @@ internal object Convert {
             courseResponse.teacher,
             courseResponse.teachingBuildName,
             color,
+            courseNumber = courseResponse.coureNumber,
             colorIndex = courseNameToIndex(courseResponse.courseName, colorListLength = 13)
         )
     }

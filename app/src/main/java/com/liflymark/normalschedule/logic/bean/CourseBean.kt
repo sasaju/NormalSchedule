@@ -13,7 +13,6 @@ import com.liflymark.normalschedule.logic.utils.Convert
  * @param color 颜色配置，实例：#ff51555
  * @param colorIndex 为适配主题色，配置一个数字，数字代表一个colorList中的index
  * @param removed 代表是否移除主题色的限制，如果为false-0，则使用colorIndex作为颜色依据，如果为true-1，则使用color作为颜色依据
- *
  * 不过无论是开发难度和用户操作难度，实现脱离主题配置都十分的不容易，所以暂时放弃。
  */
 @Keep
@@ -28,6 +27,7 @@ data class CourseBean(
     var teacher: String,
     var teachingBuildName: String,
     var color: String,
+    @ColumnInfo(defaultValue = "") var courseNumber: String = "",
     @ColumnInfo(defaultValue = "-1") var colorIndex: Int = -1,
     @ColumnInfo(defaultValue = "0") var removed: Boolean = false
 )
