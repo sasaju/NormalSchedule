@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.ui.class_course.Item
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
@@ -77,10 +78,10 @@ fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
     }
 
     val expandClassRoom = remember { mutableStateOf(false) }
-    val roomName = rememberSaveable { mutableStateOf("六教") }
+    val roomName = rememberSaveable { ssViewModel.buildNameState }
 
     val expandSchool = remember { mutableStateOf(false) }
-    val schoolName = rememberSaveable { mutableStateOf("五四路校区") }
+    val schoolName = rememberSaveable { ssViewModel.schoolNameState }
 
     val expandDate = remember { mutableStateOf(false) }
     val threeDate = remember { mutableStateOf(ssViewModel.getThreeDay()) }
@@ -94,6 +95,7 @@ fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
             if (ids != null) {
                 ssViewModel.getSpaceRoom(ids, roomName.value, dateName.value)
             }
+            Repository.saveSpaceSelected(schoolName.value, roomName.value)
         }
     }
     LaunchedEffect(dateName.value){
@@ -110,6 +112,7 @@ fun SelectRoom(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
             "七一路校区" -> roomList.addAll(listOf("A1", "A2","A3", "A4","A6"))
             "裕华路校区" -> roomList.addAll(listOf("综合楼", "新楼"))
         }
+        Repository.saveSpaceSelected(schoolName.value, roomName.value)
     }
 
     Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {

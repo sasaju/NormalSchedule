@@ -410,6 +410,8 @@ object Repository {
         }
     }
 
+    fun getCourseBeanColor(courseBean: CourseBean) = Convert.getCourseBeanColor(courseBean, getDefaultString())
+
     suspend fun insertCourse2(courseList: List<AllCourse>) {
         for (singleCourse in courseList) {
             try {
@@ -1023,6 +1025,11 @@ object Repository {
         }
     }
 
+    suspend fun saveSpaceSelected(school:String, buildingName: String){
+        AccountDao.saveSelected(school, buildingName)
+    }
+
+    fun readSpaceSelected() = AccountDao.readSelected()
     private fun courseSampleData() = CourseResponse(
         listOf(
             AllCourse(

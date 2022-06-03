@@ -21,6 +21,7 @@ import com.liflymark.normalschedule.logic.model.AllCourse
 import com.liflymark.normalschedule.logic.model.Arrange
 import com.liflymark.normalschedule.logic.model.Grade
 import com.liflymark.normalschedule.logic.model.Grades
+import com.liflymark.normalschedule.logic.utils.Convert.color
 import com.liflymark.schedule.data.Settings
 
 internal object Convert {
@@ -43,6 +44,32 @@ internal object Convert {
         )
     }
 
+    fun getCourseBeanColor(courseBean: CourseBean, colorList:List<List<String>>): List<Color> {
+        return when {
+                courseBean.colorIndex < 0 -> {
+                    listOf(
+                        courseBean.color.color,
+                        stringToBrush(courseBean.color.color.value, 1).getOrNull(1)?:courseBean.color.color,
+                        stringToBrush(courseBean.color.color.value, 1).getOrNull(2)?:courseBean.color.color
+                    )
+                }
+                courseBean.removed -> {
+                    listOf(
+                        courseBean.color.color,
+                        (colorList[courseBean.colorIndex].getOrNull(1)?:courseBean.color).color,
+                        (colorList[courseBean.colorIndex].getOrNull(2)?:courseBean.color).color,
+                    )
+                }
+                else -> {
+                    listOf(
+                        colorList[courseBean.colorIndex][0].color,
+                        (colorList[courseBean.colorIndex].getOrNull(1)?:courseBean.color).color,
+                        (colorList[courseBean.colorIndex].getOrNull(2)?:courseBean.color).color,
+                    )
+                }
+            }
+    }
+
     fun courseBeanToOneByOne2(courseBeanList: List<CourseBean>, colorList:List<List<String>>): List<List<OneByOneCourseBean>> {
         val allWeekList = mutableListOf<MutableList<OneByOneCourseBean>>()
         val maxWeek = courseBeanList.getOrElse(0) { getInitial()[0] }.classWeek.length
@@ -57,30 +84,7 @@ internal object Convert {
                 when (courseBean.classWeek[i].toString()) {
                     "1" -> {
                         // index<0为兼容老版本APP， removed代表是否无视主题色强行应用用户自己设置的颜色，remove目前只能配置纯色颜色
-                        val twoColorList =
-                            when {
-                                courseBean.colorIndex < 0 -> {
-                                    listOf(
-                                        courseBean.color.color,
-                                        stringToBrush(courseBean.color.color.value, 1).getOrNull(1)?:courseBean.color.color,
-                                        stringToBrush(courseBean.color.color.value, 1).getOrNull(2)?:courseBean.color.color
-                                    )
-                                }
-                                courseBean.removed -> {
-                                    listOf(
-                                        courseBean.color.color,
-                                        (colorList[courseBean.colorIndex].getOrNull(1)?:courseBean.color).color,
-                                        (colorList[courseBean.colorIndex].getOrNull(2)?:courseBean.color).color,
-                                    )
-                                }
-                                else -> {
-                                    listOf(
-                                        colorList[courseBean.colorIndex][0].color,
-                                        (colorList[courseBean.colorIndex].getOrNull(1)?:courseBean.color).color,
-                                        (colorList[courseBean.colorIndex].getOrNull(2)?:courseBean.color).color,
-                                    )
-                                }
-                            }
+                        val twoColorList = getCourseBeanColor(courseBean, colorList)
                         val a = OneByOneCourseBean(
                             courseName = name,
                             start = courseBean.classSessions,

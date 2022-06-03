@@ -146,7 +146,8 @@ fun CourseDiaContent(courseBean: CourseBean){
     }
     val courseTeacher = courseBean.teacher
     val courseRoom = courseBean.teachingBuildName
-
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val context = LocalContext.current
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
             .fillMaxWidth()
@@ -157,8 +158,15 @@ fun CourseDiaContent(courseBean: CourseBean){
         ClassLine(icon =  Icons.Outlined.WatchLater , content = weekNum)
         ClassLine(icon = Icons.Outlined.Group, content = courseTeacher)
         ClassLine(icon = Icons.Outlined.Room, content = courseRoom)
-        if(courseBean.courseNumber==""){
-            ClassLine(icon = Icons.Outlined.Label, content = courseBean.courseNumber) {}
+        if(courseBean.courseNumber!=""){
+            ClassLine(icon = Icons.Outlined.Label, content = courseBean.courseNumber) {
+                clipboardManager.setText(AnnotatedString(courseBean.courseNumber))
+                Toasty.success(context, "已复制到剪贴板").show()
+            }
+        }else{
+            ClassLine(icon = Icons.Outlined.Label, content = "暂无"){
+                Toasty.info(context, "可以尝试重新导入以查看").show()
+            }
         }
     }
 }
@@ -181,14 +189,11 @@ fun ClassLine(icon: ImageVector, content: String){
 
 @Composable
 fun ClassLine(icon: ImageVector, content: String, onClick:() -> Unit){
-    val clipboardManager: ClipboardManager = LocalClipboardManager.current
-    val context = LocalContext.current
+
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
         .fillMaxWidth()
         .height(50.dp)
         .clickable {
-            clipboardManager.setText(AnnotatedString(content))
-            Toasty.success(context, "已复制到剪贴板").show()
             onClick()
         }
     ) {
