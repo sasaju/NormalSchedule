@@ -12,7 +12,7 @@ import kotlin.math.max
 
 internal object GetDataUtil {
     // 修改开学日期仅需修改此处 如2021.8.23 则 GregorianCalendar(2021, 7, 23)，January-0 2022-2-28
-    private val firstWeekMondayDate =  GregorianCalendar(2022, 1, 28)
+    private val firstWeekMondayDate =  GregorianCalendar(2022, 7, 29)
     //获取当前完整的日期和时间
     @SuppressLint("SimpleDateFormat")
     fun getNowDateTime(): String {

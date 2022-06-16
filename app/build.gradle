@@ -15,8 +15,8 @@ android {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
         targetSdkVersion 32
-        versionCode 30
-        versionName "0.1.8"
+        versionCode 32
+        versionName "0.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true

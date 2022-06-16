@@ -119,7 +119,9 @@ fun AboutPage(){
             verticalAlignment = Alignment.Bottom
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().wrapContentWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(onClick = { dialog.show() }) {
@@ -188,9 +190,9 @@ fun Introduce(){
         ) {
             checkNewOrNot.value = true
         }
-        SingleIconButton(
+        SingleIconButtonTo(
             icon = Icons.Default.Groups, 
-            text = "加入反馈群" 
+            text = "加入反馈群"
         ) {
             val key = "IQn1Mh09oCQwvfVXljBPgCkkg8SPfjZP"
             val intent = Intent()
@@ -210,36 +212,14 @@ fun Introduce(){
             val intent = Intent(context, GitListActivity::class.java)
             context.startActivity(intent)
         }
-        SingleIconButton(
+        SingleIconButtonTo(
             icon = Icons.Default.Star,
             text = "用户协议及隐私政策"
         ) {
             val url = if(RomUtil.isVivo){"https://liflymark.top/privacy2/"}else{"https://liflymark.top/privacy/"}
             activity.openBrowser(url)
         }
-//        SingleIconButton(
-//            icon = Icons.Default.Star,
-//            text = "隐私政策(内置)"
-//        ) {
-//            dialog.show()
-//        }
-//        SingleIconButton(
-//            icon = Icons.Default.Star,
-//            text = "用户协议(内置)"
-//        ) {
-//            userDialog.show()
-//        }
-//        SingleIconButton(
-//            icon = Icons.Default.Share,
-//            text = "分享APP给同学"
-//        ) {
-//            val it = Intent(Intent.ACTION_SEND)
-//            it.putExtra(Intent.EXTRA_TEXT, "河大课表APP下载：\nhttp://app.lifly.cn\n非官方开发，仅为个人开发")
-//            it.type = "text/plain"
-//            context.startActivity(Intent.createChooser(it, "分享APP"))
-//            Toasty.success(context, "感谢你的分享和认可").show()
-//        }
-        SingleIconButton(
+        SingleIconButtonTo(
             icon = Icons.Default.EmojiNature,
             text = "项目开源"
         ) {
@@ -276,6 +256,30 @@ fun SingleIconButton(
             Icon(imageVector = icon, contentDescription = null, modifier = Modifier.padding(10.dp))
             Spacer(modifier = Modifier.width(19.dp))
             Text(text = text)
+        }
+    }
+}
+
+@Composable
+fun SingleIconButtonTo(
+    icon:ImageVector,
+    text:String,
+    onClick:() -> Unit
+){
+    Box(modifier = Modifier.clickable {
+        onClick()
+    }) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Spacer(modifier = Modifier.width(10.dp))
+            Icon(imageVector = icon, contentDescription = null, modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.width(19.dp))
+            Text(text = text)
+            Spacer(modifier = Modifier.width(5.dp))
+            Icon(Icons.Default.CallMade, contentDescription = null, modifier = Modifier.size(15.dp))
         }
     }
 }
