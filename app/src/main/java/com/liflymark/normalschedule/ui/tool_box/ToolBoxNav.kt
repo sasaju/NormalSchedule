@@ -44,8 +44,8 @@ fun ToolBoxNavGraph(
         composable("schoolCalendar"){
             HbuCalendar(navController = navController)
         }
-        composable("question"){
-            QuestionAllPage(navController = navController)
+        composable("start"){
+            StartBulletinAllPage(navController = navController)
         }
         composable("wait"){
             WaitTime(navController = navController)
@@ -68,8 +68,8 @@ fun FunctionList(navController: NavController){
                 SingleButton(Icons.Filled.StickyNote2, "公告栏"){
                     navController.navigate("devBoard")
                 }
-                SingleButton(Icons.Filled.HelpCenter, "常见问题"){
-                    navController.navigate("question")
+                SingleButton(Icons.Filled.Ballot, "开屏公告"){
+                    navController.navigate("start")
                 }
             }
 

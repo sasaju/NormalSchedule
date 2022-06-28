@@ -103,17 +103,6 @@ fun DevBoardContent(
  */
 @Composable
 fun BulletinCard(singleBulletin: Bulletin) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(2.dp)
-//    ) {
-//        Column(modifier = Modifier.padding(2.dp)) {
-//            Text(text = "标题：${singleBulletin.title}")
-//            Text(text = "内容：${singleBulletin.content}")
-//            Text(text = "日期：${singleBulletin.date}")
-//        }
-//    }
     BoardCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -130,7 +119,6 @@ fun BulletinCard(singleBulletin: Bulletin) {
                 textAlign = TextAlign.Right
             )
         }
-
     }
 }
 

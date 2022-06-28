@@ -25,7 +25,7 @@ class ImportScoreActivity : AppCompatActivity() {
         binding = ActivityImportScoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnSign.text = "登陆以导入成绩"
-        binding.inputId.hint = "请输入统一认证密码"
+//        binding.inputId.hint = "请输入统一认证密码"
         Toasty.Config.getInstance().setTextSize(15).apply()
         setSupportActionBar(binding.importToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);//添加默认的返回图标

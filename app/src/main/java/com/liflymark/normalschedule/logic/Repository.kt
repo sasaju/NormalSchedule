@@ -3,11 +3,9 @@ package com.liflymark.normalschedule.logic
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
-import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.liveData
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.R
@@ -24,13 +22,9 @@ import com.liflymark.normalschedule.ui.show_timetable.getNeededClassList
 import com.liflymark.schedule.data.Settings
 import com.liflymark.schedule.data.twoColorItem
 import es.dmoral.toasty.Toasty
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
-import kotlin.math.sin
 
 object Repository {
 
@@ -38,7 +32,7 @@ object Repository {
     private val courseDao = dataBase.courseDao()
     private val backgroundDao = dataBase.backgroundDao()
     private val homeworkDao = dataBase.homeworkDao()
-    private val startBulletinBean = dataBase.StartBulletinDao()
+    private val startBulletinDao = dataBase.StartBulletinDao()
     fun getDefaultString() = listOf(
         listOf("#12c2e9", "#FFFC354C", "#FF0ABFBC"),
         listOf("#376B78", "#FFC04848", "#FF480048"),
@@ -854,7 +848,7 @@ object Repository {
     // 只要本地没有存储公告每次打开都会请求，存储公告以后每天访问一遍公告
     suspend fun getNewStartBulletin2(versionCode: Int): Bulletin2? {
         try {
-            val lastBulletin2 = startBulletinBean.getLastBulletin2()
+            val lastBulletin2 = startBulletinDao.getLastBulletin2()
             val lastId = (lastBulletin2?.id) ?: 0
             val lastUpdate = AccountDataDao.getLastUpdate()
             return if (lastBulletin2 == null || !GetDataUtil.thisStringIsToday(lastUpdate)) {
@@ -866,7 +860,7 @@ object Repository {
                     getSentences(true).last()
                     null
                 } else {
-                    startBulletinBean.insertStartBulletin(res.bulletin_list)
+                    startBulletinDao.insertStartBulletin(res.bulletin_list)
                     res.bulletin_list.last()
                 }
             } else {
@@ -878,6 +872,7 @@ object Repository {
         }
     }
 
+    suspend fun loadAllStartBull() = startBulletinDao.loadAllBulletin2()
 
     // 研究生导入
     fun loginWebVPN(user: String, password: String) = flow {

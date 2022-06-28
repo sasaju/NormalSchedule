@@ -15,6 +15,7 @@ import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -24,6 +25,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -203,20 +205,25 @@ fun ExamArrangeContent(
         lastOffset = scrollState.value
         downSlide(offset)
     }
-    Column(
+    LazyColumn(
         Modifier
             .fillMaxSize()
             .padding(top = 4.dp)
-            .verticalScroll(scrollState)
     ) {
-        Text(text = "该功能尚不完善，结果可能发生缺失，请谨慎参考！", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-        if (arrangeList.isEmpty()){
-            Text(text = "未在教务系统查询到考试安排", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+        item{
+            Text(
+                text = "结果极小概率发生缺失，请谨慎参考！",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
-        for (singleArrange in arrangeList){
-            ExamArrangeCard(examArrange = singleArrange)
+        items(count = arrangeList.size, key={"net$it"}){ index: Int ->
+            ExamArrangeCard(examArrange = arrangeList[index])
         }
-        Spacer(modifier = Modifier.height(100.dp))
+
+        item {
+            Spacer(modifier = Modifier.height(100.dp))
+        }
     }
 }
 

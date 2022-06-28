@@ -1,14 +1,14 @@
 package com.liflymark.normalschedule.ui.tool_box
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.*
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.bean.Bulletin2
 import com.liflymark.normalschedule.logic.model.Bulletin
 import com.liflymark.normalschedule.logic.model.DevBoardResponse
 import com.liflymark.normalschedule.logic.model.SchoolBusResponse
 import com.liflymark.normalschedule.logic.model.TimeList
+import kotlinx.coroutines.launch
 
 class ToolBoxViewModel:ViewModel() {
     private val getBulletinValue = MutableLiveData<Int>(0)
@@ -33,6 +33,17 @@ class ToolBoxViewModel:ViewModel() {
     val busTimeLiveData = Transformations.switchMap(getBusTimeValue){
         Repository.getSchoolBusTime(it).asLiveData()
     }
+
+    val startBulletinsSate = mutableStateListOf<Bulletin2>()
+
+    init {
+        viewModelScope.launch {
+            startBulletinsSate.clear()
+            startBulletinsSate.addAll(Repository.loadAllStartBull())
+        }
+    }
+
+
 
 
     fun getBulletin(){
