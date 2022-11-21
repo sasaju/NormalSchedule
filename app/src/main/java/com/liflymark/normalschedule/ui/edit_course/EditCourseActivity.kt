@@ -24,6 +24,7 @@ class EditCourseActivity : ComponentActivity() {
                         NormalTopBar(label = "添加课程")
                     },
                     content = {
+                        it
                         ShowAllCourseToEdit(courseName = courseName)
                     }
                 )

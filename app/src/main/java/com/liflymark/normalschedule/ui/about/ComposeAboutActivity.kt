@@ -47,6 +47,7 @@ class ComposeAboutActivity : ComponentActivity() {
                         NormalTopBar(label = "关于")
                     },
                     content = {
+                        it
                         AboutPage()
                     }
                 )
@@ -231,7 +232,7 @@ fun Introduce(){
         ) {
             MaterialDialog(context)
                 .title(text = "关于开发组")
-                .message(text = "开发者：\n  河北大学 | 大三药物制剂在读@符号 \n  (QQ:1289142675) \nLOGO、背景图绘制：\n   河北大学 | 大三药学在读@Mr.")
+                .message(text = "开发者：\n  河北大学 | 大四药物制剂在读@符号 \n  (QQ:1289142675) \nLOGO、背景图绘制：\n   河北大学 | 大四药学在读@Mr.")
                 .positiveButton(text = "知道了")
                 .show()
         }

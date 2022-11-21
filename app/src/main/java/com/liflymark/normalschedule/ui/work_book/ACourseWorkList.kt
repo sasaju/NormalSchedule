@@ -48,7 +48,7 @@ fun ACourseWorkList(
                 NormalTopBar(label = "单个作业本")
             },
             content = {
-                Log.d("ACourse", "content")
+                it
                 SingleCourseWorkList(courseName = courseName, workBookViewModel = workBookViewModel)
             }
         )
@@ -72,7 +72,7 @@ fun ACourseWorkList(
                 }
             },
             content = {
-                Log.d("ACourse", "content")
+                it
                 SingleCourseWorkList(courseName = courseName, workBookViewModel = workBookViewModel)
             }
         )

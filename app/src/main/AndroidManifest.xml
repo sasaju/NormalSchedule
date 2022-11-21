@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.liflymark.normalschedule">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -80,10 +79,6 @@
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.login_space_room.ShowSpaceActivity"
-            android:exported="true"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-        <activity
-            android:name=".ui.login_space_room.LoginSpaceActivity"
             android:exported="true"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity

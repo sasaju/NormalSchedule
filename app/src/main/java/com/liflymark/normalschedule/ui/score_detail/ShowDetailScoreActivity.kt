@@ -41,6 +41,7 @@ class ShowDetailScoreActivity : ComponentActivity() {
                 Scaffold(
                     topBar = { NormalTopBar(label = "成绩明细") },
                     content = {
+                        it
                         AllGrades(allGradeListString = allGradeListString)
                     }
                 )

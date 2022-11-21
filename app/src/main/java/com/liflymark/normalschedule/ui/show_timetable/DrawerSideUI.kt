@@ -32,7 +32,7 @@ import com.liflymark.normalschedule.ui.about.ComposeAboutActivity
 import com.liflymark.normalschedule.ui.class_course.ClassCourseActivity
 import com.liflymark.normalschedule.ui.exam_arrange.ExamActivity
 import com.liflymark.normalschedule.ui.import_show_score.ImportScoreActivity
-import com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity
+import com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivity
 import com.liflymark.normalschedule.ui.score_detail.LoginToScoreActivity
 import com.liflymark.normalschedule.ui.set_background.SetBackground
 import com.liflymark.normalschedule.ui.settings.SettingsActivity
@@ -63,7 +63,7 @@ fun DrawerNavHost(drawerState: DrawerState){
             icon = Icons.Filled.Stairs, text = "成绩查询")
         NavButton(activity = LoginToScoreActivity(), drawerState = drawerState,
             icon = Icons.Filled.TrendingUp, text = "本学期成绩明细")
-        NavButton(activity = LoginSpaceActivity(),
+        NavButton(activity = ShowSpaceActivity(),
             drawerState = drawerState,
             icon = Icons.Filled.EventSeat, text = "空教室查询")
 

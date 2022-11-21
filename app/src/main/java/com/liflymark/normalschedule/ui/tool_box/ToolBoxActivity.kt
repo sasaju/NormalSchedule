@@ -72,6 +72,7 @@ fun DevBoard(
                 }
             },
             content = {
+                it
                 DevBoardContent(tbViewModel)
             }
         )
@@ -132,6 +133,7 @@ fun HbuCalendar(navController: NavController) {
             }
         },
         content = {
+            it
             var rememberWebViewProgress by remember { mutableStateOf(-1) }
             Box {
                 CustomWebView(
@@ -259,6 +261,7 @@ fun WaitTime(navController: NavController) {
             }
         },
         content = {
+            it
             Text(text = "开发者玩命完善中......")
         }
     )

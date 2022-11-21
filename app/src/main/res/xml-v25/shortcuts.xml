@@ -9,7 +9,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.liflymark.normalschedule"
-            android:targetClass="com.liflymark.normalschedule.ui.login_space_room.LoginSpaceActivity"
+            android:targetClass="com.liflymark.normalschedule.ui.login_space_room.ShowSpaceActivity"
             />
         <!-- If your shortcut is associated with multiple intents, include them
              here. The last intent in the list determines what the user sees when

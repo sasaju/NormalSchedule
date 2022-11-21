@@ -106,7 +106,7 @@ class WeekAppwidgetAppwidget() : GlanceAppWidget() {
 }
 
 class UpdateAllAction() : ActionCallback {
-    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         WeekAppwidgetAppwidget().update(context, glanceId)
     }
 }

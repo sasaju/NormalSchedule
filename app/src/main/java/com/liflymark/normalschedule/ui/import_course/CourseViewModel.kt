@@ -1,9 +1,10 @@
 package com.liflymark.normalschedule.ui.import_course
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.liflymark.normalschedule.logic.Repository
-import com.liflymark.normalschedule.logic.bean.CourseBean
 import com.liflymark.normalschedule.logic.model.AllCourse
 import kotlinx.coroutines.launch
 

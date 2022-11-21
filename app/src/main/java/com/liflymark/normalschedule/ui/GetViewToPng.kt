@@ -58,6 +58,7 @@ class GetViewToPng : ComponentActivity() {
                 Scaffold(
                     scaffoldState = state,
                     content = {
+                        it
                         SignUIAll(state){_,_ ->}
                     },
                     topBar = {
@@ -82,8 +83,7 @@ class GetViewToPng : ComponentActivity() {
             multiplePermissionsState.allPermissionsGranted -> {
                 hadShowedGrant()
             }
-            multiplePermissionsState.shouldShowRationale ||
-                    !multiplePermissionsState.permissionRequested ->
+            multiplePermissionsState.shouldShowRationale ->
             {
                 if (doNotShowRationale) {
                     LaunchedEffect(key1 = Unit, block = {

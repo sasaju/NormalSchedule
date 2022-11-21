@@ -9,14 +9,14 @@ plugins {
 apply plugin: 'com.google.devtools.ksp'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.liflymark.normalschedule"
         minSdkVersion 24
-        targetSdkVersion 32
-        versionCode 33
-        versionName "0.2.1"
+        targetSdkVersion 33
+        versionCode 35
+        versionName "0.2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -32,7 +32,7 @@ android {
         viewBinding true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-rc01"
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
     signingConfigs {
         nov2 {
@@ -74,6 +74,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "河大课表-${variant.versionName}-${variant.versionCode}.apk"
+        }
+    }
     compileOptions {
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -81,7 +86,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
         freeCompilerArgs += "-Xjvm-default=all"
     }
@@ -107,6 +111,7 @@ android {
             }
         }
     }
+    namespace 'com.liflymark.normalschedule'
 
 //    dexOptions {
 //        preDexLibraries true
@@ -116,31 +121,31 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'androidx.room:room-ktx:2.4.2'
-    implementation 'androidx.room:room-runtime:2.4.2'
-    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.room:room-ktx:2.4.3'
+    implementation 'androidx.room:room-runtime:2.4.3'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha04'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
-    ksp "androidx.room:room-compiler:2.4.2"
+    ksp "androidx.room:room-compiler:2.4.3"
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
     implementation 'com.github.GrenderG:Toasty:1.5.0'
-    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
     implementation 'com.jaredrummler:material-spinner:1.3.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     implementation "androidx.compose.ui:ui:$compose_version"
     // Tooling support (Previews, etc.)
@@ -155,14 +160,14 @@ dependencies {
     implementation "androidx.compose.material:material-icons-core:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     // Integration with activities
-    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation 'androidx.activity:activity-compose:1.6.1'
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
     // Integration with observables
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 //    implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
-    implementation "androidx.navigation:navigation-compose:2.5.0-rc01"
+    implementation "androidx.navigation:navigation-compose:2.6.0-alpha04"
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
     // UI Tests
@@ -181,15 +186,15 @@ dependencies {
     implementation "androidx.datastore:datastore:1.0.0"
     implementation "com.google.protobuf:protobuf-javalite:3.10.0"
 //    implementation 'com.jaredrummler:colorpicker:1.1.0'
-    implementation "com.google.code.gson:gson:2.8.8"
+    implementation "com.google.code.gson:gson:2.8.9"
 //    implementation project(":IcyTimeTable")
 //    debugImplementation 'com.glance.guolindev:glance:1.1.0'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.0'
 //    implementation "com.github.skydoves:colorpickerpreference:2.0.6"
     implementation 'com.afollestad.material-dialogs:color:3.2.1'
     implementation 'com.godaddy.android.colorpicker:compose-color-picker-android:0.4.2'
 //    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
     implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
-    implementation ("androidx.glance:glance-appwidget:1.0.0-alpha02")
+    implementation "androidx.glance:glance-appwidget:1.0.0-alpha05"
 //    implementation project(":PushAll")
 }

@@ -62,6 +62,7 @@ class GraduateImportActivity : ComponentActivity() {
                     scaffoldState = state,
                     topBar = { NormalTopBar(label = "研究生导入") },
                     content = {
+                        it
                         SignUIAll(scaffoldState = state){  _,_ -> }
                     }
                 )

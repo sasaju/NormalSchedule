@@ -161,7 +161,15 @@ fun SingleDayOneCourse(
 }
 
 class UpdateAllAction() : ActionCallback {
-    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+//    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+//        DayNewWidgetProvider2().update(context, glanceId)
+//    }
+
+    override suspend fun onAction(
+        context: Context,
+        glanceId: GlanceId,
+        parameters: ActionParameters
+    ) {
         DayNewWidgetProvider2().update(context, glanceId)
     }
 }

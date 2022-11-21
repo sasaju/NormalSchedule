@@ -61,6 +61,7 @@ class SetBackground : ComponentActivity() {
                         NormalTopBar(label = "更换背景")
                     },
                     content = {
+                        it
                         DefaultAndUserBack(state)
                     }
                 )

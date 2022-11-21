@@ -41,6 +41,7 @@ class ExamActivity : ComponentActivity() {
                         NormalTopBar(label = "考试安排")
                     },
                     content = {
+                        it
                         LoginToExam(state = state)
                     }
                 )

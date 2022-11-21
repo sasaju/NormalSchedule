@@ -76,6 +76,7 @@ fun ShowArrangePage(allExamArrangeList:List<Arrange>){
             NormalTopBar(label = "考试安排")
         },
         content = {
+            it
             ExamArrangeContent(allExamArrangeList){ offset -> showFloat = offset<=0 }
             if (requestGrant){
                 RequestGrant(
@@ -97,15 +98,13 @@ fun ShowArrangePage(allExamArrangeList:List<Arrange>){
             }
         },
         floatingActionButton = {
-            if (true) {
-                ExtendedFloatingActionButton(
-                    text = { Text(text = "导入日历日程") },
-                    onClick = {
-                        requestGrant = true
-                    },
-                    icon = { Icon(Icons.Default.CalendarToday, "导入日程至日历") }
-                )
-            }
+            ExtendedFloatingActionButton(
+                text = { Text(text = "导入日历日程") },
+                onClick = {
+                    requestGrant = true
+                },
+                icon = { Icon(Icons.Default.CalendarToday, "导入日程至日历") }
+            )
         },
 
     )
@@ -126,8 +125,7 @@ private fun RequestGrant(
         multiplePermissionsState.allPermissionsGranted -> {
             LaunchedEffect(Unit) {hadShowedGrant()}
         }
-        multiplePermissionsState.shouldShowRationale ||
-                !multiplePermissionsState.permissionRequested ->
+        multiplePermissionsState.shouldShowRationale ->
         {
             if (doNotShowRationale) {
                 LaunchedEffect(key1 = Unit, block = {

@@ -41,6 +41,7 @@ class LoginToScoreActivity : ComponentActivity() {
                         NormalTopBar(label = "成绩明细")
                     },
                     content = {
+                        it
                         LoginToScoreDetail(state = state)
                     }
                 )
