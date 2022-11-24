@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "com.liflymark.schedule.data";
+option java_multiple_files = true;
+
+message CourseNotice {
+  string lastNotice = 1;
+  string nowNotice = 2;
+  string date = 3;
+  int64 trigger_at_millis = 4;
+  string repeat_set_date = 5;
+}

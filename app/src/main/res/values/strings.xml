@@ -35,4 +35,5 @@
     <string name="title_activity_set_background">SetBackground</string>
     <string name="title_activity_graduate_import">研究生课程导入</string>
     <string name="title_activity_show_class">ShowClassActivity</string>
+    <string name="channel_course_notice">COURSE_NOTICE</string>
 </resources>

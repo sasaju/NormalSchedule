@@ -120,11 +120,3 @@ fun updateWidget(context: Context) {
     val appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget)
     Convert.onUpdateMIUIWidget(context, appWidgetManager, appWidgetIds)
 }
-// snackbar
-//val LocalShowSnackbar = compositionLocalOf { false }
-//val LocalSnackText = staticCompositionLocalOf { "" }
-
-//fun main(){
-//    val a = getNeededClassList(getData())
-//    println(a.toString())
-//}

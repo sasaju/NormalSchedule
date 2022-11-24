@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -17,8 +20,7 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NormalSchedule"
-        >
+        android:theme="@style/Theme.NormalSchedule">
 
         <meta-data
             android:name="miuiWidgetVersion"
@@ -131,26 +133,21 @@
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity>
-
-        <receiver
-            android:name=".ui.app_widget_day.DayAppWidgetProvider"
-            android:exported="false"
-            android:label="日视图(可滑动)">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_day_info" />
-        </receiver>
-
-        <service
-            android:name=".ui.app_widget_day.DayRemoteViewsService"
-            android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
+        </activity> <!-- <receiver -->
+        <!-- android:name=".ui.app_widget_day.DayAppWidgetProvider" -->
+        <!-- android:exported="false" -->
+        <!-- android:label="日视图(可滑动)"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.appwidget.action.APPWIDGET_UPDATE" /> -->
+        <!-- </intent-filter> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.appwidget.provider" -->
+        <!-- android:resource="@xml/appwidget_day_info" /> -->
+        <!-- </receiver> -->
+        <!-- <service -->
+        <!-- android:name=".ui.app_widget_day.DayRemoteViewsService" -->
+        <!-- android:exported="false" -->
+        <!-- android:permission="android.permission.BIND_REMOTEVIEWS" /> -->
         <receiver
             android:name=".ui.app_widget_miui.DayNewWidgetProvider"
             android:exported="true"
@@ -180,7 +177,7 @@
         <receiver
             android:name=".ui.app_widget_new_day.DayNewWidgetReceiver"
             android:exported="false"
-            android:label="日视图-新">
+            android:label="日视图-可滑动">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -201,6 +198,21 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_week_info" />
+        </receiver>
+        <receiver
+            android:name=".ui.app_wdiget_twoday.TwoDayWidgetReceiver"
+            android:enabled="@bool/glance_appwidget_available"
+            android:exported="false"
+            android:label="两日课程">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.fly.courseNotice" />
+                <action android:name="com.fly.setThisDayCourseNotice" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_twoday_info" />
         </receiver>
     </application>
 

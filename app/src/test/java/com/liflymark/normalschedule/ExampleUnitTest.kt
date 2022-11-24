@@ -1,9 +1,11 @@
 package com.liflymark.normalschedule
 
 import com.liflymark.normalschedule.logic.utils.Convert
+import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.util.GregorianCalendar
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -39,5 +41,10 @@ class ExampleUnitTest {
         val testText = "地点: 五四路校区 五四路校区综合教学楼 207"
         val test = testText.split(" ")
         print(test.last() + test[test.lastIndex-1])
+    }
+
+    fun test_adance_time(){
+        val cal = GregorianCalendar()
+        GetDataUtil.getAdvancedTimeMillis(1,50000)
     }
 }

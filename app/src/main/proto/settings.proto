@@ -60,6 +60,9 @@ message Settings {
 
   // 课程表-时间列等颜色
   sfixed32 timetable_icon_color = 19;
+
+  // 是否开启课程通知
+  bool open_course_notice = 20;
 }
 
 

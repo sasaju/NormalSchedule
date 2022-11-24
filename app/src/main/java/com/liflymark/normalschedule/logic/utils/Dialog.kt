@@ -476,24 +476,9 @@ fun SelectSessionContent(
         endSection.add("第 $i 节")
     }
 
-    val weekListPager = rememberPagerState(
-//        pageCount = weekList.size,
-        initialPage = initialWeek,
-//        initialOffscreenLimit = weekList.size,
-//        infiniteLoop = false
-    )
-    val startPager = rememberPagerState(
-//        pageCount = startSection.size,
-        initialPage = initialStart,
-//        initialOffscreenLimit = startSection.size,
-//        infiniteLoop = false
-    )
-    val endPager = rememberPagerState(
-//        pageCount = endSection.size,
-        initialPage = initialEnd,
-//        initialOffscreenLimit = endSection.size,
-//        infiniteLoop = false
-    )
+    val weekListPager = rememberPagerState(initialPage = initialWeek)
+    val startPager = rememberPagerState(initialPage = initialStart)
+    val endPager = rememberPagerState(initialPage = initialEnd)
     Box(
         modifier = Modifier
             .height(200.dp)

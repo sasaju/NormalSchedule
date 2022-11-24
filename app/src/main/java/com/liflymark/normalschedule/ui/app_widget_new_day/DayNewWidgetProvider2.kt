@@ -37,6 +37,7 @@ class DayNewWidgetProvider2():GlanceAppWidget() {
             mList.addAll(it.filter { it1 ->
                 it1.whichColumn == nowDayNum && !GetDataUtil.hadOvered(it1.end)
             })
+            mList.sortBy { course -> course.start }
         }
         Column(
             modifier = GlanceModifier
@@ -137,6 +138,8 @@ fun SingleDayOneCourse(
                     fontWeight = FontWeight.Bold
                 ),
                 maxLines = 1,
+                modifier = GlanceModifier
+                    .clickable(actionStartActivity<MainActivity>())
             )
             Text(
                 text = building,

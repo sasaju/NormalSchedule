@@ -255,14 +255,7 @@ internal object Convert {
         appWidgetIds: IntArray
     ){
         appWidgetIds.forEach { appWidgetId ->
-//            val pendingIntent: PendingIntent = Intent(context, ExampleActivity::class.java)
-//                .let { intent ->
-//                    PendingIntent.getActivity(context, 0, intent, 0)
-//                }
-
-            // Get the layout for the App Widget and attach an on-click listener
-            // to the button
-            val views: RemoteViews = RemoteViews(
+            val views = RemoteViews(
                 context.packageName,
                 R.layout.miui_appwidget_day
             )
@@ -366,25 +359,4 @@ internal object Convert {
         }
     }
 }
-//    fun getAllOneCourse(courseBeanList: List<CourseBean>): List<List<OneByOneCourseBean>> {
-//        val allOneCourseList = mutableListOf<List<OneByOneCourseBean>>()
-//        val needAllOneByOneCourseList = mutableListOf<List<List<OneByOneCourseBean>>>()
-//        for (i in courseBeanList) {
-//            allOneCourseList.add(courseBeanToOneByOne(i))
-//        }
-//
-//        for (t in 0..19){
-//            val aOneCourseList = mutableListOf<OneByOneCourseBean>()
-//            for(a in allOneCourseList) {
-//                if (a[t].courseName!="0")
-//                    aOneCourseList.add(a[t])
-//            }
-//            needAllOneByOneCourseList.add(aOneCourseList.toList())
-//        }
-//
-//
-//
-//        return allOneCourseList
-//    }
-
 

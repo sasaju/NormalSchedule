@@ -130,9 +130,10 @@ internal object GetDataUtil {
         return result
     }
 
-    fun whichWeekNow(): Int {
+    // add=1代表获取明天是第几周
+    fun whichWeekNow(add:Int = 0): Int {
         val now = GregorianCalendar()
-        val result = dateMinusDate(now, firstWeekMondayDate)
+        val result = dateMinusDate(now, firstWeekMondayDate) + add
         if (result < 0){
             return 0
         }
@@ -218,6 +219,19 @@ internal object GetDataUtil {
         return Result(nowType,minusResult / 60)
     }
 
+    // 计算第startRow节数提前advancedMillis毫秒时对应的stringerMills
+    fun getAdvancedTimeMillis(
+        startRow: Int,
+        advancedMillis: Long
+    ):Long {
+        val startTime = getStartTime(startRow).split(":").map { it.toInt() }
+        val cal = GregorianCalendar()
+        cal.set(Calendar.HOUR, startTime[0])
+        cal.set(Calendar.MINUTE, startTime[1])
+
+        return cal.timeInMillis - advancedMillis
+    }
+
     fun getStartTime(rowNumber: Int): String {
         return when(rowNumber){
             1->"08:00"
@@ -251,9 +265,11 @@ internal object GetDataUtil {
             else->"00:00"
         }
     }
-    fun getDayOfWeek(): String {// 当前列是星期几  星期一,星期二....
+
+    // 当前列是星期几  星期一,星期二....
+    fun getDayOfWeek(add: Int=0): String {
         val nowColumnCalendar = GregorianCalendar()
-        return when (nowColumnCalendar.get(Calendar.DAY_OF_WEEK)) {
+        return when (nowColumnCalendar.get(Calendar.DAY_OF_WEEK) + add) {
             1 -> "周日"
             2 -> "周一"
             3 -> "周二"

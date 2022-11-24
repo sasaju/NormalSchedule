@@ -125,7 +125,7 @@ private fun RequestGrant(
         multiplePermissionsState.allPermissionsGranted -> {
             LaunchedEffect(Unit) {hadShowedGrant()}
         }
-        multiplePermissionsState.shouldShowRationale ->
+        multiplePermissionsState.shouldShowRationale || multiplePermissionsState.revokedPermissions.isNotEmpty() ->
         {
             if (doNotShowRationale) {
                 LaunchedEffect(key1 = Unit, block = {
@@ -167,6 +167,7 @@ private fun RequestGrant(
                 }
             }
         }
+
         else -> {
             var show by rememberSaveable{ mutableStateOf(true)}
             if (show){

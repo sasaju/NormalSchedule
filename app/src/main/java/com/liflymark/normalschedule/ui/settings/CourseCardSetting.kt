@@ -135,7 +135,8 @@ fun SettingsCardPage(
                 icon = {Icon(Icons.Default.Save,"Save")}
             )
         },
-        content = {
+        content = { padding ->
+            padding
             SettingsPreviewAndControl(onValueChange = { newSettings = it })
         }
     )

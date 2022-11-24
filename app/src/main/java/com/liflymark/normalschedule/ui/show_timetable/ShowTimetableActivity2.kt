@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.ui.show_timetable
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
@@ -49,6 +50,7 @@ import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
 import com.liflymark.normalschedule.logic.bean.OneByOneCourseBean
 import com.liflymark.normalschedule.logic.bean.getData
+import com.liflymark.normalschedule.logic.notice.setRepeatCourseNoticeCheck
 import com.liflymark.normalschedule.logic.utils.*
 import com.liflymark.normalschedule.logic.utils.Convert
 import com.liflymark.normalschedule.ui.abase.BaseComment
@@ -138,7 +140,7 @@ fun Drawer(
     val startBulletin = remember { viewModel.showStartBulletin2 }
 
     val showNewUserOrNot = remember { viewModel.showUserGuide }
-
+    val context = LocalContext.current
     // 修复一次bug
 //    LaunchedEffect(newUserVersion.value){
 //        val allCourse = Repository.loadAllCourseNameNoFlow().toSet()
@@ -155,7 +157,12 @@ fun Drawer(
     LaunchedEffect(Unit){
         viewModel.checkShowUserGuide()
     }
-
+    LaunchedEffect(settings.value){
+        if (settings.value!=null && settings.value!!.openCourseNotice){
+            setRepeatCourseNoticeCheck(context = context, true)
+            Log.d("ShowTimeTable","强制重置Alarm重复任务")
+        }
+    }
     // 拦截返回键请求
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current!!.onBackPressedDispatcher
     val backCallback = remember {

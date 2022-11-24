@@ -22,7 +22,7 @@ object AccountDataDao {
         val context = NormalScheduleApplication.context
         context.dataStore.data
             .map { preferences ->
-                preferences[intPreferencesKey("userVersion")]?:0 < 1
+                (preferences[intPreferencesKey("userVersion")] ?: 0) < 1
             }
     }
 

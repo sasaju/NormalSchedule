@@ -13,6 +13,7 @@ import com.liflymark.normalschedule.logic.bean.*
 import com.liflymark.normalschedule.logic.dao.AccountDao
 import com.liflymark.normalschedule.logic.dao.AccountDataDao
 import com.liflymark.normalschedule.logic.dao.AppDatabase
+import com.liflymark.normalschedule.logic.dao.CourseNoticeDao
 import com.liflymark.normalschedule.logic.dao.SentenceDao
 import com.liflymark.normalschedule.logic.model.*
 import com.liflymark.normalschedule.logic.network.NormalScheduleNetwork
@@ -673,6 +674,10 @@ object Repository {
         }
     }
 
+    /**
+     * 用于转换默认值
+     * 这个写法并不好，应该在logic.dao.SettingsSerializer中重写defaultValue
+     */
     fun getScheduleSettings(): Flow<Settings> {
         val defaultString = getDefaultString()
         return AccountDataDao.scheduleSettings.map {
@@ -704,7 +709,10 @@ object Repository {
             new.build()
         }
     }
-
+    fun getScheduleSettingsNotice(): Flow<Boolean> {
+        val defaultString = getDefaultString()
+        return Repository.getScheduleSettings().map { it.openCourseNotice }
+    }
     fun getScheduleSettingsColorList(): Flow<List<twoColorItem>> {
         return AccountDataDao.scheduleSettings.map {
             val new = it.toBuilder()
@@ -1005,6 +1013,20 @@ object Repository {
     fun getNewUserOrNot() = AccountDataDao.getNewUserOrNot()
     fun getUserVersion() = AccountDataDao.getUserVersion()
     suspend fun getUserVersionS() = AccountDataDao.getUserVersionS()
+
+    suspend fun setCourseNotice(lastCourse:String, nowCourse:String, date:String) = CourseNoticeDao.setCourseNotice(lastCourse, nowCourse, date)
+
+    suspend fun setCourseNoticeRepeatDate(date:String) = CourseNoticeDao.setCourseNoticeRepeatDate(date)
+
+    suspend fun getCourseNotice() = CourseNoticeDao.getCourseNotice()
+    fun getCourseNoticeFlow() = CourseNoticeDao.getCourseNoticeFlow()
+    fun getCourseNoticeTimeFlow() = CourseNoticeDao.getCourseNoticeFlow().map { if (it.triggerAtMillis==0L){600000L}else{it.triggerAtMillis} }
+    suspend fun setCourseNoticeNow(nowCourse: String) = CourseNoticeDao.setCourseNoticeNow(nowCourse)
+
+    suspend fun setCourseNoticeLast(lastCourse: String, date: String) = CourseNoticeDao.setCourseNoticeLast(lastCourse, date)
+
+    suspend fun setCourseTriggerMillis(time:Long) = CourseNoticeDao.setCourseNoticeTrigger(time)
+
 
     fun joinQQGroup(context: Context) {
         val key = "IQn1Mh09oCQwvfVXljBPgCkkg8SPfjZP"
