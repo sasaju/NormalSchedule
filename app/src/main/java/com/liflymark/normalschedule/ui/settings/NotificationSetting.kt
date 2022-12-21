@@ -74,58 +74,6 @@ import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import kotlinx.coroutines.launch
 
 
-//@Composable
-//fun NotificationSetting(
-//    navController: NavController
-//){
-//    val context = LocalContext.current
-//    val scope = rememberCoroutineScope()
-//
-//    Scaffold(
-//        topBar = {
-//            NormalTopBar(label = "课程提醒配置") {
-//                navController.navigateUp()
-//            }
-//        },
-//        content = { paddingValues ->
-//            Box(
-//                modifier = Modifier.padding(paddingValues),
-//            ) {
-//                Column{
-//                    Button(onClick = {
-//                        scope.launch {
-//                            setAlarmForCourseNotice(
-//                                context,
-//                                System.currentTimeMillis() + 2000,
-//                                "这是一条测试，请不要点击它",
-//                                "滑动清除掉就可以了",
-//                                true
-//                            )
-//                        }
-//                    }) {
-//                        Text(text = "测试")
-//                    }
-//                    Button(onClick = {
-//                        scope.launch {
-//                            val manager = GlanceAppWidgetManager(context)
-//                            val glanceId = manager
-//                                .getGlanceIds(TwoDayWidgetProvider::class.java)
-//                                .firstOrNull()
-//                            if (glanceId != null) {
-//                                TwoDayWidgetProvider().update(context, glanceId)
-//                            }else{
-//                                manager.requestPinGlanceAppWidget(TwoDayWidgetReceiver::class.java)
-//                            }
-//                        }
-//                    }) {
-//                        Text(text = "添加双日小部件")
-//                    }
-//                }
-//            }
-//        }
-//    )
-//}
-
 @Composable
 fun NotificationSettingPage(
     navController: NavController

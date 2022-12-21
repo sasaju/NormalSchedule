@@ -278,6 +278,9 @@ fun SettingsContent(
             SettingsItem(title = "加入反馈群", description = "欢迎加入反馈群") {
                 Repository.joinQQGroup(context)
             }
+            SettingsItem(title = "注销账号", description = "验证帐号密码以注销账号") {
+                navController.navigate("logout")
+            }
         }
     }
 }

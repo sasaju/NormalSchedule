@@ -1,5 +1,6 @@
 package com.liflymark.normalschedule.logic.network
 
+import android.app.ActivityManager.TaskDescription
 import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,6 +17,7 @@ object NormalScheduleNetwork {
     private val DevService = ServiceCreator.create(DevBoardService::class.java)
     private val ExamArrangeService = ServiceCreator.create(ExamArrangeService::class.java)
     private val CheckUpdateService = ServiceCreator.create(CheckUpdateService::class.java)
+    private val LogoutService = ServiceCreator.create(LogoutService::class.java)
 
     suspend fun getId() =
         CourseService.getId().await()
@@ -79,6 +81,9 @@ object NormalScheduleNetwork {
     suspend fun getGraduateCaptcha(cookies: String) = CourseService.getGraduateCaptcha(cookies).await()
 
     suspend fun getStartBulletin(id:Int, versionCode: Int) = DevService.getStartBulletin(id, versionCode).await()
+
+    suspend fun logoutApp(user: String, password: String, sessionId: String, description: String) =
+        LogoutService.logout(user,password,description, sessionId).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

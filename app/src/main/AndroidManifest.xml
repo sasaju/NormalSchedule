@@ -6,6 +6,7 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -21,6 +22,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NormalSchedule">
+        <activity
+            android:name=".ui.import_show_score.ShowScoreActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_show_score2"
+            android:theme="@style/Theme.NormalSchedule" />
 
         <meta-data
             android:name="miuiWidgetVersion"
@@ -79,10 +85,10 @@
             android:exported="true"
             android:label="@string/title_activity_tool_box"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-        <activity
-            android:name=".ui.login_space_room.ShowSpaceActivity"
-            android:exported="true"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
+<!--        <activity-->
+<!--            android:name=".ui.login_space_room.ShowSpaceActivity"-->
+<!--            android:exported="true"-->
+<!--            android:theme="@style/Theme.NormalSchedule.NoActionBar" />-->
         <activity
             android:name=".ui.edit_course.EditCourseActivity"
             android:exported="true"
@@ -108,11 +114,6 @@
             android:exported="false"
             android:theme="@style/Theme.NormalSchedule.ShowTimeTableSplash" />
         <activity android:name=".ui.import_again.ImportCourseAgain" />
-        <activity
-            android:name=".ui.import_show_score.ShowScoreActivity"
-            android:label="成绩单"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.import_show_score.ImportScoreActivity"
             android:label="成绩查询"

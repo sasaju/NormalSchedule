@@ -167,11 +167,8 @@ fun TomorrowCourse(
     val mList = mutableListOf<OneByOneCourseBean>()
     val allCourse = Repository.loadAllCourse3()
     val nowWeekNum = GetDataUtil.whichWeekNow(add = 1) + 1
-    val nowDayNum = GetDataUtil.getNowWeekNum() + 1
     allCourse?.get(nowWeekNum - 1)?.let {
-        mList.addAll(it.filter { it1 ->
-            it1.whichColumn == nowDayNum && !GetDataUtil.hadOvered(it1.end)
-        })
+        mList.addAll(it)
         mList.sortBy { course -> course.start }
     }
     Column(
@@ -232,7 +229,7 @@ fun TomorrowCourse(
     }
 }
 
-class UpdateTwoDayAction() : ActionCallback {
+class UpdateTwoDayAction : ActionCallback {
     override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,

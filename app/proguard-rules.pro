@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 -printusage release/usage.txt
 
-#PictureSelector 2.0
+#PictureSelector 3.0
 -keep class com.luck.picture.lib.** { *; }
 
 #Ucrop

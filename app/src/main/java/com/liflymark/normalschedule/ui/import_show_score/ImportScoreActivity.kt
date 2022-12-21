@@ -3,6 +3,7 @@ package com.liflymark.normalschedule.ui.import_show_score
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -70,7 +71,8 @@ class ImportScoreActivity : AppCompatActivity() {
                         } else {
                             viewModel.saveAccount(userName, "")
                         }
-                        val intent = Intent(this, ShowScoreActivity::class.java).apply {
+                        Log.d("ImportScore","加载完毕")
+                        val intent = Intent(this, ShowScoreActivity2::class.java).apply {
                             putExtra("grade_list_string", Convert.allGradeToJson(allGradeList))
                         }
                         startActivity(intent)

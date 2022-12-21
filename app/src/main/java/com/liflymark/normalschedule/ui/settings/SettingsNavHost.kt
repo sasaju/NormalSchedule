@@ -22,5 +22,6 @@ fun SettingsNavHost(
         composable(route = "mainSettings"){ SettingsMainPage(navController = navController) }
         composable(route = "courseCardSettings"){ SettingsCardPage(navController = navController) }
         composable(route="notificationSettings"){ NotificationSettingPage(navController = navController)}
+        composable(route="logout"){ LogoutPage(navController = navController) }
     }
 }

@@ -1047,6 +1047,9 @@ object Repository {
     }
 
     fun readSpaceSelected() = AccountDao.readSelected()
+
+    suspend fun logoutApp(user: String, password: String, sessionId: String, description: String) =
+        NormalScheduleNetwork.logoutApp(user, password, sessionId, description)
     private fun courseSampleData() = CourseResponse(
         listOf(
             AllCourse(

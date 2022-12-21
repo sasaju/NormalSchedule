@@ -10,14 +10,14 @@ data class ScoreResponse(
 
 @Keep
 data class Grade(
-        val project: String,
-        val thisProjectGradeList: List<List<ThisProjectGrade>>
+    val project: String,
+    val thisProjectGradeList: List<List<ThisProjectGrade>>
 )
 
 @Keep
 data class ThisProjectGrade(
-        val attributeName: String,
-        val courseName: String,
-        val score: Double,
-        val time: String
+    val attributeName: String,
+    val courseName: String,
+    val score: Double,
+    val time: String
 )
