@@ -85,10 +85,10 @@
             android:exported="true"
             android:label="@string/title_activity_tool_box"
             android:theme="@style/Theme.NormalSchedule.NoActionBar" />
-<!--        <activity-->
-<!--            android:name=".ui.login_space_room.ShowSpaceActivity"-->
-<!--            android:exported="true"-->
-<!--            android:theme="@style/Theme.NormalSchedule.NoActionBar" />-->
+        <activity
+            android:name=".ui.login_space_room.ShowSpaceActivity"
+            android:exported="true"
+            android:theme="@style/Theme.NormalSchedule.NoActionBar" />
         <activity
             android:name=".ui.edit_course.EditCourseActivity"
             android:exported="true"
