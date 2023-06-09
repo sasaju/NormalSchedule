@@ -232,7 +232,7 @@ fun Introduce(){
         ) {
             MaterialDialog(context)
                 .title(text = "关于开发组")
-                .message(text = "开发者：\n  河北大学 | 大四药物制剂在读@符号 \n  (QQ:1289142675) \nLOGO、背景图绘制：\n   河北大学 | 大四药学在读@Mr.")
+                .message(text = "开发者：\n  河北大学 | 大四药物制剂在读@符号 \n  (QQ:1289142675) \nLOGO、背景图绘制：\n   河北大学 | 大四药学在读@Mr.  \n感谢 @戈青木 同学200元的捐赠，十分感谢！！！")
                 .positiveButton(text = "知道了")
                 .show()
         }

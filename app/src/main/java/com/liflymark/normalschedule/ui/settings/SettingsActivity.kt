@@ -302,7 +302,7 @@ fun SettingsPart(
         Text(
             text = label,
             style = MaterialTheme.typography.body1,
-            color = Color.Gray,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier
                 .padding(
                     top = 10.dp,
@@ -337,7 +337,7 @@ fun SettingsItem(
                     style =
                     SpanStyle(
                         fontSize = MaterialTheme.typography.body1.fontSize,
-                        color = Color.Black
+                        color = MaterialTheme.colors.onSecondary
                     )
                 ) {
                     append(title)

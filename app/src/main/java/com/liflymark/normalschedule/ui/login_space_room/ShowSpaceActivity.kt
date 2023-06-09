@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenu
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.contentColorFor
@@ -73,7 +74,11 @@ fun SelectAndShow(ids:String?, ssViewModel: ShowSpaceViewModel = viewModel()){
 fun SayHowToUse(){
     Column {
         Spacer(modifier = Modifier.height(10.dp))
-        CenterText(text = "有颜色代表未占用(空教室)，无颜色代表已占用",modifier = Modifier.fillMaxWidth())
+        CenterText(
+            text = "有颜色代表未占用(空教室)，无颜色代表已占用",
+            modifier = Modifier.fillMaxWidth(),
+            textStyle = TextStyle(color = MaterialTheme.colors.onSecondary)
+        )
         Spacer(modifier = Modifier.height(3.dp))
         CenterText(
             text = "目前仅支持新区、本部、医学部的部分教室",
@@ -207,7 +212,7 @@ fun ShowSpaceResult(ssViewModel: ShowSpaceViewModel = viewModel()){
                     modifier = Modifier
                         .weight(0.7f)
                         .height(30.dp),
-                    textStyle = TextStyle(fontSize = 18.sp),
+                    textStyle = TextStyle(fontSize = 18.sp, color = MaterialTheme.colors.onSecondary),
                     maxLines = 1
                 )
 //                Text(text = space.placeNum, modifier = Modifier.weight(0.5f))
