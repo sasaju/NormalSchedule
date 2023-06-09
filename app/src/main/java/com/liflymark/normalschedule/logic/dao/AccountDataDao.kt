@@ -2,18 +2,16 @@ package com.liflymark.normalschedule.logic.dao
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.liflymark.normalschedule.NormalScheduleApplication
 import com.liflymark.normalschedule.NormalScheduleApplication.Companion.context
+import com.liflymark.normalschedule.NormalScheduleApplication.Companion.settingData
 import com.liflymark.schedule.data.Settings
 import com.liflymark.schedule.data.twoColorItem
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
@@ -48,14 +46,14 @@ object AccountDataDao {
     }
 
 
-    // Proto内容
-    private val Context.settingsStore: DataStore<Settings> by dataStore(
-        fileName = "settings.pb",
-        serializer = SettingsSerializer
-    )
-    val scheduleSettings = context.settingsStore.data
+//    // Proto内容
+//    private val Context.settingsStore: DataStore<Settings> by dataStore(
+//        fileName = "settings.pb",
+//        serializer = SettingsSerializer
+//    )
+    val scheduleSettings = settingData
 
-    fun getDarkShowBack() = context.settingsStore.data.map {
+    fun getDarkShowBack() = scheduleSettings.data.map {
         it.darkShowBack
     }
 
@@ -64,7 +62,7 @@ object AccountDataDao {
      * 1-渐变色
      */
     suspend fun updateColorMode(mode: Int){
-        context.settingsStore.updateData {
+        scheduleSettings.updateData {
             it.toBuilder()
                 .setColorMode(mode)
                 .build()
@@ -72,7 +70,7 @@ object AccountDataDao {
     }
 
     suspend fun updateDarkShowBack(show:Boolean){
-        context.settingsStore.updateData {
+        scheduleSettings.updateData {
             it.toBuilder()
                 .setDarkShowBack(show)
                 .build()
@@ -81,7 +79,7 @@ object AccountDataDao {
 
     // 同步写入成绩详情的缓存
     fun updateScoreDetail(scoreDetail:String) = runBlocking {
-        context.settingsStore.updateData {
+        scheduleSettings.updateData {
             it.toBuilder()
                 .setScoreDetail(scoreDetail).build()
         }
@@ -89,19 +87,19 @@ object AccountDataDao {
 
     // 同步读取成绩详情缓存
     fun getScoreDetail(): String = runBlocking {
-        scheduleSettings.map { settings ->
+        scheduleSettings.data.map { settings ->
             settings.scoreDetail
         }.first()
     }
 
     fun getColorListAsyc(): MutableList<twoColorItem> = runBlocking {
-        scheduleSettings.map { value: Settings ->
+        scheduleSettings.data.map { value: Settings ->
             value.colorsList
         }.first()
     }
 
     suspend fun getLastUpdate():String {
-        val res = scheduleSettings.map { it.lastUpdate }.first()
+        val res = scheduleSettings.data.map { it.lastUpdate }.first()
         return if (res==""){
             "2000-01-01"
         }else{
@@ -110,7 +108,7 @@ object AccountDataDao {
     }
 
     suspend fun setLastUpdate(last:String) {
-        context.settingsStore.updateData {
+        scheduleSettings.updateData {
             it.toBuilder()
                 .setLastUpdate(last)
                 .build()
@@ -118,13 +116,13 @@ object AccountDataDao {
     }
 
     suspend fun updateSettings(setSettings:(settings:Settings)->Settings){
-        context.settingsStore.updateData {
+        scheduleSettings.updateData {
             setSettings(it)
         }
 
     }
     suspend fun updateSettings(settings: Settings){
-        context.settingsStore.updateData {
+        scheduleSettings.updateData {
             settings
         }
     }

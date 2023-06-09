@@ -2,17 +2,58 @@ package com.liflymark.normalschedule.logic.utils
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.liflymark.normalschedule.NormalScheduleApplication.Companion.settingData
+import com.liflymark.normalschedule.NormalScheduleApplication.Companion.settingFirst
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 import kotlin.math.abs
-import kotlin.math.max
 
 internal object GetDataUtil {
-    // 修改开学日期仅需修改此处 如2021.8.23 则 GregorianCalendar(2021, 7, 23)，January-0 2022-2-28
-    private val firstWeekMondayDate =  GregorianCalendar(2023, 1, 20)
+    // 修改开学日期仅需修改此处 如2023.2.20 则 GregorianCalendar(2021, 7, 23)，January-0 2022-2-28
+    private val defaultFirstWeekMondayDate =  GregorianCalendar(2023, 1, 20)
+    init {
+        if (settingFirst.year!=0){
+            defaultFirstWeekMondayDate.apply {
+                set(Calendar.YEAR, settingFirst.year)
+                set(Calendar.MONTH, settingFirst.month-1)
+                set(Calendar.DAY_OF_MONTH, settingFirst.day)
+            }
+        }
+    }
+//    fun getFirstWeekMondayDate(year: Int, month: Int, day: Int):GregorianCalendar{
+//        if (year == 0){
+//            return defaultFirstWeekMondayDate
+//        }
+//        return GregorianCalendar().apply {
+//            set(Calendar.YEAR, year)
+//            set(Calendar.MONTH, month)
+//            set(Calendar.DAY_OF_MONTH, day)
+//        }
+//    }
+
+    // 输出当前开学日期的yyyy-MM-dd
+    fun getNowKaiXueDate(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+        return sdf.format(defaultFirstWeekMondayDate.time)
+    }
+
+    // 验证日期是否合理
+    fun validateDateWithSimpleDateFormat(dateString: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+        try {
+            val date = LocalDate.parse(dateString, formatter)
+            if (date.dayOfWeek.value!=1){
+                return false
+            }
+            return true
+        } catch (e: DateTimeParseException) {
+            return false
+        }
+    }
     //获取当前完整的日期和时间
     @SuppressLint("SimpleDateFormat")
     fun getNowDateTime(): String {
@@ -133,7 +174,7 @@ internal object GetDataUtil {
     // add=1代表获取明天是第几周
     fun whichWeekNow(add:Int = 0): Int {
         val now = GregorianCalendar()
-        val result = dateMinusDate(now, firstWeekMondayDate) + add
+        val result = dateMinusDate(now, defaultFirstWeekMondayDate) + add
         if (result < 0){
             return 0
         }
@@ -142,13 +183,13 @@ internal object GetDataUtil {
 
     fun startSchool(): Boolean{
         val now = GregorianCalendar()
-        val result = dateMinusDate(now, firstWeekMondayDate)
+        val result = dateMinusDate(now, defaultFirstWeekMondayDate)
         return result >= 0
     }
 
     fun startSchoolDay(): Int {
         val now = GregorianCalendar()
-        return dateMinusDate(now, firstWeekMondayDate)
+        return dateMinusDate(now, defaultFirstWeekMondayDate)
     }
 
     //获取当前时间
@@ -156,7 +197,7 @@ internal object GetDataUtil {
         return GregorianCalendar()
     }
 
-    fun getFirstWeekMondayDate() = firstWeekMondayDate
+    fun getFirstWeekMondayDate() = defaultFirstWeekMondayDate
 
 
     /**

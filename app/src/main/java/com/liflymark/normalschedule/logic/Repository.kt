@@ -680,7 +680,7 @@ object Repository {
      */
     fun getScheduleSettings(): Flow<Settings> {
         val defaultString = getDefaultString()
-        return AccountDataDao.scheduleSettings.map {
+        return AccountDataDao.scheduleSettings.data.map {
             val new = it.toBuilder()
             if (new.coursePerHeight == 0) {
                 new.coursePerHeight = 70
@@ -714,7 +714,7 @@ object Repository {
         return Repository.getScheduleSettings().map { it.openCourseNotice }
     }
     fun getScheduleSettingsColorList(): Flow<List<twoColorItem>> {
-        return AccountDataDao.scheduleSettings.map {
+        return AccountDataDao.scheduleSettings.data.map {
             val new = it.toBuilder()
             if (new.colorsList.isEmpty()) {
                 new.addAllColors(colorListSetting(getDefaultString()))

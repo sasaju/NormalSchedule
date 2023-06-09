@@ -63,6 +63,11 @@ message Settings {
 
   // 是否开启课程通知
   bool open_course_notice = 20;
+
+  // 开学年月日
+  int32 year = 21;
+  int32 month = 22;
+  int32 day = 23;
 }
 
 

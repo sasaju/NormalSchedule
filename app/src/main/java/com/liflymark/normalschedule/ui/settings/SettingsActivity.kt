@@ -12,16 +12,21 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,24 +34,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.liflymark.normalschedule.R
 import com.liflymark.normalschedule.logic.Repository
+import com.liflymark.normalschedule.logic.utils.GetDataUtil
 import com.liflymark.normalschedule.logic.utils.SingleSelectDialog
 import com.liflymark.normalschedule.ui.score_detail.UiControl
 import com.liflymark.normalschedule.ui.sign_in_compose.NormalTopBar
 import com.liflymark.normalschedule.ui.theme.NorScTheme
 import com.liflymark.schedule.data.Settings
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class SettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -137,6 +148,7 @@ fun SettingsContent(
     }
 
     val showNorSetDialog = remember { mutableStateOf(false) }
+    val showDatePickerDialog = remember { mutableStateOf(false) }
     var selectInit by remember { mutableStateOf(0) }
     var selectList by remember { mutableStateOf(listOf("")) }
     var dialogResult by remember { mutableStateOf("") }
@@ -148,6 +160,27 @@ fun SettingsContent(
             selectList = selectList,
             result = {
                 dialogResult = it
+            }
+        )
+    }
+    if (showDatePickerDialog.value){
+        OutlineTextFiledDateDialog(
+            value = "",
+            onDismissRequest = {
+                showDatePickerDialog.value = false
+            },
+            onRes = { date ->
+                scope.launch {
+                    Repository.updateSettings {
+                        it.toBuilder()
+                            .setYear(date.year)
+                            .setMonth(date.monthValue)
+                            .setDay(date.dayOfMonth)
+                            .build()
+                    }
+                    showDatePickerDialog.value =false
+                }
+                Toasty.info(context,"重启生效").show()
             }
         )
     }
@@ -250,6 +283,18 @@ fun SettingsContent(
                 }
                 selectList = listOf("显示标识", "不显示标识")
                 showNorSetDialog.value = true
+            }
+            SettingsItem(
+                title = "开学日期设置",
+                description = if (settings.value.year==0){
+                    GetDataUtil.getNowKaiXueDate()
+                }else{
+                    "${settings.value.year}-" +
+                            "${String.format("%02d", settings.value.month)}-" +
+                            String.format("%02d", settings.value.day)
+                }
+            ) {
+                showDatePickerDialog.value = true
             }
             //        SettingsItem(
             //            title = "时间列字体颜色",
@@ -354,6 +399,55 @@ fun SettingsItem(
 
         )
     }
+}
+
+@Composable
+fun OutlineTextFiledDateDialog(
+    value:String,
+    onDismissRequest: () -> Unit,
+    onRes:(LocalDate) -> Unit,
+){
+    var tempValue by rememberSaveable{ mutableStateOf(value) }
+    var isError by rememberSaveable{ mutableStateOf(false) }
+    AlertDialog(
+        onDismissRequest = { onDismissRequest() },
+        title = {
+            Text(text = "设置第一周的周一日期")
+        },
+        text = {
+            Column(modifier = Modifier.fillMaxWidth()){
+                OutlinedTextField(
+                    value = tempValue,
+                    onValueChange = {tempValue =it},
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    isError = isError,
+                    label = { Text("yyyyMMdd") }
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "示例：20230605，注意：必须输入第一周的周一日期", color = if (isError){ Color.Red }else{Color.Unspecified})
+            }
+        },
+        buttons = {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp), horizontalArrangement = Arrangement.End){
+                TextButton(
+                    onClick = {
+                        if (GetDataUtil.validateDateWithSimpleDateFormat(tempValue)) {
+                            val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+                            val res = LocalDate.parse(tempValue, formatter)
+                            onRes(res)
+                        } else {
+                            isError = true
+                        }
+                    }
+                ) {
+                    Text(text = "确认")
+                }
+            }
+        },
+    )
 }
 
 
